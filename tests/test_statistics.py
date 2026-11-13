@@ -53,3 +53,9 @@ def test_invalid_counts(k,n):
 def test_harm_upper_bounded_by_false_alarm_under_noop_coupling():
     y0=np.array([1,1,1,1,0]);trigger=np.array([1,0,1,0,1]);yg=np.array([0,1,1,1,1])
     assert paired_metrics(y0,yg)['conditional_harm']<=trigger[y0==1].mean()
+
+def test_wilson_interval_known_values():
+    from hci.statistics import wilson_interval
+    lo,hi=wilson_interval(50,100);assert abs(lo-0.4038)<5e-4 and abs(hi-0.5962)<5e-4
+    lo,hi=wilson_interval(0,20);assert lo==0.0 and abs(hi-0.1611)<5e-4
+    assert wilson_interval(0,0)==(0.0,1.0)

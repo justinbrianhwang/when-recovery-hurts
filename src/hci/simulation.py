@@ -64,12 +64,20 @@ def success(info):
     if len(a)!=1:raise ValueError('Single environment required')
     return bool(a[0])
 
+def retreat_budget(r):
+    """Worst-case number of control steps a retreat may consume (used for eligibility and the loop bound)."""
+    if 'steps' in r:raise ValueError("retreat.steps (fixed step count) was replaced by retreat.max_steps + retreat.arrival_tolerance_m")
+    n=r['max_steps'];tol=r['arrival_tolerance_m']
+    if not isinstance(n,int) or n<=0 or not tol>0:raise ValueError('retreat.max_steps must be a positive int and arrival_tolerance_m positive')
+    return n
+
 class Runtime:
     def __init__(self,env,policy,c):
         self.env=env;self.policy=policy;self.c=c
         self.horizon=c['env']['horizon'];self.adim=env.single_action_space.shape[0]
     def reset(self,episode):
         self.episode=int(episode);self.repeat=0;self.t=0;self.intervention=None;self.intervention_t=None;self.actions=[]
+        self.retreat_info=None
         self.raw,info=self.env.reset(seed=self.episode)
         self.done=success(info);self.y=int(self.done);self.reason='success' if self.done else None
         self.policy.reset(self.policy.convert(self.raw))
@@ -80,13 +88,14 @@ class Runtime:
         return {'env':save_env(self.env),'policy':self.policy.snapshot(),'raw':clone(self.raw),
                 't':self.t,'done':self.done,'y':self.y,'reason':self.reason,'repeat':self.repeat,
                 'intervention':self.intervention,'intervention_t':self.intervention_t,
-                'tcp_history':clone(self.tcp_history),'episode':self.episode,'actions':clone(self.actions)}
+                'tcp_history':clone(self.tcp_history),'episode':self.episode,'actions':clone(self.actions),
+                'retreat_info':clone(self.retreat_info)}
     def restore(self,s):
         if s['episode']!=self.episode:raise ValueError('Snapshot belongs to a different episode/scene')
         atol=self.c.get('audit',{}).get('state_atol',0.)
         self.replay_error=restore_env(self.env,s['env'],self.episode,s['actions'],atol)
         self.actions=clone(s['actions']);self.policy.restore(s['policy']);self.raw=clone(s['raw'])
-        for k in ('t','done','y','reason','repeat','intervention','intervention_t','tcp_history'):
+        for k in ('t','done','y','reason','repeat','intervention','intervention_t','tcp_history','retreat_info'):
             setattr(self,k,clone(s[k]))
     def advance(self,action):
         if self.done:raise RuntimeError('Attempted action after completion')
@@ -107,7 +116,7 @@ class Runtime:
         p=self.c['protocol'];rem=len(self.policy.queue)
         ok=(not self.done and self.intervention is None and self.t>=p['min_intervention_step']
             and self.t%p['decision_stride']==0 and 0<rem<self.policy.act_horizon)
-        return np.array([True,ok,ok and self.horizon-self.t>self.c['retreat']['steps']+p['minimum_post_retreat_steps']])
+        return np.array([True,ok,ok and self.horizon-self.t>retreat_budget(self.c['retreat'])+p['minimum_post_retreat_steps']])
     def force(self,action):
         if action==0:return
         if action not in (1,2) or self.intervention is not None:raise ValueError('Invalid/repeated intervention')
@@ -115,8 +124,15 @@ class Runtime:
         self.intervention=int(action);self.intervention_t=self.t;self.policy.clear()
         if action==2:self.retreat()
     def retreat(self):
-        """Bounded EE movement, not a reset and not assumed safe."""
-        r=self.c['retreat'];controller=self.env.agent.controller.controllers['arm'];cfg=controller.config
+        """Bounded closed-loop EE movement, not a reset and not assumed safe.
+
+        The commanded target (start + distance) and the measured TCP displacement are different quantities:
+        max_translation_per_step_m bounds the commanded increment, not the achieved motion. The loop stops
+        when the measured TCP is within arrival_tolerance_m of the target or after max_steps control steps,
+        whichever comes first; every executed step is charged to the episode horizon.
+        """
+        r=self.c['retreat'];max_steps=retreat_budget(r);tol=float(r['arrival_tolerance_m'])
+        controller=self.env.agent.controller.controllers['arm'];cfg=controller.config
         if not cfg.frame.startswith('root_translation') or not cfg.normalize_action or cfg.use_target:
             raise ValueError('Unsupported controller frame/normalization/target semantics')
         rootq=as_numpy(self.env.agent.robot.pose.q).reshape(-1)
@@ -133,13 +149,22 @@ class Runtime:
         else:raise ValueError('Unsupported retreat mode')
         # Hold the last commanded gripper position, not an arbitrary open/close operation.
         grip=float(self.policy.last_action[-1]) if self.policy.last_action is not None else 0.
-        for _ in range(r['steps']):
-            if self.done:break
-            delta=target-self.tcp_history[-1]
-            norm=np.linalg.norm(delta)
-            delta*=min(1.,r['max_translation_per_step_m']/max(norm,1e-12))
-            a=np.zeros(self.adim,np.float32);a[:3]=np.clip(delta/scale,-1,1);a[-1]=grip
-            self.advance(a)
+        used=0;saturated=0;why=None
+        while why is None:
+            delta=target-self.tcp_history[-1];norm=float(np.linalg.norm(delta))
+            if norm<=tol:why='reached'
+            elif self.done:why='episode_ended'
+            elif used>=max_steps:why='budget_exhausted'
+            else:
+                if norm>r['max_translation_per_step_m']:saturated+=1
+                delta=delta*min(1.,r['max_translation_per_step_m']/max(norm,1e-12))
+                a=np.zeros(self.adim,np.float32);a[:3]=np.clip(delta/scale,-1,1);a[-1]=grip
+                self.advance(a);used+=1
+        final=self.tcp_history[-1]
+        self.retreat_info={'mode':r['mode'],'start_tcp':current.tolist(),'target_tcp':target.tolist(),'final_tcp':final.tolist(),
+            'commanded_distance_m':float(np.linalg.norm(target-current)),'achieved_displacement_m':float(np.linalg.norm(final-current)),
+            'target_error_m':float(np.linalg.norm(target-final)),'steps_used':used,'max_steps':max_steps,'arrival_tolerance_m':tol,
+            'command_saturated_steps':saturated,'gripper_command':grip,'reached':why=='reached','end_reason':why}
         self.policy.clear()
     def complete(self,chooser=None):
         while not self.done:
@@ -150,7 +175,7 @@ class Runtime:
             self.step_base()
         return {'success':self.y,'steps':self.t,'reason':self.reason,'intervention':self.intervention,
                 'intervention_step':self.intervention_t,'policy_calls':self.policy.inference_calls,
-                'policy_inference_seconds':self.policy.inference_seconds}
+                'policy_inference_seconds':self.policy.inference_seconds,'retreat':clone(self.retreat_info)}
 
 def trace(runtime,steps):
     out=[]

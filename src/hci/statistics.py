@@ -56,3 +56,12 @@ def bootstrap_gain(y0,yg,seed=42,draws=2000):
 def zero_event_requirement(epsilon,delta=.05,m=1):
     if not 0<epsilon<1 or not 0<delta<1 or m<1: raise ValueError('Invalid design')
     return int(math.ceil(math.log(delta/m)/math.log1p(-epsilon)))
+
+def wilson_interval(k:int,n:int,confidence:float=.95):
+    """Wilson score interval for a binomial proportion (descriptive; not a certificate)."""
+    _counts(k,n)
+    if n==0: return (0.0,1.0)
+    from scipy.stats import norm
+    z=float(norm.ppf(1-(1-confidence)/2));p=k/n;d=1+z*z/n
+    c=(p+z*z/(2*n))/d;h=z*math.sqrt(p*(1-p)/n+z*z/(4*n*n))/d
+    return (max(0.0,c-h),min(1.0,c+h))

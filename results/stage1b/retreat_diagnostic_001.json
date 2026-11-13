@@ -1,0 +1,1712 @@
+{
+  "retreat_config": {
+    "mode": "up",
+    "distance_m": 0.05,
+    "max_translation_per_step_m": 0.005,
+    "max_steps": 40,
+    "arrival_tolerance_m": 0.005,
+    "lookback_steps": 12
+  },
+  "n_states": 30,
+  "skipped": [],
+  "free_space": {
+    "n": 10,
+    "reached": 10,
+    "steps_used_min_mean_max": [
+      24,
+      24.0,
+      24
+    ],
+    "achieved_dz_m_min_mean_max": [
+      0.04502737522125244,
+      0.0453632190823555,
+      0.045599281787872314
+    ],
+    "target_error_m_max": 0.004975180810287557,
+    "mean_dz_per_step_m": 0.0018901341129094363,
+    "still_grasping_after": 0,
+    "grasping_before": 0,
+    "max_cube_displacement_m": 4.351140603375825e-07
+  },
+  "object_held_after_grasp": {
+    "n": 10,
+    "reached": 10,
+    "steps_used_min_mean_max": [
+      25,
+      26.1,
+      28
+    ],
+    "achieved_dz_m_min_mean_max": [
+      0.045211441814899445,
+      0.04577432945370674,
+      0.04660262167453766
+    ],
+    "target_error_m_max": 0.004849207244334842,
+    "mean_dz_per_step_m": 0.001755576196592301,
+    "still_grasping_after": 10,
+    "grasping_before": 10,
+    "max_cube_displacement_m": 0.04659735783934593
+  },
+  "object_held_near_placement": {
+    "n": 10,
+    "reached": 10,
+    "steps_used_min_mean_max": [
+      26,
+      26.7,
+      28
+    ],
+    "achieved_dz_m_min_mean_max": [
+      0.04530644416809082,
+      0.046048355847597124,
+      0.0467732772231102
+    ],
+    "target_error_m_max": 0.004745025282686001,
+    "mean_dz_per_step_m": 0.0017258954816497863,
+    "still_grasping_after": 10,
+    "grasping_before": 10,
+    "max_cube_displacement_m": 0.04677610844373703
+  },
+  "states": [
+    {
+      "traj_id": 0,
+      "scene_seed": 0,
+      "label": "free_space",
+      "prefix_steps": 5,
+      "demo_steps": 107,
+      "grasping_before": false,
+      "grasping_after": false,
+      "tcp_to_nearest_cube_before_m": 0.18198873102664948,
+      "reached": true,
+      "end_reason": "reached",
+      "steps_used": 24,
+      "max_steps": 40,
+      "commanded_distance_m": 0.04999999999999999,
+      "achieved_displacement_m": 0.045027658343315125,
+      "achieved_dz_m": 0.04502737522125244,
+      "achieved_dxy_m": 0.00015945815539453179,
+      "target_error_m": 0.004975180810287557,
+      "command_saturated_steps": 24,
+      "mean_dz_per_step_m": 0.0018761405954137444,
+      "max_normalized_arm_command": 0.05000000074505806,
+      "gripper_command": 1.0,
+      "gripper_command_constant": true,
+      "finger_qpos_before": [
+        0.03999967500567436,
+        0.0399998240172863
+      ],
+      "finger_qpos_after": [
+        0.03999991714954376,
+        0.03999996930360794
+      ],
+      "tcp_quat_max_abs_change": 0.0009444877505302429,
+      "cube_displacement_m": {
+        "cubeA": 4.956176269388379e-08,
+        "cubeB": 4.592846281070706e-08
+      },
+      "success_after_retreat": 0,
+      "episode_done_during_retreat": false,
+      "start_tcp": [
+        0.010310325771570206,
+        0.03507796674966812,
+        0.17952975630760193
+      ],
+      "target_tcp": [
+        0.010310325771570206,
+        0.03507796674966812,
+        0.22952975630760192
+      ],
+      "final_tcp": [
+        0.010328606702387333,
+        0.034919559955596924,
+        0.22455713152885437
+      ]
+    },
+    {
+      "traj_id": 0,
+      "scene_seed": 0,
+      "label": "object_held_after_grasp",
+      "prefix_steps": 51,
+      "demo_steps": 107,
+      "grasping_before": true,
+      "grasping_after": true,
+      "tcp_to_nearest_cube_before_m": 0.0013302277075126767,
+      "reached": true,
+      "end_reason": "reached",
+      "steps_used": 25,
+      "max_steps": 40,
+      "commanded_distance_m": 0.05,
+      "achieved_displacement_m": 0.045473456382751465,
+      "achieved_dz_m": 0.045470476150512695,
+      "achieved_dxy_m": 0.0005206088535487652,
+      "target_error_m": 0.00455934423694254,
+      "command_saturated_steps": 25,
+      "mean_dz_per_step_m": 0.0018188190879300237,
+      "max_normalized_arm_command": 0.05000000074505806,
+      "gripper_command": -1.0,
+      "gripper_command_constant": true,
+      "finger_qpos_before": [
+        0.020843887701630592,
+        0.02080928348004818
+      ],
+      "finger_qpos_after": [
+        0.020843863487243652,
+        0.02080945111811161
+      ],
+      "tcp_quat_max_abs_change": 0.003220614977180958,
+      "cube_displacement_m": {
+        "cubeA": 0.045475270599126816,
+        "cubeB": 0.0
+      },
+      "success_after_retreat": 0,
+      "episode_done_during_retreat": false,
+      "start_tcp": [
+        -0.08605209738016129,
+        -0.09509029984474182,
+        0.020981252193450928
+      ],
+      "target_tcp": [
+        -0.08605209738016129,
+        -0.09509029984474182,
+        0.07098125219345093
+      ],
+      "final_tcp": [
+        -0.08657039701938629,
+        -0.09504131972789764,
+        0.06645172834396362
+      ]
+    },
+    {
+      "traj_id": 0,
+      "scene_seed": 0,
+      "label": "object_held_near_placement",
+      "prefix_steps": 98,
+      "demo_steps": 107,
+      "grasping_before": true,
+      "grasping_after": true,
+      "tcp_to_nearest_cube_before_m": 0.0013412726111710072,
+      "reached": true,
+      "end_reason": "reached",
+      "steps_used": 26,
+      "max_steps": 40,
+      "commanded_distance_m": 0.05,
+      "achieved_displacement_m": 0.0458538793027401,
+      "achieved_dz_m": 0.045850202441215515,
+      "achieved_dxy_m": 0.0005807081470265985,
+      "target_error_m": 0.004190231705224479,
+      "command_saturated_steps": 26,
+      "mean_dz_per_step_m": 0.0017634693067520857,
+      "max_normalized_arm_command": 0.05000000074505806,
+      "gripper_command": -1.0,
+      "gripper_command_constant": true,
+      "finger_qpos_before": [
+        0.02084481529891491,
+        0.02080904319882393
+      ],
+      "finger_qpos_after": [
+        0.02084481529891491,
+        0.020809536799788475
+      ],
+      "tcp_quat_max_abs_change": 0.0037212809547781944,
+      "cube_displacement_m": {
+        "cubeA": 0.04585034027695656,
+        "cubeB": 1.2970484419838613e-07
+      },
+      "success_after_retreat": 0,
+      "episode_done_during_retreat": false,
+      "start_tcp": [
+        -0.04852379485964775,
+        0.09334581345319748,
+        0.06371994316577911
+      ],
+      "target_tcp": [
+        -0.04852379485964775,
+        0.09334581345319748,
+        0.11371994316577912
+      ],
+      "final_tcp": [
+        -0.049083586782217026,
+        0.09350026398897171,
+        0.10957014560699463
+      ]
+    },
+    {
+      "traj_id": 1,
+      "scene_seed": 1,
+      "label": "free_space",
+      "prefix_steps": 5,
+      "demo_steps": 94,
+      "grasping_before": false,
+      "grasping_after": false,
+      "tcp_to_nearest_cube_before_m": 0.15391823649406433,
+      "reached": true,
+      "end_reason": "reached",
+      "steps_used": 24,
+      "max_steps": 40,
+      "commanded_distance_m": 0.04999999999999999,
+      "achieved_displacement_m": 0.04512777552008629,
+      "achieved_dz_m": 0.04512776434421539,
+      "achieved_dxy_m": 3.011543412867468e-05,
+      "target_error_m": 0.004872328727099498,
+      "command_saturated_steps": 24,
+      "mean_dz_per_step_m": 0.001880323514342308,
+      "max_normalized_arm_command": 0.05000000074505806,
+      "gripper_command": 1.0,
+      "gripper_command_constant": true,
+      "finger_qpos_before": [
+        0.039999812841415405,
+        0.03999952971935272
+      ],
+      "finger_qpos_after": [
+        0.03999989107251167,
+        0.03999996557831764
+      ],
+      "tcp_quat_max_abs_change": 0.0007792618125677109,
+      "cube_displacement_m": {
+        "cubeA": 3.785342173046047e-08,
+        "cubeB": 1.8995327977222587e-08
+      },
+      "success_after_retreat": 0,
+      "episode_done_during_retreat": false,
+      "start_tcp": [
+        -0.015290336683392525,
+        0.015088952146470547,
+        0.16226956248283386
+      ],
+      "target_tcp": [
+        -0.015290336683392525,
+        0.015088952146470547,
+        0.21226956248283385
+      ],
+      "final_tcp": [
+        -0.015270634554326534,
+        0.015111728571355343,
+        0.20739732682704926
+      ]
+    },
+    {
+      "traj_id": 1,
+      "scene_seed": 1,
+      "label": "object_held_after_grasp",
+      "prefix_steps": 47,
+      "demo_steps": 94,
+      "grasping_before": true,
+      "grasping_after": true,
+      "tcp_to_nearest_cube_before_m": 0.0029304460622370243,
+      "reached": true,
+      "end_reason": "reached",
+      "steps_used": 26,
+      "max_steps": 40,
+      "commanded_distance_m": 0.05,
+      "achieved_displacement_m": 0.045887988060712814,
+      "achieved_dz_m": 0.04588411748409271,
+      "achieved_dxy_m": 0.0005961310816928744,
+      "target_error_m": 0.0041588292938747025,
+      "command_saturated_steps": 26,
+      "mean_dz_per_step_m": 0.0017647737404331565,
+      "max_normalized_arm_command": 0.05000000074505806,
+      "gripper_command": -1.0,
+      "gripper_command_constant": true,
+      "finger_qpos_before": [
+        0.02355070412158966,
+        0.02351216971874237
+      ],
+      "finger_qpos_after": [
+        0.023551203310489655,
+        0.02351236715912819
+      ],
+      "tcp_quat_max_abs_change": 0.003934899345040321,
+      "cube_displacement_m": {
+        "cubeA": 0.045891325920820236,
+        "cubeB": 1.1926748477719684e-08
+      },
+      "success_after_retreat": 0,
+      "episode_done_during_retreat": false,
+      "start_tcp": [
+        0.02946116030216217,
+        0.04809291288256645,
+        0.019332483410835266
+      ],
+      "target_tcp": [
+        0.02946116030216217,
+        0.04809291288256645,
+        0.06933248341083527
+      ],
+      "final_tcp": [
+        0.028870664536952972,
+        0.04817468672990799,
+        0.06521660089492798
+      ]
+    },
+    {
+      "traj_id": 1,
+      "scene_seed": 1,
+      "label": "object_held_near_placement",
+      "prefix_steps": 85,
+      "demo_steps": 94,
+      "grasping_before": true,
+      "grasping_after": true,
+      "tcp_to_nearest_cube_before_m": 0.002930277958512306,
+      "reached": true,
+      "end_reason": "reached",
+      "steps_used": 26,
+      "max_steps": 40,
+      "commanded_distance_m": 0.05,
+      "achieved_displacement_m": 0.045324746519327164,
+      "achieved_dz_m": 0.04531995207071304,
+      "achieved_dxy_m": 0.0006593032157979906,
+      "target_error_m": 0.004726259554980575,
+      "command_saturated_steps": 26,
+      "mean_dz_per_step_m": 0.0017430750885978341,
+      "max_normalized_arm_command": 0.05000000074505806,
+      "gripper_command": -1.0,
+      "gripper_command_constant": true,
+      "finger_qpos_before": [
+        0.02355058118700981,
+        0.023512927815318108
+      ],
+      "finger_qpos_after": [
+        0.022344108670949936,
+        0.022307291626930237
+      ],
+      "tcp_quat_max_abs_change": 0.004727441817522049,
+      "cube_displacement_m": {
+        "cubeA": 0.045333005487918854,
+        "cubeB": 5.171180532670405e-07
+      },
+      "success_after_retreat": 0,
+      "episode_done_during_retreat": false,
+      "start_tcp": [
+        -0.034680984914302826,
+        0.07258176803588867,
+        0.0700366199016571
+      ],
+      "target_tcp": [
+        -0.034680984914302826,
+        0.07258176803588867,
+        0.12003661990165711
+      ],
+      "final_tcp": [
+        -0.035332176834344864,
+        0.0726848691701889,
+        0.11535657197237015
+      ]
+    },
+    {
+      "traj_id": 2,
+      "scene_seed": 2,
+      "label": "free_space",
+      "prefix_steps": 5,
+      "demo_steps": 98,
+      "grasping_before": false,
+      "grasping_after": false,
+      "tcp_to_nearest_cube_before_m": 0.1669020652770996,
+      "reached": true,
+      "end_reason": "reached",
+      "steps_used": 24,
+      "max_steps": 40,
+      "commanded_distance_m": 0.04999999999999999,
+      "achieved_displacement_m": 0.04542672634124756,
+      "achieved_dz_m": 0.045426711440086365,
+      "achieved_dxy_m": 3.532053960952908e-05,
+      "target_error_m": 0.004573424952110738,
+      "command_saturated_steps": 24,
+      "mean_dz_per_step_m": 0.0018927796045318246,
+      "max_normalized_arm_command": 0.05000000074505806,
+      "gripper_command": 1.0,
+      "gripper_command_constant": true,
+      "finger_qpos_before": [
+        0.03999992460012436,
+        0.03999980539083481
+      ],
+      "finger_qpos_after": [
+        0.039999913424253464,
+        0.03999996930360794
+      ],
+      "tcp_quat_max_abs_change": 0.0005585290491580963,
+      "cube_displacement_m": {
+        "cubeA": 1.7473160696113155e-08,
+        "cubeB": 2.9155009073633664e-08
+      },
+      "success_after_retreat": 0,
+      "episode_done_during_retreat": false,
+      "start_tcp": [
+        0.010110253468155861,
+        -0.0357416570186615,
+        0.18196626007556915
+      ],
+      "target_tcp": [
+        0.010110253468155861,
+        -0.0357416570186615,
+        0.23196626007556914
+      ],
+      "final_tcp": [
+        0.010144423693418503,
+        -0.03575059771537781,
+        0.22739297151565552
+      ]
+    },
+    {
+      "traj_id": 2,
+      "scene_seed": 2,
+      "label": "object_held_after_grasp",
+      "prefix_steps": 55,
+      "demo_steps": 98,
+      "grasping_before": true,
+      "grasping_after": true,
+      "tcp_to_nearest_cube_before_m": 0.0007981621311046183,
+      "reached": true,
+      "end_reason": "reached",
+      "steps_used": 26,
+      "max_steps": 40,
+      "commanded_distance_m": 0.05,
+      "achieved_displacement_m": 0.04568396508693695,
+      "achieved_dz_m": 0.045680105686187744,
+      "achieved_dxy_m": 0.0005937920650467277,
+      "target_error_m": 0.004360513261494316,
+      "command_saturated_steps": 26,
+      "mean_dz_per_step_m": 0.0017569271149113774,
+      "max_normalized_arm_command": 0.05000000074505806,
+      "gripper_command": -1.0,
+      "gripper_command_constant": true,
+      "finger_qpos_before": [
+        0.026119913905858994,
+        0.026078563183546066
+      ],
+      "finger_qpos_after": [
+        0.026120256632566452,
+        0.026078687980771065
+      ],
+      "tcp_quat_max_abs_change": 0.003583179786801338,
+      "cube_displacement_m": {
+        "cubeA": 0.045681994408369064,
+        "cubeB": 3.514431767825954e-08
+      },
+      "success_after_retreat": 0,
+      "episode_done_during_retreat": false,
+      "start_tcp": [
+        0.0475214384496212,
+        -0.03373514860868454,
+        0.021055929362773895
+      ],
+      "target_tcp": [
+        0.0475214384496212,
+        -0.03373514860868454,
+        0.0710559293627739
+      ],
+      "final_tcp": [
+        0.046929750591516495,
+        -0.03368520364165306,
+        0.06673603504896164
+      ]
+    },
+    {
+      "traj_id": 2,
+      "scene_seed": 2,
+      "label": "object_held_near_placement",
+      "prefix_steps": 89,
+      "demo_steps": 98,
+      "grasping_before": true,
+      "grasping_after": true,
+      "tcp_to_nearest_cube_before_m": 0.0007983007235452533,
+      "reached": true,
+      "end_reason": "reached",
+      "steps_used": 27,
+      "max_steps": 40,
+      "commanded_distance_m": 0.05,
+      "achieved_displacement_m": 0.04651638865470886,
+      "achieved_dz_m": 0.04651356488466263,
+      "achieved_dxy_m": 0.0005127752083353698,
+      "target_error_m": 0.003523942147705578,
+      "command_saturated_steps": 27,
+      "mean_dz_per_step_m": 0.0017227246426045895,
+      "max_normalized_arm_command": 0.05000000074505806,
+      "gripper_command": -1.0,
+      "gripper_command_constant": true,
+      "finger_qpos_before": [
+        0.02611989714205265,
+        0.026078520342707634
+      ],
+      "finger_qpos_after": [
+        0.02612311579287052,
+        0.026081323623657227
+      ],
+      "tcp_quat_max_abs_change": 0.004266769625246525,
+      "cube_displacement_m": {
+        "cubeA": 0.04651394858956337,
+        "cubeB": 5.428260578810296e-07
+      },
+      "success_after_retreat": 0,
+      "episode_done_during_retreat": false,
+      "start_tcp": [
+        0.059361543506383896,
+        0.0313415452837944,
+        0.06195787340402603
+      ],
+      "target_tcp": [
+        0.059361543506383896,
+        0.0313415452837944,
+        0.11195787340402603
+      ],
+      "final_tcp": [
+        0.058852266520261765,
+        0.031401339918375015,
+        0.10847143828868866
+      ]
+    },
+    {
+      "traj_id": 3,
+      "scene_seed": 3,
+      "label": "free_space",
+      "prefix_steps": 5,
+      "demo_steps": 109,
+      "grasping_before": false,
+      "grasping_after": false,
+      "tcp_to_nearest_cube_before_m": 0.12923967838287354,
+      "reached": true,
+      "end_reason": "reached",
+      "steps_used": 24,
+      "max_steps": 40,
+      "commanded_distance_m": 0.04999999999999999,
+      "achieved_displacement_m": 0.04537828266620636,
+      "achieved_dz_m": 0.04537734389305115,
+      "achieved_dxy_m": 0.0002921075210906565,
+      "target_error_m": 0.004631876108192121,
+      "command_saturated_steps": 24,
+      "mean_dz_per_step_m": 0.0018907226622104645,
+      "max_normalized_arm_command": 0.05000000074505806,
+      "gripper_command": 1.0,
+      "gripper_command_constant": true,
+      "finger_qpos_before": [
+        0.03999967873096466,
+        0.039999838918447495
+      ],
+      "finger_qpos_after": [
+        0.039999883621931076,
+        0.039999961853027344
+      ],
+      "tcp_quat_max_abs_change": 0.0017816424369812012,
+      "cube_displacement_m": {
+        "cubeA": 4.71216097253091e-08,
+        "cubeB": 3.2742313749167806e-08
+      },
+      "success_after_retreat": 0,
+      "episode_done_during_retreat": false,
+      "start_tcp": [
+        -0.021492594853043556,
+        0.015963226556777954,
+        0.14709815382957458
+      ],
+      "target_tcp": [
+        -0.021492594853043556,
+        0.015963226556777954,
+        0.19709815382957457
+      ],
+      "final_tcp": [
+        -0.021459365263581276,
+        0.015673015266656876,
+        0.19247549772262573
+      ]
+    },
+    {
+      "traj_id": 3,
+      "scene_seed": 3,
+      "label": "object_held_after_grasp",
+      "prefix_steps": 48,
+      "demo_steps": 109,
+      "grasping_before": true,
+      "grasping_after": true,
+      "tcp_to_nearest_cube_before_m": 0.006684522144496441,
+      "reached": true,
+      "end_reason": "reached",
+      "steps_used": 25,
+      "max_steps": 40,
+      "commanded_distance_m": 0.05,
+      "achieved_displacement_m": 0.04563116654753685,
+      "achieved_dz_m": 0.045628711581230164,
+      "achieved_dxy_m": 0.00047362505574710667,
+      "target_error_m": 0.004396871972118173,
+      "command_saturated_steps": 25,
+      "mean_dz_per_step_m": 0.0018251484725624323,
+      "max_normalized_arm_command": 0.05000000074505806,
+      "gripper_command": -1.0,
+      "gripper_command_constant": true,
+      "finger_qpos_before": [
+        0.02038864605128765,
+        0.020356491208076477
+      ],
+      "finger_qpos_after": [
+        0.020389387384057045,
+        0.020356757566332817
+      ],
+      "tcp_quat_max_abs_change": 0.0033135786652565002,
+      "cube_displacement_m": {
+        "cubeA": 0.04561612010002136,
+        "cubeB": 0.0
+      },
+      "success_after_retreat": 0,
+      "episode_done_during_retreat": false,
+      "start_tcp": [
+        -0.1447754204273224,
+        -0.26688873767852783,
+        0.021260805428028107
+      ],
+      "target_tcp": [
+        -0.1447754204273224,
+        -0.26688873767852783,
+        0.07126080542802811
+      ],
+      "final_tcp": [
+        -0.1452363282442093,
+        -0.26677972078323364,
+        0.06688951700925827
+      ]
+    },
+    {
+      "traj_id": 3,
+      "scene_seed": 3,
+      "label": "object_held_near_placement",
+      "prefix_steps": 100,
+      "demo_steps": 109,
+      "grasping_before": true,
+      "grasping_after": true,
+      "tcp_to_nearest_cube_before_m": 0.006681990344077349,
+      "reached": true,
+      "end_reason": "reached",
+      "steps_used": 26,
+      "max_steps": 40,
+      "commanded_distance_m": 0.05,
+      "achieved_displacement_m": 0.04662483185529709,
+      "achieved_dz_m": 0.04662301391363144,
+      "achieved_dxy_m": 0.00041165726725012064,
+      "target_error_m": 0.0034019842324817156,
+      "command_saturated_steps": 26,
+      "mean_dz_per_step_m": 0.0017931928159669042,
+      "max_normalized_arm_command": 0.05000000074505806,
+      "gripper_command": -1.0,
+      "gripper_command_constant": true,
+      "finger_qpos_before": [
+        0.02039557695388794,
+        0.020359564572572708
+      ],
+      "finger_qpos_after": [
+        0.020395701751112938,
+        0.020360255613923073
+      ],
+      "tcp_quat_max_abs_change": 0.003533530980348587,
+      "cube_displacement_m": {
+        "cubeA": 0.046625539660453796,
+        "cubeB": 1.6382809064907633e-07
+      },
+      "success_after_retreat": 0,
+      "episode_done_during_retreat": false,
+      "start_tcp": [
+        -0.05823122337460518,
+        0.007665340788662434,
+        0.063716359436512
+      ],
+      "target_tcp": [
+        -0.05823122337460518,
+        0.007665340788662434,
+        0.113716359436512
+      ],
+      "final_tcp": [
+        -0.058627597987651825,
+        0.0077764661982655525,
+        0.11033937335014343
+      ]
+    },
+    {
+      "traj_id": 4,
+      "scene_seed": 4,
+      "label": "free_space",
+      "prefix_steps": 5,
+      "demo_steps": 109,
+      "grasping_before": false,
+      "grasping_after": false,
+      "tcp_to_nearest_cube_before_m": 0.18400894105434418,
+      "reached": true,
+      "end_reason": "reached",
+      "steps_used": 24,
+      "max_steps": 40,
+      "commanded_distance_m": 0.04999999999999999,
+      "achieved_displacement_m": 0.045599304139614105,
+      "achieved_dz_m": 0.045599281787872314,
+      "achieved_dxy_m": 4.507728590397164e-05,
+      "target_error_m": 0.004400949073117493,
+      "command_saturated_steps": 24,
+      "mean_dz_per_step_m": 0.001899970113299787,
+      "max_normalized_arm_command": 0.05000000074505806,
+      "gripper_command": 1.0,
+      "gripper_command_constant": true,
+      "finger_qpos_before": [
+        0.03999978303909302,
+        0.03999987244606018
+      ],
+      "finger_qpos_after": [
+        0.03999989107251167,
+        0.039999958127737045
+      ],
+      "tcp_quat_max_abs_change": 0.00048803258687257767,
+      "cube_displacement_m": {
+        "cubeA": 1.666000493116826e-08,
+        "cubeB": 1.862645149230957e-08
+      },
+      "success_after_retreat": 0,
+      "episode_done_during_retreat": false,
+      "start_tcp": [
+        -0.003808252513408661,
+        -0.013252662494778633,
+        0.165736123919487
+      ],
+      "target_tcp": [
+        -0.003808252513408661,
+        -0.013252662494778633,
+        0.215736123919487
+      ],
+      "final_tcp": [
+        -0.003772634081542492,
+        -0.013280290178954601,
+        0.21133540570735931
+      ]
+    },
+    {
+      "traj_id": 4,
+      "scene_seed": 4,
+      "label": "object_held_after_grasp",
+      "prefix_steps": 62,
+      "demo_steps": 109,
+      "grasping_before": true,
+      "grasping_after": true,
+      "tcp_to_nearest_cube_before_m": 0.0009491453529335558,
+      "reached": true,
+      "end_reason": "reached",
+      "steps_used": 25,
+      "max_steps": 40,
+      "commanded_distance_m": 0.05,
+      "achieved_displacement_m": 0.04536154493689537,
+      "achieved_dz_m": 0.0453583225607872,
+      "achieved_dxy_m": 0.0005406313575804234,
+      "target_error_m": 0.004673055935001586,
+      "command_saturated_steps": 25,
+      "mean_dz_per_step_m": 0.001814332907088101,
+      "max_normalized_arm_command": 0.05000000074505806,
+      "gripper_command": -1.0,
+      "gripper_command_constant": true,
+      "finger_qpos_before": [
+        0.0259711816906929,
+        0.02593081444501877
+      ],
+      "finger_qpos_after": [
+        0.02597186528146267,
+        0.02593102864921093
+      ],
+      "tcp_quat_max_abs_change": 0.003241610247641802,
+      "cube_displacement_m": {
+        "cubeA": 0.0453571081161499,
+        "cubeB": 1.9086433766801747e-08
+      },
+      "success_after_retreat": 0,
+      "episode_done_during_retreat": false,
+      "start_tcp": [
+        -0.07283224910497665,
+        -0.10451416671276093,
+        0.021471582353115082
+      ],
+      "target_tcp": [
+        -0.07283224910497665,
+        -0.10451416671276093,
+        0.07147158235311508
+      ],
+      "final_tcp": [
+        -0.07336284965276718,
+        -0.10441050678491592,
+        0.06682990491390228
+      ]
+    },
+    {
+      "traj_id": 4,
+      "scene_seed": 4,
+      "label": "object_held_near_placement",
+      "prefix_steps": 100,
+      "demo_steps": 109,
+      "grasping_before": true,
+      "grasping_after": true,
+      "tcp_to_nearest_cube_before_m": 0.0009509178926236928,
+      "reached": true,
+      "end_reason": "reached",
+      "steps_used": 27,
+      "max_steps": 40,
+      "commanded_distance_m": 0.05,
+      "achieved_displacement_m": 0.04677616432309151,
+      "achieved_dz_m": 0.0467732772231102,
+      "achieved_dxy_m": 0.0005198458675295115,
+      "target_error_m": 0.0032683297910542667,
+      "command_saturated_steps": 27,
+      "mean_dz_per_step_m": 0.0017323435749858618,
+      "max_normalized_arm_command": 0.05000000074505806,
+      "gripper_command": -1.0,
+      "gripper_command_constant": true,
+      "finger_qpos_before": [
+        0.025971222668886185,
+        0.025930799543857574
+      ],
+      "finger_qpos_after": [
+        0.02597224898636341,
+        0.025931186974048615
+      ],
+      "tcp_quat_max_abs_change": 0.005319554358720779,
+      "cube_displacement_m": {
+        "cubeA": 0.04677610844373703,
+        "cubeB": 5.545085741687217e-07
+      },
+      "success_after_retreat": 0,
+      "episode_done_during_retreat": false,
+      "start_tcp": [
+        -0.08606256544589996,
+        -0.16002614796161652,
+        0.06949901580810547
+      ],
+      "target_tcp": [
+        -0.08606256544589996,
+        -0.16002614796161652,
+        0.11949901580810547
+      ],
+      "final_tcp": [
+        -0.08658050745725632,
+        -0.16007059812545776,
+        0.11627229303121567
+      ]
+    },
+    {
+      "traj_id": 5,
+      "scene_seed": 5,
+      "label": "free_space",
+      "prefix_steps": 5,
+      "demo_steps": 120,
+      "grasping_before": false,
+      "grasping_after": false,
+      "tcp_to_nearest_cube_before_m": 0.20845381915569305,
+      "reached": true,
+      "end_reason": "reached",
+      "steps_used": 24,
+      "max_steps": 40,
+      "commanded_distance_m": 0.04999999999999999,
+      "achieved_displacement_m": 0.04527321457862854,
+      "achieved_dz_m": 0.045273199677467346,
+      "achieved_dxy_m": 3.5468048736220226e-05,
+      "target_error_m": 0.004726933389805794,
+      "command_saturated_steps": 24,
+      "mean_dz_per_step_m": 0.0018863832810893655,
+      "max_normalized_arm_command": 0.05000000074505806,
+      "gripper_command": 1.0,
+      "gripper_command_constant": true,
+      "finger_qpos_before": [
+        0.03999973088502884,
+        0.03999936580657959
+      ],
+      "finger_qpos_after": [
+        0.03999990597367287,
+        0.039999958127737045
+      ],
+      "tcp_quat_max_abs_change": 0.0006375308148562908,
+      "cube_displacement_m": {
+        "cubeA": 1.8995327977222587e-08,
+        "cubeB": 4.351140603375825e-07
+      },
+      "success_after_retreat": 0,
+      "episode_done_during_retreat": false,
+      "start_tcp": [
+        0.007338147610425949,
+        0.03665431588888168,
+        0.17336824536323547
+      ],
+      "target_tcp": [
+        0.007338147610425949,
+        0.03665431588888168,
+        0.22336824536323546
+      ],
+      "final_tcp": [
+        0.007372190244495869,
+        0.03664436191320419,
+        0.21864144504070282
+      ]
+    },
+    {
+      "traj_id": 5,
+      "scene_seed": 5,
+      "label": "object_held_after_grasp",
+      "prefix_steps": 61,
+      "demo_steps": 120,
+      "grasping_before": true,
+      "grasping_after": true,
+      "tcp_to_nearest_cube_before_m": 0.00274669099599123,
+      "reached": true,
+      "end_reason": "reached",
+      "steps_used": 28,
+      "max_steps": 40,
+      "commanded_distance_m": 0.05,
+      "achieved_displacement_m": 0.046606965363025665,
+      "achieved_dz_m": 0.04660262167453766,
+      "achieved_dxy_m": 0.0006361212581396103,
+      "target_error_m": 0.0034564186324157614,
+      "command_saturated_steps": 28,
+      "mean_dz_per_step_m": 0.0016643793787807226,
+      "max_normalized_arm_command": 0.05000000074505806,
+      "gripper_command": -1.0,
+      "gripper_command_constant": true,
+      "finger_qpos_before": [
+        0.018654225394129753,
+        0.01861867867410183
+      ],
+      "finger_qpos_after": [
+        0.01865571364760399,
+        0.01862270012497902
+      ],
+      "tcp_quat_max_abs_change": 0.005162455141544342,
+      "cube_displacement_m": {
+        "cubeA": 0.04659735783934593,
+        "cubeB": 0.0
+      },
+      "success_after_retreat": 0,
+      "episode_done_during_retreat": false,
+      "start_tcp": [
+        0.1444759964942932,
+        0.05208622291684151,
+        0.019002631306648254
+      ],
+      "target_tcp": [
+        0.1444759964942932,
+        0.05208622291684151,
+        0.06900263130664826
+      ],
+      "final_tcp": [
+        0.14384064078330994,
+        0.052117422223091125,
+        0.06560525298118591
+      ]
+    },
+    {
+      "traj_id": 5,
+      "scene_seed": 5,
+      "label": "object_held_near_placement",
+      "prefix_steps": 111,
+      "demo_steps": 120,
+      "grasping_before": true,
+      "grasping_after": true,
+      "tcp_to_nearest_cube_before_m": 0.002745554782450199,
+      "reached": true,
+      "end_reason": "reached",
+      "steps_used": 28,
+      "max_steps": 40,
+      "commanded_distance_m": 0.05,
+      "achieved_displacement_m": 0.045786529779434204,
+      "achieved_dz_m": 0.04578195512294769,
+      "achieved_dxy_m": 0.0006471123197115958,
+      "target_error_m": 0.004267394631650457,
+      "command_saturated_steps": 28,
+      "mean_dz_per_step_m": 0.0016350698424503207,
+      "max_normalized_arm_command": 0.05000000074505806,
+      "gripper_command": -1.0,
+      "gripper_command_constant": true,
+      "finger_qpos_before": [
+        0.01865762285888195,
+        0.01862306520342827
+      ],
+      "finger_qpos_after": [
+        0.018658801913261414,
+        0.018623482435941696
+      ],
+      "tcp_quat_max_abs_change": 0.0061768703162670135,
+      "cube_displacement_m": {
+        "cubeA": 0.04579425975680351,
+        "cubeB": 2.861139364540577e-06
+      },
+      "success_after_retreat": 0,
+      "episode_done_during_retreat": false,
+      "start_tcp": [
+        0.14189277589321136,
+        -0.22354266047477722,
+        0.05909910053014755
+      ],
+      "target_tcp": [
+        0.14189277589321136,
+        -0.22354266047477722,
+        0.10909910053014756
+      ],
+      "final_tcp": [
+        0.14125333726406097,
+        -0.22344329953193665,
+        0.10488105565309525
+      ]
+    },
+    {
+      "traj_id": 6,
+      "scene_seed": 6,
+      "label": "free_space",
+      "prefix_steps": 5,
+      "demo_steps": 119,
+      "grasping_before": false,
+      "grasping_after": false,
+      "tcp_to_nearest_cube_before_m": 0.1381438821554184,
+      "reached": true,
+      "end_reason": "reached",
+      "steps_used": 24,
+      "max_steps": 40,
+      "commanded_distance_m": 0.04999999999999999,
+      "achieved_displacement_m": 0.04532069340348244,
+      "achieved_dz_m": 0.045320674777030945,
+      "achieved_dxy_m": 3.94122616853565e-05,
+      "target_error_m": 0.004679491197632049,
+      "command_saturated_steps": 24,
+      "mean_dz_per_step_m": 0.0018883614102378488,
+      "max_normalized_arm_command": 0.05000000074505806,
+      "gripper_command": 1.0,
+      "gripper_command_constant": true,
+      "finger_qpos_before": [
+        0.039999715983867645,
+        0.039999328553676605
+      ],
+      "finger_qpos_after": [
+        0.03999989852309227,
+        0.03999996930360794
+      ],
+      "tcp_quat_max_abs_change": 0.0006402437575161457,
+      "cube_displacement_m": {
+        "cubeA": 4.037946723656205e-07,
+        "cubeB": 1.2071319943629533e-08
+      },
+      "success_after_retreat": 0,
+      "episode_done_during_retreat": false,
+      "start_tcp": [
+        -0.003317577764391899,
+        -0.004577795043587685,
+        0.1534617841243744
+      ],
+      "target_tcp": [
+        -0.003317577764391899,
+        -0.004577795043587685,
+        0.20346178412437438
+      ],
+      "final_tcp": [
+        -0.0032844729721546173,
+        -0.004556408151984215,
+        0.19878245890140533
+      ]
+    },
+    {
+      "traj_id": 6,
+      "scene_seed": 6,
+      "label": "object_held_after_grasp",
+      "prefix_steps": 58,
+      "demo_steps": 119,
+      "grasping_before": true,
+      "grasping_after": true,
+      "tcp_to_nearest_cube_before_m": 0.0057026115246117115,
+      "reached": true,
+      "end_reason": "reached",
+      "steps_used": 27,
+      "max_steps": 40,
+      "commanded_distance_m": 0.05,
+      "achieved_displacement_m": 0.04613026604056358,
+      "achieved_dz_m": 0.046126119792461395,
+      "achieved_dxy_m": 0.0006183919031172991,
+      "target_error_m": 0.003922927019865732,
+      "command_saturated_steps": 27,
+      "mean_dz_per_step_m": 0.0017083748243749142,
+      "max_normalized_arm_command": 0.05000000074505806,
+      "gripper_command": -1.0,
+      "gripper_command_constant": true,
+      "finger_qpos_before": [
+        0.02107701264321804,
+        0.0210419874638319
+      ],
+      "finger_qpos_after": [
+        0.021080026403069496,
+        0.02104429341852665
+      ],
+      "tcp_quat_max_abs_change": 0.004415588453412056,
+      "cube_displacement_m": {
+        "cubeA": 0.04613767936825752,
+        "cubeB": 0.0
+      },
+      "success_after_retreat": 0,
+      "episode_done_during_retreat": false,
+      "start_tcp": [
+        0.10919361561536789,
+        0.052132558077573776,
+        0.0182025283575058
+      ],
+      "target_tcp": [
+        0.10919361561536789,
+        0.052132558077573776,
+        0.0682025283575058
+      ],
+      "final_tcp": [
+        0.1085752323269844,
+        0.052129294723272324,
+        0.0643286481499672
+      ]
+    },
+    {
+      "traj_id": 6,
+      "scene_seed": 6,
+      "label": "object_held_near_placement",
+      "prefix_steps": 110,
+      "demo_steps": 119,
+      "grasping_before": true,
+      "grasping_after": true,
+      "tcp_to_nearest_cube_before_m": 0.005709524266421795,
+      "reached": true,
+      "end_reason": "reached",
+      "steps_used": 26,
+      "max_steps": 40,
+      "commanded_distance_m": 0.05,
+      "achieved_displacement_m": 0.045866914093494415,
+      "achieved_dz_m": 0.0458633229136467,
+      "achieved_dxy_m": 0.0005740138585679233,
+      "target_error_m": 0.0041763128764341,
+      "command_saturated_steps": 26,
+      "mean_dz_per_step_m": 0.0017639739671722054,
+      "max_normalized_arm_command": 0.05000000074505806,
+      "gripper_command": -1.0,
+      "gripper_command_constant": true,
+      "finger_qpos_before": [
+        0.021080082282423973,
+        0.021045491099357605
+      ],
+      "finger_qpos_after": [
+        0.021079901605844498,
+        0.021044204011559486
+      ],
+      "tcp_quat_max_abs_change": 0.00389857217669487,
+      "cube_displacement_m": {
+        "cubeA": 0.04587903618812561,
+        "cubeB": 5.439242727334204e-07
+      },
+      "success_after_retreat": 0,
+      "episode_done_during_retreat": false,
+      "start_tcp": [
+        -0.033399246633052826,
+        -0.006361712701618671,
+        0.06364162266254425
+      ],
+      "target_tcp": [
+        -0.033399246633052826,
+        -0.006361712701618671,
+        0.11364162266254425
+      ],
+      "final_tcp": [
+        -0.033972885459661484,
+        -0.006382459308952093,
+        0.10950494557619095
+      ]
+    },
+    {
+      "traj_id": 7,
+      "scene_seed": 7,
+      "label": "free_space",
+      "prefix_steps": 5,
+      "demo_steps": 101,
+      "grasping_before": false,
+      "grasping_after": false,
+      "tcp_to_nearest_cube_before_m": 0.16214688122272491,
+      "reached": true,
+      "end_reason": "reached",
+      "steps_used": 24,
+      "max_steps": 40,
+      "commanded_distance_m": 0.04999999999999999,
+      "achieved_displacement_m": 0.04542206600308418,
+      "achieved_dz_m": 0.04542204737663269,
+      "achieved_dxy_m": 3.941066825063899e-05,
+      "target_error_m": 0.004578122259465594,
+      "command_saturated_steps": 24,
+      "mean_dz_per_step_m": 0.0018925853073596954,
+      "max_normalized_arm_command": 0.05000000074505806,
+      "gripper_command": 1.0,
+      "gripper_command_constant": true,
+      "finger_qpos_before": [
+        0.03999995067715645,
+        0.03999984264373779
+      ],
+      "finger_qpos_after": [
+        0.039999913424253464,
+        0.03999996930360794
+      ],
+      "tcp_quat_max_abs_change": 0.0005773778539150953,
+      "cube_displacement_m": {
+        "cubeA": 2.4755712146884434e-08,
+        "cubeB": 1.5359765015432458e-08
+      },
+      "success_after_retreat": 0,
+      "episode_done_during_retreat": false,
+      "start_tcp": [
+        0.005134831182658672,
+        0.01970623806118965,
+        0.17767363786697388
+      ],
+      "target_tcp": [
+        0.005134831182658672,
+        0.01970623806118965,
+        0.22767363786697387
+      ],
+      "final_tcp": [
+        0.005169423297047615,
+        0.019687354564666748,
+        0.22309568524360657
+      ]
+    },
+    {
+      "traj_id": 7,
+      "scene_seed": 7,
+      "label": "object_held_after_grasp",
+      "prefix_steps": 53,
+      "demo_steps": 101,
+      "grasping_before": true,
+      "grasping_after": true,
+      "tcp_to_nearest_cube_before_m": 0.0011061824625357985,
+      "reached": true,
+      "end_reason": "reached",
+      "steps_used": 26,
+      "max_steps": 40,
+      "commanded_distance_m": 0.05,
+      "achieved_displacement_m": 0.045217905193567276,
+      "achieved_dz_m": 0.045211441814899445,
+      "achieved_dxy_m": 0.0007645400473847985,
+      "target_error_m": 0.004849207244334842,
+      "command_saturated_steps": 26,
+      "mean_dz_per_step_m": 0.0017389015993103385,
+      "max_normalized_arm_command": 0.05000000074505806,
+      "gripper_command": -1.0,
+      "gripper_command_constant": true,
+      "finger_qpos_before": [
+        0.025750450789928436,
+        0.025708982720971107
+      ],
+      "finger_qpos_after": [
+        0.025750597938895226,
+        0.025709792971611023
+      ],
+      "tcp_quat_max_abs_change": 0.004101901315152645,
+      "cube_displacement_m": {
+        "cubeA": 0.04521176218986511,
+        "cubeB": 0.0
+      },
+      "success_after_retreat": 0,
+      "episode_done_during_retreat": false,
+      "start_tcp": [
+        0.03573887422680855,
+        0.002737943083047867,
+        0.021263480186462402
+      ],
+      "target_tcp": [
+        0.03573887422680855,
+        0.002737943083047867,
+        0.0712634801864624
+      ],
+      "final_tcp": [
+        0.034976452589035034,
+        0.002794817090034485,
+        0.06647492200136185
+      ]
+    },
+    {
+      "traj_id": 7,
+      "scene_seed": 7,
+      "label": "object_held_near_placement",
+      "prefix_steps": 92,
+      "demo_steps": 101,
+      "grasping_before": true,
+      "grasping_after": true,
+      "tcp_to_nearest_cube_before_m": 0.001001790282316506,
+      "reached": true,
+      "end_reason": "reached",
+      "steps_used": 26,
+      "max_steps": 40,
+      "commanded_distance_m": 0.05,
+      "achieved_displacement_m": 0.04531180486083031,
+      "achieved_dz_m": 0.04530644416809082,
+      "achieved_dxy_m": 0.000696992501616478,
+      "target_error_m": 0.004745025282686001,
+      "command_saturated_steps": 26,
+      "mean_dz_per_step_m": 0.0017425555270165205,
+      "max_normalized_arm_command": 0.05000000074505806,
+      "gripper_command": -1.0,
+      "gripper_command_constant": true,
+      "finger_qpos_before": [
+        0.025759117677807808,
+        0.02571965381503105
+      ],
+      "finger_qpos_after": [
+        0.02576003223657608,
+        0.025719238445162773
+      ],
+      "tcp_quat_max_abs_change": 0.004601180087774992,
+      "cube_displacement_m": {
+        "cubeA": 0.04530961066484451,
+        "cubeB": 4.453553117400588e-07
+      },
+      "success_after_retreat": 0,
+      "episode_done_during_retreat": false,
+      "start_tcp": [
+        -0.041391219943761826,
+        -0.0776166170835495,
+        0.07047707587480545
+      ],
+      "target_tcp": [
+        -0.041391219943761826,
+        -0.0776166170835495,
+        0.12047707587480545
+      ],
+      "final_tcp": [
+        -0.04208133742213249,
+        -0.07771427184343338,
+        0.11578352004289627
+      ]
+    },
+    {
+      "traj_id": 8,
+      "scene_seed": 8,
+      "label": "free_space",
+      "prefix_steps": 5,
+      "demo_steps": 110,
+      "grasping_before": false,
+      "grasping_after": false,
+      "tcp_to_nearest_cube_before_m": 0.17150074243545532,
+      "reached": true,
+      "end_reason": "reached",
+      "steps_used": 24,
+      "max_steps": 40,
+      "commanded_distance_m": 0.04999999999999999,
+      "achieved_displacement_m": 0.045493606477975845,
+      "achieved_dz_m": 0.04549358785152435,
+      "achieved_dxy_m": 4.1225870518246666e-05,
+      "target_error_m": 0.0045066007172072185,
+      "command_saturated_steps": 24,
+      "mean_dz_per_step_m": 0.001895566121675074,
+      "max_normalized_arm_command": 0.05000000074505806,
+      "gripper_command": 1.0,
+      "gripper_command_constant": true,
+      "finger_qpos_before": [
+        0.039999786764383316,
+        0.03999951481819153
+      ],
+      "finger_qpos_after": [
+        0.03999990224838257,
+        0.03999996930360794
+      ],
+      "tcp_quat_max_abs_change": 0.0005250759422779083,
+      "cube_displacement_m": {
+        "cubeA": 1.1926748477719684e-08,
+        "cubeB": 3.003713970883837e-07
+      },
+      "success_after_retreat": 0,
+      "episode_done_during_retreat": false,
+      "start_tcp": [
+        -0.0038924431428313255,
+        -0.02726188488304615,
+        0.1483531892299652
+      ],
+      "target_tcp": [
+        -0.0038924431428313255,
+        -0.02726188488304615,
+        0.1983531892299652
+      ],
+      "final_tcp": [
+        -0.0038537587970495224,
+        -0.027276135981082916,
+        0.19384677708148956
+      ]
+    },
+    {
+      "traj_id": 8,
+      "scene_seed": 8,
+      "label": "object_held_after_grasp",
+      "prefix_steps": 59,
+      "demo_steps": 110,
+      "grasping_before": true,
+      "grasping_after": true,
+      "tcp_to_nearest_cube_before_m": 0.0033556867856532335,
+      "reached": true,
+      "end_reason": "reached",
+      "steps_used": 27,
+      "max_steps": 40,
+      "commanded_distance_m": 0.05,
+      "achieved_displacement_m": 0.046299394220113754,
+      "achieved_dz_m": 0.04629555344581604,
+      "achieved_dxy_m": 0.0005963271833024919,
+      "target_error_m": 0.00375213677996892,
+      "command_saturated_steps": 27,
+      "mean_dz_per_step_m": 0.0017146500758826733,
+      "max_normalized_arm_command": 0.05000000074505806,
+      "gripper_command": -1.0,
+      "gripper_command_constant": true,
+      "finger_qpos_before": [
+        0.024097897112369537,
+        0.024058297276496887
+      ],
+      "finger_qpos_after": [
+        0.024100491777062416,
+        0.02406040020287037
+      ],
+      "tcp_quat_max_abs_change": 0.004187313839793205,
+      "cube_displacement_m": {
+        "cubeA": 0.04629978537559509,
+        "cubeB": 0.0
+      },
+      "success_after_retreat": 0,
+      "episode_done_during_retreat": false,
+      "start_tcp": [
+        0.10590194165706635,
+        -0.013756033964455128,
+        0.01814042031764984
+      ],
+      "target_tcp": [
+        0.10590194165706635,
+        -0.013756033964455128,
+        0.06814042031764984
+      ],
+      "final_tcp": [
+        0.10530664771795273,
+        -0.01372094452381134,
+        0.06443597376346588
+      ]
+    },
+    {
+      "traj_id": 8,
+      "scene_seed": 8,
+      "label": "object_held_near_placement",
+      "prefix_steps": 101,
+      "demo_steps": 110,
+      "grasping_before": true,
+      "grasping_after": true,
+      "tcp_to_nearest_cube_before_m": 0.0033560115844011307,
+      "reached": true,
+      "end_reason": "reached",
+      "steps_used": 27,
+      "max_steps": 40,
+      "commanded_distance_m": 0.05,
+      "achieved_displacement_m": 0.045893870294094086,
+      "achieved_dz_m": 0.04588857293128967,
+      "achieved_dxy_m": 0.0006973021081648767,
+      "target_error_m": 0.004170139420338631,
+      "command_saturated_steps": 27,
+      "mean_dz_per_step_m": 0.0016995767364278436,
+      "max_normalized_arm_command": 0.05000000074505806,
+      "gripper_command": -1.0,
+      "gripper_command_constant": true,
+      "finger_qpos_before": [
+        0.02409914880990982,
+        0.02406076341867447
+      ],
+      "finger_qpos_after": [
+        0.02410048060119152,
+        0.024060804396867752
+      ],
+      "tcp_quat_max_abs_change": 0.004931751638650894,
+      "cube_displacement_m": {
+        "cubeA": 0.0458940714597702,
+        "cubeB": 2.819062956405105e-07
+      },
+      "success_after_retreat": 0,
+      "episode_done_during_retreat": false,
+      "start_tcp": [
+        0.026804929599165916,
+        0.11312680691480637,
+        0.06722643971443176
+      ],
+      "target_tcp": [
+        0.026804929599165916,
+        0.11312680691480637,
+        0.11722643971443177
+      ],
+      "final_tcp": [
+        0.026141203939914703,
+        0.1133405789732933,
+        0.11311501264572144
+      ]
+    },
+    {
+      "traj_id": 9,
+      "scene_seed": 9,
+      "label": "free_space",
+      "prefix_steps": 5,
+      "demo_steps": 114,
+      "grasping_before": false,
+      "grasping_after": false,
+      "tcp_to_nearest_cube_before_m": 0.17611034214496613,
+      "reached": true,
+      "end_reason": "reached",
+      "steps_used": 24,
+      "max_steps": 40,
+      "commanded_distance_m": 0.04999999999999999,
+      "achieved_displacement_m": 0.04556424170732498,
+      "achieved_dz_m": 0.045564204454422,
+      "achieved_dxy_m": 5.750361378886737e-05,
+      "target_error_m": 0.004436168255111271,
+      "command_saturated_steps": 24,
+      "mean_dz_per_step_m": 0.0018985085189342499,
+      "max_normalized_arm_command": 0.05000000074505806,
+      "gripper_command": 1.0,
+      "gripper_command_constant": true,
+      "finger_qpos_before": [
+        0.039999980479478836,
+        0.039999935775995255
+      ],
+      "finger_qpos_after": [
+        0.039999913424253464,
+        0.03999997675418854
+      ],
+      "tcp_quat_max_abs_change": 0.0005287497770041227,
+      "cube_displacement_m": {
+        "cubeA": 1.4244059798329545e-07,
+        "cubeB": 3.161013495400766e-08
+      },
+      "success_after_retreat": 0,
+      "episode_done_during_retreat": false,
+      "start_tcp": [
+        -0.0013658450916409492,
+        -0.013899601995944977,
+        0.17144101858139038
+      ],
+      "target_tcp": [
+        -0.0013658450916409492,
+        -0.013899601995944977,
+        0.22144101858139037
+      ],
+      "final_tcp": [
+        -0.0013263039290904999,
+        -0.013857850804924965,
+        0.21700522303581238
+      ]
+    },
+    {
+      "traj_id": 9,
+      "scene_seed": 9,
+      "label": "object_held_after_grasp",
+      "prefix_steps": 59,
+      "demo_steps": 114,
+      "grasping_before": true,
+      "grasping_after": true,
+      "tcp_to_nearest_cube_before_m": 0.0009366936283186078,
+      "reached": true,
+      "end_reason": "reached",
+      "steps_used": 26,
+      "max_steps": 40,
+      "commanded_distance_m": 0.05,
+      "achieved_displacement_m": 0.04549113288521767,
+      "achieved_dz_m": 0.04548582434654236,
+      "achieved_dxy_m": 0.000695054535754025,
+      "target_error_m": 0.004567371522236851,
+      "command_saturated_steps": 26,
+      "mean_dz_per_step_m": 0.001749454764649272,
+      "max_normalized_arm_command": 0.05000000074505806,
+      "gripper_command": -1.0,
+      "gripper_command_constant": true,
+      "finger_qpos_before": [
+        0.026082223281264305,
+        0.026041468605399132
+      ],
+      "finger_qpos_after": [
+        0.026082541793584824,
+        0.02604159153997898
+      ],
+      "tcp_quat_max_abs_change": 0.004135266877710819,
+      "cube_displacement_m": {
+        "cubeA": 0.04548845812678337,
+        "cubeB": 4.2370160713289806e-07
+      },
+      "success_after_retreat": 0,
+      "episode_done_during_retreat": false,
+      "start_tcp": [
+        0.02405974641442299,
+        0.0708504319190979,
+        0.02088490128517151
+      ],
+      "target_tcp": [
+        0.02405974641442299,
+        0.0708504319190979,
+        0.07088490128517151
+      ],
+      "final_tcp": [
+        0.023368094116449356,
+        0.07078174501657486,
+        0.06637072563171387
+      ]
+    },
+    {
+      "traj_id": 9,
+      "scene_seed": 9,
+      "label": "object_held_near_placement",
+      "prefix_steps": 105,
+      "demo_steps": 114,
+      "grasping_before": true,
+      "grasping_after": true,
+      "tcp_to_nearest_cube_before_m": 0.0009372115018777549,
+      "reached": true,
+      "end_reason": "reached",
+      "steps_used": 28,
+      "max_steps": 40,
+      "commanded_distance_m": 0.05,
+      "achieved_displacement_m": 0.046566858887672424,
+      "achieved_dz_m": 0.04656325280666351,
+      "achieved_dxy_m": 0.000579630199354142,
+      "target_error_m": 0.00348528369312802,
+      "command_saturated_steps": 28,
+      "mean_dz_per_step_m": 0.001662973314523697,
+      "max_normalized_arm_command": 0.05000000074505806,
+      "gripper_command": -1.0,
+      "gripper_command_constant": true,
+      "finger_qpos_before": [
+        0.0260832030326128,
+        0.026041453704237938
+      ],
+      "finger_qpos_after": [
+        0.026085417717695236,
+        0.02604365535080433
+      ],
+      "tcp_quat_max_abs_change": 0.005654426291584969,
+      "cube_displacement_m": {
+        "cubeA": 0.04655969887971878,
+        "cubeB": 5.314515192367253e-07
+      },
+      "success_after_retreat": 0,
+      "episode_done_during_retreat": false,
+      "start_tcp": [
+        0.10757486522197723,
+        0.12904584407806396,
+        0.06407788395881653
+      ],
+      "target_tcp": [
+        0.10757486522197723,
+        0.12904584407806396,
+        0.11407788395881653
+      ],
+      "final_tcp": [
+        0.10699714720249176,
+        0.128998801112175,
+        0.11064113676548004
+      ]
+    }
+  ],
+  "runtime": {
+    "python": "3.10.12 (main, Aug 31 2026, 10:18:17) [GCC 11.4.0]",
+    "platform": "Linux-7.0.0-31-generic-x86_64-with-glibc2.35",
+    "packages": {
+      "torch": "2.6.0+cu124",
+      "torchvision": "0.21.0+cu124",
+      "mani_skill": "3.0.1",
+      "sapien": "3.0.3",
+      "gymnasium": "0.29.1",
+      "diffusers": "0.30.3",
+      "numpy": "1.26.4",
+      "scipy": "1.13.1",
+      "PyYAML": "6.0.2"
+    },
+    "nvidia_smi": {
+      "returncode": 0,
+      "stdout": "name, driver_version, memory.total [MiB]\nNVIDIA GeForce RTX 3090, 580.178.04, 24576 MiB\n",
+      "stderr": ""
+    }
+  },
+  "scope": "Development diagnostic on demonstration scenes. max_translation_per_step_m bounds the commanded increment; the measured displacement is reported separately. Reaching the target is not a safety or harmlessness claim."
+}

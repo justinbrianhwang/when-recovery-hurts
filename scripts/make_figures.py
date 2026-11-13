@@ -72,8 +72,31 @@ def retreat_tracking():
     fig.tight_layout(); fig.savefig(ROOT / 'assets/retreat_tracking.png', dpi=180); plt.close(fig)
 
 
+def retreat_closed_loop():
+    """Stage 1B: closed-loop retreat (stop on arrival or after 40 steps) at 30 states prepared from demonstration prefixes."""
+    r = rows(ROOT / 'results/stage1b/retreat_steps_001.csv'); legacy = rows(ROOT / 'results/stage1_2/retreat_tracking.csv')
+    fig, ax = plt.subplots(figsize=(8, 4.2)); paths = {}
+    for v in r: paths.setdefault((v['traj_id'], v['label']), []).append((int(v['retreat_step']), 100 * float(v['tcp_dz_m'])))
+    groups = (('free space (10 states)', BLUE, lambda lab: lab == 'free_space'), ('holding a cube (20 states)', ORANGE, lambda lab: lab != 'free_space'))
+    for name, color, pick in groups:
+        first = True
+        for (_, lab), pts in paths.items():
+            if not pick(lab): continue
+            ax.plot([p[0] for p in pts], [p[1] for p in pts], color=color, lw=1.3, alpha=0.55, label=name if first else None); first = False
+    ax.plot([0] + [int(v['step']) for v in legacy], [0] + [100 * float(v['achieved_cumulative_z_m']) for v in legacy], color=MUTED, lw=2, ls=(0, (4, 3)),
+            label='previous fixed 12 steps (1 state)')
+    ax.axhline(5.0, color=INK, lw=1.2); ax.annotate('commanded target 5 cm', (0.3, 5.0), xytext=(0, 5), textcoords='offset points', color=INK)
+    ax.axhspan(4.5, 5.0, color=GRID, alpha=0.6, lw=0); ax.annotate('arrival tolerance 5 mm', (0.3, 4.5), xytext=(0, -13), textcoords='offset points', color=MUTED)
+    ax.axvline(40, color=MUTED, lw=1, ls=(0, (2, 3))); ax.annotate('step budget 40', (40, 3.0), xytext=(-6, 0), textcoords='offset points', ha='right', color=MUTED)
+    ax.set_xlim(0, 42); ax.set_ylim(-0.4, 5.9); ax.set_xlabel('retreat control step'); ax.set_ylabel('measured upward TCP displacement (cm)')
+    ax.legend(loc='lower right', frameon=False, labelcolor=INK)
+    style(ax, 'Closed-loop retreat arrives in 24-28 steps at all 30 diagnostic states')
+    fig.tight_layout(); fig.savefig(ROOT / 'assets/retreat_closed_loop.png', dpi=180); plt.close(fig)
+
+
 if __name__ == '__main__':
     restore_divergence()
     training_eval()
     retreat_tracking()
+    retreat_closed_loop()
     print('figures written to assets/')

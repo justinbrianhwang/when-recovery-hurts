@@ -12,7 +12,7 @@ from test_runtime_mock import MockEnv, MockPolicy
 from hci.simulation import Runtime, trace, compare_traces
 
 CFG = {'env': {'horizon': 40}, 'protocol': {'min_intervention_step': 12, 'decision_stride': 4, 'minimum_post_retreat_steps': 4},
-       'retreat': {'steps': 6, 'mode': 'up', 'distance_m': .03, 'max_translation_per_step_m': .005, 'lookback_steps': 8},
+       'retreat': {'max_steps': 6, 'arrival_tolerance_m': .005, 'mode': 'up', 'distance_m': .03, 'max_translation_per_step_m': .005, 'lookback_steps': 8},
        'audit': {'state_atol': 1e-6}}
 
 

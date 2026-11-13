@@ -1,0 +1,602 @@
+{
+  "artifact_tensors": {
+    "missing_in_artifact": [],
+    "extra_in_artifact": [],
+    "n_tensors": 160,
+    "max_abs_over_tensors": 0.0,
+    "all_bit_equal": true,
+    "source_checkpoint_sha256": "4e57dbed4f1f906082fda1d7dc77adf8548af9590a9b4e68059708ff9872550b",
+    "meta_source_checkpoint_sha256": "4e57dbed4f1f906082fda1d7dc77adf8548af9590a9b4e68059708ff9872550b",
+    "weights_sha256": "04dfc563e5d6f2837104d543901fbe492252cbc7fc0b04748498d6aa4a50eba7",
+    "meta_weights_sha256": "04dfc563e5d6f2837104d543901fbe492252cbc7fc0b04748498d6aa4a50eba7",
+    "raw_agent_differs_from_ema": true,
+    "buffers_note": "EMAModel.copy_to copies parameters only; any tensor listed in state_dict but not in named_parameters is a buffer.",
+    "pass": true
+  },
+  "same_raw_frames": {
+    "n_histories": 42,
+    "n_trajectories": 6,
+    "all_pass": true,
+    "state_A_vs_C_max": 0.0,
+    "state_B_vs_C_max": 0.0,
+    "rgb_A_vs_C_all_exact": true,
+    "rgb_B_vs_C_all_exact": true,
+    "encoder_feature_A_vs_C_max": 0.0,
+    "info_encoder_feature_layout_effect_max": 4.069879651069641e-05,
+    "info_layout_note": "Gate: same input values in the same memory layout must give identical encoder features. Info: the other layout (contiguous vs NHWC-strided view) changes the cuDNN path and the low-order float bits.",
+    "train_action_alignment_max": 0.0
+  },
+  "live_environments": {
+    "n_histories": 42,
+    "all_pass": true,
+    "state_B_vs_C_max": 0.0,
+    "rgb_B_vs_C_all_exact": true,
+    "rgb_B_vs_C_max_abs": 0.0,
+    "info_state_live_vs_file_max": 8.393617463298142e-05,
+    "info_rgb_live_vs_file_max_abs": 203.0,
+    "info_rgb_live_vs_file_mean_abs_max": 0.4915262858072917,
+    "info_rgb_live_vs_file_fraction_differing_max": 0.4888204038143158,
+    "info_note": "live-vs-file values are informational: the file was recorded with --use-first-env-state, which is not the same restore path as reset(seed)."
+  },
+  "actions": {
+    "n_chunks": 42,
+    "all_pass": true,
+    "upstream_on_B_vs_adapter_max": 0.0,
+    "upstream_on_C_vs_adapter_max": 0.0,
+    "upstream_abs_max": 1.0,
+    "clip_changes_upstream_output_max": 0.0,
+    "rng_note": "Both sides call torch.manual_seed(seed_for(scene, step, 0, \"dp\")) immediately before get_action; that seeds the CPU and all CUDA generators, covering the initial noise and the noise drawn inside DDPMScheduler.step."
+  },
+  "scheduler": {
+    "upstream": {
+      "num_train_timesteps": 100,
+      "beta_start": 0.0001,
+      "beta_end": 0.02,
+      "beta_schedule": "squaredcos_cap_v2",
+      "trained_betas": null,
+      "variance_type": "fixed_small",
+      "clip_sample": true,
+      "prediction_type": "epsilon",
+      "thresholding": false,
+      "dynamic_thresholding_ratio": 0.995,
+      "clip_sample_range": 1.0,
+      "sample_max_value": 1.0,
+      "timestep_spacing": "leading",
+      "steps_offset": 0,
+      "rescale_betas_zero_snr": false,
+      "_use_default_values": [
+        "beta_start",
+        "dynamic_thresholding_ratio",
+        "thresholding",
+        "beta_end",
+        "rescale_betas_zero_snr",
+        "clip_sample_range",
+        "timestep_spacing",
+        "trained_betas",
+        "sample_max_value",
+        "steps_offset",
+        "variance_type"
+      ]
+    },
+    "adapter": {
+      "num_train_timesteps": 100,
+      "beta_start": 0.0001,
+      "beta_end": 0.02,
+      "beta_schedule": "squaredcos_cap_v2",
+      "trained_betas": null,
+      "variance_type": "fixed_small",
+      "clip_sample": true,
+      "prediction_type": "epsilon",
+      "thresholding": false,
+      "dynamic_thresholding_ratio": 0.995,
+      "clip_sample_range": 1.0,
+      "sample_max_value": 1.0,
+      "timestep_spacing": "leading",
+      "steps_offset": 0,
+      "rescale_betas_zero_snr": false,
+      "_use_default_values": [
+        "beta_start",
+        "dynamic_thresholding_ratio",
+        "thresholding",
+        "beta_end",
+        "rescale_betas_zero_snr",
+        "clip_sample_range",
+        "timestep_spacing",
+        "trained_betas",
+        "sample_max_value",
+        "steps_offset",
+        "variance_type"
+      ]
+    },
+    "num_inference_steps_upstream": 100,
+    "num_inference_steps_adapter": 100,
+    "adapter_training_flag": false,
+    "upstream_training_flag": false,
+    "horizons": {
+      "obs_horizon": [
+        2,
+        2,
+        2
+      ],
+      "act_horizon": [
+        8,
+        8,
+        8
+      ],
+      "pred_horizon": [
+        16,
+        16,
+        16
+      ]
+    },
+    "equal": true
+  },
+  "environment_config_equal": {
+    "robot_uid": true,
+    "control_mode": true,
+    "obs_mode": true,
+    "sim_freq": true,
+    "control_freq": true,
+    "backend": true,
+    "arm": true,
+    "gripper": true,
+    "action_low": true,
+    "action_high": true,
+    "cameras": true,
+    "camera_params": true,
+    "camera_shader": true,
+    "raw_obs_keys": true
+  },
+  "environment_B_training_eval": {
+    "robot_uid": "panda_wristcam",
+    "control_mode": "pd_ee_delta_pos",
+    "obs_mode": "rgb",
+    "sim_freq": 100,
+    "control_freq": 20,
+    "backend": "physx_cpu",
+    "arm": {
+      "class": "PDEEPosControllerConfig",
+      "frame": "root_translation",
+      "pos_lower": -0.1,
+      "pos_upper": 0.1,
+      "normalize_action": true,
+      "use_target": false,
+      "use_delta": true
+    },
+    "gripper": {
+      "class": "PDJointPosMimicControllerConfig",
+      "lower": -0.01,
+      "upper": 0.04,
+      "normalize_action": true
+    },
+    "action_low": [
+      -1.0,
+      -1.0,
+      -1.0,
+      -1.0
+    ],
+    "action_high": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "cameras": [
+      "base_camera",
+      "hand_camera"
+    ],
+    "camera_params": {
+      "base_camera": {
+        "extrinsic_cv": [
+          [
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.7808688,
+              0.0,
+              -0.6246951,
+              0.1405565
+            ],
+            [
+              -0.6246951,
+              0.0,
+              -0.7808688,
+              0.6559298
+            ]
+          ]
+        ],
+        "cam2world_gl": [
+          [
+            [
+              0.0,
+              -0.7808688,
+              0.6246951,
+              0.3
+            ],
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.6246951,
+              0.7808688,
+              0.6
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ]
+        ],
+        "intrinsic_cv": [
+          [
+            [
+              64.0,
+              0.0,
+              64.0
+            ],
+            [
+              0.0,
+              64.0,
+              64.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ]
+        ]
+      },
+      "hand_camera": {
+        "extrinsic_cv": [
+          [
+            [
+              0.999835,
+              0.0083843,
+              0.0161203,
+              0.0044902
+            ],
+            [
+              0.0089477,
+              -0.9993402,
+              -0.0352046,
+              0.0907827
+            ],
+            [
+              0.0158144,
+              0.0353432,
+              -0.9992502,
+              0.2478818
+            ]
+          ]
+        ],
+        "cam2world_gl": [
+          [
+            [
+              0.9998349,
+              -0.0089477,
+              -0.0158145,
+              -0.0092219
+            ],
+            [
+              0.0083843,
+              0.9993401,
+              -0.0353432,
+              0.0819243
+            ],
+            [
+              0.0161203,
+              0.0352047,
+              0.9992501,
+              0.2508195
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ]
+        ],
+        "intrinsic_cv": [
+          [
+            [
+              64.0,
+              0.0,
+              64.0
+            ],
+            [
+              0.0,
+              64.0,
+              64.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ]
+        ]
+      }
+    },
+    "camera_shader": {
+      "base_camera": "minimal",
+      "hand_camera": "minimal"
+    },
+    "raw_obs_keys": {
+      "agent": [
+        "qpos",
+        "qvel"
+      ],
+      "extra": [
+        "tcp_pose"
+      ],
+      "sensor_param": [
+        "base_camera",
+        "hand_camera"
+      ],
+      "sensor_data": [
+        "base_camera",
+        "hand_camera"
+      ]
+    }
+  },
+  "environment_C_deployment": {
+    "robot_uid": "panda_wristcam",
+    "control_mode": "pd_ee_delta_pos",
+    "obs_mode": "rgb",
+    "sim_freq": 100,
+    "control_freq": 20,
+    "backend": "physx_cpu",
+    "arm": {
+      "class": "PDEEPosControllerConfig",
+      "frame": "root_translation",
+      "pos_lower": -0.1,
+      "pos_upper": 0.1,
+      "normalize_action": true,
+      "use_target": false,
+      "use_delta": true
+    },
+    "gripper": {
+      "class": "PDJointPosMimicControllerConfig",
+      "lower": -0.01,
+      "upper": 0.04,
+      "normalize_action": true
+    },
+    "action_low": [
+      -1.0,
+      -1.0,
+      -1.0,
+      -1.0
+    ],
+    "action_high": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "cameras": [
+      "base_camera",
+      "hand_camera"
+    ],
+    "camera_params": {
+      "base_camera": {
+        "extrinsic_cv": [
+          [
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.7808688,
+              0.0,
+              -0.6246951,
+              0.1405565
+            ],
+            [
+              -0.6246951,
+              0.0,
+              -0.7808688,
+              0.6559298
+            ]
+          ]
+        ],
+        "cam2world_gl": [
+          [
+            [
+              0.0,
+              -0.7808688,
+              0.6246951,
+              0.3
+            ],
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.6246951,
+              0.7808688,
+              0.6
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ]
+        ],
+        "intrinsic_cv": [
+          [
+            [
+              64.0,
+              0.0,
+              64.0
+            ],
+            [
+              0.0,
+              64.0,
+              64.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ]
+        ]
+      },
+      "hand_camera": {
+        "extrinsic_cv": [
+          [
+            [
+              0.999835,
+              0.0083843,
+              0.0161203,
+              0.0044902
+            ],
+            [
+              0.0089477,
+              -0.9993402,
+              -0.0352046,
+              0.0907827
+            ],
+            [
+              0.0158144,
+              0.0353432,
+              -0.9992502,
+              0.2478818
+            ]
+          ]
+        ],
+        "cam2world_gl": [
+          [
+            [
+              0.9998349,
+              -0.0089477,
+              -0.0158145,
+              -0.0092219
+            ],
+            [
+              0.0083843,
+              0.9993401,
+              -0.0353432,
+              0.0819243
+            ],
+            [
+              0.0161203,
+              0.0352047,
+              0.9992501,
+              0.2508195
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ]
+        ],
+        "intrinsic_cv": [
+          [
+            [
+              64.0,
+              0.0,
+              64.0
+            ],
+            [
+              0.0,
+              64.0,
+              64.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ]
+        ]
+      }
+    },
+    "camera_shader": {
+      "base_camera": "minimal",
+      "hand_camera": "minimal"
+    },
+    "raw_obs_keys": {
+      "agent": [
+        "qpos",
+        "qvel"
+      ],
+      "extra": [
+        "tcp_pose"
+      ],
+      "sensor_param": [
+        "base_camera",
+        "hand_camera"
+      ],
+      "sensor_data": [
+        "base_camera",
+        "hand_camera"
+      ]
+    }
+  },
+  "observation": {
+    "state_layout": [
+      "agent/qpos",
+      "agent/qvel",
+      "extra/tcp_pose"
+    ],
+    "state_dim": 25,
+    "camera_channel_order": [
+      "base_camera",
+      "hand_camera"
+    ],
+    "normalization": "uint8 RGB enters both paths; Agent.encode_obs divides by 255 once (checked through equal encoder features and rgb_max_value > 1).",
+    "privileged_inputs": "none: only agent/qpos, agent/qvel, extra/tcp_pose and camera RGB are read"
+  },
+  "tolerances": {
+    "state_atol": 1e-06,
+    "action_atol": 1e-06,
+    "rgb": "exact equality"
+  },
+  "policy": "artifacts/policies/stack_s1_d99",
+  "checkpoint": "runs/policy/stack_s1_d99/checkpoints/best_eval_success_once.pt",
+  "demo_sha256": "60465211ad0913582881586d946e80fe36b871ca34fa21db26b6d167a2ea7a1e",
+  "runtime": {
+    "python": "3.10.12 (main, Aug 31 2026, 10:18:17) [GCC 11.4.0]",
+    "platform": "Linux-7.0.0-31-generic-x86_64-with-glibc2.35",
+    "packages": {
+      "torch": "2.6.0+cu124",
+      "torchvision": "0.21.0+cu124",
+      "mani_skill": "3.0.1",
+      "sapien": "3.0.3",
+      "gymnasium": "0.29.1",
+      "diffusers": "0.30.3",
+      "numpy": "1.26.4",
+      "scipy": "1.13.1",
+      "PyYAML": "6.0.2"
+    },
+    "nvidia_smi": {
+      "returncode": 0,
+      "stdout": "name, driver_version, memory.total [MiB]\nNVIDIA GeForce RTX 3090, 580.178.04, 24576 MiB\n",
+      "stderr": ""
+    }
+  },
+  "scope": "Parity of data, in-training evaluation and deployment paths at the checked histories. It says nothing about whether the policy solves the task.",
+  "pass": true
+}

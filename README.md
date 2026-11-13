@@ -1,4 +1,7 @@
-<!-- BANNER: add assets/banner.png here once the illustration is ready -->
+<p align="center">
+  <img src="assets/banner.png" alt="Illustration: a white robot arm holds a red cube above a green cube on a wooden table; a faint second image of the gripper shows it slightly displaced">
+</p>
+<p align="center"><sub>Conceptual illustration, not a photograph of an experiment. All experiments in this repository run in simulation.</sub></p>
 
 # When Recovery Hurts
 
@@ -50,6 +53,11 @@ Every paired episode falls into one of four cells:
 | **baseline succeeds** | both succeed | **harm** |
 | **baseline fails** | **rescue** | both fail |
 
+<p align="center">
+  <img src="assets/fig_outcomes.png" width="420" alt="Two-by-two diagram of paired outcomes: both succeed, harm, rescue, both fail. Harm rate is harm divided by baseline successes.">
+</p>
+<p align="center"><sub>Schematic of the four paired outcomes. The harm rate is undefined when the baseline never succeeds.</sub></p>
+
 Raising success means collecting rescues. The constraint limits harms. A selector that only predicts "the policy is about to fail" controls neither directly, which is the motivation for the hypotheses below.
 
 ### Hypotheses (not yet tested)
@@ -68,7 +76,12 @@ The base policy is a Diffusion Policy that predicts 16 actions and executes 8 of
 |---|---|---|
 | **Continue** | Keep executing the queued actions. | none |
 | **Refresh** | Discard the remaining queued actions and replan from the current observation history. Only allowed *inside* a chunk, never at a natural replanning boundary, where it would be identical to Continue. | none |
-| **Retreat–Retry** | Discard the queue, execute a bounded end-effector retreat with real control steps (default: up to 5 cm, at most 5 mm per step, 12 steps), then replan. The gripper command is held. | consumes steps from the original horizon |
+| **Retreat–Retry** | Discard the queue, execute a bounded end-effector retreat with real control steps (default: a target 5 cm above the current TCP, at most 5 mm commanded per step, ending when the measured TCP is within 5 mm of the target or after 40 steps), then replan. The gripper command is held. | consumes steps from the original horizon |
+
+<p align="center">
+  <img src="assets/fig_three_choices.png" width="760" alt="Diagram: from one checkpoint state the episode branches into Continue, Refresh and Retreat-Retry">
+</p>
+<p align="center"><sub>Schematic. From the same restored state, the three choices are rolled out separately. The 5 cm of Retreat–Retry is the commanded target; the displacement actually achieved is measured and reported separately.</sub></p>
 
 At most one non-Continue choice is allowed per episode. A retreat is a physical action executed through `env.step`; it is never a `reset` or a state overwrite, and it is not assumed to be safe.
 
@@ -125,6 +138,11 @@ The Q head is a supervised Monte-Carlo success estimator, not Q-learning. Both l
 All experiments run in [ManiSkill3](https://github.com/mani-skill/ManiSkill) at a pinned commit, with a Panda arm carrying a wrist camera.
 
 <p align="center">
+  <img src="assets/fig_sim_scene.png" width="640" alt="Schematic of the simulated scene: a robot arm with a wrist camera, a fixed base camera, two cubes on a table, and the two camera views as insets">
+</p>
+<p align="center"><sub>Schematic of the scene and its two cameras, not to scale: the cubes in StackCube-v1 are 4 cm on a side, not the 10 cm written in the drawing. The images below are actual simulator renders.</sub></p>
+
+<p align="center">
   <img src="assets/stackcube_filmstrip.png" alt="Five frames of the StackCube task: approach, grasp, lift, move, place">
 </p>
 <p align="center"><sub>StackCube-v1: approach, grasp, lift, move, place. Frames from a replayed official demonstration (seed 0, 107 control steps).</sub></p>
@@ -164,6 +182,10 @@ Last updated 2026-11-13. Host: one rented RTX 3090 (24 GB), Ubuntu 22.04, Python
 | 2 | Restore audit with the real policy, 5 seeds | pass; state, observation and action differences all exactly 0.0, also after an intervention branch |
 | 2 | Three-way branch collection, 2 seeds | complete: 96 branch rollouts, 12.2 s each |
 | 2 | Intervention behaviour check and videos | recorded; see below |
+| 1B | Policy input/output parity audit (training data, in-training evaluation, deployment adapter) | pass: 42 observation histories from 6 episodes identical, action chunks identical under the same RNG (difference 0.0) |
+| 1B | Demonstrations for the next base policy | 129/130 converted; first 100 fixed as the training set, 10 replayed by action and all succeeded |
+| 1B | Closed-loop retreat diagnostic, 30 states | all 30 reached the 5 cm target within tolerance in 24–28 steps |
+| 1B | Base policy, 100 demonstrations, 100,000 updates, batch 256 | **training in progress**; no result yet |
 | 3–6 | Pilot, development, calibration, final test | not run |
 
 What this does **not** show: that the base policy solves the task, that any selector helps, or that any hypothesis holds. Unit tests check Python logic on mock physics; they say nothing about manipulation success.
@@ -189,13 +211,23 @@ This matters for the research question itself: the harm rate is defined over epi
 
 These rows are correlated checkpoints and repeats from two episodes. They confirm that the collection, labelling and bookkeeping run; they are not evidence about any intervention.
 
-**The retreat primitive moves less than configured.**
+**The first retreat primitive moved less than configured.**
 
 <p align="center">
   <img src="assets/retreat_tracking.png" width="720" alt="Line chart: the configured retreat path reaches 5 cm after 10 steps; the measured upward TCP displacement reaches only 1.9 cm after 12 steps.">
 </p>
 
 Measured at one development state (seed 20000, step 12; data: [`results/stage1_2/retreat_tracking.csv`](results/stage1_2/retreat_tracking.csv)): the retreat consumed 12 control steps, held the gripper command constant, did not move the cubes and changed the TCP orientation by less than 0.003, but raised the TCP by 1.9 cm instead of the configured 5 cm. The controller tracks about 1.9 mm of each 5 mm step. The retreat parameters are development settings and have not been changed yet.
+
+**Stage 1B: the retreat is now closed-loop.** Instead of a fixed 12 steps, the retreat measures the TCP after every step and stops when it is within 5 mm of the target or after 40 steps; an unfinished retreat is recorded as such. The commanded increment is still at most 5 mm per step.
+
+<p align="center">
+  <img src="assets/retreat_closed_loop.png" width="720" alt="Line chart of measured upward TCP displacement per retreat step at 30 states: all curves rise at about 1.8 mm per step and stop inside the 5 mm arrival band below the 5 cm target after 24 to 28 steps, well before the 40-step budget. The previous fixed 12-step retreat ends at 1.9 cm.">
+</p>
+
+At 30 states prepared by replaying demonstration prefixes (10 in free space, 20 while holding a cube; data: [`results/stage1b/retreat_diagnostic_001.json`](results/stage1b/retreat_diagnostic_001.json)), every retreat arrived in 24–28 steps, the gripper command stayed constant and a held cube stayed in the grasp. This is a statement about tracking the control specification. It is not a claim that a retreat is harmless for the task.
+
+**Stage 1B: the policy's inputs and outputs were checked before retraining.** The same recorded frames were pushed through the training data path, the in-training evaluation wrappers and the deployment adapter; two live environments were driven with the same seed and actions; and the upstream agent and the adapter were asked for an action chunk from the same weights and RNG state. Observations matched exactly and action chunks differed by 0.0 ([`results/stage1b/policy_io_audit_004.json`](results/stage1b/policy_io_audit_004.json)). The weak first policy is therefore not explained by an input/output mismatch. Changes are recorded in [`amendments/AMENDMENT_002_stage1b_policy_io_training_retreat.md`](amendments/AMENDMENT_002_stage1b_policy_io_training_retreat.md) (Korean).
 
 At the same state, Refresh discarded the 4 remaining queued actions, triggered one new inference, and changed the next action by at most 0.007 in normalized units.
 
@@ -338,6 +370,12 @@ validation/         checks recorded when the initial package was built (CPU only
 - Restore exactness is verified at the tested seeds and states; it is not a proof of global simulator determinism.
 - The four-cell outcome definition, branch rollouts and the Learn-then-Test principle are existing ideas and are not claimed as contributions.
 - Not included: trained weights, demonstration files, rate-matched random and timer controls, the false-alarm-calibrated control for H2, multiple policy seeds, observation ablations, coupling and latency sensitivity.
+
+## License
+
+The code and documentation written for this project are released under the [Apache License 2.0](LICENSE).
+That license does not extend to third-party code, demonstrations, model assets or robot models, which are
+downloaded separately and stay under their own terms; see [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md).
 
 ## Acknowledgements
 
