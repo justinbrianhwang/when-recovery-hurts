@@ -1,0 +1,142 @@
+{
+  "version": 1,
+  "candidates": [
+    {
+      "id": "never",
+      "family": "never",
+      "kind": "never"
+    },
+    {
+      "id": "timer_a1_t28",
+      "family": "timer",
+      "kind": "timer",
+      "time": 28,
+      "action": 1
+    },
+    {
+      "id": "timer_a1_t60",
+      "family": "timer",
+      "kind": "timer",
+      "time": 60,
+      "action": 1
+    },
+    {
+      "id": "random_a1_p0.03",
+      "family": "random",
+      "kind": "random",
+      "probability": 0.03,
+      "action": 1
+    },
+    {
+      "id": "random_a1_p0.1",
+      "family": "random",
+      "kind": "random",
+      "probability": 0.1,
+      "action": 1
+    },
+    {
+      "id": "timer_a2_t28",
+      "family": "timer",
+      "kind": "timer",
+      "time": 28,
+      "action": 2
+    },
+    {
+      "id": "timer_a2_t60",
+      "family": "timer",
+      "kind": "timer",
+      "time": 60,
+      "action": 2
+    },
+    {
+      "id": "random_a2_p0.03",
+      "family": "random",
+      "kind": "random",
+      "probability": 0.03,
+      "action": 2
+    },
+    {
+      "id": "random_a2_p0.1",
+      "family": "random",
+      "kind": "random",
+      "probability": 0.1,
+      "action": 2
+    },
+    {
+      "id": "risk_q_0.5",
+      "family": "risk_q",
+      "kind": "risk_q",
+      "threshold": 0.5
+    },
+    {
+      "id": "risk_q_0.8",
+      "family": "risk_q",
+      "kind": "risk_q",
+      "threshold": 0.8
+    },
+    {
+      "id": "q_0.0",
+      "family": "q",
+      "kind": "q",
+      "threshold": 0.0
+    },
+    {
+      "id": "q_0.05",
+      "family": "q",
+      "kind": "q",
+      "threshold": 0.05
+    },
+    {
+      "id": "q_0.15",
+      "family": "q",
+      "kind": "q",
+      "threshold": 0.15
+    },
+    {
+      "id": "joint_l0.0_t0.0",
+      "family": "joint",
+      "kind": "joint",
+      "penalty": 0.0,
+      "threshold": 0.0
+    },
+    {
+      "id": "joint_l0.0_t0.05",
+      "family": "joint",
+      "kind": "joint",
+      "penalty": 0.0,
+      "threshold": 0.05
+    },
+    {
+      "id": "joint_l1.0_t0.0",
+      "family": "joint",
+      "kind": "joint",
+      "penalty": 1.0,
+      "threshold": 0.0
+    },
+    {
+      "id": "joint_l1.0_t0.05",
+      "family": "joint",
+      "kind": "joint",
+      "penalty": 1.0,
+      "threshold": 0.05
+    },
+    {
+      "id": "joint_l3.0_t0.0",
+      "family": "joint",
+      "kind": "joint",
+      "penalty": 3.0,
+      "threshold": 0.0
+    },
+    {
+      "id": "joint_l3.0_t0.05",
+      "family": "joint",
+      "kind": "joint",
+      "penalty": 3.0,
+      "threshold": 0.05
+    }
+  ],
+  "fixed_before_calibration": true,
+  "epsilon_primary": 0.05,
+  "delta_familywise": 0.05,
+  "note": "All families can use both non-continue actions. Q and joint share the same episode-level risk selection."
+}

@@ -1,0 +1,49 @@
+version: 0.3.0
+env:
+  id: PickCube-v1
+  robot_uid: panda_wristcam
+  sim_backend: physx_cpu
+  num_envs: 1
+  obs_mode: rgb
+  control_mode: pd_ee_delta_pos
+  horizon: 100
+policy:
+  obs_horizon: 2
+  act_horizon: 8
+  pred_horizon: 16
+  diffusion_step_embed_dim: 64
+  unet_dims:
+  - 64
+  - 128
+  - 256
+  n_groups: 8
+protocol:
+  max_interventions: 1
+  success_definition: success_once_absorbing
+  min_intervention_step: 12
+  decision_stride: 4
+  minimum_post_retreat_steps: 8
+retreat:
+  mode: up
+  distance_m: 0.05
+  max_translation_per_step_m: 0.005
+  steps: 12
+  lookback_steps: 12
+collection:
+  checkpoint_steps:
+  - 12
+  - 28
+  - 44
+  - 60
+  repeats: 4
+audit:
+  replay_steps: 20
+  state_atol: 1.0e-06
+  action_atol: 1.0e-06
+  observation_atol: 1.0
+notes:
+- Provisional development defaults; freeze after pilot, before calibration and final
+  Test.
+- Refresh is evaluated inside an unexecuted action chunk, not at a natural replanning
+  boundary.
+- Retreat is not assumed safe. This code must never control real hardware.
