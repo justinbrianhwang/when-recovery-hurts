@@ -1,0 +1,32 @@
+{
+  "config_sha256": "5fd2ae87a97e8d488472f8f550700fc83f06339495fa46ac1709321c79974509",
+  "policy_sha256": "04dfc563e5d6f2837104d543901fbe492252cbc7fc0b04748498d6aa4a50eba7",
+  "policy_metadata_sha256": "5d778e967d08b832c51d65c95fb0010e8966c9776cbd24334f2bb567e766bace",
+  "split": "train",
+  "seeds": [
+    10000,
+    10001
+  ],
+  "observation_schema": "rgb_qpos_qvel_tcp_v1",
+  "source_type": "real_sim",
+  "split_manifest_sha256": "a61fa30d96e63e80fc2b3d97c4dd6a3221f274654c027b455cecba1301a64872",
+  "repeat_coupling": "same frozen past; future policy seed keyed by episode, physical step, repeat",
+  "success_definition": "success_once_absorbing",
+  "completed": true,
+  "episode_summaries": [
+    {
+      "seed": 10000,
+      "checkpoints": 4,
+      "rows": 48,
+      "trunk_success": 0
+    },
+    {
+      "seed": 10001,
+      "checkpoints": 4,
+      "rows": 48,
+      "trunk_success": 0
+    }
+  ],
+  "branch_rollouts": 96,
+  "wall_seconds": 1175.1231850506738
+}

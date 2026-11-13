@@ -38,6 +38,42 @@ def restore_divergence():
     fig.tight_layout(); fig.savefig(ROOT / 'assets/restore_divergence.png', dpi=180); plt.close(fig)
 
 
+def style(ax, title):
+    ax.set_title(title, loc='left', color=INK, fontsize=13, pad=12)
+    ax.grid(True, axis='y', color=GRID, lw=0.8); ax.set_axisbelow(True)
+    for s in ('top', 'right'): ax.spines[s].set_visible(False)
+
+
+def training_eval():
+    r = rows(ROOT / 'results/stage1_2/training_eval.csv')
+    fig, ax = plt.subplots(figsize=(8, 3.8))
+    for run, name, color, dy in (('stack_s1_d99', '99 demos', BLUE, 0), ('stack_s1_d20', '20 demos', ORANGE, 0.5)):
+        x = [int(v['iteration']) / 1000 for v in r if v['run'] == run]
+        y = [int(v['successes_once_of_5']) for v in r if v['run'] == run]
+        ax.plot(x, y, color=color, lw=2, marker='o', ms=5, mec=SURFACE, mew=1.2, label=name)
+        ax.annotate(name, (x[-1], y[-1] + dy), xytext=(8, 0), textcoords='offset points', va='center', color=INK)
+    ax.set_ylim(-0.2, 5.2); ax.set_yticks(range(6)); ax.set_xlim(-0.8, 34.5); ax.set_xticks(range(0, 31, 5))
+    ax.set_xlabel('training iterations (thousands)'); ax.set_ylabel('successes out of 5 episodes')
+    style(ax, 'Base policy is not solving StackCube yet (30k iterations)')
+    fig.tight_layout(); fig.savefig(ROOT / 'assets/training_eval.png', dpi=180); plt.close(fig)
+
+
+def retreat_tracking():
+    r = rows(ROOT / 'results/stage1_2/retreat_tracking.csv')
+    x = [int(v['step']) for v in r]
+    fig, ax = plt.subplots(figsize=(8, 3.8))
+    for key, name, color in (('commanded_cumulative_z_m', 'configured', BLUE), ('achieved_cumulative_z_m', 'achieved', ORANGE)):
+        y = [100 * float(v[key]) for v in r]
+        ax.plot(x, y, color=color, lw=2, marker='o', ms=5, mec=SURFACE, mew=1.2, label=name)
+        ax.annotate(f'{name}: {y[-1]:.1f} cm', (x[-1], y[-1]), xytext=(8, 0), textcoords='offset points', va='center', color=INK)
+    ax.set_xlim(0.5, 15.2); ax.set_xticks(x); ax.set_ylim(-0.4, 5.6)
+    ax.set_xlabel('retreat control step'); ax.set_ylabel('upward TCP displacement (cm)')
+    style(ax, 'Retreat reaches 1.9 cm of the configured 5 cm in 12 steps')
+    fig.tight_layout(); fig.savefig(ROOT / 'assets/retreat_tracking.png', dpi=180); plt.close(fig)
+
+
 if __name__ == '__main__':
     restore_divergence()
+    training_eval()
+    retreat_tracking()
     print('figures written to assets/')

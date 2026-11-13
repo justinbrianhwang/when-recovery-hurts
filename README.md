@@ -150,7 +150,7 @@ Single-environment CPU physics was chosen so that branch restoration can be veri
 
 ## Current status
 
-Last updated 2026-11-13. Host: one rented RTX 3090 (24 GB), Ubuntu 22.04, Python 3.10, torch 2.6.0+cu124, sapien 3.0.3.
+Last updated 2026-11-13. Host: one rented RTX 3090 (24 GB), Ubuntu 22.04, Python 3.10, torch 2.6.0+cu124, sapien 3.0.3. Full record with commands, exit codes and hashes: [`reports/STAGE_REPORT_stage0-2_001.md`](reports/STAGE_REPORT_stage0-2_001.md) (Korean).
 
 | Stage | Item | Result |
 |---|---|---|
@@ -159,13 +159,47 @@ Last updated 2026-11-13. Host: one rented RTX 3090 (24 GB), Ubuntu 22.04, Python
 | 0 | CUDA and Vulkan (`hci doctor`) | pass |
 | 0 | RGB rendering and restore smoke, PickCube and StackCube | pass after the restore fix below (state, RGB and success difference all exactly 0.0) |
 | 1 | Demonstration conversion to RGB | 20/20 valid; second set 99/100 valid |
-| 1 | Short training run (500 iterations) | runs end to end; 19 it/s at batch 64, peak 2.4 GB VRAM; 0/5 evaluation successes, as expected at this length |
-| 1 | Base policy, 30,000 iterations | **in progress** |
-| 2 | Restore audit with the real policy | not run yet |
-| 2 | Three-way branch collection on 2 seeds | not run yet |
+| 1 | Training loop, checkpointing, export | runs end to end; 19 it/s at batch 64, peak 2.4 GB VRAM |
+| 1 | **Base policy quality** | **not good enough yet**: 0/20 successes on dev seeds after 30,000 iterations on 99 demonstrations |
+| 2 | Restore audit with the real policy, 5 seeds | pass; state, observation and action differences all exactly 0.0, also after an intervention branch |
+| 2 | Three-way branch collection, 2 seeds | complete: 96 branch rollouts, 12.2 s each |
+| 2 | Intervention behaviour check and videos | recorded; see below |
 | 3–6 | Pilot, development, calibration, final test | not run |
 
 What this does **not** show: that the base policy solves the task, that any selector helps, or that any hypothesis holds. Unit tests check Python logic on mock physics; they say nothing about manipulation success.
+
+### What the first runs showed
+
+**The pipeline works end to end, and the base policy is the bottleneck.**
+
+<p align="center">
+  <img src="assets/training_eval.png" width="720" alt="Line chart of training-time evaluation: with 20 demonstrations the policy never succeeds in 31 evaluations of 5 episodes; with 99 demonstrations it succeeds once at 14k, once at 22k and twice at 24k iterations.">
+</p>
+
+Two Diffusion Policy runs of 30,000 iterations were trained on StackCube, evaluated every 1,000 iterations on 5 episodes (data: [`results/stage1_2/training_eval.csv`](results/stage1_2/training_eval.csv)). With 20 demonstrations the policy never succeeded. With 99 it succeeded in 4 of 155 evaluation episodes. The exported checkpoint, chosen as the best training-time evaluation (2/5), then scored **0/20** on development seeds, which shows how noisy a 5-episode selection criterion is.
+
+This matters for the research question itself: the harm rate is defined over episodes the base policy would have solved. In the two-seed collection the baseline never succeeded, so the harm denominator is zero.
+
+| Two-seed branch collection (train seeds 10000, 10001) | Continue | Refresh | Retreat–Retry |
+|---|---|---|---|
+| Branch rollouts | 32 | 32 | 32 |
+| Successes | 0 | 2 | 0 |
+| Rescues / baseline failures | – | 2 / 32 | 0 / 32 |
+| Harms / baseline successes | – | 0 / 0 | 0 / 0 |
+
+These rows are correlated checkpoints and repeats from two episodes. They confirm that the collection, labelling and bookkeeping run; they are not evidence about any intervention.
+
+**The retreat primitive moves less than configured.**
+
+<p align="center">
+  <img src="assets/retreat_tracking.png" width="720" alt="Line chart: the configured retreat path reaches 5 cm after 10 steps; the measured upward TCP displacement reaches only 1.9 cm after 12 steps.">
+</p>
+
+Measured at one development state (seed 20000, step 12; data: [`results/stage1_2/retreat_tracking.csv`](results/stage1_2/retreat_tracking.csv)): the retreat consumed 12 control steps, held the gripper command constant, did not move the cubes and changed the TCP orientation by less than 0.003, but raised the TCP by 1.9 cm instead of the configured 5 cm. The controller tracks about 1.9 mm of each 5 mm step. The retreat parameters are development settings and have not been changed yet.
+
+At the same state, Refresh discarded the 4 remaining queued actions, triggered one new inference, and changed the next action by at most 0.007 in normalized units.
+
+**Cost per rollout.** A 200-step episode takes 18.3 s, of which 16.7 s is policy inference (25 calls of 100 denoising steps). At that rate the planned 120-seed pilot is at most 5,760 branch rollouts, about 19.5 GPU-hours.
 
 ## Finding: restoring simulator state by `set_state` is not exact
 
@@ -187,7 +221,7 @@ Measured on the experiment host (seed 7, fixed small random actions, data in [`r
 
 Writing a rigid body's state back, even with identical values, changes the next contact solve. That internal solver state is not part of the state dictionary, so it cannot be saved. Joint drive targets, joint forces and link velocities were checked and are not the cause.
 
-**Fix.** Restoration no longer calls `set_state_dict`. It resets the episode with its seed and **replays the logged actions**, then checks the replayed state against the snapshot at the unchanged tolerance of 1e-6 and raises if they differ. Policy queue, observation history and random generators are restored afterwards. With this, restored and unrestored rollouts agree exactly in both tasks. The tolerance was not relaxed. The cost is extra physics and rendering steps per branch (no policy inference); it will be measured in the two-seed collection.
+**Fix.** Restoration no longer calls `set_state_dict`. It resets the episode with its seed and **replays the logged actions**, then checks the replayed state against the snapshot at the unchanged tolerance of 1e-6 and raises if they differ. Policy queue, observation history and random generators are restored afterwards. With this, restored and unrestored rollouts agree exactly in both tasks. The tolerance was not relaxed. The cost is extra physics and rendering steps per branch (no policy inference); it is included in the 12.2 s per branch rollout measured in the two-seed collection.
 
 Details, including two interface fixes found on the host, are in [`amendments/AMENDMENT_001_restore_by_prefix_replay.md`](amendments/AMENDMENT_001_restore_by_prefix_replay.md).
 
@@ -279,7 +313,8 @@ configs/            per-task YAML, candidate registry, seed splits
 tests/              unit and mock-physics tests (no simulator required)
 docs/               scope, protocol, data and statistics specifications (Korean)
 amendments/         dated records of every protocol or code change after the initial package
-results/            small measurement files behind the figures
+results/            small measurement files behind the figures and tables
+reports/            stage reports: commands, exit codes, hashes, pass/fail (Korean)
 assets/             images used in this README
 templates/          stage report and amendment forms
 validation/         checks recorded when the initial package was built (CPU only)
