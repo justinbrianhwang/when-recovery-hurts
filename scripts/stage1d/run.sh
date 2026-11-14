@@ -119,8 +119,7 @@ case "$1" in
     A=/root/stage1d_out${X}
     tar czf $A.tgz --exclude="$R/new_source*/trajectory.h5" $R runs/policy/$RUN runs/*_1d*         artifacts/policies/${RUN}_i* artifacts/ledger logs/s1d_* logs/*_1d* logs/stage1d_001.status || exit 1
     rm -rf $A.verify && mkdir $A.verify && tar xzf $A.tgz -C $A.verify || exit 1
-    ( cd $A.verify && find . -type f | sed 's|^\./||' | sort | xargs -d '
-' sha256sum ) > $A.sha256 || exit 1
+    ( cd $A.verify && find . -type f | sed 's|^\./||' | sort | xargs -d '\n' sha256sum ) > $A.sha256 || exit 1
     rm -rf $A.verify
     sha256sum $A.tgz; wc -l < $A.sha256; ls -la $A.tgz ;;
   *) echo "usage: run.sh env|data|probe|train|select|diag|post|pack [SUFFIX]"; exit 2 ;;
