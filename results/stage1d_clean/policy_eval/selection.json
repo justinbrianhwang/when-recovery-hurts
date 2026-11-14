@@ -1,0 +1,51 @@
+{
+  "rule": "highest success_once on policy_select; ties go to the later iteration (declared before evaluation)",
+  "candidates": [
+    {
+      "iteration": 60000,
+      "run": "runs/select_stack_1d_s1_d500_clean_v1_i060000",
+      "policy": "artifacts/policies/stack_1d_s1_d500_clean_v1_i060000",
+      "policy_sha256": "0b25cf045276444d7ce67a3d78146342f919061e045abee84739b4a85555114c",
+      "set": "policy_select",
+      "n": 50,
+      "success_once": 21,
+      "wilson95": [
+        0.2937500335471198,
+        0.5576655823142176
+      ],
+      "success_at_end": 16
+    },
+    {
+      "iteration": 80000,
+      "run": "runs/select_stack_1d_s1_d500_clean_v1_i080000",
+      "policy": "artifacts/policies/stack_1d_s1_d500_clean_v1_i080000",
+      "policy_sha256": "faacd2d86464c725a4fb95563a5ed5808019a8b420795b9a2a931822ed89db0e",
+      "set": "policy_select",
+      "n": 50,
+      "success_once": 23,
+      "wilson95": [
+        0.3296965219222435,
+        0.5960112860084253
+      ],
+      "success_at_end": 19
+    },
+    {
+      "iteration": 100000,
+      "run": "runs/select_stack_1d_s1_d500_clean_v1_i100000",
+      "policy": "artifacts/policies/stack_1d_s1_d500_clean_v1_i100000",
+      "policy_sha256": "ebc1b9c56372c4f81655863b518903816e853f2f1b44182edeae432ffe6e7dc2",
+      "set": "policy_select",
+      "n": 50,
+      "success_once": 13,
+      "wilson95": [
+        0.15871527493552393,
+        0.39553157264848837
+      ],
+      "success_at_end": 12
+    }
+  ],
+  "selected_iteration": 80000,
+  "selected_policy": "artifacts/policies/stack_1d_s1_d500_clean_v1_i080000",
+  "selected_policy_sha256": "faacd2d86464c725a4fb95563a5ed5808019a8b420795b9a2a931822ed89db0e",
+  "note": "Selection uses development seeds; the selected policy must be qualified once on a separate set."
+}

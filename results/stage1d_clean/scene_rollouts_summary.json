@@ -1,0 +1,124 @@
+{
+  "cells": {
+    "F_policy/train": {
+      "n": 10,
+      "success": 7,
+      "furthest_stage": {
+        "success": 7,
+        "grasped_not_lifted": 1,
+        "aligned_no_success": 2
+      },
+      "success_traj_ids": [
+        0,
+        11,
+        22,
+        33,
+        55,
+        77,
+        99
+      ],
+      "reasons": [
+        "horizon",
+        "success"
+      ],
+      "init_cubes_state_max_abs_vs_file_max": 0.008406233042478561,
+      "init_robot_state_max_abs_vs_file_max": 1.4901161193847656e-08
+    },
+    "F_policy/heldout": {
+      "n": 10,
+      "success": 3,
+      "furthest_stage": {
+        "grasped_not_lifted": 2,
+        "lifted_not_aligned": 2,
+        "success": 3,
+        "aligned_no_success": 1,
+        "not_near": 2
+      },
+      "success_traj_ids": [
+        104,
+        106,
+        113
+      ],
+      "reasons": [
+        "horizon",
+        "success"
+      ],
+      "init_cubes_state_max_abs_vs_file_max": 0.0058640725910663605,
+      "init_robot_state_max_abs_vs_file_max": 1.4901161193847656e-08
+    },
+    "R_policy/train": {
+      "n": 10,
+      "success": 7,
+      "furthest_stage": {
+        "success": 7,
+        "grasped_not_lifted": 1,
+        "aligned_no_success": 2
+      },
+      "success_traj_ids": [
+        0,
+        11,
+        22,
+        33,
+        55,
+        77,
+        99
+      ],
+      "reasons": [
+        "horizon",
+        "success"
+      ],
+      "init_cubes_state_max_abs_vs_file_max": 0.008406233042478561,
+      "init_robot_state_max_abs_vs_file_max": 0.0
+    },
+    "R_policy/heldout": {
+      "n": 10,
+      "success": 3,
+      "furthest_stage": {
+        "grasped_not_lifted": 3,
+        "success": 3,
+        "aligned_no_success": 1,
+        "not_near": 2,
+        "lifted_not_aligned": 1
+      },
+      "success_traj_ids": [
+        104,
+        106,
+        113
+      ],
+      "reasons": [
+        "horizon",
+        "success"
+      ],
+      "init_cubes_state_max_abs_vs_file_max": 0.0058640725910663605,
+      "init_robot_state_max_abs_vs_file_max": 0.0
+    }
+  },
+  "n_rollouts": 40,
+  "demo_env_kwargs_used_for_Fdemo": null,
+  "limit": null,
+  "horizon": 200,
+  "policy": "artifacts/policies/stack_1d_s1_d500_clean_v1_i080000",
+  "manifest_sha256": "a820d606f8415908625d06a7d39ffea955d72741edebcdc48e68be514cd0de76",
+  "wall_seconds": 156.3488419270143,
+  "runtime": {
+    "python": "3.10.12 (main, Aug 31 2026, 10:18:17) [GCC 11.4.0]",
+    "platform": "Linux-6.8.0-85-generic-x86_64-with-glibc2.35",
+    "packages": {
+      "torch": "2.6.0+cu124",
+      "torchvision": "0.21.0+cu124",
+      "mani_skill": "3.0.1",
+      "sapien": "3.0.3",
+      "gymnasium": "0.29.1",
+      "diffusers": "0.30.3",
+      "numpy": "1.26.4",
+      "scipy": "1.13.1",
+      "PyYAML": "6.0.2"
+    },
+    "nvidia_smi": {
+      "returncode": 0,
+      "stdout": "name, driver_version, memory.total [MiB]\nNVIDIA GeForce RTX 3090, 580.95.05, 24576 MiB\n",
+      "stderr": ""
+    }
+  },
+  "scope": "Development diagnosis on demonstration scenes. Training-scene success measures fit, not generalisation. Small n: counts, not rates to compare. Not a qualification, not calibration, not the final Test."
+}

@@ -1,0 +1,34 @@
+{
+  "dataset": "train_d500_clean_v1",
+  "n_train_expected": 500,
+  "train_h5_sha256": "93416a4a8b7e2203d4cca1fe3c5d1e577830fa720ea4f3855021a168ea65f342",
+  "train_json_sha256": "7ac4a763d40ab93f54cb25e7b2d721d4451e6698f526e37fc8ce916e6eaa7065",
+  "manifest_sha256": "30615b3326bc6b90e153169a1f94e3493f4d81cea110ff49d621298e44ddbd1b",
+  "validator_sha256": "afc47e482279b88452d3ae95b7a28ba071b21d80c6215b3ce8b85b8ae4af8a48",
+  "layers": {
+    "structural_validation": {
+      "status": "PASS",
+      "n": 500,
+      "problems": []
+    },
+    "source_and_split_validation": {
+      "status": "PASS",
+      "problems": [],
+      "protected_overlap": [],
+      "distinct_initial_placements": 529
+    },
+    "episode_content_integrity": {
+      "status": "PASS",
+      "n_pass": 500,
+      "n": 500
+    },
+    "sampled_action_replay": {
+      "status": "NOT RUN"
+    },
+    "policy_io_parity": {
+      "status": "NOT RUN"
+    }
+  },
+  "unresolved_candidates": [],
+  "note": "Written at build time. The two simulator layers are added as separate reports and checked by the gate command; an exit code or a final success flag replaces none of the layers."
+}

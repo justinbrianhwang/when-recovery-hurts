@@ -1,0 +1,69 @@
+{
+  "set": "policy_monitor",
+  "seeds": [
+    50000,
+    50001,
+    50002,
+    50003,
+    50004,
+    50005,
+    50006,
+    50007,
+    50008,
+    50009,
+    50010,
+    50011,
+    50012,
+    50013,
+    50014,
+    50015,
+    50016,
+    50017,
+    50018,
+    50019
+  ],
+  "n": 20,
+  "success_once": 4,
+  "success_once_rate": 0.2,
+  "wilson95": [
+    0.08065766257979806,
+    0.41601743225189364
+  ],
+  "mean_steps_to_completion": 185.8,
+  "mean_steps_successful": 129.0,
+  "policy_calls": 466,
+  "policy_inference_seconds": 158.60567942407215,
+  "seconds_per_policy_call": 0.34035553524479,
+  "wall_seconds_per_episode": 9.815636254000129,
+  "horizon": 200,
+  "config_sha256": "c8cc0a581f7d4e9de4042490bd6939e9b80da1dd333df081cb9107c29427dfbd",
+  "policy_sha256": "0a6097b22a630d9589d9ea319cb434554b640b835da89e03506797b35b14b3c0",
+  "policy_metadata_sha256": "7fadb0b39bf3d2669de031b17b34f6b66f04b02e758c63765ce090464069ced7",
+  "policy": "artifacts/policies/stack_1d_s1_d500_clean_v1_i030000",
+  "policy_eval_manifest_sha256": "579d59ade70f9fe9a6262abaf2598c091da6cb2d6d1a1e9964183965ce6128f0",
+  "split_manifest_sha256": "a61fa30d96e63e80fc2b3d97c4dd6a3221f274654c027b455cecba1301a64872",
+  "success_definition": "success_once_absorbing",
+  "source_type": "real_sim",
+  "wall_seconds": 196.3141713179648,
+  "runtime": {
+    "python": "3.10.12 (main, Aug 31 2026, 10:18:17) [GCC 11.4.0]",
+    "platform": "Linux-6.8.0-85-generic-x86_64-with-glibc2.35",
+    "packages": {
+      "torch": "2.6.0+cu124",
+      "torchvision": "0.21.0+cu124",
+      "mani_skill": "3.0.1",
+      "sapien": "3.0.3",
+      "gymnasium": "0.29.1",
+      "diffusers": "0.30.3",
+      "numpy": "1.26.4",
+      "scipy": "1.13.1",
+      "PyYAML": "6.0.2"
+    },
+    "nvidia_smi": {
+      "returncode": 0,
+      "stdout": "name, driver_version, memory.total [MiB]\nNVIDIA GeForce RTX 3090, 580.95.05, 24576 MiB\n",
+      "stderr": ""
+    }
+  },
+  "scope": "Development measurement of one fixed policy without intervention. Not calibration, not the final Test. The interval is descriptive; it is not a guarantee about the population success rate."
+}

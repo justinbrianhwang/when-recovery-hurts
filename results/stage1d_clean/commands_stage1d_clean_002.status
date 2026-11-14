@@ -1,0 +1,119 @@
+s1dc_doctor cmd=python -m hci doctor --out runs/stage1d_clean_002/doctor
+s1dc_doctor start=2026-11-14T05:51:38Z
+s1dc_doctor exit=0 end=2026-11-14T05:51:41Z
+s1dc_pytest cmd=python -m pytest -q
+s1dc_pytest start=2026-11-14T05:51:41Z
+s1dc_pytest exit=0 end=2026-11-14T05:51:45Z
+ENV_DONE
+PHASE_EXIT env 0
+s1dc_gate_data cmd=python scripts/17_stage1d_clean.py gate --data runs/stage1d_clean_002/data --out runs/stage1d_clean_002/gate_data_server.json
+s1dc_gate_data start=2026-11-14T05:51:45Z
+s1dc_gate_data exit=0 end=2026-11-14T05:51:47Z
+s1dc_replay cmd=python scripts/17_stage1d_clean.py replay --config configs/stackcube.yaml --data runs/stage1d_clean_002/data --out runs/stage1d_clean_002/replay
+s1dc_replay start=2026-11-14T05:51:47Z
+s1dc_replay exit=0 end=2026-11-14T05:51:56Z
+s1dc_io_dataset_path cmd=python scripts/08_policy_io_audit.py --config configs/stackcube.yaml --policy artifacts/policies/stack_1b_s1_d100_i060000 --checkpoint runs/policy/stack_1b_s1_d100/checkpoints/full_060000.pt --demo runs/stage1d_clean_002/data/io_parity_sample_clean_v1.h5 --trajectories 10 --out runs/stage1d_clean_002/io_dataset_path_60k
+s1dc_io_dataset_path start=2026-11-14T05:51:56Z
+s1dc_io_dataset_path exit=0 end=2026-11-14T05:53:06Z
+GATE_DONE
+PHASE_EXIT gate 0
+budget: all-in 0.2281 USD/h; spent so far (stage1d_001 0.24 + this instance) about 0.28; TRAIN_LIMIT_S=7200
+s1dc_gate_train_start cmd=python scripts/17_stage1d_clean.py gate --data runs/stage1d_clean_002/data --train-start --cap-usd 2.0 --spent-usd 0.28 --usd-per-hour 0.2281 --train-limit-s 7200 --reserve-usd 0.35 --out runs/stage1d_clean_002/gate_train_start.json
+s1dc_gate_train_start start=2026-11-14T05:53:30Z
+s1dc_gate_train_start exit=0 end=2026-11-14T05:53:31Z
+train_stack_1d_s1_d500_clean_v1 cmd=timeout 7200 python scripts/03_train_dp.py --config configs/stackcube.yaml --demo runs/stage1d_clean_002/data/train_d500_clean_v1.h5 --run stack_1d_s1_d500_clean_v1 --num-demos 500 --total-iters 100000 --batch-size 256 --eval-freq 10000 --num-eval-episodes 5 --seed 1 --data-manifest runs/stage1d_clean_002/data/train_d500_clean_manifest.json --execute
+train_stack_1d_s1_d500_clean_v1 start=2026-11-14T05:53:31Z
+export_stack_1d_s1_d500_clean_v1_i010000 cmd=timeout 300 python scripts/04_export_policy.py --run runs/policy/stack_1d_s1_d500_clean_v1 --checkpoint runs/policy/stack_1d_s1_d500_clean_v1/checkpoints/full_010000.pt --out artifacts/policies/stack_1d_s1_d500_clean_v1_i010000
+export_stack_1d_s1_d500_clean_v1_i010000 start=2026-11-14T06:03:31Z
+export_stack_1d_s1_d500_clean_v1_i010000 exit=0 end=2026-11-14T06:03:32Z
+monitor_stack_1d_s1_d500_clean_v1_i010000 cmd=timeout 900 python scripts/09_eval_policy.py --config configs/stackcube.yaml --policy artifacts/policies/stack_1d_s1_d500_clean_v1_i010000 --set policy_monitor --demo-manifest runs/stage1d_clean_002/data/train_d500_clean_manifest.json --out runs/monitor_stack_1d_s1_d500_clean_v1_i010000
+monitor_stack_1d_s1_d500_clean_v1_i010000 start=2026-11-14T06:03:32Z
+monitor_stack_1d_s1_d500_clean_v1_i010000 exit=0 end=2026-11-14T06:06:54Z
+export_stack_1d_s1_d500_clean_v1_i020000 cmd=timeout 300 python scripts/04_export_policy.py --run runs/policy/stack_1d_s1_d500_clean_v1 --checkpoint runs/policy/stack_1d_s1_d500_clean_v1/checkpoints/full_020000.pt --out artifacts/policies/stack_1d_s1_d500_clean_v1_i020000
+export_stack_1d_s1_d500_clean_v1_i020000 start=2026-11-14T06:14:24Z
+export_stack_1d_s1_d500_clean_v1_i020000 exit=0 end=2026-11-14T06:14:25Z
+monitor_stack_1d_s1_d500_clean_v1_i020000 cmd=timeout 900 python scripts/09_eval_policy.py --config configs/stackcube.yaml --policy artifacts/policies/stack_1d_s1_d500_clean_v1_i020000 --set policy_monitor --demo-manifest runs/stage1d_clean_002/data/train_d500_clean_manifest.json --out runs/monitor_stack_1d_s1_d500_clean_v1_i020000
+monitor_stack_1d_s1_d500_clean_v1_i020000 start=2026-11-14T06:14:25Z
+monitor_stack_1d_s1_d500_clean_v1_i020000 exit=0 end=2026-11-14T06:18:02Z
+export_stack_1d_s1_d500_clean_v1_i030000 cmd=timeout 300 python scripts/04_export_policy.py --run runs/policy/stack_1d_s1_d500_clean_v1 --checkpoint runs/policy/stack_1d_s1_d500_clean_v1/checkpoints/full_030000.pt --out artifacts/policies/stack_1d_s1_d500_clean_v1_i030000
+export_stack_1d_s1_d500_clean_v1_i030000 start=2026-11-14T06:25:02Z
+export_stack_1d_s1_d500_clean_v1_i030000 exit=0 end=2026-11-14T06:25:03Z
+monitor_stack_1d_s1_d500_clean_v1_i030000 cmd=timeout 900 python scripts/09_eval_policy.py --config configs/stackcube.yaml --policy artifacts/policies/stack_1d_s1_d500_clean_v1_i030000 --set policy_monitor --demo-manifest runs/stage1d_clean_002/data/train_d500_clean_manifest.json --out runs/monitor_stack_1d_s1_d500_clean_v1_i030000
+monitor_stack_1d_s1_d500_clean_v1_i030000 start=2026-11-14T06:25:03Z
+monitor_stack_1d_s1_d500_clean_v1_i030000 exit=0 end=2026-11-14T06:28:23Z
+export_stack_1d_s1_d500_clean_v1_i040000 cmd=timeout 300 python scripts/04_export_policy.py --run runs/policy/stack_1d_s1_d500_clean_v1 --checkpoint runs/policy/stack_1d_s1_d500_clean_v1/checkpoints/full_040000.pt --out artifacts/policies/stack_1d_s1_d500_clean_v1_i040000
+export_stack_1d_s1_d500_clean_v1_i040000 start=2026-11-14T06:35:53Z
+export_stack_1d_s1_d500_clean_v1_i040000 exit=0 end=2026-11-14T06:35:54Z
+monitor_stack_1d_s1_d500_clean_v1_i040000 cmd=timeout 900 python scripts/09_eval_policy.py --config configs/stackcube.yaml --policy artifacts/policies/stack_1d_s1_d500_clean_v1_i040000 --set policy_monitor --demo-manifest runs/stage1d_clean_002/data/train_d500_clean_manifest.json --out runs/monitor_stack_1d_s1_d500_clean_v1_i040000
+monitor_stack_1d_s1_d500_clean_v1_i040000 start=2026-11-14T06:35:54Z
+monitor_stack_1d_s1_d500_clean_v1_i040000 exit=0 end=2026-11-14T06:39:11Z
+export_stack_1d_s1_d500_clean_v1_i050000 cmd=timeout 300 python scripts/04_export_policy.py --run runs/policy/stack_1d_s1_d500_clean_v1 --checkpoint runs/policy/stack_1d_s1_d500_clean_v1/checkpoints/full_050000.pt --out artifacts/policies/stack_1d_s1_d500_clean_v1_i050000
+export_stack_1d_s1_d500_clean_v1_i050000 start=2026-11-14T06:46:11Z
+export_stack_1d_s1_d500_clean_v1_i050000 exit=0 end=2026-11-14T06:46:12Z
+monitor_stack_1d_s1_d500_clean_v1_i050000 cmd=timeout 900 python scripts/09_eval_policy.py --config configs/stackcube.yaml --policy artifacts/policies/stack_1d_s1_d500_clean_v1_i050000 --set policy_monitor --demo-manifest runs/stage1d_clean_002/data/train_d500_clean_manifest.json --out runs/monitor_stack_1d_s1_d500_clean_v1_i050000
+monitor_stack_1d_s1_d500_clean_v1_i050000 start=2026-11-14T06:46:12Z
+monitor_stack_1d_s1_d500_clean_v1_i050000 exit=0 end=2026-11-14T06:49:11Z
+export_stack_1d_s1_d500_clean_v1_i060000 cmd=timeout 300 python scripts/04_export_policy.py --run runs/policy/stack_1d_s1_d500_clean_v1 --checkpoint runs/policy/stack_1d_s1_d500_clean_v1/checkpoints/full_060000.pt --out artifacts/policies/stack_1d_s1_d500_clean_v1_i060000
+export_stack_1d_s1_d500_clean_v1_i060000 start=2026-11-14T06:56:41Z
+export_stack_1d_s1_d500_clean_v1_i060000 exit=0 end=2026-11-14T06:56:42Z
+monitor_stack_1d_s1_d500_clean_v1_i060000 cmd=timeout 900 python scripts/09_eval_policy.py --config configs/stackcube.yaml --policy artifacts/policies/stack_1d_s1_d500_clean_v1_i060000 --set policy_monitor --demo-manifest runs/stage1d_clean_002/data/train_d500_clean_manifest.json --out runs/monitor_stack_1d_s1_d500_clean_v1_i060000
+monitor_stack_1d_s1_d500_clean_v1_i060000 start=2026-11-14T06:56:42Z
+monitor_stack_1d_s1_d500_clean_v1_i060000 exit=0 end=2026-11-14T06:59:40Z
+export_stack_1d_s1_d500_clean_v1_i070000 cmd=timeout 300 python scripts/04_export_policy.py --run runs/policy/stack_1d_s1_d500_clean_v1 --checkpoint runs/policy/stack_1d_s1_d500_clean_v1/checkpoints/full_070000.pt --out artifacts/policies/stack_1d_s1_d500_clean_v1_i070000
+export_stack_1d_s1_d500_clean_v1_i070000 start=2026-11-14T07:07:40Z
+export_stack_1d_s1_d500_clean_v1_i070000 exit=0 end=2026-11-14T07:07:41Z
+monitor_stack_1d_s1_d500_clean_v1_i070000 cmd=timeout 900 python scripts/09_eval_policy.py --config configs/stackcube.yaml --policy artifacts/policies/stack_1d_s1_d500_clean_v1_i070000 --set policy_monitor --demo-manifest runs/stage1d_clean_002/data/train_d500_clean_manifest.json --out runs/monitor_stack_1d_s1_d500_clean_v1_i070000
+monitor_stack_1d_s1_d500_clean_v1_i070000 start=2026-11-14T07:07:41Z
+monitor_stack_1d_s1_d500_clean_v1_i070000 exit=0 end=2026-11-14T07:10:54Z
+export_stack_1d_s1_d500_clean_v1_i080000 cmd=timeout 300 python scripts/04_export_policy.py --run runs/policy/stack_1d_s1_d500_clean_v1 --checkpoint runs/policy/stack_1d_s1_d500_clean_v1/checkpoints/full_080000.pt --out artifacts/policies/stack_1d_s1_d500_clean_v1_i080000
+export_stack_1d_s1_d500_clean_v1_i080000 start=2026-11-14T07:17:54Z
+export_stack_1d_s1_d500_clean_v1_i080000 exit=0 end=2026-11-14T07:17:55Z
+monitor_stack_1d_s1_d500_clean_v1_i080000 cmd=timeout 900 python scripts/09_eval_policy.py --config configs/stackcube.yaml --policy artifacts/policies/stack_1d_s1_d500_clean_v1_i080000 --set policy_monitor --demo-manifest runs/stage1d_clean_002/data/train_d500_clean_manifest.json --out runs/monitor_stack_1d_s1_d500_clean_v1_i080000
+monitor_stack_1d_s1_d500_clean_v1_i080000 start=2026-11-14T07:17:55Z
+monitor_stack_1d_s1_d500_clean_v1_i080000 exit=0 end=2026-11-14T07:20:51Z
+export_stack_1d_s1_d500_clean_v1_i090000 cmd=timeout 300 python scripts/04_export_policy.py --run runs/policy/stack_1d_s1_d500_clean_v1 --checkpoint runs/policy/stack_1d_s1_d500_clean_v1/checkpoints/full_090000.pt --out artifacts/policies/stack_1d_s1_d500_clean_v1_i090000
+export_stack_1d_s1_d500_clean_v1_i090000 start=2026-11-14T07:28:51Z
+export_stack_1d_s1_d500_clean_v1_i090000 exit=0 end=2026-11-14T07:28:52Z
+monitor_stack_1d_s1_d500_clean_v1_i090000 cmd=timeout 900 python scripts/09_eval_policy.py --config configs/stackcube.yaml --policy artifacts/policies/stack_1d_s1_d500_clean_v1_i090000 --set policy_monitor --demo-manifest runs/stage1d_clean_002/data/train_d500_clean_manifest.json --out runs/monitor_stack_1d_s1_d500_clean_v1_i090000
+monitor_stack_1d_s1_d500_clean_v1_i090000 start=2026-11-14T07:28:52Z
+monitor_stack_1d_s1_d500_clean_v1_i090000 exit=0 end=2026-11-14T07:32:06Z
+export_stack_1d_s1_d500_clean_v1_i100000 cmd=timeout 300 python scripts/04_export_policy.py --run runs/policy/stack_1d_s1_d500_clean_v1 --checkpoint runs/policy/stack_1d_s1_d500_clean_v1/checkpoints/full_100000.pt --out artifacts/policies/stack_1d_s1_d500_clean_v1_i100000
+export_stack_1d_s1_d500_clean_v1_i100000 start=2026-11-14T07:39:06Z
+export_stack_1d_s1_d500_clean_v1_i100000 exit=0 end=2026-11-14T07:39:07Z
+monitor_stack_1d_s1_d500_clean_v1_i100000 cmd=timeout 900 python scripts/09_eval_policy.py --config configs/stackcube.yaml --policy artifacts/policies/stack_1d_s1_d500_clean_v1_i100000 --set policy_monitor --demo-manifest runs/stage1d_clean_002/data/train_d500_clean_manifest.json --out runs/monitor_stack_1d_s1_d500_clean_v1_i100000
+monitor_stack_1d_s1_d500_clean_v1_i100000 start=2026-11-14T07:39:07Z
+train_stack_1d_s1_d500_clean_v1 exit=0 end=2026-11-14T07:39:33Z
+monitor_stack_1d_s1_d500_clean_v1_i100000 exit=0 end=2026-11-14T07:40:45Z
+MONITOR_DONE stack_1d_s1_d500_clean_v1
+TRAIN_DONE stack_1d_s1_d500_clean_v1
+PHASE_EXIT train 0
+select_stack_1d_s1_d500_clean_v1_i060000 cmd=python scripts/09_eval_policy.py --config configs/stackcube.yaml --policy artifacts/policies/stack_1d_s1_d500_clean_v1_i060000 --set policy_select --success-at-end --demo-manifest runs/stage1d_clean_002/data/train_d500_clean_manifest.json --out runs/select_stack_1d_s1_d500_clean_v1_i060000
+select_stack_1d_s1_d500_clean_v1_i060000 start=2026-11-14T07:40:45Z
+select_stack_1d_s1_d500_clean_v1_i060000 exit=0 end=2026-11-14T07:44:59Z
+select_stack_1d_s1_d500_clean_v1_i080000 cmd=python scripts/09_eval_policy.py --config configs/stackcube.yaml --policy artifacts/policies/stack_1d_s1_d500_clean_v1_i080000 --set policy_select --success-at-end --demo-manifest runs/stage1d_clean_002/data/train_d500_clean_manifest.json --out runs/select_stack_1d_s1_d500_clean_v1_i080000
+select_stack_1d_s1_d500_clean_v1_i080000 start=2026-11-14T07:44:59Z
+select_stack_1d_s1_d500_clean_v1_i080000 exit=0 end=2026-11-14T07:49:11Z
+select_stack_1d_s1_d500_clean_v1_i100000 cmd=python scripts/09_eval_policy.py --config configs/stackcube.yaml --policy artifacts/policies/stack_1d_s1_d500_clean_v1_i100000 --set policy_select --success-at-end --demo-manifest runs/stage1d_clean_002/data/train_d500_clean_manifest.json --out runs/select_stack_1d_s1_d500_clean_v1_i100000
+select_stack_1d_s1_d500_clean_v1_i100000 start=2026-11-14T07:49:11Z
+select_stack_1d_s1_d500_clean_v1_i100000 exit=0 end=2026-11-14T07:53:22Z
+choose_stack_1d_s1_d500_clean_v1 cmd=python scripts/11_select_candidate.py --candidate 60000=runs/select_stack_1d_s1_d500_clean_v1_i060000 --candidate 80000=runs/select_stack_1d_s1_d500_clean_v1_i080000 --candidate 100000=runs/select_stack_1d_s1_d500_clean_v1_i100000 --out runs/select_stack_1d_s1_d500_clean_v1/selection.json
+choose_stack_1d_s1_d500_clean_v1 start=2026-11-14T07:53:22Z
+choose_stack_1d_s1_d500_clean_v1 exit=0 end=2026-11-14T07:53:22Z
+s1dc_io_parity_selected cmd=python scripts/08_policy_io_audit.py --config configs/stackcube.yaml --policy artifacts/policies/stack_1d_s1_d500_clean_v1_i080000 --checkpoint runs/policy/stack_1d_s1_d500_clean_v1/checkpoints/full_080000.pt --demo runs/stage1d_clean_002/data/io_parity_sample_clean_v1.h5 --trajectories 10 --out runs/stage1d_clean_002/io_parity_selected
+s1dc_io_parity_selected start=2026-11-14T07:53:22Z
+s1dc_io_parity_selected exit=0 end=2026-11-14T07:54:32Z
+qualify_stack_1d_s1_d500_clean_v1 cmd=python scripts/09_eval_policy.py --config configs/stackcube.yaml --policy artifacts/policies/stack_1d_s1_d500_clean_v1_i080000 --set policy_qualify_B --success-at-end --demo-manifest runs/stage1d_clean_002/data/train_d500_clean_manifest.json --out runs/qualify_stack_1d_s1_d500_clean_v1
+qualify_stack_1d_s1_d500_clean_v1 start=2026-11-14T07:54:32Z
+qualify_stack_1d_s1_d500_clean_v1 exit=0 end=2026-11-14T08:02:51Z
+QUALIFY_DONE stack_1d_s1_d500_clean_v1 artifacts/policies/stack_1d_s1_d500_clean_v1_i080000
+PHASE_EXIT select 0
+s1dc_scene_rollouts cmd=python scripts/14_scene_rollouts.py --config configs/stackcube.yaml --manifest runs/stage1c_001/manifest/diagnostic_manifest.json --demo data_backup/demos_stack_002/trajectory.rgb.pd_ee_delta_pos.physx_cpu.h5 --source data_backup/demos_stack_002/trajectory.h5 --policy artifacts/policies/stack_1d_s1_d500_clean_v1_i080000 --other-policy --cells F_policy R_policy --out runs/stage1d_clean_002/scene_rollouts
+s1dc_scene_rollouts start=2026-11-14T08:02:51Z
+s1dc_scene_rollouts exit=0 end=2026-11-14T08:05:32Z
+s1dc_offline cmd=python scripts/15_offline_action_diag.py --config configs/stackcube.yaml --manifest runs/stage1c_001/manifest/diagnostic_manifest.json --demo data_backup/demos_stack_002/trajectory.rgb.pd_ee_delta_pos.physx_cpu.h5 --policy artifacts/policies/stack_1d_s1_d500_clean_v1_i080000 --other-policy --out runs/stage1d_clean_002/offline
+s1dc_offline start=2026-11-14T08:05:32Z
+s1dc_offline exit=0 end=2026-11-14T08:07:10Z
+DIAG_DONE
+PHASE_EXIT diag 0
+POST NOT RUN: qualify=37/100 is below the gate (>=50)
+PHASE_EXIT post 0

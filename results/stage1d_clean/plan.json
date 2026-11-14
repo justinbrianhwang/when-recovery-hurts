@@ -1,0 +1,330 @@
+{
+  "stage": "1D clean rebuild",
+  "run_ids": {
+    "stage": "stage1d_clean_002",
+    "policy": "stack_1d_s1_d500_clean_v1"
+  },
+  "spec": "prompts/STAGE1D_CLEAN_REBUILD_AND_RETRAIN_AGENT_PROMPT_v0_2.md (decision: exclude every defective trajectory, replace in source order; no trimming)",
+  "purpose": "Obtain a base policy from data with the known cross-episode defect removed. Development only: not calibration, not the final Test. Not a \"demonstration count only\" comparison with D100.",
+  "code": {
+    "git_head": "b0c5406201c90fdc4dacdfa9497639402501f3ef",
+    "uncommitted_files": [],
+    "upstream_commit": {
+      "repository": "https://github.com/mani-skill/ManiSkill.git",
+      "tag": "v3.0.1",
+      "commit": "a4a4f9272ad64b1564035874b605ceb687b63ed8",
+      "reviewed_date": "2026-11-12",
+      "policy": "examples/baselines/diffusion_policy/train_rgbd.py",
+      "runtime_validation": "NOT_RUN_IN_BUILDER"
+    }
+  },
+  "config_sha256": "c8cc0a581f7d4e9de4042490bd6939e9b80da1dd333df081cb9107c29427dfbd",
+  "previous_run": {
+    "stage1d_001": "ABORTED_AFTER_DATA_INTEGRITY_FAILURE / INCOMPLETE (about 2k of 100k updates; no checkpoint; evaluation NOT RUN)",
+    "backup_archive_sha256": "66692866ebafb7d813ce362671ce0cc049912cdac78fd72c873dec3de051ff40"
+  },
+  "audit": {
+    "n_trajectories": 545,
+    "by_role": {
+      "old_train": {
+        "PASS": 99,
+        "FAIL": 1
+      },
+      "protected_dev": {
+        "PASS": 20
+      },
+      "protected_remainder": {
+        "PASS": 9
+      },
+      "new_train": {
+        "PASS": 397,
+        "FAIL": 3
+      },
+      "unused_reserve": {
+        "PASS": 15,
+        "FAIL": 1
+      }
+    },
+    "excluded_source_episode_ids": [
+      31,
+      230,
+      382,
+      414,
+      536
+    ],
+    "validator_sha256": "afc47e482279b88452d3ae95b7a28ba071b21d80c6215b3ce8b85b8ae4af8a48",
+    "integrity_summary_sha256": "63360284c250aaf90e4d9d4dbaa05124442b769f46c4be9a7731630b032317f3",
+    "content_integrity_csv_sha256": "57f05107fc6fbd6c1f9574f5083e55e65c32be2078d937b12bb8a0e1542b6ea0",
+    "replacement_manifest_sha256": "5ae250a75a82ac53275b68ecf570469fbe681983e308463a3aa3562cc156d971"
+  },
+  "dataset": {
+    "name": "train_d500_clean_v1",
+    "train_h5_sha256": "93416a4a8b7e2203d4cca1fe3c5d1e577830fa720ea4f3855021a168ea65f342",
+    "train_json_sha256": "7ac4a763d40ab93f54cb25e7b2d721d4451e6698f526e37fc8ce916e6eaa7065",
+    "manifest_sha256": "30615b3326bc6b90e153169a1f94e3493f4d81cea110ff49d621298e44ddbd1b",
+    "data_gate_sha256": "5e2671e659d0d40c07c4a4f4c9183a044c2e6ee4c70c63e756829867b821dff9",
+    "io_parity_sample_sha256": "cc3b3e6f57fa5cfb8b8ae59f548089d9bc46354f0561eefcfa503e0aae9fdf5e",
+    "counts": {
+      "retained_old": 99,
+      "retained_new": 397,
+      "replacement": 4
+    },
+    "replacements": [
+      {
+        "label": "r1",
+        "slot_train_id": 30,
+        "belongs_to": "D100_clean_v1",
+        "source_episode_id": 533,
+        "replaces_source_episode_id": 31
+      },
+      {
+        "label": "r2",
+        "slot_train_id": 199,
+        "belongs_to": "Dnew400_clean_v1",
+        "source_episode_id": 534,
+        "replaces_source_episode_id": 230
+      },
+      {
+        "label": "r3",
+        "slot_train_id": 350,
+        "belongs_to": "Dnew400_clean_v1",
+        "source_episode_id": 537,
+        "replaces_source_episode_id": 382
+      },
+      {
+        "label": "r4",
+        "slot_train_id": 381,
+        "belongs_to": "Dnew400_clean_v1",
+        "source_episode_id": 538,
+        "replaces_source_episode_id": 414
+      }
+    ],
+    "reserve_left_unused": [
+      539,
+      540,
+      541,
+      542,
+      543,
+      544,
+      545,
+      546,
+      547,
+      548,
+      549
+    ],
+    "d100_clean": "ids 0..99 (manifest only; not trained separately)"
+  },
+  "training": {
+    "env": "StackCube-v1",
+    "num_demos": 500,
+    "init": "from scratch; no resume from the aborted run, the probe or D100 weights",
+    "seed": 1,
+    "total_iters": 100000,
+    "batch_size": 256,
+    "policy_config": {
+      "obs_horizon": 2,
+      "act_horizon": 8,
+      "pred_horizon": 16,
+      "diffusion_step_embed_dim": 64,
+      "unet_dims": [
+        64,
+        128,
+        256
+      ],
+      "n_groups": 8
+    },
+    "horizon": 200,
+    "success_definition": "success_once_absorbing",
+    "probe": "not repeated: stage1d_001 measured 19.2 updates/s, 11.7 GB VRAM, 16.8 GB RAM with 500 demonstrations"
+  },
+  "selection": {
+    "candidates_iteration_tags": [
+      60000,
+      80000,
+      100000
+    ],
+    "weights": "EMA",
+    "set": "policy_select",
+    "primary": "success_once",
+    "tie": "later iteration",
+    "execution": "sequential"
+  },
+  "qualification": {
+    "set": "policy_qualify_B",
+    "seeds": [
+      50300,
+      50301,
+      50302,
+      50303,
+      50304,
+      50305,
+      50306,
+      50307,
+      50308,
+      50309,
+      50310,
+      50311,
+      50312,
+      50313,
+      50314,
+      50315,
+      50316,
+      50317,
+      50318,
+      50319,
+      50320,
+      50321,
+      50322,
+      50323,
+      50324,
+      50325,
+      50326,
+      50327,
+      50328,
+      50329,
+      50330,
+      50331,
+      50332,
+      50333,
+      50334,
+      50335,
+      50336,
+      50337,
+      50338,
+      50339,
+      50340,
+      50341,
+      50342,
+      50343,
+      50344,
+      50345,
+      50346,
+      50347,
+      50348,
+      50349,
+      50350,
+      50351,
+      50352,
+      50353,
+      50354,
+      50355,
+      50356,
+      50357,
+      50358,
+      50359,
+      50360,
+      50361,
+      50362,
+      50363,
+      50364,
+      50365,
+      50366,
+      50367,
+      50368,
+      50369,
+      50370,
+      50371,
+      50372,
+      50373,
+      50374,
+      50375,
+      50376,
+      50377,
+      50378,
+      50379,
+      50380,
+      50381,
+      50382,
+      50383,
+      50384,
+      50385,
+      50386,
+      50387,
+      50388,
+      50389,
+      50390,
+      50391,
+      50392,
+      50393,
+      50394,
+      50395,
+      50396,
+      50397,
+      50398,
+      50399
+    ],
+    "rule": "the selected candidate only, once, after tensor parity and new-weights I/O parity pass",
+    "bands": {
+      ">=50": "operational gate PASS: new restore audit, then branches of two source episodes if the budget allows",
+      "10-49": "below the gate: Stage 1C comparison on the integrity-passing scenes, then end",
+      "0-9": "below the gate: end without further training or comparison"
+    }
+  },
+  "server_gate": {
+    "expert_replay": "all 4 replacements + 5 retained old + 5 retained new (equal spacing over ascending source id); actions only",
+    "io_parity_sample_train_ids": [
+      30,
+      199,
+      350,
+      381,
+      0,
+      50,
+      99,
+      100,
+      299,
+      499
+    ],
+    "layers": [
+      "structural_validation",
+      "source_and_split_validation",
+      "episode_content_integrity",
+      "sampled_action_replay",
+      "policy_io_parity"
+    ]
+  },
+  "diagnostics": {
+    "manifest_sha256": "a820d606f8415908625d06a7d39ffea955d72741edebcdc48e68be514cd0de76",
+    "scenes": [
+      0,
+      11,
+      22,
+      33,
+      44,
+      55,
+      66,
+      77,
+      88,
+      99,
+      100,
+      102,
+      104,
+      106,
+      108,
+      111,
+      113,
+      115,
+      117,
+      119
+    ],
+    "all_scenes_pass_content_audit": true,
+    "cells": [
+      "F_policy",
+      "R_policy"
+    ]
+  },
+  "budget": {
+    "stage1d_cumulative_cap_usd": 2.0,
+    "spent_stage1d_001_usd": 0.24,
+    "remaining_usd": 1.76,
+    "note": "recomputed from the actual all-in price before training; the gate refuses a start that does not fit"
+  },
+  "not_done": [
+    "D100-clean control training",
+    "retraining on contaminated data",
+    "converter patch or re-conversion",
+    "calibration",
+    "final Test",
+    "large branch collection",
+    "monitor training"
+  ]
+}

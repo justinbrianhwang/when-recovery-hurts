@@ -1,0 +1,209 @@
+{
+  "rule": "reserve = successful conversions of the stage1d_001 window that were not adopted; candidates must pass the content validator and must not be protected; they are taken in ascending source-episode id; the first replaces the excluded old (D100) trajectory, the next ones the excluded new trajectories in ascending old training id",
+  "reserve": [
+    {
+      "traj_id": 400,
+      "declared_source_episode_id": 533,
+      "scene_seed": 549,
+      "verdict": "PASS",
+      "hard_signals": []
+    },
+    {
+      "traj_id": 401,
+      "declared_source_episode_id": 534,
+      "scene_seed": 550,
+      "verdict": "PASS",
+      "hard_signals": []
+    },
+    {
+      "traj_id": 402,
+      "declared_source_episode_id": 536,
+      "scene_seed": 552,
+      "verdict": "FAIL",
+      "hard_signals": [
+        "internal_terminal",
+        "truncated_restart",
+        "first_obs_not_source",
+        "first_state_not_source"
+      ]
+    },
+    {
+      "traj_id": 403,
+      "declared_source_episode_id": 537,
+      "scene_seed": 553,
+      "verdict": "PASS",
+      "hard_signals": []
+    },
+    {
+      "traj_id": 404,
+      "declared_source_episode_id": 538,
+      "scene_seed": 554,
+      "verdict": "PASS",
+      "hard_signals": []
+    },
+    {
+      "traj_id": 405,
+      "declared_source_episode_id": 539,
+      "scene_seed": 555,
+      "verdict": "PASS",
+      "hard_signals": []
+    },
+    {
+      "traj_id": 406,
+      "declared_source_episode_id": 540,
+      "scene_seed": 556,
+      "verdict": "PASS",
+      "hard_signals": []
+    },
+    {
+      "traj_id": 407,
+      "declared_source_episode_id": 541,
+      "scene_seed": 557,
+      "verdict": "PASS",
+      "hard_signals": []
+    },
+    {
+      "traj_id": 408,
+      "declared_source_episode_id": 542,
+      "scene_seed": 558,
+      "verdict": "PASS",
+      "hard_signals": []
+    },
+    {
+      "traj_id": 409,
+      "declared_source_episode_id": 543,
+      "scene_seed": 559,
+      "verdict": "PASS",
+      "hard_signals": []
+    },
+    {
+      "traj_id": 410,
+      "declared_source_episode_id": 544,
+      "scene_seed": 561,
+      "verdict": "PASS",
+      "hard_signals": []
+    },
+    {
+      "traj_id": 411,
+      "declared_source_episode_id": 545,
+      "scene_seed": 562,
+      "verdict": "PASS",
+      "hard_signals": []
+    },
+    {
+      "traj_id": 412,
+      "declared_source_episode_id": 546,
+      "scene_seed": 563,
+      "verdict": "PASS",
+      "hard_signals": []
+    },
+    {
+      "traj_id": 413,
+      "declared_source_episode_id": 547,
+      "scene_seed": 564,
+      "verdict": "PASS",
+      "hard_signals": []
+    },
+    {
+      "traj_id": 414,
+      "declared_source_episode_id": 548,
+      "scene_seed": 565,
+      "verdict": "PASS",
+      "hard_signals": []
+    },
+    {
+      "traj_id": 415,
+      "declared_source_episode_id": 549,
+      "scene_seed": 566,
+      "verdict": "PASS",
+      "hard_signals": []
+    }
+  ],
+  "pairs": [
+    {
+      "slot_train_id": 30,
+      "replaces": {
+        "file": "old_converted",
+        "traj_id": 30,
+        "declared_source_episode_id": 31,
+        "scene_seed": 32,
+        "role_stage1d_001": "old_train"
+      },
+      "replacement": {
+        "file": "new_converted",
+        "traj_id": 400,
+        "declared_source_episode_id": 533,
+        "scene_seed": 549
+      },
+      "label": "r1",
+      "belongs_to": "D100_clean_v1"
+    },
+    {
+      "slot_train_id": 199,
+      "replaces": {
+        "file": "new_converted",
+        "traj_id": 99,
+        "declared_source_episode_id": 230,
+        "scene_seed": 236,
+        "role_stage1d_001": "new_train"
+      },
+      "replacement": {
+        "file": "new_converted",
+        "traj_id": 401,
+        "declared_source_episode_id": 534,
+        "scene_seed": 550
+      },
+      "label": "r2",
+      "belongs_to": "Dnew400_clean_v1"
+    },
+    {
+      "slot_train_id": 350,
+      "replaces": {
+        "file": "new_converted",
+        "traj_id": 250,
+        "declared_source_episode_id": 382,
+        "scene_seed": 396,
+        "role_stage1d_001": "new_train"
+      },
+      "replacement": {
+        "file": "new_converted",
+        "traj_id": 403,
+        "declared_source_episode_id": 537,
+        "scene_seed": 553
+      },
+      "label": "r3",
+      "belongs_to": "Dnew400_clean_v1"
+    },
+    {
+      "slot_train_id": 381,
+      "replaces": {
+        "file": "new_converted",
+        "traj_id": 281,
+        "declared_source_episode_id": 414,
+        "scene_seed": 430,
+        "role_stage1d_001": "new_train"
+      },
+      "replacement": {
+        "file": "new_converted",
+        "traj_id": 404,
+        "declared_source_episode_id": 538,
+        "scene_seed": 554
+      },
+      "label": "r4",
+      "belongs_to": "Dnew400_clean_v1"
+    }
+  ],
+  "reserve_left_unused": [
+    539,
+    540,
+    541,
+    542,
+    543,
+    544,
+    545,
+    546,
+    547,
+    548,
+    549
+  ]
+}

@@ -1,0 +1,380 @@
+{
+  "pass": true,
+  "problems": [],
+  "n_trajectories": 545,
+  "by_role": {
+    "old_train": {
+      "PASS": 99,
+      "FAIL": 1
+    },
+    "protected_dev": {
+      "PASS": 20
+    },
+    "protected_remainder": {
+      "PASS": 9
+    },
+    "new_train": {
+      "PASS": 397,
+      "FAIL": 3
+    },
+    "unused_reserve": {
+      "PASS": 15,
+      "FAIL": 1
+    }
+  },
+  "expert_gripper_is_binary_in_source": true,
+  "not_pass": [
+    {
+      "file": "old_converted",
+      "traj_id": 30,
+      "declared_source_episode_id": 31,
+      "role_stage1d_001": "old_train",
+      "stage1d_001_train_id": 30,
+      "verdict": "FAIL",
+      "hard_signals": [
+        "internal_terminal",
+        "truncated_restart",
+        "first_obs_not_source",
+        "first_state_not_source"
+      ],
+      "soft_signals": [
+        "kinematic_jump",
+        "gripper_not_binary",
+        "length_not_source",
+        "cube_path_not_source"
+      ],
+      "boundary_steps": [
+        108
+      ],
+      "content_origin_of_first_state": [
+        30
+      ],
+      "origin_after_boundary": [
+        31
+      ]
+    },
+    {
+      "file": "new_converted",
+      "traj_id": 99,
+      "declared_source_episode_id": 230,
+      "role_stage1d_001": "new_train",
+      "stage1d_001_train_id": 199,
+      "verdict": "FAIL",
+      "hard_signals": [
+        "internal_terminal",
+        "truncated_restart",
+        "first_obs_not_source",
+        "first_state_not_source"
+      ],
+      "soft_signals": [
+        "kinematic_jump",
+        "gripper_not_binary",
+        "length_not_source",
+        "cube_path_not_source"
+      ],
+      "boundary_steps": [
+        108
+      ],
+      "content_origin_of_first_state": [
+        229
+      ],
+      "origin_after_boundary": [
+        230
+      ]
+    },
+    {
+      "file": "new_converted",
+      "traj_id": 250,
+      "declared_source_episode_id": 382,
+      "role_stage1d_001": "new_train",
+      "stage1d_001_train_id": 350,
+      "verdict": "FAIL",
+      "hard_signals": [
+        "internal_terminal",
+        "truncated_restart",
+        "first_obs_not_source",
+        "first_state_not_source"
+      ],
+      "soft_signals": [
+        "kinematic_jump",
+        "gripper_not_binary",
+        "length_not_source",
+        "cube_path_not_source"
+      ],
+      "boundary_steps": [
+        95
+      ],
+      "content_origin_of_first_state": [
+        381
+      ],
+      "origin_after_boundary": [
+        382
+      ]
+    },
+    {
+      "file": "new_converted",
+      "traj_id": 281,
+      "declared_source_episode_id": 414,
+      "role_stage1d_001": "new_train",
+      "stage1d_001_train_id": 381,
+      "verdict": "FAIL",
+      "hard_signals": [
+        "internal_terminal",
+        "truncated_restart",
+        "first_obs_not_source",
+        "first_state_not_source"
+      ],
+      "soft_signals": [
+        "kinematic_jump",
+        "gripper_not_binary",
+        "length_not_source",
+        "cube_path_not_source"
+      ],
+      "boundary_steps": [
+        411
+      ],
+      "content_origin_of_first_state": [
+        413
+      ],
+      "origin_after_boundary": [
+        414
+      ]
+    },
+    {
+      "file": "new_converted",
+      "traj_id": 402,
+      "declared_source_episode_id": 536,
+      "role_stage1d_001": "unused_reserve",
+      "stage1d_001_train_id": null,
+      "verdict": "FAIL",
+      "hard_signals": [
+        "internal_terminal",
+        "truncated_restart",
+        "first_obs_not_source",
+        "first_state_not_source"
+      ],
+      "soft_signals": [
+        "kinematic_jump",
+        "gripper_not_binary",
+        "length_not_source",
+        "cube_path_not_source"
+      ],
+      "boundary_steps": [
+        108
+      ],
+      "content_origin_of_first_state": [
+        535
+      ],
+      "origin_after_boundary": [
+        536
+      ]
+    }
+  ],
+  "success_flicker": [
+    {
+      "file": "new_converted",
+      "traj_id": 239,
+      "declared_source_episode_id": 370,
+      "role_stage1d_001": "new_train",
+      "verdict": "PASS",
+      "success_flicker_steps": [
+        113,
+        114
+      ]
+    }
+  ],
+  "after_failed_source_episodes": [
+    {
+      "failed_source_episode_id": 30,
+      "next_source_episode_id": 31,
+      "next_converted": {
+        "file": "old_converted",
+        "traj_id": 30,
+        "verdict": "FAIL",
+        "hard_signals": [
+          "internal_terminal",
+          "truncated_restart",
+          "first_obs_not_source",
+          "first_state_not_source"
+        ],
+        "boundary_steps": [
+          108
+        ],
+        "role_stage1d_001": "old_train",
+        "stage1d_001_train_id": 30
+      },
+      "prefix_is_the_failed_episode": true
+    },
+    {
+      "failed_source_episode_id": 229,
+      "next_source_episode_id": 230,
+      "next_converted": {
+        "file": "new_converted",
+        "traj_id": 99,
+        "verdict": "FAIL",
+        "hard_signals": [
+          "internal_terminal",
+          "truncated_restart",
+          "first_obs_not_source",
+          "first_state_not_source"
+        ],
+        "boundary_steps": [
+          108
+        ],
+        "role_stage1d_001": "new_train",
+        "stage1d_001_train_id": 199
+      },
+      "prefix_is_the_failed_episode": true
+    },
+    {
+      "failed_source_episode_id": 381,
+      "next_source_episode_id": 382,
+      "next_converted": {
+        "file": "new_converted",
+        "traj_id": 250,
+        "verdict": "FAIL",
+        "hard_signals": [
+          "internal_terminal",
+          "truncated_restart",
+          "first_obs_not_source",
+          "first_state_not_source"
+        ],
+        "boundary_steps": [
+          95
+        ],
+        "role_stage1d_001": "new_train",
+        "stage1d_001_train_id": 350
+      },
+      "prefix_is_the_failed_episode": true
+    },
+    {
+      "failed_source_episode_id": 413,
+      "next_source_episode_id": 414,
+      "next_converted": {
+        "file": "new_converted",
+        "traj_id": 281,
+        "verdict": "FAIL",
+        "hard_signals": [
+          "internal_terminal",
+          "truncated_restart",
+          "first_obs_not_source",
+          "first_state_not_source"
+        ],
+        "boundary_steps": [
+          411
+        ],
+        "role_stage1d_001": "new_train",
+        "stage1d_001_train_id": 381
+      },
+      "prefix_is_the_failed_episode": true
+    },
+    {
+      "failed_source_episode_id": 535,
+      "next_source_episode_id": 536,
+      "next_converted": {
+        "file": "new_converted",
+        "traj_id": 402,
+        "verdict": "FAIL",
+        "hard_signals": [
+          "internal_terminal",
+          "truncated_restart",
+          "first_obs_not_source",
+          "first_state_not_source"
+        ],
+        "boundary_steps": [
+          108
+        ],
+        "role_stage1d_001": "unused_reserve",
+        "stage1d_001_train_id": null
+      },
+      "prefix_is_the_failed_episode": true
+    }
+  ],
+  "foreign_content_source_ids": [
+    30,
+    229,
+    381,
+    413,
+    535
+  ],
+  "foreign_content_in_protected_or_eval": [],
+  "stage1d_001_contamination": {
+    "trajectories": [
+      {
+        "stage1d_001_train_id": 30,
+        "steps": 205,
+        "boundary_action_index": 108,
+        "failed_prefix_steps": 108,
+        "windows": 204,
+        "obs_in_failed_prefix": 109,
+        "obs_across_reset": 1,
+        "target_contains_dummy_action": 16,
+        "touched_by_prefix_or_reset": 110
+      },
+      {
+        "stage1d_001_train_id": 199,
+        "steps": 212,
+        "boundary_action_index": 108,
+        "failed_prefix_steps": 108,
+        "windows": 211,
+        "obs_in_failed_prefix": 109,
+        "obs_across_reset": 1,
+        "target_contains_dummy_action": 16,
+        "touched_by_prefix_or_reset": 110
+      },
+      {
+        "stage1d_001_train_id": 350,
+        "steps": 194,
+        "boundary_action_index": 95,
+        "failed_prefix_steps": 95,
+        "windows": 193,
+        "obs_in_failed_prefix": 96,
+        "obs_across_reset": 1,
+        "target_contains_dummy_action": 16,
+        "touched_by_prefix_or_reset": 97
+      },
+      {
+        "stage1d_001_train_id": 381,
+        "steps": 534,
+        "boundary_action_index": 411,
+        "failed_prefix_steps": 411,
+        "windows": 533,
+        "obs_in_failed_prefix": 412,
+        "obs_across_reset": 1,
+        "target_contains_dummy_action": 16,
+        "touched_by_prefix_or_reset": 413
+      }
+    ],
+    "failed_prefix_steps_total": 722,
+    "dummy_transitions": 4,
+    "train_transitions": 54521,
+    "windows_total": 54021,
+    "windows_touched": 730,
+    "windows_target_contains_dummy_action": 64,
+    "note": "Counts of affected steps and training windows. They say nothing about the size of the effect on a policy."
+  },
+  "thresholds": {
+    "cube_path_m": 0.05,
+    "jump_cube_m": 0.02,
+    "jump_qpos_rad": 0.3,
+    "state_tol": 1e-05,
+    "hard": [
+      "internal_terminal",
+      "truncated_restart",
+      "first_obs_not_source",
+      "first_state_not_source"
+    ],
+    "soft": [
+      "kinematic_jump",
+      "gripper_not_binary",
+      "length_not_source",
+      "cube_path_not_source"
+    ]
+  },
+  "validator_sha256": "afc47e482279b88452d3ae95b7a28ba071b21d80c6215b3ce8b85b8ae4af8a48",
+  "inputs": {
+    "old_converted_sha256": "60465211ad0913582881586d946e80fe36b871ca34fa21db26b6d167a2ea7a1e",
+    "new_converted_sha256": "8b0ff52e37e3331f655849b71c36820263b9374aae9357d3d0cb640b7a5d9df4",
+    "source_sha256": "61d07df7b52f303d2088e977df5f863be7d2274348ff05791f3a815359815523"
+  }
+}
