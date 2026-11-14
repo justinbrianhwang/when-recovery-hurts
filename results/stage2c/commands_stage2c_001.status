@@ -1,0 +1,12 @@
+s2c_manifest cmd=python scripts/21_stage2c_offline_review.py manifest --out runs/stage2c_001 start=2026-11-14T22:10:54Z
+s2c_manifest exit=0 end=2026-11-14T22:10:56Z
+s2c_verifylabelinput_hash_check_before cmd=python scripts/21_stage2c_offline_review.py verify --label input_hash_check_before --out runs/stage2c_001 start=2026-11-14T22:10:56Z
+s2c_verifylabelinput_hash_check_before exit=0 end=2026-11-14T22:10:57Z
+s2c_run cmd=python scripts/21_stage2c_offline_review.py run --out runs/stage2c_001 start=2026-11-14T22:10:57Z
+s2c_run exit=0 end=2026-11-14T22:10:58Z
+s2c_verifylabelinput_hash_check_after cmd=python scripts/21_stage2c_offline_review.py verify --label input_hash_check_after --out runs/stage2c_001 start=2026-11-14T22:10:58Z
+s2c_verifylabelinput_hash_check_after exit=0 end=2026-11-14T22:10:59Z
+s2c_supplement cmd=python scripts/22_stage2c_release_reading.py --events runs/stage2c_001/retreat_event_rows.csv --traces runs/stage2b_001/branches/traces --scenes results/stage2b/scenes --out runs/stage2c_001_supplement start=2026-11-14T22:12:39Z
+s2c_supplement exit=0 end=2026-11-14T22:12:40Z
+s2c_verify3 cmd=python scripts/21_stage2c_offline_review.py verify --label input_hash_check_after_supplement --out runs/stage2c_001 start=2026-11-14T22:12:40Z
+s2c_verify3 exit=0 end=2026-11-14T22:12:41Z

@@ -194,6 +194,7 @@ Last updated 2026-11-14. Host: one rented RTX 3090 (24 GB), Ubuntu 22.04, Python
 | 1C | Does the file-vs-live RGB difference change the actions? | the difference is almost entirely ±1 intensity; swapping it in changes the action by about 5–6% of the seed-to-seed variation |
 | 2A | Exploratory recovery pilot with the fixed D500-clean policy (base policy still below the gate; see below) | restore audit pass at 18 checkpoints; 24 train scenes, 364 paired blocks, 1,092 branch continuations, all reproducibility checks identical. Descriptive only |
 | 2B | Four-arm control on 24 new train scenes: Continue, Continue with another future noise key, Refresh, Retreat–Retry (same policy, still below the gate; see below) | restore audit pass at 18 checkpoints; 336 blocks, 1,344 continuations; the noise-only arm matched Continue exactly until the old action queue was used up in 336/336 blocks. In this sample the mean outcome of Refresh was within 0.03 of both Continue arms and that of forced Retreat–Retry was 0.16–0.25 lower. Descriptive only |
+| 2C | Offline review of the saved Stage 2B records (no simulator, no GPU, nothing trained; planned after the 2B results were seen) | the 2B counts were reproduced from the raw rows; choosing an arm from three noise repeats of a state and reading it on the fourth gave scene means 0.01–0.03 above Continue, carried by 2–4 of 24 scenes; during the retreat itself the recorded grasp, lift and alignment flags never switched off. Descriptive only |
 | 3–6 | Pilot, development, calibration, final test | not run |
 
 What this does **not** show: that the base policy solves the task, that any selector helps, or that any hypothesis holds. Unit tests check Python logic on mock physics; they say nothing about manipulation success.
@@ -295,6 +296,31 @@ Stage 2A could not tell an intervention apart from a re-draw of the policy's noi
 Successful blocks: C0 93, C1 98, Refresh 94, Retreat–Retry 39. Retreat–Retry alone succeeded (C0 and Refresh both failed) in 12 blocks from 5 scenes, which is not more than the 18 blocks in which changing only the noise turned a failed Continue into a success; it failed in 53 of the 73 blocks where C0 and Refresh both succeeded. The Stage 2A direction for Refresh (+20 blocks) did not reappear on the new scenes; the two stages use different scenes and are not pooled.
 
 These are forced choices at fixed checkpoints on 24 scenes, with no interval or p-value. They are not the value or the harm rate of an online selector that intervenes only when needed, and the control arm does not separate the components of Refresh. Inputs an online model could read at each snapshot (image and proprioception history, last action, queue, time) were saved separately from ground-truth diagnostics; nothing was trained. Report: [`reports/STAGE_REPORT_stage2b_001.md`](reports/STAGE_REPORT_stage2b_001.md) (Korean); data: [`results/stage2b/`](results/stage2b/); change record: [`amendments/AMENDMENT_006_stage2b_noise_control.md`](amendments/AMENDMENT_006_stage2b_noise_control.md).
+
+**Stage 2C: what the saved Stage 2B records say, without running anything new.**
+
+```text
+base_policy_qualification: BELOW_ORIGINAL_GATE
+stage2b: COMPLETED_EXPLORATORY_ONLY
+stage2c: COMPLETED_POSTHOC_OFFLINE_DIAGNOSTIC
+observation_based_selector: NOT_TRAINED
+calibration: NOT_RUN
+final_test: NOT_RUN
+```
+
+A post hoc analysis on a CPU: the rules and the hashes of all 123 input files were written to a manifest before any new number was computed, and the inputs were unchanged afterwards. The Stage 2B tables were reproduced from the raw rows (336 blocks joined between the CSV and the scene records).
+
+*Does a favourable choice persist across noise repeats of the same state?* For every snapshot, one repeat was held out, the arm with the most successes on the other three was chosen (ties: Continue, then Refresh, then Retreat–Retry; the noise-only arm C1 is never a candidate), and its outcome was read on the held-out repeat. This uses past branch outcomes of the same state, so it is a consistency check and not a selector that could be deployed.
+
+| Mean over 24 scenes | Always C0 | Always C1 | Always Refresh | Always Retreat | choose from {C0, Refresh} | {C0, Retreat} | {C0, Refresh, Retreat} |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| Success fraction | 0.362 | 0.376 | 0.350 | 0.127 | 0.375 | 0.385 | 0.396 |
+
+When Retreat–Retry was chosen (26 held-out rows, 4 scenes) it turned a failed Continue into a success in 10 rows and a success into a failure in 1; all 10 come from two scenes. When Refresh was chosen (38 rows, 9 scenes) the counts were 9 and 3, from three scenes each. Eighteen of the 24 scenes are unaffected by any of the three rules. Rows of one scene are related and repeats are reused, so 336 rows per rule is not a sample size.
+
+*What happens around the retreat?* In none of the 336 blocks did the grasp flag turn off, the lift or alignment condition disappear, or the target cube move by 2 mm during the retreat itself. In the 69 blocks where Continue succeeded and Retreat–Retry failed, the branch always ran to step 200, and in 66 of them more steps were left when control returned than Continue had needed from the checkpoint (a comparison of step counts between different branches, which does not settle whether elapsed time matters). In 42 of the 69 the cube was held at the checkpoint: it was carried up about 4.5 cm, and when the policy later commanded the gripper to open, the cube was more than 2 cm (median 7.7 cm) from the target cube in all 42, while Continue in the same blocks released it on the target cube in all 42. This last reading was added after the main tables were seen.
+
+These are observations from step logs, not from videos, and they carry no cause: the records cannot separate the time spent on the retreat from the displacement it creates, and they do not show whether such states can be recognised from observations. Report: [`reports/STAGE_REPORT_stage2c_001.md`](reports/STAGE_REPORT_stage2c_001.md) (Korean); data: [`results/stage2c/`](results/stage2c/); change record: [`amendments/AMENDMENT_007_stage2c_offline_analysis.md`](amendments/AMENDMENT_007_stage2c_offline_analysis.md).
 
 At the same state, Refresh discarded the 4 remaining queued actions, triggered one new inference, and changed the next action by at most 0.007 in normalized units.
 

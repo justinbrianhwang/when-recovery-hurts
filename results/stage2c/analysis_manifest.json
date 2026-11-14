@@ -1,0 +1,310 @@
+{
+  "run_id": "stage2c_001",
+  "stage": "Stage 2C offline review of saved Stage 2B records",
+  "created_utc": "2026-11-14T22:10:55.739922+00:00",
+  "nature": "Post hoc development analysis, written after the Stage 2B aggregates and several individual cases were already seen and published (report stage2b_001, README). Not a confirmatory experiment and not an independent validation.",
+  "resources": {
+    "gpu": "none",
+    "paid": 0,
+    "new_scenes": 0,
+    "simulator_rollouts": 0,
+    "policy_inference": 0,
+    "training": 0,
+    "rendering": 0
+  },
+  "status": {
+    "base_policy_qualification": "BELOW_ORIGINAL_GATE",
+    "stage2a": "COMPLETED_EXPLORATORY_ONLY",
+    "stage2b": "COMPLETED_EXPLORATORY_ONLY",
+    "observation_based_selector": "NOT_TRAINED",
+    "calibration": "NOT_RUN",
+    "final_test": "NOT_RUN"
+  },
+  "data_role": {
+    "main": "Stage 2B only (stage2b_exploratory_dev, 24 scenes, seeds 10024-10047)",
+    "stage2a": "context only, reported separately, never pooled",
+    "saved_online_inputs": "existence and layout checked; not used for any model"
+  },
+  "arms": {
+    "C0": "continue",
+    "C1": "continue_alt_noise",
+    "F": "refresh",
+    "R": "retreat_retry",
+    "note": "C1 is an experimental control and not a deployable intervention candidate; it is never chosen by any rule"
+  },
+  "stage2b_code_at_run_time": {
+    "plan_sha256": "9bbe7aa53df47281c9498a406d4a6df42a92093b65caac0294ca5cb78254facf",
+    "code": {
+      "src/hci/pilot2b.py": "625ba28e118e04095a0a0adcfd5b6a1f41416c85eab7c988c7e92a8ab2ba5e34",
+      "src/hci/pilot.py": "4e730c36abdbcaa84d71c8643078b7aece7b01de958c81f4f67a75c62cebfac6",
+      "src/hci/simulation.py": "c42626728cac7eb9ebeffd5372683fc4ba01e41ef9d050f01e51134b0208fe9d",
+      "src/hci/policies.py": "d9083dfe1eff702bae087b96840d2703dbb609fb7947c01eb49864bbd0eb9157",
+      "src/hci/experiment.py": "b7425dcfcff7ff188992bde22e1e2308292aea58eb8a11c557a1ced8ff595d29",
+      "src/hci/io.py": "60f2701b2e52ba80fc7e05142a06ae56c306c4298cd749ca5e418b54cb454a44",
+      "src/hci/diagnostics.py": "49c79927d8cf5f8a208189647c75de1c67c3d4ee873fb87074db506e6534769d",
+      "src/hci/schema.py": "52ef9c07a41ef6e007b5d57429fa062bb66d56b9047e4db0d731117e08589db6",
+      "src/hci/trees.py": "5f0fc7c28a89b32175abea983ac5202ffe535a0fe105e1ff6e855299177d8a60",
+      "scripts/20_stage2b_pilot.py": "615a1ece5060a25202e47b83cc6e935f5444789cb5da126ec268c5782e345ec5",
+      "scripts/18_stage2a_pilot.py": "3739db21bf352f21b20affdd1b0c3a5214e26fc86490a427c8cceabf5a0149ee",
+      "scripts/stage2b/run.sh": "750228f7d6bd4502544a475c8bfba12e686604c2d7f477173fb261e8682c51ed"
+    },
+    "repository_head_then": "d82168be6b3f37fa96224c55f37fb0490e1e388d",
+    "note": "Records are read with the schema of this code, not with the current HEAD"
+  },
+  "analysis_code": {
+    "scripts/21_stage2c_offline_review.py": "53ca3b9a51aacbdf2298f671c867dda70e962c1ac982e0edc76dd16a8a377ba1"
+  },
+  "inputs": {
+    "files": 123,
+    "required_missing": [],
+    "trace_files": 24,
+    "sha256": {
+      "results/stage2b/backup_sha256_stage2b_001.txt": "9170d62063764fe1ed1c9aa28a595d09628c4a2bedc6de08d53d328813f11549",
+      "results/stage2b/c0_c1_queue_prefix_parity.csv": "a0c4307a3aaf22d928c1dc64a2e25c6294bc0b3048babddbe5b70682a11d15df",
+      "results/stage2b/commands_stage2b_001.status": "87f31f30b58bf9b2462f38b3ca4cba07f3a1ec07dbde6893dc9f16a9c7d989a5",
+      "results/stage2b/dataset.json": "9da08c8b45df162f3a0a1995866355650913bd60725a9b8e82eb52c4b05767bb",
+      "results/stage2b/inference_step_seed_trace.csv": "7171b866883d844c05f08b70f845b59e6b009770d834f566b49359d37a2e88fc",
+      "results/stage2b/observation_fields.json": "67cd36ad488c065fde18eaf816e2615786bcac0f7a417abb283436e93816f52b",
+      "results/stage2b/pair_outcomes_four_arm.csv": "5def797cc9d7c4b3a9b222b40ab0eb8dde92308984e8c844ec25eb94638f2652",
+      "results/stage2b/pair_summary.csv": "96cc96304f2b6ce18ecf974b1ca9447e3b4567fa6379f34e3fbc1792288ca407",
+      "results/stage2b/plan.json": "9bbe7aa53df47281c9498a406d4a6df42a92093b65caac0294ca5cb78254facf",
+      "results/stage2b/reference_scene_keys.json": "5aa107fb1e4ab019467b7a34480526f6c08f65aaa3535026f37632956db1dc22",
+      "results/stage2b/refresh_retreat_complementarity.csv": "d97c8041b0a153f9e57f14ecd9ae93251468df9cf81a22d67fac87be7e7e6751",
+      "results/stage2b/restore_audit.json": "006d4b234883ee12bd8e4d09390b2b47147e2bf346479b04a5028bce59afa1a6",
+      "results/stage2b/scale_decision.json": "f375592a36715b553b13a68ea88c3527ed3c99c74862ec4dacf840f9fffd942b",
+      "results/stage2b/scene_equal_weight_summary.csv": "3d3a6e99a0f07a6e96e27732308271e50a81ffc8aa03a99fd144b400249e4e34",
+      "results/stage2b/scenes/10024.json": "36e26cc912d7ffc9dc94c87807e523d41899a23350077c88208c0d8042fb6a67",
+      "results/stage2b/scenes/10025.json": "4e760b5c5cbaef3918d783b0e7eb367c2f9a8e691c7ef7cd6c0a403101f15f70",
+      "results/stage2b/scenes/10026.json": "791899dadd297745bee6fe9c6876d7967905eb87e0a22fe9250690d9d949bca6",
+      "results/stage2b/scenes/10027.json": "9e4bda2f1f4284269cf65867caed07e6c474294b35ce4f2078e379a2377970d7",
+      "results/stage2b/scenes/10028.json": "9cf660809285b375803d9ff37631acd9c840448e2bc5cd8f85e7c8f7d4fc4b6f",
+      "results/stage2b/scenes/10029.json": "d4907666a849083fbbc9e0dce481649793f8c7aae07fa8fb570ccd530f25ebee",
+      "results/stage2b/scenes/10030.json": "be1f27e09c98b99de593975b93d6e347249cbbe79f24aa443abda8fa3d80a877",
+      "results/stage2b/scenes/10031.json": "3df95681f825d246519b5740056b29c999f3844a88d99092818151f301965a93",
+      "results/stage2b/scenes/10032.json": "b1833dd9b88afc497ade32f66737a3eb6633d6b3c8c1882f23fdffa2f6b5e581",
+      "results/stage2b/scenes/10033.json": "c38041784d23aeb06cadee6f9ac640227dda3612e97cb1210110f9d4e52af1f5",
+      "results/stage2b/scenes/10034.json": "7b46f5644a4ea1978859f7864cc5a226048a34716b6c56d748e8b8fe0534c318",
+      "results/stage2b/scenes/10035.json": "db6fb36640df0efca1531631e4e2072bac6a60920ac2217426004e78bc396f20",
+      "results/stage2b/scenes/10036.json": "876f0ff0cbb207b6a72f9d7d1484ee5af6bf409e4b8cbcfe64937b62397cb238",
+      "results/stage2b/scenes/10037.json": "7010647b26b3a19cd7042bda9c4d4541da96d2d4ef0a8ac58f97814335164642",
+      "results/stage2b/scenes/10038.json": "dcbbfb48b97c79876dd316a2927b658df73e2fcfcf3ad74ad60a18365835ba53",
+      "results/stage2b/scenes/10039.json": "1641f5fd487eaf561a9f42466a3a776694dca26230992c64b6fd1f2e3e9b78c3",
+      "results/stage2b/scenes/10040.json": "b22ff45fbb24d5889085b9ca4808b07f928ef0ca1a39b18a7bdbb412f33018ff",
+      "results/stage2b/scenes/10041.json": "f39f8eb4971eac4853d2835d7f2d81707f9b54fed7bbad22fe53ea34f548af4f",
+      "results/stage2b/scenes/10042.json": "7c5032ea54aa1c4c6f6786a52374cd9b572bd2890e775aea7fb3f071383feb30",
+      "results/stage2b/scenes/10043.json": "4bfd16241edbfb664232750c46202725ebb6ff106cb6cfc11c0efdf8df429f34",
+      "results/stage2b/scenes/10044.json": "4ea1e505c19434c00c09a44e7d17cf80f966e5c0f8206dc20e48522bbde87b38",
+      "results/stage2b/scenes/10045.json": "39f04f802b1ec9cb897c72b3055305eddf99284d9a5e03e46cf6a2ced9fac5fa",
+      "results/stage2b/scenes/10046.json": "fe6b4459aff69c1b7ac0d9727abca88142cd1370e521b38f04fe4a81c75f89c6",
+      "results/stage2b/scenes/10047.json": "4085a82cc64da97c9e67b6a1d6689f60cf0286c97ecadef1163071734327fe39",
+      "results/stage2b/scenes.json": "231fda6f6b5c47ab51b41e5fca8717d13ec248d910954ec22df9b932c411ba0c",
+      "results/stage2b/skip_reasons.csv": "5fb6dbf4f66c6f9b7048c7e58dd599b4f3de21fd31b78084059b394851b96849",
+      "results/stage2b/summary.json": "8f6b3b6ff854fa2c6f0593da9b625fe0b231c30a03776075d54fd5753aabe0fd",
+      "results/stage2b/techcheck.json": "c06147762921a24d7beb56e4b0a92000c4525fb7d54cead809b50ce3a179b076",
+      "results/stage2b/videos/scene10024_t12_r0_continue.mp4": "974d6ef0e7dbfd95f126b319046664f82d3b110a711d364636f9ab4f6b11834b",
+      "results/stage2b/videos/scene10024_t12_r0_continue_alt_noise.mp4": "9954216c84c86083a5dfa3fc215a7623a6c2f908131c4024caf22a7af26f5767",
+      "results/stage2b/videos/scene10024_t12_r0_refresh.mp4": "2c6eec858559c12f457e24c30629364192c72fd1fe9dc456df13c509ad73de49",
+      "results/stage2b/videos/scene10024_t12_r0_retreat_retry.mp4": "9c73288ce77fb0f03a0024b2512dae133700a56269cfa5aeb646fac72c397641",
+      "results/stage2b/videos/scene10025_t12_r0_continue.mp4": "e74e947e8e610559eeb3edeb0b85aed7b20c334284710f64ae34950d00b86301",
+      "results/stage2b/videos/scene10025_t12_r0_continue_alt_noise.mp4": "d6802f54cab134d09de18544b8aa08feae8470aae139a9fa9057328e03d3ea17",
+      "results/stage2b/videos/scene10025_t12_r0_refresh.mp4": "d65a867e37a55e1dbffdb5a5f9c4275977fca176f9251ad87b3cf226b3e6fdb4",
+      "results/stage2b/videos/scene10025_t12_r0_retreat_retry.mp4": "75675d54f7378cacf367094d4489ccbd6a1f9532121c2fbae658777885b30166",
+      "runs/stage2b_001/branches/traces/10024.npz": "afc8510be38ca5e2579fb2a670d90eecbc570964572c4103c3616a7a750739f0",
+      "runs/stage2b_001/branches/traces/10025.npz": "72f046b9e755112f5bcc858e9cfed9aab55d8b4d32f458fb3f9102b46d335257",
+      "runs/stage2b_001/branches/traces/10026.npz": "8f7c2018de62126eaa71c4bf99b31e9fd987161f3d2cf6e648a5d81ce5dfa0fb",
+      "runs/stage2b_001/branches/traces/10027.npz": "42539b0c4a106931f0d2178ca5104a6cc51c82cfdfa8924ffc0ad9d1faffcc17",
+      "runs/stage2b_001/branches/traces/10028.npz": "d3c855ada6acfabfc605f31eaf143f62a5f3303fe2a818815f6dabd3245a1a2f",
+      "runs/stage2b_001/branches/traces/10029.npz": "5bcc44325b264584a1103b91b343d2944f24c795113e093d2244b9df1ceb6e26",
+      "runs/stage2b_001/branches/traces/10030.npz": "d47cc7ff39bfd68ac905f5c824bf5131cc6bd53d5493085d10a14b4729bfce79",
+      "runs/stage2b_001/branches/traces/10031.npz": "f4f207a27d31854f8b54a6a50197a3adbfb8ca6a815f59829b1e6681ba6c15e7",
+      "runs/stage2b_001/branches/traces/10032.npz": "216c87d9d643f55ce31c5e4015be05f0a40a9fc022f5bc078f4afc15b0181dee",
+      "runs/stage2b_001/branches/traces/10033.npz": "bebecdf6860625d4504948f3887fc9caa934cdaad7521f65d8cbe606cae9a741",
+      "runs/stage2b_001/branches/traces/10034.npz": "bd5b7947d8058aa4a08d79dce855e422b06c00093647be8111515c47466f2ca8",
+      "runs/stage2b_001/branches/traces/10035.npz": "6c769a8ae92354b078b7674d2b3140b3d0e9ac47c80ecbbdded17e3cb25c363a",
+      "runs/stage2b_001/branches/traces/10036.npz": "308171b365491a6f249383e6017ac7aba1e7454d0e04a0a0b6218559155d02dc",
+      "runs/stage2b_001/branches/traces/10037.npz": "97380104506860b53fee404d59550e78e19e22d3420449584b8b1275b3724fda",
+      "runs/stage2b_001/branches/traces/10038.npz": "1f2fc707efdcce33e39aa5628b0ebf75d3ac0f618d91f95cf103598d03cf5bce",
+      "runs/stage2b_001/branches/traces/10039.npz": "83a6dc1327a099119443cf79b8b611ce95daa780ed0594271164d057b0cef1ce",
+      "runs/stage2b_001/branches/traces/10040.npz": "1d5330268ace781fe46f7c4e617e0b4a280b9c4ee0ebfe84af00abd25aa24314",
+      "runs/stage2b_001/branches/traces/10041.npz": "c6cc04d1b1d227d1ef121aa73e2797ced17d3a28f15e071058fb67dc78140a81",
+      "runs/stage2b_001/branches/traces/10042.npz": "f96b292e141cdbc8dfa8263ed6a4c3475a5f1232a7872b71de7a1521e8ace8fd",
+      "runs/stage2b_001/branches/traces/10043.npz": "3a2a3573cd8446d0b2db614d5768e99eef81d86d2a89ec6dfbbecd36e971a7e5",
+      "runs/stage2b_001/branches/traces/10044.npz": "fd65fe3b1c0187a07bb93979cf978db5af3b32d18558af7729133ce8fcdc8915",
+      "runs/stage2b_001/branches/traces/10045.npz": "ec75a49498d37626142d3001dba1cacc70833a1f73f3e3b2f82a0887e889c287",
+      "runs/stage2b_001/branches/traces/10046.npz": "ff70b0dfcb17f700dcc34525077d30a764cc729f4d6e59f04681367b2f481207",
+      "runs/stage2b_001/branches/traces/10047.npz": "0945a930f190fc36a12d7f12952d25f2744eee58049c7f7b77cd7f55477315e5",
+      "runs/stage2b_001/branches/inputs/10024.npz": "d9635d02f6a3ef29d86eb9d710b735141d93f24f975bb6cff31732e666eee756",
+      "runs/stage2b_001/branches/inputs/10025.npz": "c78b06f9180eec615a3166794d8fd3d31d0b98e71ee2d11d25914da87d096542",
+      "runs/stage2b_001/branches/inputs/10026.npz": "7b4a3c61b7cad122e9f0a0ec8ab417d75394a867244311e29af5277d37552b37",
+      "runs/stage2b_001/branches/inputs/10027.npz": "d5221694dbda2af2b8fdda0f6a3f3aee1676a6c2c909e7be23aa15be56db4419",
+      "runs/stage2b_001/branches/inputs/10028.npz": "1962a64fede4cdd2fadace42482a3a64d7f3bc713ac237a94bc26c1d01c6f9c3",
+      "runs/stage2b_001/branches/inputs/10029.npz": "3d0fb3f7e689be76fe36af56f30140a0aeca278b3d9027388296817ca44c244a",
+      "runs/stage2b_001/branches/inputs/10030.npz": "4fb8963a334548664a61ac03e0506777e82a1b97455152de826194f4500466f7",
+      "runs/stage2b_001/branches/inputs/10031.npz": "3dbcfa2e74c35d427c865170a08139d78b4e09dda6798b33ec51c77a2d2f8992",
+      "runs/stage2b_001/branches/inputs/10032.npz": "9b82b1b669e39379223335394c061e495bec17f5e93f20f6a2b6463b2b1c79db",
+      "runs/stage2b_001/branches/inputs/10033.npz": "17363b7e578ec35f798510a2696e9c6b45e54878bbbdd7fad81d64be2eec82ca",
+      "runs/stage2b_001/branches/inputs/10034.npz": "3b600db47eb3158572419754f7684d84fb6f503389c4e116b395ecef07231406",
+      "runs/stage2b_001/branches/inputs/10035.npz": "410a425b794c3332a4100976d856a0133099d76202e129f167e5c24e45f57c1e",
+      "runs/stage2b_001/branches/inputs/10036.npz": "94f4d3f6920b55cea5459f600e3cb2faac64cf873ada4ab63d3b483ad51d25c7",
+      "runs/stage2b_001/branches/inputs/10037.npz": "f6c61ea71e9e1b275e6e815b239b5b2c810c040322fdfd93d2d4be3fb17e096b",
+      "runs/stage2b_001/branches/inputs/10038.npz": "1c937f2a357afe14bb1112c45a56601f6e38f0b60c4f3cf8f9cadf275207a2d9",
+      "runs/stage2b_001/branches/inputs/10039.npz": "c2e87bc39e62a55dcb315ddf06865a5447d17e82ba87389f0b6a3a87b479c48b",
+      "runs/stage2b_001/branches/inputs/10040.npz": "420268c8cc6fd37144136d528aa0fe86d537f6f3f82db5aaa3d6768fbb41db8d",
+      "runs/stage2b_001/branches/inputs/10041.npz": "12cadbe96193b85628d42df43cf1a182dd3bda8804587b9dabcc757c34d7a98e",
+      "runs/stage2b_001/branches/inputs/10042.npz": "bd1e015d25d46810e3d9f57cfc0123b43434981b3ebbc4e3204086bf58143e0f",
+      "runs/stage2b_001/branches/inputs/10043.npz": "4523bd3985277b96dca3a37211b3ab2bcbb1cf44a16f66f6867480ec41184dda",
+      "runs/stage2b_001/branches/inputs/10044.npz": "26b0b7119bbd184f0a05b64e60f44a0efb342dda4380d57817875d1d628cf36f",
+      "runs/stage2b_001/branches/inputs/10045.npz": "4cf9696f1a27a7ec2cc6138674eccdeed44737ac58289b907984b97ad34268d3",
+      "runs/stage2b_001/branches/inputs/10046.npz": "bbecfcd0c66d5e1b1f9e68f08dcb2d24187021319927716a43814010dc89e3df",
+      "runs/stage2b_001/branches/inputs/10047.npz": "84047f425a196177fa886f4747fa8fdb9853505c7c71aa8f8af6fd37d7289518",
+      "runs/stage2b_001/branches/scenes/10024.json": "36e26cc912d7ffc9dc94c87807e523d41899a23350077c88208c0d8042fb6a67",
+      "runs/stage2b_001/branches/scenes/10025.json": "4e760b5c5cbaef3918d783b0e7eb367c2f9a8e691c7ef7cd6c0a403101f15f70",
+      "runs/stage2b_001/branches/scenes/10026.json": "791899dadd297745bee6fe9c6876d7967905eb87e0a22fe9250690d9d949bca6",
+      "runs/stage2b_001/branches/scenes/10027.json": "9e4bda2f1f4284269cf65867caed07e6c474294b35ce4f2078e379a2377970d7",
+      "runs/stage2b_001/branches/scenes/10028.json": "9cf660809285b375803d9ff37631acd9c840448e2bc5cd8f85e7c8f7d4fc4b6f",
+      "runs/stage2b_001/branches/scenes/10029.json": "d4907666a849083fbbc9e0dce481649793f8c7aae07fa8fb570ccd530f25ebee",
+      "runs/stage2b_001/branches/scenes/10030.json": "be1f27e09c98b99de593975b93d6e347249cbbe79f24aa443abda8fa3d80a877",
+      "runs/stage2b_001/branches/scenes/10031.json": "3df95681f825d246519b5740056b29c999f3844a88d99092818151f301965a93",
+      "runs/stage2b_001/branches/scenes/10032.json": "b1833dd9b88afc497ade32f66737a3eb6633d6b3c8c1882f23fdffa2f6b5e581",
+      "runs/stage2b_001/branches/scenes/10033.json": "c38041784d23aeb06cadee6f9ac640227dda3612e97cb1210110f9d4e52af1f5",
+      "runs/stage2b_001/branches/scenes/10034.json": "7b46f5644a4ea1978859f7864cc5a226048a34716b6c56d748e8b8fe0534c318",
+      "runs/stage2b_001/branches/scenes/10035.json": "db6fb36640df0efca1531631e4e2072bac6a60920ac2217426004e78bc396f20",
+      "runs/stage2b_001/branches/scenes/10036.json": "876f0ff0cbb207b6a72f9d7d1484ee5af6bf409e4b8cbcfe64937b62397cb238",
+      "runs/stage2b_001/branches/scenes/10037.json": "7010647b26b3a19cd7042bda9c4d4541da96d2d4ef0a8ac58f97814335164642",
+      "runs/stage2b_001/branches/scenes/10038.json": "dcbbfb48b97c79876dd316a2927b658df73e2fcfcf3ad74ad60a18365835ba53",
+      "runs/stage2b_001/branches/scenes/10039.json": "1641f5fd487eaf561a9f42466a3a776694dca26230992c64b6fd1f2e3e9b78c3",
+      "runs/stage2b_001/branches/scenes/10040.json": "b22ff45fbb24d5889085b9ca4808b07f928ef0ca1a39b18a7bdbb412f33018ff",
+      "runs/stage2b_001/branches/scenes/10041.json": "f39f8eb4971eac4853d2835d7f2d81707f9b54fed7bbad22fe53ea34f548af4f",
+      "runs/stage2b_001/branches/scenes/10042.json": "7c5032ea54aa1c4c6f6786a52374cd9b572bd2890e775aea7fb3f071383feb30",
+      "runs/stage2b_001/branches/scenes/10043.json": "4bfd16241edbfb664232750c46202725ebb6ff106cb6cfc11c0efdf8df429f34",
+      "runs/stage2b_001/branches/scenes/10044.json": "4ea1e505c19434c00c09a44e7d17cf80f966e5c0f8206dc20e48522bbde87b38",
+      "runs/stage2b_001/branches/scenes/10045.json": "39f04f802b1ec9cb897c72b3055305eddf99284d9a5e03e46cf6a2ced9fac5fa",
+      "runs/stage2b_001/branches/scenes/10046.json": "fe6b4459aff69c1b7ac0d9727abca88142cd1370e521b38f04fe4a81c75f89c6",
+      "runs/stage2b_001/branches/scenes/10047.json": "4085a82cc64da97c9e67b6a1d6689f60cf0286c97ecadef1163071734327fe39",
+      "data_backup/stage2b_001/stage2b_out.tgz": "7204cbebad51f5f38c59bfa1f4dd39a38563a76501e4b918582723b0f57511c1"
+    }
+  },
+  "rules": {
+    "join_key": "(scene, checkpoint, block_repeat_id); duplicates, gaps, conflicts and a block tied to another snapshot are errors",
+    "outcomes": "strictly 0 or 1; booleans strictly True or False",
+    "pairs": [
+      "F vs C0",
+      "R vs C0",
+      "C1 vs C0",
+      "F vs C1",
+      "R vs C1",
+      "R vs F"
+    ],
+    "primary_weighting": "mean within a scene over its reached checkpoints and repeats, then over the 24 scenes",
+    "repeat_transfer": {
+      "candidate_sets": {
+        "G_CF": [
+          "C0",
+          "F"
+        ],
+        "G_CR": [
+          "C0",
+          "R"
+        ],
+        "G_CFR": [
+          "C0",
+          "F",
+          "R"
+        ]
+      },
+      "choice": "largest number of successes over the three other repeats",
+      "ties": "C0 first, then F, then R",
+      "held_out": "every repeat 0..3 of every snapshot; the held-out outcome is never used for the choice",
+      "C1": "reported on the same held-out repeat as an additional reference only",
+      "meaning": "consistency of the arm ranking across noise repeats of the SAME state. Uses past branch outcomes, so it cannot be deployed. Not generalisation to new scenes, not an observation-based selector, not a policy evaluation, not a causal test."
+    },
+    "events": {
+      "time_axis": "trunk row i = state after step i+1; branch row i = state after step checkpoint+i+1; checkpoint state = trunk row checkpoint-1",
+      "retreat_end": "retreat.steps_used of the block, cross-checked with the first inference step of the R arm; never a fixed number",
+      "thresholds": {
+        "NEAR_M": 0.03,
+        "ALIGN_M": 0.02,
+        "LIFT_M": 0.01,
+        "source": "src/hci/diagnostics.py at the Stage 2B code hash (existing labels)",
+        "B_MOVED_M": 0.002,
+        "B_MOVED_M_note": "set here before the run; describes displacement only"
+      },
+      "flags": [
+        "grasp_loss_during_retreat",
+        "grasp_kept_through_retreat",
+        "grasp_loss_after_return",
+        "grasp_loss_after_return_while_on_cubeB",
+        "lift_lost_during_retreat",
+        "alignment_lost_during_retreat",
+        "near_lost_during_retreat",
+        "no_reapproach_before_horizon",
+        "never_grasped_after_return",
+        "retained_grasp_no_success_by_horizon",
+        "aligned_after_return_no_success",
+        "success_after_return",
+        "ended_during_retreat",
+        "cubeB_moved_during_retreat",
+        "cubeB_moved_after_return",
+        "ended_at_horizon",
+        "insufficient_trace"
+      ],
+      "applied_to": "all blocks; sets are formed from outcomes afterwards",
+      "not_claimed": [
+        "a grasp flag that turns off is not \"the cube was dropped\" (a normal placement also turns it off)",
+        "a failure at step 200 is not \"the time spent on the retreat was the only cause\"",
+        "retreat steps used is not \"that many extra steps would have given success\"",
+        "no out-of-distribution or off-manifold cause is established",
+        "cube B displacement is not a confirmed collision (no force or contact data)"
+      ]
+    },
+    "cases": "picked after the tables by a fixed rule (first ascending block per set and flag; first snapshot with a pattern in >= 2 repeats)",
+    "excluded": [
+      "p-values",
+      "confidence intervals",
+      "LTT",
+      "risk guarantees",
+      "threshold search on these data",
+      "best-of-arms presented as executable"
+    ]
+  },
+  "expected_for_recount_only": {
+    "scenes": 24,
+    "snapshots": 84,
+    "blocks": 336,
+    "continuations": 1344,
+    "success": {
+      "C0": 93,
+      "C1": 98,
+      "F": 94,
+      "R": 39
+    },
+    "sets": {
+      "C0=1,R=0": [
+        69,
+        13
+      ],
+      "C0=0,R=1": [
+        15,
+        5
+      ],
+      "C0=1,F=1,R=0": [
+        53,
+        11
+      ],
+      "C0=0,F=0,R=1": [
+        12,
+        5
+      ],
+      "C0=C1=F=0,R=1": [
+        8,
+        4
+      ]
+    }
+  },
+  "environment": {
+    "python": "3.14.4 (tags/v3.14.4:23116f9, Apr  7 2026, 14:10:54) [MSC v.1944 64 bit (AMD64)]",
+    "numpy": "2.5.4",
+    "platform": "Windows-11-10.0.26300-SP0"
+  },
+  "pass": true
+}
