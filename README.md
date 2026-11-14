@@ -168,7 +168,7 @@ Single-environment CPU physics was chosen so that branch restoration can be veri
 
 ## Current status
 
-Last updated 2026-11-13. Host: one rented RTX 3090 (24 GB), Ubuntu 22.04, Python 3.10, torch 2.6.0+cu124, sapien 3.0.3. Full record with commands, exit codes and hashes: [`reports/STAGE_REPORT_stage0-2_001.md`](reports/STAGE_REPORT_stage0-2_001.md) (Korean).
+Last updated 2026-11-14. Host: one rented RTX 3090 (24 GB), Ubuntu 22.04, Python 3.10, torch 2.6.0+cu124, sapien 3.0.3. Full record with commands, exit codes and hashes: [`reports/STAGE_REPORT_stage0-2_001.md`](reports/STAGE_REPORT_stage0-2_001.md) (Korean).
 
 | Stage | Item | Result |
 |---|---|---|
@@ -192,6 +192,7 @@ Last updated 2026-11-13. Host: one rented RTX 3090 (24 GB), Ubuntu 22.04, Python
 | 1C | **Policy on scenes it was trained on vs. demonstration scenes it never saw** (10 each, closed loop) | **6/10 vs. 0/10** (5/10 vs. 0/10 with the plain runtime reset). Small sample: a direction, not a rate |
 | 1C | Generated actions on recorded histories, 4 fixed noise seeds | error about 3× larger and denoising loss about 46× larger on unseen demonstrations |
 | 1C | Does the file-vs-live RGB difference change the actions? | the difference is almost entirely ±1 intensity; swapping it in changes the action by about 5–6% of the seed-to-seed variation |
+| 2A | Exploratory recovery pilot with the fixed D500-clean policy (base policy still below the gate; see below) | restore audit pass at 18 checkpoints; 24 train scenes, 364 paired blocks, 1,092 branch continuations, all reproducibility checks identical. Descriptive only |
 | 3–6 | Pilot, development, calibration, final test | not run |
 
 What this does **not** show: that the base policy solves the task, that any selector helps, or that any hypothesis holds. Unit tests check Python logic on mock physics; they say nothing about manipulation success.
@@ -247,6 +248,27 @@ At 30 states prepared by replaying demonstration prefixes (10 in free space, 20 
 At the pinned ManiSkill commit, when the replay of one source episode fails, the converter does not save it but keeps its record buffer, and the next saved trajectory then starts with the failed attempt, a reset entry with one sampled action, and only afterwards the intended episode. Shapes and the final success flag look normal. Five of the 545 converted trajectories held by this project have this form, including one of the 100 that the Stage 1B policy was trained on. A content validator ([`src/hci/integrity.py`](src/hci/integrity.py)) now checks every trajectory against its source episode, the affected trajectories are excluded rather than trimmed, and training refuses to start without a passing data gate. `scripts/02_prepare_demos.sh` refuses to run until that check is acknowledged.
 
 The Stage 1B result (4/100) is unchanged and is now labelled as a legacy policy trained on data that contained one defective demonstration. The new result differs from it in two ways at once (defect removed, 100 → 500 demonstrations) and was qualified on a different seed set, so neither effect is established separately. On the 20 diagnostic scenes of Stage 1C the new policy solved 7 of 10 training scenes and 3 of 10 scenes held out of training (before: 6 and 0). Reports: [`reports/STAGE_REPORT_stage1d_001.md`](reports/STAGE_REPORT_stage1d_001.md), [`reports/STAGE_REPORT_stage1d_clean_002.md`](reports/STAGE_REPORT_stage1d_clean_002.md) (Korean); changes: [`amendments/AMENDMENT_003_stage1d_d500_data_expansion.md`](amendments/AMENDMENT_003_stage1d_d500_data_expansion.md), [`amendments/AMENDMENT_004_stage1d_data_integrity_clean_rebuild.md`](amendments/AMENDMENT_004_stage1d_data_integrity_clean_rebuild.md).
+
+**Stage 2A: a small exploratory recovery pilot on the policy that is below the gate.**
+
+```text
+base_policy_qualification: BELOW_ORIGINAL_GATE (37/100 < 50/100)
+exploratory_recovery_pilot: AUTHORIZED_BY_STAGE2A_SCOPE
+formal_study_ready: NOT_ESTABLISHED
+calibration: NOT_RUN
+final_test: NOT_RUN
+```
+
+The qualification verdict is unchanged. After seeing it, a separate, limited scope was opened: keep the 80k policy exactly as it is and ask whether Refresh and Retreat–Retry ever help or hurt at fixed checkpoints. This is a follow-up exploration, not a pre-registered test. The runner accepts only the policy, config, code and scene list whose hashes are in its plan.
+
+The restore audit was rerun for this policy and extended to the whole runtime state (simulator, counters, policy history, unexecuted action queue, RNG, and the observation the environment returns after the replay): every difference was 0.0 at 18 checkpoints. Then the first 24 train scenes were branched at steps 12, 52, 92 and 132 with 4 noise repeats. Each block is compared with the Continue of the same block.
+
+| 364 blocks from 24 scenes | Rescue | Harm | Both succeed | Both fail | Scenes with a rescue | Scenes with a harm |
+|---|---:|---:|---:|---:|---:|---:|
+| Refresh | 30 | 10 | 57 | 267 | 10 | 8 |
+| Retreat–Retry | 33 | 26 | 41 | 264 | 9 | 8 |
+
+Harm is counted over the 67 blocks whose Continue succeeded, Rescue over the 297 whose Continue failed. Blocks of one scene share their past and are not independent, so no interval is given. Continue itself changes with the future noise (in 14 of 91 snapshots its outcome differed between repeats), and both interventions also draw other noise than their block's Continue; a reference computed afterwards from the saved records shows flips of a similar size at the earliest checkpoint. These counts therefore do not separate the effect of an intervention from the effect of re-drawn noise, and they are not the value or the harm rate of an online selector. Report: [`reports/STAGE_REPORT_stage2a_001.md`](reports/STAGE_REPORT_stage2a_001.md) (Korean); data: [`results/stage2a/`](results/stage2a/); change record: [`amendments/AMENDMENT_005_stage2a_exploratory_scope.md`](amendments/AMENDMENT_005_stage2a_exploratory_scope.md).
 
 At the same state, Refresh discarded the 4 remaining queued actions, triggered one new inference, and changed the next action by at most 0.007 in normalized units.
 

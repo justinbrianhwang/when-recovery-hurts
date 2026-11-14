@@ -1,0 +1,217 @@
+{
+  "run_id": "stage2a_001",
+  "stage": "Stage 2A exploratory recovery pilot",
+  "created_utc": "2026-11-14T16:54:46.258108+00:00",
+  "pass": true,
+  "problems": [],
+  "status": {
+    "base_policy_qualification": "BELOW_ORIGINAL_GATE (37/100 < 50/100)",
+    "exploratory_recovery_pilot": "AUTHORIZED_BY_STAGE2A_SCOPE",
+    "formal_study_ready": "NOT_ESTABLISHED",
+    "calibration": "NOT_RUN",
+    "final_test": "NOT_RUN"
+  },
+  "role": "stage2a_exploratory_dev",
+  "nature": "Follow-up exploration decided after the qualification result. Not a pre-registered confirmatory experiment.",
+  "policy": {
+    "path": "artifacts/policies/stack_1d_s1_d500_clean_v1_i080000",
+    "weights_sha256": "faacd2d86464c725a4fb95563a5ed5808019a8b420795b9a2a931822ed89db0e",
+    "policy_meta_sha256": "9976053598632fd58c48b89c9dffabf8f97b3d18ccf5062127c9c0be3de8a468",
+    "source_checkpoint_sha256": "fcbd79737c72a9dbd3d9e7e9f3d90dee8a10b15fdfe70cda5bd1fd589fe001fc",
+    "verified_against": {
+      "file": "results/stage1d_clean/backup_sha256_stage1d_clean_002.txt",
+      "sha256": "8ea55c5f616f6eed141c767f97f9f07710005989571c06e239b1ca0657042233"
+    },
+    "qualification": {
+      "file": "runs/qualify_stack_1d_s1_d500_clean_v1/policy_eval.json",
+      "set": "policy_qualify_B",
+      "success_once": 37,
+      "n": 100,
+      "success_at_end": 31
+    },
+    "settings": {
+      "obs_horizon": 2,
+      "act_horizon": 8,
+      "pred_horizon": 16
+    },
+    "unchanged": "weights, schedule, DDPM steps, action clip"
+  },
+  "config": {
+    "path": "configs/stackcube.yaml",
+    "file_sha256": "b145ca59607f4edf45f20bd45624f1bd4c8ff028a035ee4ab12b7de40bb08d8b",
+    "config_sha256": "c8cc0a581f7d4e9de4042490bd6939e9b80da1dd333df081cb9107c29427dfbd",
+    "env": {
+      "id": "StackCube-v1",
+      "robot_uid": "panda_wristcam",
+      "sim_backend": "physx_cpu",
+      "num_envs": 1,
+      "obs_mode": "rgb",
+      "control_mode": "pd_ee_delta_pos",
+      "horizon": 200
+    },
+    "protocol": {
+      "max_interventions": 1,
+      "success_definition": "success_once_absorbing",
+      "min_intervention_step": 12,
+      "decision_stride": 4,
+      "minimum_post_retreat_steps": 8
+    },
+    "retreat": {
+      "mode": "up",
+      "distance_m": 0.05,
+      "max_translation_per_step_m": 0.005,
+      "max_steps": 40,
+      "arrival_tolerance_m": 0.005,
+      "lookback_steps": 12
+    },
+    "audit": {
+      "replay_steps": 20,
+      "state_atol": 1e-06,
+      "action_atol": 1e-06,
+      "observation_atol": 1.0
+    }
+  },
+  "data_provenance": {
+    "manifest": "runs/stage1d_clean_002/data/train_d500_clean_manifest.json",
+    "manifest_sha256": "30615b3326bc6b90e153169a1f94e3493f4d81cea110ff49d621298e44ddbd1b",
+    "train_h5_sha256": "93416a4a8b7e2203d4cca1fe3c5d1e577830fa720ea4f3855021a168ea65f342",
+    "name": "train_d500_clean_v1"
+  },
+  "code": {
+    "src/hci/pilot.py": "4e730c36abdbcaa84d71c8643078b7aece7b01de958c81f4f67a75c62cebfac6",
+    "src/hci/simulation.py": "c42626728cac7eb9ebeffd5372683fc4ba01e41ef9d050f01e51134b0208fe9d",
+    "src/hci/policies.py": "392695d1ed9039b372a74903f392fe11be5e53f0d1448166ab61a2fdd6133791",
+    "src/hci/experiment.py": "b7425dcfcff7ff188992bde22e1e2308292aea58eb8a11c557a1ced8ff595d29",
+    "src/hci/io.py": "60f2701b2e52ba80fc7e05142a06ae56c306c4298cd749ca5e418b54cb454a44",
+    "src/hci/diagnostics.py": "49c79927d8cf5f8a208189647c75de1c67c3d4ee873fb87074db506e6534769d",
+    "src/hci/schema.py": "52ef9c07a41ef6e007b5d57429fa062bb66d56b9047e4db0d731117e08589db6",
+    "src/hci/trees.py": "5f0fc7c28a89b32175abea983ac5202ffe535a0fe105e1ff6e855299177d8a60",
+    "scripts/18_stage2a_pilot.py": "3739db21bf352f21b20affdd1b0c3a5214e26fc86490a427c8cceabf5a0149ee",
+    "scripts/stage2a/run.sh": "cad96dce788c34ebdacc28128acd5d7af7cc6edf51891df75eb40bd256a2bf25"
+  },
+  "upstream_commit": "a4a4f9272ad64b1564035874b605ceb687b63ed8",
+  "splits": {
+    "path": "configs/splits.json",
+    "file_sha256": "828b8f131d85e7ba6a3e720cfdaff022165f6848dd29e0b714bba609797e3224",
+    "digest": "a61fa30d96e63e80fc2b3d97c4dd6a3221f274654c027b455cecba1301a64872"
+  },
+  "policy_eval_splits": {
+    "path": "configs/policy_eval_splits.json",
+    "file_sha256": "579d59ade70f9fe9a6262abaf2598c091da6cb2d6d1a1e9964183965ce6128f0"
+  },
+  "scenes": {
+    "rule": "first 24 seeds of splits/train in ascending order; a seed declared for any other use, or whose initial cube placement equals a demonstration or another declared scene, is replaced by the next train seed. Outcomes of this policy are never an input.",
+    "list": [
+      10000,
+      10001,
+      10002,
+      10003,
+      10004,
+      10005,
+      10006,
+      10007,
+      10008,
+      10009,
+      10010,
+      10011,
+      10012,
+      10013,
+      10014,
+      10015,
+      10016,
+      10017,
+      10018,
+      10019,
+      10020,
+      10021,
+      10022,
+      10023
+    ],
+    "seed_level_replaced": [],
+    "prior_use_with_other_policies": [
+      {
+        "run": "branches_smoke_001",
+        "scenes": [
+          10000,
+          10001
+        ],
+        "policy_sha256": "04dfc563e5d6f2837104d543901fbe492252cbc7fc0b04748498d6aa4a50eba7",
+        "same_policy_as_this_pilot": false
+      }
+    ],
+    "scene_identity": "server step `scenes` (cube placement within 1e-05 m of a reference counts as identical); calibration and Test seeds are compared by seed only and are never reset",
+    "shrink_ladder": [
+      24,
+      12,
+      2
+    ],
+    "shrink_rule": "prefix of the list, chosen from measured time and cost of the first two scenes only"
+  },
+  "audit": {
+    "seeds": [
+      100,
+      101,
+      102,
+      103,
+      104
+    ],
+    "also_demonstration_scenes": [
+      100,
+      101,
+      102,
+      103,
+      104
+    ],
+    "use": "engineering check of restore; not a performance sample and not a denominator",
+    "protocol": "at each reached checkpoint: Continue 20 steps; restore, repeat; Retreat branch to the end, restore, repeat; Refresh branch to the end, restore, repeat. Compared: simulator state, step counter, policy history, unexecuted queue, last action, action log, TCP history, flags, intervention and retreat records, RNG digests, and the observation returned by the environment after the prefix replay."
+  },
+  "checkpoints": [
+    12,
+    52,
+    92,
+    132
+  ],
+  "repeats": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "max": {
+    "scenes": 24,
+    "snapshots": 96,
+    "paired_blocks": 384,
+    "continuations": 1152,
+    "first_two_scenes_continuations": 96
+  },
+  "coupling": {
+    "past": "identical for the three choices: same scene seed, same executed action prefix (restored by prefix replay), same policy history and queue",
+    "future_noise": "diffusion noise of an inference call is keyed by (scene, physical step of the call, repeat); it does not depend on the choice or on execution order",
+    "continue": "keeps the remaining queue; its next inference is at the natural chunk boundary",
+    "refresh": "discards the remaining queue and infers at the checkpoint step, so its calls happen at other steps than Continue: not the same noise draws, by definition of the choice",
+    "retreat_retry": "physical control steps charged to the same 200-step budget, then inference; no extra time, no state reset",
+    "reference": "each (scene, checkpoint, repeat) block is compared with the Continue of the same block only"
+  },
+  "reproducibility_checks": {
+    "every_snapshot": "Continue with repeat 0 must reproduce the never-restored trunk (actions, outcome, steps, final state)",
+    "first_two_scenes": "Continue with repeat 1 is run a second time after all other branches of the snapshot",
+    "on_mismatch": "flagged, never subtracted; interpretation is withheld"
+  },
+  "video_rule": "first two scenes, first usable checkpoint, repeat 0, the three choices (at most 6 files)",
+  "budget": {
+    "stage2a_cap_usd": 1.5,
+    "kept_separate_from": "Stage 1D cumulative about 1.13 USD",
+    "cost_basis": "credit difference, not hourly price x time"
+  },
+  "not_run_in_this_stage": [
+    "new training",
+    "data expansion",
+    "checkpoint re-selection",
+    "qualification",
+    "calibration",
+    "final Test",
+    "intervention predictor / Q training",
+    "candidate (21) evaluation",
+    "5,760-continuation pilot"
+  ]
+}

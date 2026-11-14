@@ -1,0 +1,2848 @@
+{
+  "scene": 10019,
+  "role": "stage2a_exploratory_dev",
+  "planned_checkpoints": [
+    12,
+    52,
+    92,
+    132
+  ],
+  "repeats": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "initial_state": {
+    "t": 0,
+    "tcp": [
+      0.01565224677324295,
+      -0.017301302403211594,
+      0.18784041702747345
+    ],
+    "cubeA": [
+      0.1057479977607727,
+      -0.21167001128196716,
+      0.019999999552965164
+    ],
+    "cubeB": [
+      0.07285784929990768,
+      0.005487941205501556,
+      0.019999999552965164
+    ],
+    "tcp_to_cubeA": 0.27215224504470825,
+    "cubeA_to_cubeB_xy": 0.21963456273078918,
+    "is_cubeA_grasped": false,
+    "is_cubeA_on_cubeB": false,
+    "is_cubeA_static": true,
+    "success": false,
+    "action": null
+  },
+  "trunk": {
+    "policy_noise_key": "(scene, physical_step, repeat=0)",
+    "success": 0,
+    "steps": 200,
+    "reason": "horizon",
+    "policy_calls": 25,
+    "policy_inference_seconds": 20.883849991019815,
+    "stage": {
+      "first_near_step": 38,
+      "first_close_command_step": 44,
+      "first_grasp_step": 45,
+      "first_lift_step": 56,
+      "first_grasped_lift_step": 56,
+      "first_aligned_step": null,
+      "first_on_cubeB_step": 94,
+      "first_success_step": null,
+      "grasp_steps": 54,
+      "last_grasp_step": 98,
+      "close_command_steps": 83,
+      "min_tcp_to_cubeA_m": 0.012536455877125263,
+      "min_cubeA_to_cubeB_xy_m": 0.021755443885922432,
+      "max_cubeA_lift_m": 0.09884924814105034,
+      "cubeA_xy_displacement_m": 0.20983198382953666,
+      "cubeB_xy_displacement_m": 0.011074611099640606,
+      "final_is_grasped": false,
+      "final_gripper_command": 1.0,
+      "furthest_stage": "aligned_no_success"
+    }
+  },
+  "snapshots": [
+    {
+      "checkpoint": 12,
+      "queue_len": 4,
+      "history_len": 2,
+      "remaining_budget": 188,
+      "eligible": [
+        true,
+        true,
+        true
+      ],
+      "policy_calls_so_far": 2,
+      "state_sha256": "3be28c1effe67e5a1b9994044cd35143efaa10350c619894b0566ee34f84147d",
+      "state_at_checkpoint": {
+        "t": 12,
+        "tcp": [
+          0.04734247177839279,
+          -0.07853084057569504,
+          0.14899183809757233
+        ],
+        "cubeA": [
+          0.1057472676038742,
+          -0.21167001128196716,
+          0.019999910145998
+        ],
+        "cubeB": [
+          0.07285817712545395,
+          0.005487178917974234,
+          0.019999919459223747
+        ],
+        "tcp_to_cubeA": 0.19436068832874298,
+        "cubeA_to_cubeB_xy": 0.21963363885879517,
+        "is_cubeA_grasped": false,
+        "is_cubeA_on_cubeB": false,
+        "is_cubeA_static": true,
+        "success": false,
+        "action": [
+          0.10503485053777695,
+          -0.280684232711792,
+          -0.17650476098060608,
+          1.0
+        ]
+      },
+      "stage_so_far": "not_near"
+    },
+    {
+      "checkpoint": 52,
+      "queue_len": 4,
+      "history_len": 2,
+      "remaining_budget": 148,
+      "eligible": [
+        true,
+        true,
+        true
+      ],
+      "policy_calls_so_far": 7,
+      "state_sha256": "f5360487ba8807f1d64db8ed1dde0888d385da0bb3e43adfaf6de2b95e98c932",
+      "state_at_checkpoint": {
+        "t": 52,
+        "tcp": [
+          0.09127316623926163,
+          -0.2051292210817337,
+          0.022076226770877838
+        ],
+        "cubeA": [
+          0.09089444577693939,
+          -0.21769537031650543,
+          0.020930426195263863
+        ],
+        "cubeB": [
+          0.07285817712545395,
+          0.005487178917974234,
+          0.019999919459223747
+        ],
+        "tcp_to_cubeA": 0.012623961083590984,
+        "cubeA_to_cubeB_xy": 0.2239101529121399,
+        "is_cubeA_grasped": true,
+        "is_cubeA_on_cubeB": false,
+        "is_cubeA_static": false,
+        "success": false,
+        "action": [
+          0.00022304114827420563,
+          -0.0005442225374281406,
+          0.034797556698322296,
+          -1.0
+        ]
+      },
+      "stage_so_far": "grasped_not_lifted"
+    },
+    {
+      "checkpoint": 92,
+      "queue_len": 4,
+      "history_len": 2,
+      "remaining_budget": 108,
+      "eligible": [
+        true,
+        true,
+        true
+      ],
+      "policy_calls_so_far": 12,
+      "state_sha256": "69f77932b3df9b04ca5ae01fa88b23cc554b1bba1af981bc49d131297672272f",
+      "state_at_checkpoint": {
+        "t": 92,
+        "tcp": [
+          0.05686239153146744,
+          -0.009982723742723465,
+          0.0688767358660698
+        ],
+        "cubeA": [
+          0.05639108642935753,
+          -0.022544046863913536,
+          0.06773006170988083
+        ],
+        "cubeB": [
+          0.07285837084054947,
+          0.00548666063696146,
+          0.01999995857477188
+        ],
+        "tcp_to_cubeA": 0.012622354552149773,
+        "cubeA_to_cubeB_xy": 0.032509878277778625,
+        "is_cubeA_grasped": true,
+        "is_cubeA_on_cubeB": false,
+        "is_cubeA_static": false,
+        "success": false,
+        "action": [
+          -0.0433785542845726,
+          0.19320333003997803,
+          -0.04888487607240677,
+          -0.9988067746162415
+        ]
+      },
+      "stage_so_far": "lifted_not_aligned"
+    },
+    {
+      "checkpoint": 132,
+      "queue_len": 4,
+      "history_len": 2,
+      "remaining_budget": 68,
+      "eligible": [
+        true,
+        true,
+        true
+      ],
+      "policy_calls_so_far": 17,
+      "state_sha256": "2a0331f5593c380f201639e4738d38215ad743823325856179618609fcf5805f",
+      "state_at_checkpoint": {
+        "t": 132,
+        "tcp": [
+          0.06910381466150284,
+          0.013972428627312183,
+          0.03966473042964935
+        ],
+        "cubeA": [
+          0.0018371233018115163,
+          -0.029373304918408394,
+          0.019999919459223747
+        ],
+        "cubeB": [
+          0.08226160705089569,
+          0.008722824975848198,
+          0.02759872004389763
+        ],
+        "tcp_to_cubeA": 0.08240367472171783,
+        "cubeA_to_cubeB_xy": 0.08899107575416565,
+        "is_cubeA_grasped": false,
+        "is_cubeA_on_cubeB": false,
+        "is_cubeA_static": true,
+        "success": false,
+        "action": [
+          -0.002201324561610818,
+          -0.0025324891321361065,
+          -0.0068046958185732365,
+          0.9997378587722778
+        ]
+      },
+      "stage_so_far": "aligned_no_success"
+    }
+  ],
+  "skips": [],
+  "blocks": [
+    {
+      "scene": 10019,
+      "checkpoint": 12,
+      "repeat": 0,
+      "role": "stage2a_exploratory_dev",
+      "y_continue": 0,
+      "cells": [
+        {
+          "action": "continue",
+          "action_id": 0,
+          "y": 0,
+          "steps": 200,
+          "reason": "horizon",
+          "success_step": null,
+          "intervention": null,
+          "intervention_step": null,
+          "queue_len_after_choice": 4,
+          "policy_calls_after_snapshot": 23,
+          "policy_seconds_after_snapshot": 18.908372561912984,
+          "retreat": null,
+          "prefix_replay_state_error": 0.0,
+          "live_observation": {
+            "state_max_abs": 0.0,
+            "rgb_max_abs": 0.0
+          },
+          "stage": {
+            "first_near_step": 38,
+            "first_close_command_step": 44,
+            "first_grasp_step": 45,
+            "first_lift_step": 56,
+            "first_grasped_lift_step": 56,
+            "first_aligned_step": null,
+            "first_on_cubeB_step": 94,
+            "first_success_step": null,
+            "grasp_steps": 54,
+            "last_grasp_step": 98,
+            "close_command_steps": 83,
+            "min_tcp_to_cubeA_m": 0.012536455877125263,
+            "min_cubeA_to_cubeB_xy_m": 0.021755443885922432,
+            "max_cubeA_lift_m": 0.09884924814105034,
+            "cubeA_xy_displacement_m": 0.20983198382953666,
+            "cubeB_xy_displacement_m": 0.011074611099640606,
+            "final_is_grasped": false,
+            "final_gripper_command": 1.0,
+            "furthest_stage": "aligned_no_success"
+          },
+          "wall_seconds": 21.63317524921149
+        },
+        {
+          "action": "refresh",
+          "action_id": 1,
+          "y": 1,
+          "steps": 98,
+          "reason": "success",
+          "success_step": 98,
+          "intervention": 1,
+          "intervention_step": 12,
+          "queue_len_after_choice": 0,
+          "policy_calls_after_snapshot": 11,
+          "policy_seconds_after_snapshot": 9.156883750110865,
+          "retreat": null,
+          "prefix_replay_state_error": 0.0,
+          "live_observation": {
+            "state_max_abs": 0.0,
+            "rgb_max_abs": 0.0
+          },
+          "stage": {
+            "first_near_step": 42,
+            "first_close_command_step": 46,
+            "first_grasp_step": 46,
+            "first_lift_step": 58,
+            "first_grasped_lift_step": 58,
+            "first_aligned_step": 93,
+            "first_on_cubeB_step": 92,
+            "first_success_step": 98,
+            "grasp_steps": 52,
+            "last_grasp_step": 97,
+            "close_command_steps": 52,
+            "min_tcp_to_cubeA_m": 0.01759222149848938,
+            "min_cubeA_to_cubeB_xy_m": 0.011294444091618061,
+            "max_cubeA_lift_m": 0.09386009350419044,
+            "cubeA_xy_displacement_m": 0.21604422311059382,
+            "cubeB_xy_displacement_m": 0.0019316189066507434,
+            "final_is_grasped": false,
+            "final_gripper_command": 0.9998903274536133,
+            "furthest_stage": "success"
+          },
+          "wall_seconds": 10.696617994923145
+        },
+        {
+          "action": "retreat_retry",
+          "action_id": 2,
+          "y": 0,
+          "steps": 200,
+          "reason": "horizon",
+          "success_step": null,
+          "intervention": 2,
+          "intervention_step": 12,
+          "queue_len_after_choice": 0,
+          "policy_calls_after_snapshot": 21,
+          "policy_seconds_after_snapshot": 17.332653678953648,
+          "retreat": {
+            "mode": "up",
+            "start_tcp": [
+              0.04734247177839279,
+              -0.07853084057569504,
+              0.14899183809757233
+            ],
+            "target_tcp": [
+              0.04734247177839279,
+              -0.07853084057569504,
+              0.19899183809757232
+            ],
+            "final_tcp": [
+              0.047207389026880264,
+              -0.0790908932685852,
+              0.19556906819343567
+            ],
+            "commanded_distance_m": 0.04999999999999999,
+            "achieved_displacement_m": 0.04658079519867897,
+            "target_error_m": 0.0034709163322144934,
+            "steps_used": 27,
+            "max_steps": 40,
+            "arrival_tolerance_m": 0.005,
+            "command_saturated_steps": 27,
+            "gripper_command": 1.0,
+            "reached": true,
+            "end_reason": "reached"
+          },
+          "prefix_replay_state_error": 0.0,
+          "live_observation": {
+            "state_max_abs": 0.0,
+            "rgb_max_abs": 0.0
+          },
+          "stage": {
+            "first_near_step": 88,
+            "first_close_command_step": 88,
+            "first_grasp_step": 90,
+            "first_lift_step": null,
+            "first_grasped_lift_step": null,
+            "first_aligned_step": null,
+            "first_on_cubeB_step": null,
+            "first_success_step": null,
+            "grasp_steps": 8,
+            "last_grasp_step": 103,
+            "close_command_steps": 97,
+            "min_tcp_to_cubeA_m": 0.029612457379698753,
+            "min_cubeA_to_cubeB_xy_m": 0.219633549451828,
+            "max_cubeA_lift_m": 0.00819791667163372,
+            "cubeA_xy_displacement_m": 0.07397310712552714,
+            "cubeB_xy_displacement_m": 8.297902524708137e-07,
+            "final_is_grasped": false,
+            "final_gripper_command": -0.9320217967033386,
+            "furthest_stage": "grasped_not_lifted"
+          },
+          "wall_seconds": 20.24138993769884
+        }
+      ]
+    },
+    {
+      "scene": 10019,
+      "checkpoint": 12,
+      "repeat": 1,
+      "role": "stage2a_exploratory_dev",
+      "y_continue": 0,
+      "cells": [
+        {
+          "action": "continue",
+          "action_id": 0,
+          "y": 0,
+          "steps": 200,
+          "reason": "horizon",
+          "success_step": null,
+          "intervention": null,
+          "intervention_step": null,
+          "queue_len_after_choice": 4,
+          "policy_calls_after_snapshot": 23,
+          "policy_seconds_after_snapshot": 18.946504081599414,
+          "retreat": null,
+          "prefix_replay_state_error": 0.0,
+          "live_observation": {
+            "state_max_abs": 0.0,
+            "rgb_max_abs": 0.0
+          },
+          "stage": {
+            "first_near_step": 38,
+            "first_close_command_step": 44,
+            "first_grasp_step": 45,
+            "first_lift_step": 56,
+            "first_grasped_lift_step": 56,
+            "first_aligned_step": null,
+            "first_on_cubeB_step": 96,
+            "first_success_step": null,
+            "grasp_steps": 54,
+            "last_grasp_step": 98,
+            "close_command_steps": 85,
+            "min_tcp_to_cubeA_m": 0.01318053063005209,
+            "min_cubeA_to_cubeB_xy_m": 0.03011091984808445,
+            "max_cubeA_lift_m": 0.09865350648760796,
+            "cubeA_xy_displacement_m": 0.20346176661979928,
+            "cubeB_xy_displacement_m": 0.032536093553642675,
+            "final_is_grasped": false,
+            "final_gripper_command": 1.0,
+            "furthest_stage": "aligned_no_success"
+          },
+          "wall_seconds": 21.752137976232916
+        },
+        {
+          "action": "refresh",
+          "action_id": 1,
+          "y": 0,
+          "steps": 200,
+          "reason": "horizon",
+          "success_step": null,
+          "intervention": 1,
+          "intervention_step": 12,
+          "queue_len_after_choice": 0,
+          "policy_calls_after_snapshot": 24,
+          "policy_seconds_after_snapshot": 19.988210688810796,
+          "retreat": null,
+          "prefix_replay_state_error": 0.0,
+          "live_observation": {
+            "state_max_abs": 0.0,
+            "rgb_max_abs": 0.0
+          },
+          "stage": {
+            "first_near_step": 42,
+            "first_close_command_step": 46,
+            "first_grasp_step": 46,
+            "first_lift_step": 62,
+            "first_grasped_lift_step": 62,
+            "first_aligned_step": null,
+            "first_on_cubeB_step": 102,
+            "first_success_step": null,
+            "grasp_steps": 61,
+            "last_grasp_step": 106,
+            "close_command_steps": 94,
+            "min_tcp_to_cubeA_m": 0.02030887082219124,
+            "min_cubeA_to_cubeB_xy_m": 0.029974671080708504,
+            "max_cubeA_lift_m": 0.09320308640599251,
+            "cubeA_xy_displacement_m": 0.2129068877444465,
+            "cubeB_xy_displacement_m": 0.016697065707436058,
+            "final_is_grasped": false,
+            "final_gripper_command": -0.9915587306022644,
+            "furthest_stage": "aligned_no_success"
+          },
+          "wall_seconds": 22.88596884533763
+        },
+        {
+          "action": "retreat_retry",
+          "action_id": 2,
+          "y": 0,
+          "steps": 200,
+          "reason": "horizon",
+          "success_step": null,
+          "intervention": 2,
+          "intervention_step": 12,
+          "queue_len_after_choice": 0,
+          "policy_calls_after_snapshot": 21,
+          "policy_seconds_after_snapshot": 17.449652621522546,
+          "retreat": {
+            "mode": "up",
+            "start_tcp": [
+              0.04734247177839279,
+              -0.07853084057569504,
+              0.14899183809757233
+            ],
+            "target_tcp": [
+              0.04734247177839279,
+              -0.07853084057569504,
+              0.19899183809757232
+            ],
+            "final_tcp": [
+              0.047207389026880264,
+              -0.0790908932685852,
+              0.19556906819343567
+            ],
+            "commanded_distance_m": 0.04999999999999999,
+            "achieved_displacement_m": 0.04658079519867897,
+            "target_error_m": 0.0034709163322144934,
+            "steps_used": 27,
+            "max_steps": 40,
+            "arrival_tolerance_m": 0.005,
+            "command_saturated_steps": 27,
+            "gripper_command": 1.0,
+            "reached": true,
+            "end_reason": "reached"
+          },
+          "prefix_replay_state_error": 0.0,
+          "live_observation": {
+            "state_max_abs": 0.0,
+            "rgb_max_abs": 0.0
+          },
+          "stage": {
+            "first_near_step": 81,
+            "first_close_command_step": 85,
+            "first_grasp_step": 86,
+            "first_lift_step": null,
+            "first_grasped_lift_step": null,
+            "first_aligned_step": null,
+            "first_on_cubeB_step": null,
+            "first_success_step": null,
+            "grasp_steps": 12,
+            "last_grasp_step": 97,
+            "close_command_steps": 35,
+            "min_tcp_to_cubeA_m": 0.021456442773342133,
+            "min_cubeA_to_cubeB_xy_m": 0.21963351964950562,
+            "max_cubeA_lift_m": 0.00920233502984047,
+            "cubeA_xy_displacement_m": 0.031180619711046968,
+            "cubeB_xy_displacement_m": 8.297902524708137e-07,
+            "final_is_grasped": false,
+            "final_gripper_command": 1.0,
+            "furthest_stage": "grasped_not_lifted"
+          },
+          "wall_seconds": 20.362832891754806
+        }
+      ]
+    },
+    {
+      "scene": 10019,
+      "checkpoint": 12,
+      "repeat": 2,
+      "role": "stage2a_exploratory_dev",
+      "y_continue": 0,
+      "cells": [
+        {
+          "action": "continue",
+          "action_id": 0,
+          "y": 0,
+          "steps": 200,
+          "reason": "horizon",
+          "success_step": null,
+          "intervention": null,
+          "intervention_step": null,
+          "queue_len_after_choice": 4,
+          "policy_calls_after_snapshot": 23,
+          "policy_seconds_after_snapshot": 19.379071408417076,
+          "retreat": null,
+          "prefix_replay_state_error": 0.0,
+          "live_observation": {
+            "state_max_abs": 0.0,
+            "rgb_max_abs": 0.0
+          },
+          "stage": {
+            "first_near_step": 39,
+            "first_close_command_step": 44,
+            "first_grasp_step": 44,
+            "first_lift_step": 57,
+            "first_grasped_lift_step": 57,
+            "first_aligned_step": null,
+            "first_on_cubeB_step": 95,
+            "first_success_step": null,
+            "grasp_steps": 55,
+            "last_grasp_step": 98,
+            "close_command_steps": 106,
+            "min_tcp_to_cubeA_m": 0.013556412421166897,
+            "min_cubeA_to_cubeB_xy_m": 0.029734451323747635,
+            "max_cubeA_lift_m": 0.09745418652892113,
+            "cubeA_xy_displacement_m": 0.20839716538241695,
+            "cubeB_xy_displacement_m": 0.01151977464330063,
+            "final_is_grasped": false,
+            "final_gripper_command": -1.0,
+            "furthest_stage": "aligned_no_success"
+          },
+          "wall_seconds": 22.231534666847438
+        },
+        {
+          "action": "refresh",
+          "action_id": 1,
+          "y": 1,
+          "steps": 102,
+          "reason": "success",
+          "success_step": 102,
+          "intervention": 1,
+          "intervention_step": 12,
+          "queue_len_after_choice": 0,
+          "policy_calls_after_snapshot": 12,
+          "policy_seconds_after_snapshot": 10.200082738418132,
+          "retreat": null,
+          "prefix_replay_state_error": 0.0,
+          "live_observation": {
+            "state_max_abs": 0.0,
+            "rgb_max_abs": 0.0
+          },
+          "stage": {
+            "first_near_step": 41,
+            "first_close_command_step": 47,
+            "first_grasp_step": 47,
+            "first_lift_step": 61,
+            "first_grasped_lift_step": 61,
+            "first_aligned_step": 99,
+            "first_on_cubeB_step": 98,
+            "first_success_step": 102,
+            "grasp_steps": 54,
+            "last_grasp_step": 100,
+            "close_command_steps": 54,
+            "min_tcp_to_cubeA_m": 0.009533089585602283,
+            "min_cubeA_to_cubeB_xy_m": 0.013613289222121239,
+            "max_cubeA_lift_m": 0.09950140491127968,
+            "cubeA_xy_displacement_m": 0.2087552441916033,
+            "cubeB_xy_displacement_m": 6.632705519406306e-07,
+            "final_is_grasped": false,
+            "final_gripper_command": 1.0,
+            "furthest_stage": "success"
+          },
+          "wall_seconds": 11.876508748158813
+        },
+        {
+          "action": "retreat_retry",
+          "action_id": 2,
+          "y": 0,
+          "steps": 200,
+          "reason": "horizon",
+          "success_step": null,
+          "intervention": 2,
+          "intervention_step": 12,
+          "queue_len_after_choice": 0,
+          "policy_calls_after_snapshot": 21,
+          "policy_seconds_after_snapshot": 17.55781845888123,
+          "retreat": {
+            "mode": "up",
+            "start_tcp": [
+              0.04734247177839279,
+              -0.07853084057569504,
+              0.14899183809757233
+            ],
+            "target_tcp": [
+              0.04734247177839279,
+              -0.07853084057569504,
+              0.19899183809757232
+            ],
+            "final_tcp": [
+              0.047207389026880264,
+              -0.0790908932685852,
+              0.19556906819343567
+            ],
+            "commanded_distance_m": 0.04999999999999999,
+            "achieved_displacement_m": 0.04658079519867897,
+            "target_error_m": 0.0034709163322144934,
+            "steps_used": 27,
+            "max_steps": 40,
+            "arrival_tolerance_m": 0.005,
+            "command_saturated_steps": 27,
+            "gripper_command": 1.0,
+            "reached": true,
+            "end_reason": "reached"
+          },
+          "prefix_replay_state_error": 0.0,
+          "live_observation": {
+            "state_max_abs": 0.0,
+            "rgb_max_abs": 0.0
+          },
+          "stage": {
+            "first_near_step": 83,
+            "first_close_command_step": 86,
+            "first_grasp_step": 89,
+            "first_lift_step": 185,
+            "first_grasped_lift_step": 185,
+            "first_aligned_step": null,
+            "first_on_cubeB_step": null,
+            "first_success_step": null,
+            "grasp_steps": 41,
+            "last_grasp_step": 200,
+            "close_command_steps": 57,
+            "min_tcp_to_cubeA_m": 0.008934986777603626,
+            "min_cubeA_to_cubeB_xy_m": 0.219633549451828,
+            "max_cubeA_lift_m": 0.09573102369904518,
+            "cubeA_xy_displacement_m": 0.031721416726176864,
+            "cubeB_xy_displacement_m": 8.297902524708137e-07,
+            "final_is_grasped": true,
+            "final_gripper_command": -0.9977607727050781,
+            "furthest_stage": "lifted_not_aligned"
+          },
+          "wall_seconds": 20.626039579045027
+        }
+      ]
+    },
+    {
+      "scene": 10019,
+      "checkpoint": 12,
+      "repeat": 3,
+      "role": "stage2a_exploratory_dev",
+      "y_continue": 1,
+      "cells": [
+        {
+          "action": "continue",
+          "action_id": 0,
+          "y": 1,
+          "steps": 97,
+          "reason": "success",
+          "success_step": 97,
+          "intervention": null,
+          "intervention_step": null,
+          "queue_len_after_choice": 4,
+          "policy_calls_after_snapshot": 11,
+          "policy_seconds_after_snapshot": 9.255565860308707,
+          "retreat": null,
+          "prefix_replay_state_error": 0.0,
+          "live_observation": {
+            "state_max_abs": 0.0,
+            "rgb_max_abs": 0.0
+          },
+          "stage": {
+            "first_near_step": 38,
+            "first_close_command_step": 44,
+            "first_grasp_step": 44,
+            "first_lift_step": 55,
+            "first_grasped_lift_step": 55,
+            "first_aligned_step": 94,
+            "first_on_cubeB_step": 93,
+            "first_success_step": 97,
+            "grasp_steps": 53,
+            "last_grasp_step": 96,
+            "close_command_steps": 53,
+            "min_tcp_to_cubeA_m": 0.011886853724718094,
+            "min_cubeA_to_cubeB_xy_m": 0.014816494658589363,
+            "max_cubeA_lift_m": 0.09972529485821724,
+            "cubeA_xy_displacement_m": 0.21625031443513126,
+            "cubeB_xy_displacement_m": 5.30846188148785e-06,
+            "final_is_grasped": false,
+            "final_gripper_command": 0.9973354935646057,
+            "furthest_stage": "success"
+          },
+          "wall_seconds": 10.87233270984143
+        },
+        {
+          "action": "refresh",
+          "action_id": 1,
+          "y": 1,
+          "steps": 100,
+          "reason": "success",
+          "success_step": 100,
+          "intervention": 1,
+          "intervention_step": 12,
+          "queue_len_after_choice": 0,
+          "policy_calls_after_snapshot": 11,
+          "policy_seconds_after_snapshot": 9.074558273889124,
+          "retreat": null,
+          "prefix_replay_state_error": 0.0,
+          "live_observation": {
+            "state_max_abs": 0.0,
+            "rgb_max_abs": 0.0
+          },
+          "stage": {
+            "first_near_step": 40,
+            "first_close_command_step": 46,
+            "first_grasp_step": 47,
+            "first_lift_step": 59,
+            "first_grasped_lift_step": 59,
+            "first_aligned_step": null,
+            "first_on_cubeB_step": 95,
+            "first_success_step": 100,
+            "grasp_steps": 52,
+            "last_grasp_step": 98,
+            "close_command_steps": 53,
+            "min_tcp_to_cubeA_m": 0.008834831416606903,
+            "min_cubeA_to_cubeB_xy_m": 0.020854327827692032,
+            "max_cubeA_lift_m": 0.10045105591416359,
+            "cubeA_xy_displacement_m": 0.2199911951242581,
+            "cubeB_xy_displacement_m": 6.368344335750034e-06,
+            "final_is_grasped": false,
+            "final_gripper_command": 1.0,
+            "furthest_stage": "success"
+          },
+          "wall_seconds": 10.7635842198506
+        },
+        {
+          "action": "retreat_retry",
+          "action_id": 2,
+          "y": 1,
+          "steps": 159,
+          "reason": "success",
+          "success_step": 159,
+          "intervention": 2,
+          "intervention_step": 12,
+          "queue_len_after_choice": 0,
+          "policy_calls_after_snapshot": 15,
+          "policy_seconds_after_snapshot": 12.33727620402351,
+          "retreat": {
+            "mode": "up",
+            "start_tcp": [
+              0.04734247177839279,
+              -0.07853084057569504,
+              0.14899183809757233
+            ],
+            "target_tcp": [
+              0.04734247177839279,
+              -0.07853084057569504,
+              0.19899183809757232
+            ],
+            "final_tcp": [
+              0.047207389026880264,
+              -0.0790908932685852,
+              0.19556906819343567
+            ],
+            "commanded_distance_m": 0.04999999999999999,
+            "achieved_displacement_m": 0.04658079519867897,
+            "target_error_m": 0.0034709163322144934,
+            "steps_used": 27,
+            "max_steps": 40,
+            "arrival_tolerance_m": 0.005,
+            "command_saturated_steps": 27,
+            "gripper_command": 1.0,
+            "reached": true,
+            "end_reason": "reached"
+          },
+          "prefix_replay_state_error": 0.0,
+          "live_observation": {
+            "state_max_abs": 0.0,
+            "rgb_max_abs": 0.0
+          },
+          "stage": {
+            "first_near_step": 81,
+            "first_close_command_step": 85,
+            "first_grasp_step": 104,
+            "first_lift_step": 117,
+            "first_grasped_lift_step": 117,
+            "first_aligned_step": 153,
+            "first_on_cubeB_step": 153,
+            "first_success_step": 159,
+            "grasp_steps": 55,
+            "last_grasp_step": 158,
+            "close_command_steps": 58,
+            "min_tcp_to_cubeA_m": 0.004941202234476805,
+            "min_cubeA_to_cubeB_xy_m": 0.013072943314909935,
+            "max_cubeA_lift_m": 0.09701302275061607,
+            "cubeA_xy_displacement_m": 0.22697020298814685,
+            "cubeB_xy_displacement_m": 0.0004363764406687364,
+            "final_is_grasped": false,
+            "final_gripper_command": 1.0,
+            "furthest_stage": "success"
+          },
+          "wall_seconds": 14.601288876961917
+        }
+      ]
+    },
+    {
+      "scene": 10019,
+      "checkpoint": 52,
+      "repeat": 0,
+      "role": "stage2a_exploratory_dev",
+      "y_continue": 0,
+      "cells": [
+        {
+          "action": "continue",
+          "action_id": 0,
+          "y": 0,
+          "steps": 200,
+          "reason": "horizon",
+          "success_step": null,
+          "intervention": null,
+          "intervention_step": null,
+          "queue_len_after_choice": 4,
+          "policy_calls_after_snapshot": 18,
+          "policy_seconds_after_snapshot": 14.864850737620145,
+          "retreat": null,
+          "prefix_replay_state_error": 0.0,
+          "live_observation": {
+            "state_max_abs": 0.0,
+            "rgb_max_abs": 0.0
+          },
+          "stage": {
+            "first_near_step": 38,
+            "first_close_command_step": 44,
+            "first_grasp_step": 45,
+            "first_lift_step": 56,
+            "first_grasped_lift_step": 56,
+            "first_aligned_step": null,
+            "first_on_cubeB_step": 94,
+            "first_success_step": null,
+            "grasp_steps": 54,
+            "last_grasp_step": 98,
+            "close_command_steps": 83,
+            "min_tcp_to_cubeA_m": 0.012536455877125263,
+            "min_cubeA_to_cubeB_xy_m": 0.021755443885922432,
+            "max_cubeA_lift_m": 0.09884924814105034,
+            "cubeA_xy_displacement_m": 0.20983198382953666,
+            "cubeB_xy_displacement_m": 0.011074611099640606,
+            "final_is_grasped": false,
+            "final_gripper_command": 1.0,
+            "furthest_stage": "aligned_no_success"
+          },
+          "wall_seconds": 17.574311586096883
+        },
+        {
+          "action": "refresh",
+          "action_id": 1,
+          "y": 0,
+          "steps": 200,
+          "reason": "horizon",
+          "success_step": null,
+          "intervention": 1,
+          "intervention_step": 52,
+          "queue_len_after_choice": 0,
+          "policy_calls_after_snapshot": 19,
+          "policy_seconds_after_snapshot": 15.124776951503009,
+          "retreat": null,
+          "prefix_replay_state_error": 0.0,
+          "live_observation": {
+            "state_max_abs": 0.0,
+            "rgb_max_abs": 0.0
+          },
+          "stage": {
+            "first_near_step": 38,
+            "first_close_command_step": 44,
+            "first_grasp_step": 45,
+            "first_lift_step": 56,
+            "first_grasped_lift_step": 56,
+            "first_aligned_step": null,
+            "first_on_cubeB_step": 94,
+            "first_success_step": null,
+            "grasp_steps": 53,
+            "last_grasp_step": 97,
+            "close_command_steps": 116,
+            "min_tcp_to_cubeA_m": 0.012536455877125263,
+            "min_cubeA_to_cubeB_xy_m": 0.023876769468188286,
+            "max_cubeA_lift_m": 0.09959601238369942,
+            "cubeA_xy_displacement_m": 0.2043078935329243,
+            "cubeB_xy_displacement_m": 0.005966769665465867,
+            "final_is_grasped": false,
+            "final_gripper_command": -1.0,
+            "furthest_stage": "aligned_no_success"
+          },
+          "wall_seconds": 17.78420341014862
+        },
+        {
+          "action": "retreat_retry",
+          "action_id": 2,
+          "y": 0,
+          "steps": 200,
+          "reason": "horizon",
+          "success_step": null,
+          "intervention": 2,
+          "intervention_step": 52,
+          "queue_len_after_choice": 0,
+          "policy_calls_after_snapshot": 16,
+          "policy_seconds_after_snapshot": 13.11787398159504,
+          "retreat": {
+            "mode": "up",
+            "start_tcp": [
+              0.09127316623926163,
+              -0.2051292210817337,
+              0.022076226770877838
+            ],
+            "target_tcp": [
+              0.09127316623926163,
+              -0.2051292210817337,
+              0.07207622677087784
+            ],
+            "final_tcp": [
+              0.0907445028424263,
+              -0.20497676730155945,
+              0.06864937394857407
+            ],
+            "commanded_distance_m": 0.05,
+            "achieved_displacement_m": 0.04657639563083649,
+            "target_error_m": 0.0034707416221859896,
+            "steps_used": 27,
+            "max_steps": 40,
+            "arrival_tolerance_m": 0.005,
+            "command_saturated_steps": 27,
+            "gripper_command": -1.0,
+            "reached": true,
+            "end_reason": "reached"
+          },
+          "prefix_replay_state_error": 0.0,
+          "live_observation": {
+            "state_max_abs": 0.0,
+            "rgb_max_abs": 0.0
+          },
+          "stage": {
+            "first_near_step": 38,
+            "first_close_command_step": 44,
+            "first_grasp_step": 45,
+            "first_lift_step": 58,
+            "first_grasped_lift_step": 58,
+            "first_aligned_step": null,
+            "first_on_cubeB_step": 135,
+            "first_success_step": null,
+            "grasp_steps": 91,
+            "last_grasp_step": 135,
+            "close_command_steps": 101,
+            "min_tcp_to_cubeA_m": 0.012536455877125263,
+            "min_cubeA_to_cubeB_xy_m": 0.026517614722251892,
+            "max_cubeA_lift_m": 0.11304641887545586,
+            "cubeA_xy_displacement_m": 0.1851687433182074,
+            "cubeB_xy_displacement_m": 0.026621347782055042,
+            "final_is_grasped": false,
+            "final_gripper_command": 1.0,
+            "furthest_stage": "aligned_no_success"
+          },
+          "wall_seconds": 15.821474990341812
+        }
+      ]
+    },
+    {
+      "scene": 10019,
+      "checkpoint": 52,
+      "repeat": 1,
+      "role": "stage2a_exploratory_dev",
+      "y_continue": 0,
+      "cells": [
+        {
+          "action": "continue",
+          "action_id": 0,
+          "y": 0,
+          "steps": 200,
+          "reason": "horizon",
+          "success_step": null,
+          "intervention": null,
+          "intervention_step": null,
+          "queue_len_after_choice": 4,
+          "policy_calls_after_snapshot": 18,
+          "policy_seconds_after_snapshot": 14.65915049565956,
+          "retreat": null,
+          "prefix_replay_state_error": 0.0,
+          "live_observation": {
+            "state_max_abs": 0.0,
+            "rgb_max_abs": 0.0
+          },
+          "stage": {
+            "first_near_step": 38,
+            "first_close_command_step": 44,
+            "first_grasp_step": 45,
+            "first_lift_step": 56,
+            "first_grasped_lift_step": 56,
+            "first_aligned_step": null,
+            "first_on_cubeB_step": 96,
+            "first_success_step": null,
+            "grasp_steps": 53,
+            "last_grasp_step": 97,
+            "close_command_steps": 120,
+            "min_tcp_to_cubeA_m": 0.012536455877125263,
+            "min_cubeA_to_cubeB_xy_m": 0.026480376720428467,
+            "max_cubeA_lift_m": 0.09907344356179237,
+            "cubeA_xy_displacement_m": 0.20169218229765143,
+            "cubeB_xy_displacement_m": 0.022518893934307452,
+            "final_is_grasped": false,
+            "final_gripper_command": -1.0,
+            "furthest_stage": "aligned_no_success"
+          },
+          "wall_seconds": 17.39731195801869
+        },
+        {
+          "action": "refresh",
+          "action_id": 1,
+          "y": 0,
+          "steps": 200,
+          "reason": "horizon",
+          "success_step": null,
+          "intervention": 1,
+          "intervention_step": 52,
+          "queue_len_after_choice": 0,
+          "policy_calls_after_snapshot": 19,
+          "policy_seconds_after_snapshot": 15.612905048765242,
+          "retreat": null,
+          "prefix_replay_state_error": 0.0,
+          "live_observation": {
+            "state_max_abs": 0.0,
+            "rgb_max_abs": 0.0
+          },
+          "stage": {
+            "first_near_step": 38,
+            "first_close_command_step": 44,
+            "first_grasp_step": 45,
+            "first_lift_step": 56,
+            "first_grasped_lift_step": 56,
+            "first_aligned_step": null,
+            "first_on_cubeB_step": 94,
+            "first_success_step": null,
+            "grasp_steps": 53,
+            "last_grasp_step": 97,
+            "close_command_steps": 117,
+            "min_tcp_to_cubeA_m": 0.012536455877125263,
+            "min_cubeA_to_cubeB_xy_m": 0.025989042595028877,
+            "max_cubeA_lift_m": 0.09788086637854576,
+            "cubeA_xy_displacement_m": 0.20497187835099603,
+            "cubeB_xy_displacement_m": 0.014602832471689633,
+            "final_is_grasped": false,
+            "final_gripper_command": -1.0,
+            "furthest_stage": "aligned_no_success"
+          },
+          "wall_seconds": 18.281709077768028
+        },
+        {
+          "action": "retreat_retry",
+          "action_id": 2,
+          "y": 0,
+          "steps": 200,
+          "reason": "horizon",
+          "success_step": null,
+          "intervention": 2,
+          "intervention_step": 52,
+          "queue_len_after_choice": 0,
+          "policy_calls_after_snapshot": 16,
+          "policy_seconds_after_snapshot": 12.769433266017586,
+          "retreat": {
+            "mode": "up",
+            "start_tcp": [
+              0.09127316623926163,
+              -0.2051292210817337,
+              0.022076226770877838
+            ],
+            "target_tcp": [
+              0.09127316623926163,
+              -0.2051292210817337,
+              0.07207622677087784
+            ],
+            "final_tcp": [
+              0.0907445028424263,
+              -0.20497676730155945,
+              0.06864937394857407
+            ],
+            "commanded_distance_m": 0.05,
+            "achieved_displacement_m": 0.04657639563083649,
+            "target_error_m": 0.0034707416221859896,
+            "steps_used": 27,
+            "max_steps": 40,
+            "arrival_tolerance_m": 0.005,
+            "command_saturated_steps": 27,
+            "gripper_command": -1.0,
+            "reached": true,
+            "end_reason": "reached"
+          },
+          "prefix_replay_state_error": 0.0,
+          "live_observation": {
+            "state_max_abs": 0.0,
+            "rgb_max_abs": 0.0
+          },
+          "stage": {
+            "first_near_step": 38,
+            "first_close_command_step": 44,
+            "first_grasp_step": 45,
+            "first_lift_step": 58,
+            "first_grasped_lift_step": 58,
+            "first_aligned_step": 134,
+            "first_on_cubeB_step": 132,
+            "first_success_step": null,
+            "grasp_steps": 90,
+            "last_grasp_step": 134,
+            "close_command_steps": 134,
+            "min_tcp_to_cubeA_m": 0.012536455877125263,
+            "min_cubeA_to_cubeB_xy_m": 0.019972587004303932,
+            "max_cubeA_lift_m": 0.11049553379416466,
+            "cubeA_xy_displacement_m": 0.20014664832044401,
+            "cubeB_xy_displacement_m": 0.022331475560882642,
+            "final_is_grasped": false,
+            "final_gripper_command": -1.0,
+            "furthest_stage": "aligned_no_success"
+          },
+          "wall_seconds": 15.304135201033205
+        }
+      ]
+    },
+    {
+      "scene": 10019,
+      "checkpoint": 52,
+      "repeat": 2,
+      "role": "stage2a_exploratory_dev",
+      "y_continue": 0,
+      "cells": [
+        {
+          "action": "continue",
+          "action_id": 0,
+          "y": 0,
+          "steps": 200,
+          "reason": "horizon",
+          "success_step": null,
+          "intervention": null,
+          "intervention_step": null,
+          "queue_len_after_choice": 4,
+          "policy_calls_after_snapshot": 18,
+          "policy_seconds_after_snapshot": 14.302738487254828,
+          "retreat": null,
+          "prefix_replay_state_error": 0.0,
+          "live_observation": {
+            "state_max_abs": 0.0,
+            "rgb_max_abs": 0.0
+          },
+          "stage": {
+            "first_near_step": 38,
+            "first_close_command_step": 44,
+            "first_grasp_step": 45,
+            "first_lift_step": 56,
+            "first_grasped_lift_step": 56,
+            "first_aligned_step": null,
+            "first_on_cubeB_step": 95,
+            "first_success_step": null,
+            "grasp_steps": 53,
+            "last_grasp_step": 97,
+            "close_command_steps": 111,
+            "min_tcp_to_cubeA_m": 0.012536455877125263,
+            "min_cubeA_to_cubeB_xy_m": 0.025389986112713814,
+            "max_cubeA_lift_m": 0.09858221933245659,
+            "cubeA_xy_displacement_m": 0.20885707693045635,
+            "cubeB_xy_displacement_m": 0.007585208935708515,
+            "final_is_grasped": false,
+            "final_gripper_command": -1.0,
+            "furthest_stage": "aligned_no_success"
+          },
+          "wall_seconds": 16.853902388829738
+        },
+        {
+          "action": "refresh",
+          "action_id": 1,
+          "y": 0,
+          "steps": 200,
+          "reason": "horizon",
+          "success_step": null,
+          "intervention": 1,
+          "intervention_step": 52,
+          "queue_len_after_choice": 0,
+          "policy_calls_after_snapshot": 19,
+          "policy_seconds_after_snapshot": 15.342200618237257,
+          "retreat": null,
+          "prefix_replay_state_error": 0.0,
+          "live_observation": {
+            "state_max_abs": 0.0,
+            "rgb_max_abs": 0.0
+          },
+          "stage": {
+            "first_near_step": 38,
+            "first_close_command_step": 44,
+            "first_grasp_step": 45,
+            "first_lift_step": 56,
+            "first_grasped_lift_step": 56,
+            "first_aligned_step": null,
+            "first_on_cubeB_step": 94,
+            "first_success_step": null,
+            "grasp_steps": 53,
+            "last_grasp_step": 97,
+            "close_command_steps": 121,
+            "min_tcp_to_cubeA_m": 0.012536455877125263,
+            "min_cubeA_to_cubeB_xy_m": 0.025112180039286613,
+            "max_cubeA_lift_m": 0.09896576777100563,
+            "cubeA_xy_displacement_m": 0.20028301827835618,
+            "cubeB_xy_displacement_m": 0.023675803281166797,
+            "final_is_grasped": false,
+            "final_gripper_command": -1.0,
+            "furthest_stage": "aligned_no_success"
+          },
+          "wall_seconds": 17.93871496291831
+        },
+        {
+          "action": "retreat_retry",
+          "action_id": 2,
+          "y": 0,
+          "steps": 200,
+          "reason": "horizon",
+          "success_step": null,
+          "intervention": 2,
+          "intervention_step": 52,
+          "queue_len_after_choice": 0,
+          "policy_calls_after_snapshot": 16,
+          "policy_seconds_after_snapshot": 12.738290899898857,
+          "retreat": {
+            "mode": "up",
+            "start_tcp": [
+              0.09127316623926163,
+              -0.2051292210817337,
+              0.022076226770877838
+            ],
+            "target_tcp": [
+              0.09127316623926163,
+              -0.2051292210817337,
+              0.07207622677087784
+            ],
+            "final_tcp": [
+              0.0907445028424263,
+              -0.20497676730155945,
+              0.06864937394857407
+            ],
+            "commanded_distance_m": 0.05,
+            "achieved_displacement_m": 0.04657639563083649,
+            "target_error_m": 0.0034707416221859896,
+            "steps_used": 27,
+            "max_steps": 40,
+            "arrival_tolerance_m": 0.005,
+            "command_saturated_steps": 27,
+            "gripper_command": -1.0,
+            "reached": true,
+            "end_reason": "reached"
+          },
+          "prefix_replay_state_error": 0.0,
+          "live_observation": {
+            "state_max_abs": 0.0,
+            "rgb_max_abs": 0.0
+          },
+          "stage": {
+            "first_near_step": 38,
+            "first_close_command_step": 44,
+            "first_grasp_step": 45,
+            "first_lift_step": 58,
+            "first_grasped_lift_step": 58,
+            "first_aligned_step": null,
+            "first_on_cubeB_step": 137,
+            "first_success_step": null,
+            "grasp_steps": 93,
+            "last_grasp_step": 137,
+            "close_command_steps": 97,
+            "min_tcp_to_cubeA_m": 0.012536455877125263,
+            "min_cubeA_to_cubeB_xy_m": 0.025330057367682457,
+            "max_cubeA_lift_m": 0.11196347698569298,
+            "cubeA_xy_displacement_m": 0.19899195923333748,
+            "cubeB_xy_displacement_m": 0.08690107637718611,
+            "final_is_grasped": false,
+            "final_gripper_command": 1.0,
+            "furthest_stage": "aligned_no_success"
+          },
+          "wall_seconds": 15.253277386073023
+        }
+      ]
+    },
+    {
+      "scene": 10019,
+      "checkpoint": 52,
+      "repeat": 3,
+      "role": "stage2a_exploratory_dev",
+      "y_continue": 0,
+      "cells": [
+        {
+          "action": "continue",
+          "action_id": 0,
+          "y": 0,
+          "steps": 200,
+          "reason": "horizon",
+          "success_step": null,
+          "intervention": null,
+          "intervention_step": null,
+          "queue_len_after_choice": 4,
+          "policy_calls_after_snapshot": 18,
+          "policy_seconds_after_snapshot": 14.219442906789482,
+          "retreat": null,
+          "prefix_replay_state_error": 0.0,
+          "live_observation": {
+            "state_max_abs": 0.0,
+            "rgb_max_abs": 0.0
+          },
+          "stage": {
+            "first_near_step": 38,
+            "first_close_command_step": 44,
+            "first_grasp_step": 45,
+            "first_lift_step": 56,
+            "first_grasped_lift_step": 56,
+            "first_aligned_step": null,
+            "first_on_cubeB_step": 95,
+            "first_success_step": null,
+            "grasp_steps": 54,
+            "last_grasp_step": 98,
+            "close_command_steps": 88,
+            "min_tcp_to_cubeA_m": 0.012536455877125263,
+            "min_cubeA_to_cubeB_xy_m": 0.024762816727161407,
+            "max_cubeA_lift_m": 0.09987713024020195,
+            "cubeA_xy_displacement_m": 0.20743236296965717,
+            "cubeB_xy_displacement_m": 0.011178019145181938,
+            "final_is_grasped": false,
+            "final_gripper_command": 1.0,
+            "furthest_stage": "aligned_no_success"
+          },
+          "wall_seconds": 16.735185585916042
+        },
+        {
+          "action": "refresh",
+          "action_id": 1,
+          "y": 0,
+          "steps": 200,
+          "reason": "horizon",
+          "success_step": null,
+          "intervention": 1,
+          "intervention_step": 52,
+          "queue_len_after_choice": 0,
+          "policy_calls_after_snapshot": 19,
+          "policy_seconds_after_snapshot": 14.779855020809919,
+          "retreat": null,
+          "prefix_replay_state_error": 0.0,
+          "live_observation": {
+            "state_max_abs": 0.0,
+            "rgb_max_abs": 0.0
+          },
+          "stage": {
+            "first_near_step": 38,
+            "first_close_command_step": 44,
+            "first_grasp_step": 45,
+            "first_lift_step": 56,
+            "first_grasped_lift_step": 56,
+            "first_aligned_step": null,
+            "first_on_cubeB_step": 95,
+            "first_success_step": null,
+            "grasp_steps": 59,
+            "last_grasp_step": 172,
+            "close_command_steps": 77,
+            "min_tcp_to_cubeA_m": 0.012536455877125263,
+            "min_cubeA_to_cubeB_xy_m": 0.028013482689857483,
+            "max_cubeA_lift_m": 0.09982175752520561,
+            "cubeA_xy_displacement_m": 0.19087247604949226,
+            "cubeB_xy_displacement_m": 0.03402537085115134,
+            "final_is_grasped": false,
+            "final_gripper_command": 0.9982401728630066,
+            "furthest_stage": "aligned_no_success"
+          },
+          "wall_seconds": 17.243731131311506
+        },
+        {
+          "action": "retreat_retry",
+          "action_id": 2,
+          "y": 0,
+          "steps": 200,
+          "reason": "horizon",
+          "success_step": null,
+          "intervention": 2,
+          "intervention_step": 52,
+          "queue_len_after_choice": 0,
+          "policy_calls_after_snapshot": 16,
+          "policy_seconds_after_snapshot": 12.55556674906984,
+          "retreat": {
+            "mode": "up",
+            "start_tcp": [
+              0.09127316623926163,
+              -0.2051292210817337,
+              0.022076226770877838
+            ],
+            "target_tcp": [
+              0.09127316623926163,
+              -0.2051292210817337,
+              0.07207622677087784
+            ],
+            "final_tcp": [
+              0.0907445028424263,
+              -0.20497676730155945,
+              0.06864937394857407
+            ],
+            "commanded_distance_m": 0.05,
+            "achieved_displacement_m": 0.04657639563083649,
+            "target_error_m": 0.0034707416221859896,
+            "steps_used": 27,
+            "max_steps": 40,
+            "arrival_tolerance_m": 0.005,
+            "command_saturated_steps": 27,
+            "gripper_command": -1.0,
+            "reached": true,
+            "end_reason": "reached"
+          },
+          "prefix_replay_state_error": 0.0,
+          "live_observation": {
+            "state_max_abs": 0.0,
+            "rgb_max_abs": 0.0
+          },
+          "stage": {
+            "first_near_step": 38,
+            "first_close_command_step": 44,
+            "first_grasp_step": 45,
+            "first_lift_step": 58,
+            "first_grasped_lift_step": 58,
+            "first_aligned_step": null,
+            "first_on_cubeB_step": 137,
+            "first_success_step": null,
+            "grasp_steps": 94,
+            "last_grasp_step": 138,
+            "close_command_steps": 98,
+            "min_tcp_to_cubeA_m": 0.012536455877125263,
+            "min_cubeA_to_cubeB_xy_m": 0.026076721027493477,
+            "max_cubeA_lift_m": 0.11043564602732658,
+            "cubeA_xy_displacement_m": 0.20039818042791713,
+            "cubeB_xy_displacement_m": 0.07804914303706288,
+            "final_is_grasped": false,
+            "final_gripper_command": 1.0,
+            "furthest_stage": "aligned_no_success"
+          },
+          "wall_seconds": 15.055370723828673
+        }
+      ]
+    },
+    {
+      "scene": 10019,
+      "checkpoint": 92,
+      "repeat": 0,
+      "role": "stage2a_exploratory_dev",
+      "y_continue": 0,
+      "cells": [
+        {
+          "action": "continue",
+          "action_id": 0,
+          "y": 0,
+          "steps": 200,
+          "reason": "horizon",
+          "success_step": null,
+          "intervention": null,
+          "intervention_step": null,
+          "queue_len_after_choice": 4,
+          "policy_calls_after_snapshot": 13,
+          "policy_seconds_after_snapshot": 10.237761409953237,
+          "retreat": null,
+          "prefix_replay_state_error": 0.0,
+          "live_observation": {
+            "state_max_abs": 0.0,
+            "rgb_max_abs": 0.0
+          },
+          "stage": {
+            "first_near_step": 38,
+            "first_close_command_step": 44,
+            "first_grasp_step": 45,
+            "first_lift_step": 56,
+            "first_grasped_lift_step": 56,
+            "first_aligned_step": null,
+            "first_on_cubeB_step": 94,
+            "first_success_step": null,
+            "grasp_steps": 54,
+            "last_grasp_step": 98,
+            "close_command_steps": 83,
+            "min_tcp_to_cubeA_m": 0.012536455877125263,
+            "min_cubeA_to_cubeB_xy_m": 0.021755443885922432,
+            "max_cubeA_lift_m": 0.09884924814105034,
+            "cubeA_xy_displacement_m": 0.20983198382953666,
+            "cubeB_xy_displacement_m": 0.011074611099640606,
+            "final_is_grasped": false,
+            "final_gripper_command": 1.0,
+            "furthest_stage": "aligned_no_success"
+          },
+          "wall_seconds": 12.685077675618231
+        },
+        {
+          "action": "refresh",
+          "action_id": 1,
+          "y": 0,
+          "steps": 200,
+          "reason": "horizon",
+          "success_step": null,
+          "intervention": 1,
+          "intervention_step": 92,
+          "queue_len_after_choice": 0,
+          "policy_calls_after_snapshot": 14,
+          "policy_seconds_after_snapshot": 11.30514814471826,
+          "retreat": null,
+          "prefix_replay_state_error": 0.0,
+          "live_observation": {
+            "state_max_abs": 0.0,
+            "rgb_max_abs": 0.0
+          },
+          "stage": {
+            "first_near_step": 38,
+            "first_close_command_step": 44,
+            "first_grasp_step": 45,
+            "first_lift_step": 56,
+            "first_grasped_lift_step": 56,
+            "first_aligned_step": null,
+            "first_on_cubeB_step": 94,
+            "first_success_step": null,
+            "grasp_steps": 53,
+            "last_grasp_step": 97,
+            "close_command_steps": 119,
+            "min_tcp_to_cubeA_m": 0.012536455877125263,
+            "min_cubeA_to_cubeB_xy_m": 0.022412801161408424,
+            "max_cubeA_lift_m": 0.09884924814105034,
+            "cubeA_xy_displacement_m": 0.2113946098786212,
+            "cubeB_xy_displacement_m": 0.009630606896251748,
+            "final_is_grasped": false,
+            "final_gripper_command": -1.0,
+            "furthest_stage": "aligned_no_success"
+          },
+          "wall_seconds": 13.755039804149419
+        },
+        {
+          "action": "retreat_retry",
+          "action_id": 2,
+          "y": 0,
+          "steps": 200,
+          "reason": "horizon",
+          "success_step": null,
+          "intervention": 2,
+          "intervention_step": 92,
+          "queue_len_after_choice": 0,
+          "policy_calls_after_snapshot": 11,
+          "policy_seconds_after_snapshot": 8.848037059418857,
+          "retreat": {
+            "mode": "up",
+            "start_tcp": [
+              0.05686239153146744,
+              -0.009982723742723465,
+              0.0688767358660698
+            ],
+            "target_tcp": [
+              0.05686239153146744,
+              -0.009982723742723465,
+              0.1188767358660698
+            ],
+            "final_tcp": [
+              0.056169066578149796,
+              -0.009456855244934559,
+              0.11406812071800232
+            ],
+            "commanded_distance_m": 0.05,
+            "achieved_displacement_m": 0.04519975930452347,
+            "target_error_m": 0.004886718409125256,
+            "steps_used": 27,
+            "max_steps": 40,
+            "arrival_tolerance_m": 0.005,
+            "command_saturated_steps": 27,
+            "gripper_command": -0.9988067746162415,
+            "reached": true,
+            "end_reason": "reached"
+          },
+          "prefix_replay_state_error": 0.0,
+          "live_observation": {
+            "state_max_abs": 0.0,
+            "rgb_max_abs": 0.0
+          },
+          "stage": {
+            "first_near_step": 38,
+            "first_close_command_step": 44,
+            "first_grasp_step": 45,
+            "first_lift_step": 56,
+            "first_grasped_lift_step": 56,
+            "first_aligned_step": null,
+            "first_on_cubeB_step": 199,
+            "first_success_step": null,
+            "grasp_steps": 135,
+            "last_grasp_step": 198,
+            "close_command_steps": 136,
+            "min_tcp_to_cubeA_m": 0.011084630154073238,
+            "min_cubeA_to_cubeB_xy_m": 0.022479526698589325,
+            "max_cubeA_lift_m": 0.0994039960205555,
+            "cubeA_xy_displacement_m": 0.20740976726419566,
+            "cubeB_xy_displacement_m": 7.724750377491403e-06,
+            "final_is_grasped": false,
+            "final_gripper_command": 1.0,
+            "furthest_stage": "aligned_no_success"
+          },
+          "wall_seconds": 11.24493804294616
+        }
+      ]
+    },
+    {
+      "scene": 10019,
+      "checkpoint": 92,
+      "repeat": 1,
+      "role": "stage2a_exploratory_dev",
+      "y_continue": 0,
+      "cells": [
+        {
+          "action": "continue",
+          "action_id": 0,
+          "y": 0,
+          "steps": 200,
+          "reason": "horizon",
+          "success_step": null,
+          "intervention": null,
+          "intervention_step": null,
+          "queue_len_after_choice": 4,
+          "policy_calls_after_snapshot": 13,
+          "policy_seconds_after_snapshot": 10.467164798639715,
+          "retreat": null,
+          "prefix_replay_state_error": 0.0,
+          "live_observation": {
+            "state_max_abs": 0.0,
+            "rgb_max_abs": 0.0
+          },
+          "stage": {
+            "first_near_step": 38,
+            "first_close_command_step": 44,
+            "first_grasp_step": 45,
+            "first_lift_step": 56,
+            "first_grasped_lift_step": 56,
+            "first_aligned_step": null,
+            "first_on_cubeB_step": 94,
+            "first_success_step": null,
+            "grasp_steps": 53,
+            "last_grasp_step": 97,
+            "close_command_steps": 107,
+            "min_tcp_to_cubeA_m": 0.012536455877125263,
+            "min_cubeA_to_cubeB_xy_m": 0.021971965208649635,
+            "max_cubeA_lift_m": 0.09884924814105034,
+            "cubeA_xy_displacement_m": 0.205426429889885,
+            "cubeB_xy_displacement_m": 0.05057239039920456,
+            "final_is_grasped": false,
+            "final_gripper_command": -1.0,
+            "furthest_stage": "aligned_no_success"
+          },
+          "wall_seconds": 12.835054056718946
+        },
+        {
+          "action": "refresh",
+          "action_id": 1,
+          "y": 0,
+          "steps": 200,
+          "reason": "horizon",
+          "success_step": null,
+          "intervention": 1,
+          "intervention_step": 92,
+          "queue_len_after_choice": 0,
+          "policy_calls_after_snapshot": 14,
+          "policy_seconds_after_snapshot": 11.593055065255612,
+          "retreat": null,
+          "prefix_replay_state_error": 0.0,
+          "live_observation": {
+            "state_max_abs": 0.0,
+            "rgb_max_abs": 0.0
+          },
+          "stage": {
+            "first_near_step": 38,
+            "first_close_command_step": 44,
+            "first_grasp_step": 45,
+            "first_lift_step": 56,
+            "first_grasped_lift_step": 56,
+            "first_aligned_step": null,
+            "first_on_cubeB_step": 94,
+            "first_success_step": null,
+            "grasp_steps": 53,
+            "last_grasp_step": 97,
+            "close_command_steps": 114,
+            "min_tcp_to_cubeA_m": 0.012536455877125263,
+            "min_cubeA_to_cubeB_xy_m": 0.022370517253875732,
+            "max_cubeA_lift_m": 0.09884924814105034,
+            "cubeA_xy_displacement_m": 0.20998550339845942,
+            "cubeB_xy_displacement_m": 0.007383363792738823,
+            "final_is_grasped": false,
+            "final_gripper_command": -1.0,
+            "furthest_stage": "aligned_no_success"
+          },
+          "wall_seconds": 14.134079590439796
+        },
+        {
+          "action": "retreat_retry",
+          "action_id": 2,
+          "y": 0,
+          "steps": 200,
+          "reason": "horizon",
+          "success_step": null,
+          "intervention": 2,
+          "intervention_step": 92,
+          "queue_len_after_choice": 0,
+          "policy_calls_after_snapshot": 11,
+          "policy_seconds_after_snapshot": 8.974436526652426,
+          "retreat": {
+            "mode": "up",
+            "start_tcp": [
+              0.05686239153146744,
+              -0.009982723742723465,
+              0.0688767358660698
+            ],
+            "target_tcp": [
+              0.05686239153146744,
+              -0.009982723742723465,
+              0.1188767358660698
+            ],
+            "final_tcp": [
+              0.056169066578149796,
+              -0.009456855244934559,
+              0.11406812071800232
+            ],
+            "commanded_distance_m": 0.05,
+            "achieved_displacement_m": 0.04519975930452347,
+            "target_error_m": 0.004886718409125256,
+            "steps_used": 27,
+            "max_steps": 40,
+            "arrival_tolerance_m": 0.005,
+            "command_saturated_steps": 27,
+            "gripper_command": -0.9988067746162415,
+            "reached": true,
+            "end_reason": "reached"
+          },
+          "prefix_replay_state_error": 0.0,
+          "live_observation": {
+            "state_max_abs": 0.0,
+            "rgb_max_abs": 0.0
+          },
+          "stage": {
+            "first_near_step": 38,
+            "first_close_command_step": 44,
+            "first_grasp_step": 45,
+            "first_lift_step": 56,
+            "first_grasped_lift_step": 56,
+            "first_aligned_step": null,
+            "first_on_cubeB_step": 195,
+            "first_success_step": null,
+            "grasp_steps": 131,
+            "last_grasp_step": 194,
+            "close_command_steps": 132,
+            "min_tcp_to_cubeA_m": 0.010411035269498825,
+            "min_cubeA_to_cubeB_xy_m": 0.027999140322208405,
+            "max_cubeA_lift_m": 0.09884924814105034,
+            "cubeA_xy_displacement_m": 0.19651642082533974,
+            "cubeB_xy_displacement_m": 0.0005510668884072589,
+            "final_is_grasped": false,
+            "final_gripper_command": 1.0,
+            "furthest_stage": "aligned_no_success"
+          },
+          "wall_seconds": 11.403265123721212
+        }
+      ]
+    },
+    {
+      "scene": 10019,
+      "checkpoint": 92,
+      "repeat": 2,
+      "role": "stage2a_exploratory_dev",
+      "y_continue": 0,
+      "cells": [
+        {
+          "action": "continue",
+          "action_id": 0,
+          "y": 0,
+          "steps": 200,
+          "reason": "horizon",
+          "success_step": null,
+          "intervention": null,
+          "intervention_step": null,
+          "queue_len_after_choice": 4,
+          "policy_calls_after_snapshot": 13,
+          "policy_seconds_after_snapshot": 10.969662223476917,
+          "retreat": null,
+          "prefix_replay_state_error": 0.0,
+          "live_observation": {
+            "state_max_abs": 0.0,
+            "rgb_max_abs": 0.0
+          },
+          "stage": {
+            "first_near_step": 38,
+            "first_close_command_step": 44,
+            "first_grasp_step": 45,
+            "first_lift_step": 56,
+            "first_grasped_lift_step": 56,
+            "first_aligned_step": null,
+            "first_on_cubeB_step": 94,
+            "first_success_step": null,
+            "grasp_steps": 52,
+            "last_grasp_step": 96,
+            "close_command_steps": 56,
+            "min_tcp_to_cubeA_m": 0.012536455877125263,
+            "min_cubeA_to_cubeB_xy_m": 0.02218380570411682,
+            "max_cubeA_lift_m": 0.09884924814105034,
+            "cubeA_xy_displacement_m": 0.20829957038494065,
+            "cubeB_xy_displacement_m": 0.11492081758364679,
+            "final_is_grasped": false,
+            "final_gripper_command": 1.0,
+            "furthest_stage": "aligned_no_success"
+          },
+          "wall_seconds": 13.537556116934866
+        },
+        {
+          "action": "refresh",
+          "action_id": 1,
+          "y": 0,
+          "steps": 200,
+          "reason": "horizon",
+          "success_step": null,
+          "intervention": 1,
+          "intervention_step": 92,
+          "queue_len_after_choice": 0,
+          "policy_calls_after_snapshot": 14,
+          "policy_seconds_after_snapshot": 11.402188926935196,
+          "retreat": null,
+          "prefix_replay_state_error": 0.0,
+          "live_observation": {
+            "state_max_abs": 0.0,
+            "rgb_max_abs": 0.0
+          },
+          "stage": {
+            "first_near_step": 38,
+            "first_close_command_step": 44,
+            "first_grasp_step": 45,
+            "first_lift_step": 56,
+            "first_grasped_lift_step": 56,
+            "first_aligned_step": null,
+            "first_on_cubeB_step": 94,
+            "first_success_step": null,
+            "grasp_steps": 53,
+            "last_grasp_step": 97,
+            "close_command_steps": 115,
+            "min_tcp_to_cubeA_m": 0.012536455877125263,
+            "min_cubeA_to_cubeB_xy_m": 0.022239072248339653,
+            "max_cubeA_lift_m": 0.09884924814105034,
+            "cubeA_xy_displacement_m": 0.2063171104932334,
+            "cubeB_xy_displacement_m": 0.00461957833336952,
+            "final_is_grasped": false,
+            "final_gripper_command": -1.0,
+            "furthest_stage": "aligned_no_success"
+          },
+          "wall_seconds": 13.890290168114007
+        },
+        {
+          "action": "retreat_retry",
+          "action_id": 2,
+          "y": 0,
+          "steps": 200,
+          "reason": "horizon",
+          "success_step": null,
+          "intervention": 2,
+          "intervention_step": 92,
+          "queue_len_after_choice": 0,
+          "policy_calls_after_snapshot": 11,
+          "policy_seconds_after_snapshot": 8.618042345158756,
+          "retreat": {
+            "mode": "up",
+            "start_tcp": [
+              0.05686239153146744,
+              -0.009982723742723465,
+              0.0688767358660698
+            ],
+            "target_tcp": [
+              0.05686239153146744,
+              -0.009982723742723465,
+              0.1188767358660698
+            ],
+            "final_tcp": [
+              0.056169066578149796,
+              -0.009456855244934559,
+              0.11406812071800232
+            ],
+            "commanded_distance_m": 0.05,
+            "achieved_displacement_m": 0.04519975930452347,
+            "target_error_m": 0.004886718409125256,
+            "steps_used": 27,
+            "max_steps": 40,
+            "arrival_tolerance_m": 0.005,
+            "command_saturated_steps": 27,
+            "gripper_command": -0.9988067746162415,
+            "reached": true,
+            "end_reason": "reached"
+          },
+          "prefix_replay_state_error": 0.0,
+          "live_observation": {
+            "state_max_abs": 0.0,
+            "rgb_max_abs": 0.0
+          },
+          "stage": {
+            "first_near_step": 38,
+            "first_close_command_step": 44,
+            "first_grasp_step": 45,
+            "first_lift_step": 56,
+            "first_grasped_lift_step": 56,
+            "first_aligned_step": null,
+            "first_on_cubeB_step": 196,
+            "first_success_step": null,
+            "grasp_steps": 131,
+            "last_grasp_step": 195,
+            "close_command_steps": 133,
+            "min_tcp_to_cubeA_m": 0.01062851957976818,
+            "min_cubeA_to_cubeB_xy_m": 0.02414403297007084,
+            "max_cubeA_lift_m": 0.09884924814105034,
+            "cubeA_xy_displacement_m": 0.19965459677054195,
+            "cubeB_xy_displacement_m": 7.544904504202312e-05,
+            "final_is_grasped": false,
+            "final_gripper_command": 0.9972044229507446,
+            "furthest_stage": "aligned_no_success"
+          },
+          "wall_seconds": 10.922590516973287
+        }
+      ]
+    },
+    {
+      "scene": 10019,
+      "checkpoint": 92,
+      "repeat": 3,
+      "role": "stage2a_exploratory_dev",
+      "y_continue": 0,
+      "cells": [
+        {
+          "action": "continue",
+          "action_id": 0,
+          "y": 0,
+          "steps": 200,
+          "reason": "horizon",
+          "success_step": null,
+          "intervention": null,
+          "intervention_step": null,
+          "queue_len_after_choice": 4,
+          "policy_calls_after_snapshot": 13,
+          "policy_seconds_after_snapshot": 10.987249090801924,
+          "retreat": null,
+          "prefix_replay_state_error": 0.0,
+          "live_observation": {
+            "state_max_abs": 0.0,
+            "rgb_max_abs": 0.0
+          },
+          "stage": {
+            "first_near_step": 38,
+            "first_close_command_step": 44,
+            "first_grasp_step": 45,
+            "first_lift_step": 56,
+            "first_grasped_lift_step": 56,
+            "first_aligned_step": null,
+            "first_on_cubeB_step": 94,
+            "first_success_step": null,
+            "grasp_steps": 53,
+            "last_grasp_step": 97,
+            "close_command_steps": 93,
+            "min_tcp_to_cubeA_m": 0.012536455877125263,
+            "min_cubeA_to_cubeB_xy_m": 0.021894223988056183,
+            "max_cubeA_lift_m": 0.09884924814105034,
+            "cubeA_xy_displacement_m": 0.20955363298432927,
+            "cubeB_xy_displacement_m": 0.026855983489464396,
+            "final_is_grasped": false,
+            "final_gripper_command": -1.0,
+            "furthest_stage": "aligned_no_success"
+          },
+          "wall_seconds": 13.432088566944003
+        },
+        {
+          "action": "refresh",
+          "action_id": 1,
+          "y": 0,
+          "steps": 200,
+          "reason": "horizon",
+          "success_step": null,
+          "intervention": 1,
+          "intervention_step": 92,
+          "queue_len_after_choice": 0,
+          "policy_calls_after_snapshot": 14,
+          "policy_seconds_after_snapshot": 11.346771011129022,
+          "retreat": null,
+          "prefix_replay_state_error": 0.0,
+          "live_observation": {
+            "state_max_abs": 0.0,
+            "rgb_max_abs": 0.0
+          },
+          "stage": {
+            "first_near_step": 38,
+            "first_close_command_step": 44,
+            "first_grasp_step": 45,
+            "first_lift_step": 56,
+            "first_grasped_lift_step": 56,
+            "first_aligned_step": null,
+            "first_on_cubeB_step": 94,
+            "first_success_step": null,
+            "grasp_steps": 53,
+            "last_grasp_step": 97,
+            "close_command_steps": 116,
+            "min_tcp_to_cubeA_m": 0.012536455877125263,
+            "min_cubeA_to_cubeB_xy_m": 0.022208020091056824,
+            "max_cubeA_lift_m": 0.09884924814105034,
+            "cubeA_xy_displacement_m": 0.21259326663396189,
+            "cubeB_xy_displacement_m": 0.008398409293179903,
+            "final_is_grasped": false,
+            "final_gripper_command": -1.0,
+            "furthest_stage": "aligned_no_success"
+          },
+          "wall_seconds": 13.85839936695993
+        },
+        {
+          "action": "retreat_retry",
+          "action_id": 2,
+          "y": 0,
+          "steps": 200,
+          "reason": "horizon",
+          "success_step": null,
+          "intervention": 2,
+          "intervention_step": 92,
+          "queue_len_after_choice": 0,
+          "policy_calls_after_snapshot": 11,
+          "policy_seconds_after_snapshot": 8.935781597159803,
+          "retreat": {
+            "mode": "up",
+            "start_tcp": [
+              0.05686239153146744,
+              -0.009982723742723465,
+              0.0688767358660698
+            ],
+            "target_tcp": [
+              0.05686239153146744,
+              -0.009982723742723465,
+              0.1188767358660698
+            ],
+            "final_tcp": [
+              0.056169066578149796,
+              -0.009456855244934559,
+              0.11406812071800232
+            ],
+            "commanded_distance_m": 0.05,
+            "achieved_displacement_m": 0.04519975930452347,
+            "target_error_m": 0.004886718409125256,
+            "steps_used": 27,
+            "max_steps": 40,
+            "arrival_tolerance_m": 0.005,
+            "command_saturated_steps": 27,
+            "gripper_command": -0.9988067746162415,
+            "reached": true,
+            "end_reason": "reached"
+          },
+          "prefix_replay_state_error": 0.0,
+          "live_observation": {
+            "state_max_abs": 0.0,
+            "rgb_max_abs": 0.0
+          },
+          "stage": {
+            "first_near_step": 38,
+            "first_close_command_step": 44,
+            "first_grasp_step": 45,
+            "first_lift_step": 56,
+            "first_grasped_lift_step": 56,
+            "first_aligned_step": null,
+            "first_on_cubeB_step": 197,
+            "first_success_step": null,
+            "grasp_steps": 133,
+            "last_grasp_step": 196,
+            "close_command_steps": 134,
+            "min_tcp_to_cubeA_m": 0.010951611213386059,
+            "min_cubeA_to_cubeB_xy_m": 0.023501399904489517,
+            "max_cubeA_lift_m": 0.09884924814105034,
+            "cubeA_xy_displacement_m": 0.2015902674585093,
+            "cubeB_xy_displacement_m": 3.794305351958187e-06,
+            "final_is_grasped": false,
+            "final_gripper_command": 0.9982408881187439,
+            "furthest_stage": "aligned_no_success"
+          },
+          "wall_seconds": 11.389537004753947
+        }
+      ]
+    },
+    {
+      "scene": 10019,
+      "checkpoint": 132,
+      "repeat": 0,
+      "role": "stage2a_exploratory_dev",
+      "y_continue": 0,
+      "cells": [
+        {
+          "action": "continue",
+          "action_id": 0,
+          "y": 0,
+          "steps": 200,
+          "reason": "horizon",
+          "success_step": null,
+          "intervention": null,
+          "intervention_step": null,
+          "queue_len_after_choice": 4,
+          "policy_calls_after_snapshot": 8,
+          "policy_seconds_after_snapshot": 6.5564622185193,
+          "retreat": null,
+          "prefix_replay_state_error": 0.0,
+          "live_observation": {
+            "state_max_abs": 0.0,
+            "rgb_max_abs": 0.0
+          },
+          "stage": {
+            "first_near_step": 38,
+            "first_close_command_step": 44,
+            "first_grasp_step": 45,
+            "first_lift_step": 56,
+            "first_grasped_lift_step": 56,
+            "first_aligned_step": null,
+            "first_on_cubeB_step": 94,
+            "first_success_step": null,
+            "grasp_steps": 54,
+            "last_grasp_step": 98,
+            "close_command_steps": 83,
+            "min_tcp_to_cubeA_m": 0.012536455877125263,
+            "min_cubeA_to_cubeB_xy_m": 0.021755443885922432,
+            "max_cubeA_lift_m": 0.09884924814105034,
+            "cubeA_xy_displacement_m": 0.20983198382953666,
+            "cubeB_xy_displacement_m": 0.011074611099640606,
+            "final_is_grasped": false,
+            "final_gripper_command": 1.0,
+            "furthest_stage": "aligned_no_success"
+          },
+          "wall_seconds": 8.842967422213405
+        },
+        {
+          "action": "refresh",
+          "action_id": 1,
+          "y": 0,
+          "steps": 200,
+          "reason": "horizon",
+          "success_step": null,
+          "intervention": 1,
+          "intervention_step": 132,
+          "queue_len_after_choice": 0,
+          "policy_calls_after_snapshot": 9,
+          "policy_seconds_after_snapshot": 7.294685733038932,
+          "retreat": null,
+          "prefix_replay_state_error": 0.0,
+          "live_observation": {
+            "state_max_abs": 0.0,
+            "rgb_max_abs": 0.0
+          },
+          "stage": {
+            "first_near_step": 38,
+            "first_close_command_step": 44,
+            "first_grasp_step": 45,
+            "first_lift_step": 56,
+            "first_grasped_lift_step": 56,
+            "first_aligned_step": null,
+            "first_on_cubeB_step": 94,
+            "first_success_step": null,
+            "grasp_steps": 54,
+            "last_grasp_step": 98,
+            "close_command_steps": 99,
+            "min_tcp_to_cubeA_m": 0.012536455877125263,
+            "min_cubeA_to_cubeB_xy_m": 0.021755443885922432,
+            "max_cubeA_lift_m": 0.09884924814105034,
+            "cubeA_xy_displacement_m": 0.20983197076848412,
+            "cubeB_xy_displacement_m": 0.0032567763760887273,
+            "final_is_grasped": false,
+            "final_gripper_command": 0.9935155510902405,
+            "furthest_stage": "aligned_no_success"
+          },
+          "wall_seconds": 9.705090377945453
+        },
+        {
+          "action": "retreat_retry",
+          "action_id": 2,
+          "y": 0,
+          "steps": 200,
+          "reason": "horizon",
+          "success_step": null,
+          "intervention": 2,
+          "intervention_step": 132,
+          "queue_len_after_choice": 0,
+          "policy_calls_after_snapshot": 6,
+          "policy_seconds_after_snapshot": 4.770362612325698,
+          "retreat": {
+            "mode": "up",
+            "start_tcp": [
+              0.06910381466150284,
+              0.013972428627312183,
+              0.03966473042964935
+            ],
+            "target_tcp": [
+              0.06910381466150284,
+              0.013972428627312183,
+              0.08966473042964936
+            ],
+            "final_tcp": [
+              0.06915480643510818,
+              0.013966599479317665,
+              0.08555962145328522
+            ],
+            "commanded_distance_m": 0.05,
+            "achieved_displacement_m": 0.04589492082595825,
+            "target_error_m": 0.0041054298006137175,
+            "steps_used": 24,
+            "max_steps": 40,
+            "arrival_tolerance_m": 0.005,
+            "command_saturated_steps": 24,
+            "gripper_command": 0.9997378587722778,
+            "reached": true,
+            "end_reason": "reached"
+          },
+          "prefix_replay_state_error": 0.0,
+          "live_observation": {
+            "state_max_abs": 0.0,
+            "rgb_max_abs": 0.0
+          },
+          "stage": {
+            "first_near_step": 38,
+            "first_close_command_step": 44,
+            "first_grasp_step": 45,
+            "first_lift_step": 56,
+            "first_grasped_lift_step": 56,
+            "first_aligned_step": null,
+            "first_on_cubeB_step": 94,
+            "first_success_step": null,
+            "grasp_steps": 54,
+            "last_grasp_step": 98,
+            "close_command_steps": 63,
+            "min_tcp_to_cubeA_m": 0.012536455877125263,
+            "min_cubeA_to_cubeB_xy_m": 0.021755443885922432,
+            "max_cubeA_lift_m": 0.09884924814105034,
+            "cubeA_xy_displacement_m": 0.20940767503838564,
+            "cubeB_xy_displacement_m": 0.00345865745702551,
+            "final_is_grasped": false,
+            "final_gripper_command": -0.9949578046798706,
+            "furthest_stage": "aligned_no_success"
+          },
+          "wall_seconds": 7.121664053294808
+        }
+      ]
+    },
+    {
+      "scene": 10019,
+      "checkpoint": 132,
+      "repeat": 1,
+      "role": "stage2a_exploratory_dev",
+      "y_continue": 0,
+      "cells": [
+        {
+          "action": "continue",
+          "action_id": 0,
+          "y": 0,
+          "steps": 200,
+          "reason": "horizon",
+          "success_step": null,
+          "intervention": null,
+          "intervention_step": null,
+          "queue_len_after_choice": 4,
+          "policy_calls_after_snapshot": 8,
+          "policy_seconds_after_snapshot": 6.755352756008506,
+          "retreat": null,
+          "prefix_replay_state_error": 0.0,
+          "live_observation": {
+            "state_max_abs": 0.0,
+            "rgb_max_abs": 0.0
+          },
+          "stage": {
+            "first_near_step": 38,
+            "first_close_command_step": 44,
+            "first_grasp_step": 45,
+            "first_lift_step": 56,
+            "first_grasped_lift_step": 56,
+            "first_aligned_step": null,
+            "first_on_cubeB_step": 94,
+            "first_success_step": null,
+            "grasp_steps": 54,
+            "last_grasp_step": 98,
+            "close_command_steps": 83,
+            "min_tcp_to_cubeA_m": 0.012536455877125263,
+            "min_cubeA_to_cubeB_xy_m": 0.021755443885922432,
+            "max_cubeA_lift_m": 0.09884924814105034,
+            "cubeA_xy_displacement_m": 0.2098319367241501,
+            "cubeB_xy_displacement_m": 0.009366505926405486,
+            "final_is_grasped": false,
+            "final_gripper_command": 1.0,
+            "furthest_stage": "aligned_no_success"
+          },
+          "wall_seconds": 9.074441901873797
+        },
+        {
+          "action": "refresh",
+          "action_id": 1,
+          "y": 0,
+          "steps": 200,
+          "reason": "horizon",
+          "success_step": null,
+          "intervention": 1,
+          "intervention_step": 132,
+          "queue_len_after_choice": 0,
+          "policy_calls_after_snapshot": 9,
+          "policy_seconds_after_snapshot": 7.39798101503402,
+          "retreat": null,
+          "prefix_replay_state_error": 0.0,
+          "live_observation": {
+            "state_max_abs": 0.0,
+            "rgb_max_abs": 0.0
+          },
+          "stage": {
+            "first_near_step": 38,
+            "first_close_command_step": 44,
+            "first_grasp_step": 45,
+            "first_lift_step": 56,
+            "first_grasped_lift_step": 56,
+            "first_aligned_step": null,
+            "first_on_cubeB_step": 94,
+            "first_success_step": null,
+            "grasp_steps": 54,
+            "last_grasp_step": 98,
+            "close_command_steps": 71,
+            "min_tcp_to_cubeA_m": 0.012536455877125263,
+            "min_cubeA_to_cubeB_xy_m": 0.021755443885922432,
+            "max_cubeA_lift_m": 0.09884924814105034,
+            "cubeA_xy_displacement_m": 0.20983221441012945,
+            "cubeB_xy_displacement_m": 0.012965858686360035,
+            "final_is_grasped": false,
+            "final_gripper_command": -1.0,
+            "furthest_stage": "aligned_no_success"
+          },
+          "wall_seconds": 9.773425907827914
+        },
+        {
+          "action": "retreat_retry",
+          "action_id": 2,
+          "y": 0,
+          "steps": 200,
+          "reason": "horizon",
+          "success_step": null,
+          "intervention": 2,
+          "intervention_step": 132,
+          "queue_len_after_choice": 0,
+          "policy_calls_after_snapshot": 6,
+          "policy_seconds_after_snapshot": 4.84262337628752,
+          "retreat": {
+            "mode": "up",
+            "start_tcp": [
+              0.06910381466150284,
+              0.013972428627312183,
+              0.03966473042964935
+            ],
+            "target_tcp": [
+              0.06910381466150284,
+              0.013972428627312183,
+              0.08966473042964936
+            ],
+            "final_tcp": [
+              0.06915480643510818,
+              0.013966599479317665,
+              0.08555962145328522
+            ],
+            "commanded_distance_m": 0.05,
+            "achieved_displacement_m": 0.04589492082595825,
+            "target_error_m": 0.0041054298006137175,
+            "steps_used": 24,
+            "max_steps": 40,
+            "arrival_tolerance_m": 0.005,
+            "command_saturated_steps": 24,
+            "gripper_command": 0.9997378587722778,
+            "reached": true,
+            "end_reason": "reached"
+          },
+          "prefix_replay_state_error": 0.0,
+          "live_observation": {
+            "state_max_abs": 0.0,
+            "rgb_max_abs": 0.0
+          },
+          "stage": {
+            "first_near_step": 38,
+            "first_close_command_step": 44,
+            "first_grasp_step": 45,
+            "first_lift_step": 56,
+            "first_grasped_lift_step": 56,
+            "first_aligned_step": null,
+            "first_on_cubeB_step": 94,
+            "first_success_step": null,
+            "grasp_steps": 54,
+            "last_grasp_step": 98,
+            "close_command_steps": 63,
+            "min_tcp_to_cubeA_m": 0.012536455877125263,
+            "min_cubeA_to_cubeB_xy_m": 0.021755443885922432,
+            "max_cubeA_lift_m": 0.09884924814105034,
+            "cubeA_xy_displacement_m": 0.20915064137774703,
+            "cubeB_xy_displacement_m": 0.004897230141274161,
+            "final_is_grasped": false,
+            "final_gripper_command": -0.997538685798645,
+            "furthest_stage": "aligned_no_success"
+          },
+          "wall_seconds": 7.128813781309873
+        }
+      ]
+    },
+    {
+      "scene": 10019,
+      "checkpoint": 132,
+      "repeat": 2,
+      "role": "stage2a_exploratory_dev",
+      "y_continue": 0,
+      "cells": [
+        {
+          "action": "continue",
+          "action_id": 0,
+          "y": 0,
+          "steps": 200,
+          "reason": "horizon",
+          "success_step": null,
+          "intervention": null,
+          "intervention_step": null,
+          "queue_len_after_choice": 4,
+          "policy_calls_after_snapshot": 8,
+          "policy_seconds_after_snapshot": 6.495667309965938,
+          "retreat": null,
+          "prefix_replay_state_error": 0.0,
+          "live_observation": {
+            "state_max_abs": 0.0,
+            "rgb_max_abs": 0.0
+          },
+          "stage": {
+            "first_near_step": 38,
+            "first_close_command_step": 44,
+            "first_grasp_step": 45,
+            "first_lift_step": 56,
+            "first_grasped_lift_step": 56,
+            "first_aligned_step": null,
+            "first_on_cubeB_step": 94,
+            "first_success_step": null,
+            "grasp_steps": 54,
+            "last_grasp_step": 98,
+            "close_command_steps": 107,
+            "min_tcp_to_cubeA_m": 0.012536455877125263,
+            "min_cubeA_to_cubeB_xy_m": 0.021755443885922432,
+            "max_cubeA_lift_m": 0.09884924814105034,
+            "cubeA_xy_displacement_m": 0.2098319653990058,
+            "cubeB_xy_displacement_m": 0.0030055112243105304,
+            "final_is_grasped": false,
+            "final_gripper_command": -0.9990418553352356,
+            "furthest_stage": "aligned_no_success"
+          },
+          "wall_seconds": 8.914522381033748
+        },
+        {
+          "action": "refresh",
+          "action_id": 1,
+          "y": 0,
+          "steps": 200,
+          "reason": "horizon",
+          "success_step": null,
+          "intervention": 1,
+          "intervention_step": 132,
+          "queue_len_after_choice": 0,
+          "policy_calls_after_snapshot": 9,
+          "policy_seconds_after_snapshot": 7.154804744292051,
+          "retreat": null,
+          "prefix_replay_state_error": 0.0,
+          "live_observation": {
+            "state_max_abs": 0.0,
+            "rgb_max_abs": 0.0
+          },
+          "stage": {
+            "first_near_step": 38,
+            "first_close_command_step": 44,
+            "first_grasp_step": 45,
+            "first_lift_step": 56,
+            "first_grasped_lift_step": 56,
+            "first_aligned_step": null,
+            "first_on_cubeB_step": 94,
+            "first_success_step": null,
+            "grasp_steps": 54,
+            "last_grasp_step": 98,
+            "close_command_steps": 79,
+            "min_tcp_to_cubeA_m": 0.012536455877125263,
+            "min_cubeA_to_cubeB_xy_m": 0.021755443885922432,
+            "max_cubeA_lift_m": 0.09884924814105034,
+            "cubeA_xy_displacement_m": 0.20983221441012945,
+            "cubeB_xy_displacement_m": 0.01098866102512329,
+            "final_is_grasped": false,
+            "final_gripper_command": -0.9950739741325378,
+            "furthest_stage": "aligned_no_success"
+          },
+          "wall_seconds": 9.4690260598436
+        },
+        {
+          "action": "retreat_retry",
+          "action_id": 2,
+          "y": 0,
+          "steps": 200,
+          "reason": "horizon",
+          "success_step": null,
+          "intervention": 2,
+          "intervention_step": 132,
+          "queue_len_after_choice": 0,
+          "policy_calls_after_snapshot": 6,
+          "policy_seconds_after_snapshot": 4.847156744915992,
+          "retreat": {
+            "mode": "up",
+            "start_tcp": [
+              0.06910381466150284,
+              0.013972428627312183,
+              0.03966473042964935
+            ],
+            "target_tcp": [
+              0.06910381466150284,
+              0.013972428627312183,
+              0.08966473042964936
+            ],
+            "final_tcp": [
+              0.06915480643510818,
+              0.013966599479317665,
+              0.08555962145328522
+            ],
+            "commanded_distance_m": 0.05,
+            "achieved_displacement_m": 0.04589492082595825,
+            "target_error_m": 0.0041054298006137175,
+            "steps_used": 24,
+            "max_steps": 40,
+            "arrival_tolerance_m": 0.005,
+            "command_saturated_steps": 24,
+            "gripper_command": 0.9997378587722778,
+            "reached": true,
+            "end_reason": "reached"
+          },
+          "prefix_replay_state_error": 0.0,
+          "live_observation": {
+            "state_max_abs": 0.0,
+            "rgb_max_abs": 0.0
+          },
+          "stage": {
+            "first_near_step": 38,
+            "first_close_command_step": 44,
+            "first_grasp_step": 45,
+            "first_lift_step": 56,
+            "first_grasped_lift_step": 56,
+            "first_aligned_step": null,
+            "first_on_cubeB_step": 94,
+            "first_success_step": null,
+            "grasp_steps": 54,
+            "last_grasp_step": 98,
+            "close_command_steps": 59,
+            "min_tcp_to_cubeA_m": 0.012536455877125263,
+            "min_cubeA_to_cubeB_xy_m": 0.021755443885922432,
+            "max_cubeA_lift_m": 0.09884924814105034,
+            "cubeA_xy_displacement_m": 0.2098098944221656,
+            "cubeB_xy_displacement_m": 0.012238629556845395,
+            "final_is_grasped": false,
+            "final_gripper_command": 0.9930358529090881,
+            "furthest_stage": "aligned_no_success"
+          },
+          "wall_seconds": 7.1801928617060184
+        }
+      ]
+    },
+    {
+      "scene": 10019,
+      "checkpoint": 132,
+      "repeat": 3,
+      "role": "stage2a_exploratory_dev",
+      "y_continue": 0,
+      "cells": [
+        {
+          "action": "continue",
+          "action_id": 0,
+          "y": 0,
+          "steps": 200,
+          "reason": "horizon",
+          "success_step": null,
+          "intervention": null,
+          "intervention_step": null,
+          "queue_len_after_choice": 4,
+          "policy_calls_after_snapshot": 8,
+          "policy_seconds_after_snapshot": 6.357152359560132,
+          "retreat": null,
+          "prefix_replay_state_error": 0.0,
+          "live_observation": {
+            "state_max_abs": 0.0,
+            "rgb_max_abs": 0.0
+          },
+          "stage": {
+            "first_near_step": 38,
+            "first_close_command_step": 44,
+            "first_grasp_step": 45,
+            "first_lift_step": 56,
+            "first_grasped_lift_step": 56,
+            "first_aligned_step": null,
+            "first_on_cubeB_step": 94,
+            "first_success_step": null,
+            "grasp_steps": 54,
+            "last_grasp_step": 98,
+            "close_command_steps": 83,
+            "min_tcp_to_cubeA_m": 0.012536455877125263,
+            "min_cubeA_to_cubeB_xy_m": 0.021755443885922432,
+            "max_cubeA_lift_m": 0.09884924814105034,
+            "cubeA_xy_displacement_m": 0.2098321903854498,
+            "cubeB_xy_displacement_m": 0.013875220413256005,
+            "final_is_grasped": false,
+            "final_gripper_command": 0.9986333250999451,
+            "furthest_stage": "aligned_no_success"
+          },
+          "wall_seconds": 8.637117447797209
+        },
+        {
+          "action": "refresh",
+          "action_id": 1,
+          "y": 0,
+          "steps": 200,
+          "reason": "horizon",
+          "success_step": null,
+          "intervention": 1,
+          "intervention_step": 132,
+          "queue_len_after_choice": 0,
+          "policy_calls_after_snapshot": 9,
+          "policy_seconds_after_snapshot": 7.119679720606655,
+          "retreat": null,
+          "prefix_replay_state_error": 0.0,
+          "live_observation": {
+            "state_max_abs": 0.0,
+            "rgb_max_abs": 0.0
+          },
+          "stage": {
+            "first_near_step": 38,
+            "first_close_command_step": 44,
+            "first_grasp_step": 45,
+            "first_lift_step": 56,
+            "first_grasped_lift_step": 56,
+            "first_aligned_step": null,
+            "first_on_cubeB_step": 94,
+            "first_success_step": null,
+            "grasp_steps": 54,
+            "last_grasp_step": 98,
+            "close_command_steps": 95,
+            "min_tcp_to_cubeA_m": 0.012536455877125263,
+            "min_cubeA_to_cubeB_xy_m": 0.021755443885922432,
+            "max_cubeA_lift_m": 0.09884924814105034,
+            "cubeA_xy_displacement_m": 0.20983221441012945,
+            "cubeB_xy_displacement_m": 0.004787904390639742,
+            "final_is_grasped": false,
+            "final_gripper_command": -0.99334317445755,
+            "furthest_stage": "aligned_no_success"
+          },
+          "wall_seconds": 9.458602532278746
+        },
+        {
+          "action": "retreat_retry",
+          "action_id": 2,
+          "y": 0,
+          "steps": 200,
+          "reason": "horizon",
+          "success_step": null,
+          "intervention": 2,
+          "intervention_step": 132,
+          "queue_len_after_choice": 0,
+          "policy_calls_after_snapshot": 6,
+          "policy_seconds_after_snapshot": 4.825339509639889,
+          "retreat": {
+            "mode": "up",
+            "start_tcp": [
+              0.06910381466150284,
+              0.013972428627312183,
+              0.03966473042964935
+            ],
+            "target_tcp": [
+              0.06910381466150284,
+              0.013972428627312183,
+              0.08966473042964936
+            ],
+            "final_tcp": [
+              0.06915480643510818,
+              0.013966599479317665,
+              0.08555962145328522
+            ],
+            "commanded_distance_m": 0.05,
+            "achieved_displacement_m": 0.04589492082595825,
+            "target_error_m": 0.0041054298006137175,
+            "steps_used": 24,
+            "max_steps": 40,
+            "arrival_tolerance_m": 0.005,
+            "command_saturated_steps": 24,
+            "gripper_command": 0.9997378587722778,
+            "reached": true,
+            "end_reason": "reached"
+          },
+          "prefix_replay_state_error": 0.0,
+          "live_observation": {
+            "state_max_abs": 0.0,
+            "rgb_max_abs": 0.0
+          },
+          "stage": {
+            "first_near_step": 38,
+            "first_close_command_step": 44,
+            "first_grasp_step": 45,
+            "first_lift_step": 56,
+            "first_grasped_lift_step": 56,
+            "first_aligned_step": null,
+            "first_on_cubeB_step": 94,
+            "first_success_step": null,
+            "grasp_steps": 54,
+            "last_grasp_step": 98,
+            "close_command_steps": 71,
+            "min_tcp_to_cubeA_m": 0.012536455877125263,
+            "min_cubeA_to_cubeB_xy_m": 0.021755443885922432,
+            "max_cubeA_lift_m": 0.09884924814105034,
+            "cubeA_xy_displacement_m": 0.2098322129809357,
+            "cubeB_xy_displacement_m": 0.004887487739961988,
+            "final_is_grasped": false,
+            "final_gripper_command": -1.0,
+            "furthest_stage": "aligned_no_success"
+          },
+          "wall_seconds": 7.069748000241816
+        }
+      ]
+    }
+  ],
+  "no_intervention_duplicates": [
+    {
+      "checkpoint": 12,
+      "repeat": 0,
+      "against": "trunk",
+      "action_max_abs": 0.0,
+      "final_state_max_abs": 0.0,
+      "outcome_equal": true,
+      "match": true
+    },
+    {
+      "checkpoint": 52,
+      "repeat": 0,
+      "against": "trunk",
+      "action_max_abs": 0.0,
+      "final_state_max_abs": 0.0,
+      "outcome_equal": true,
+      "match": true
+    },
+    {
+      "checkpoint": 92,
+      "repeat": 0,
+      "against": "trunk",
+      "action_max_abs": 0.0,
+      "final_state_max_abs": 0.0,
+      "outcome_equal": true,
+      "match": true
+    },
+    {
+      "checkpoint": 132,
+      "repeat": 0,
+      "against": "trunk",
+      "action_max_abs": 0.0,
+      "final_state_max_abs": 0.0,
+      "outcome_equal": true,
+      "match": true
+    }
+  ],
+  "continue_rechecks": [],
+  "reproducibility_ok": true,
+  "counts": {
+    "snapshots": 4,
+    "blocks": 16,
+    "continuations": 48,
+    "extra_reproducibility_continuations": 0
+  },
+  "wall_seconds": 689.2766943629831,
+  "completed": true,
+  "position": 19,
+  "worker": "w5",
+  "policy_sha256": "faacd2d86464c725a4fb95563a5ed5808019a8b420795b9a2a931822ed89db0e",
+  "config_sha256": "c8cc0a581f7d4e9de4042490bd6939e9b80da1dd333df081cb9107c29427dfbd",
+  "videos": []
+}

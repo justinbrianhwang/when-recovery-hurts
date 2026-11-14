@@ -1,0 +1,62 @@
+install start=2026-11-14T16:59:07Z
+install_sys exit=0 end=2026-11-14T17:00:34Z
+bootstrap exit=0 end=2026-11-14T17:03:24Z
+PHASE_EXIT install 0
+s2a_doctor cmd=python -m hci doctor --out runs/stage2a_001/doctor
+s2a_doctor start=2026-11-14T17:03:24Z
+s2a_doctor exit=0 end=2026-11-14T17:03:30Z
+s2a_pytest cmd=python -m pytest -q
+s2a_pytest start=2026-11-14T17:03:30Z
+s2a_pytest exit=0 end=2026-11-14T17:03:47Z
+ENV_DONE
+PHASE_EXIT env 0
+s2a_scenes cmd=python scripts/18_stage2a_pilot.py scenes --plan runs/stage2a_001/plan.json --demo-keys runs/stage2a_001/demo_scene_keys.json --out runs/stage2a_001/scenes.json
+s2a_scenes start=2026-11-14T17:03:47Z
+s2a_scenes exit=0 end=2026-11-14T17:05:04Z
+SCENES_DONE
+PHASE_EXIT scenes 0
+s2a_audit cmd=python scripts/18_stage2a_pilot.py audit --plan runs/stage2a_001/plan.json --out runs/stage2a_001/audit
+s2a_audit start=2026-11-14T17:05:04Z
+s2a_audit exit=0 end=2026-11-14T17:15:06Z
+AUDIT_DONE
+PHASE_EXIT audit 0
+s2a_collect_first2 cmd=python scripts/18_stage2a_pilot.py collect --plan runs/stage2a_001/plan.json --run runs/stage2a_001 --start 0 --stop 2 --label first2
+s2a_collect_first2 start=2026-11-14T17:15:06Z
+s2a_collect_first2 exit=0 end=2026-11-14T17:37:56Z
+s2a_techcheck cmd=python scripts/18_stage2a_pilot.py techcheck --plan runs/stage2a_001/plan.json --run runs/stage2a_001
+s2a_techcheck start=2026-11-14T17:37:56Z
+s2a_techcheck exit=0 end=2026-11-14T17:37:58Z
+FIRST2_DONE
+PHASE_EXIT first2 0
+PART_A_DONE 2026-11-14T17:37:58Z
+budget: all-in 0.27 USD/h (credit-based); spent so far 0.18; cap 1.50; WORKERS=6 COLLECT_LIMIT_S=5400
+s2a_scale cmd=python scripts/18_stage2a_pilot.py scale --plan runs/stage2a_001/plan.json --run runs/stage2a_001 --usd-per-hour 0.27 --spent-usd 0.18 --reserve-usd 0.25 --workers 6 --efficiency 0.7
+s2a_scale start=2026-11-14T17:38:15Z
+s2a_scale exit=0 end=2026-11-14T17:38:17Z
+SCALE_DONE
+PHASE_EXIT scale 0
+s2a_collect_w0 cmd=timeout 5400 python scripts/18_stage2a_pilot.py collect --plan runs/stage2a_001/plan.json --run runs/stage2a_001 --start 2 --stop 24 --step 6 --label w0
+s2a_collect_w0 start=2026-11-14T17:38:17Z
+s2a_collect_w0 exit=0 end=2026-11-14T18:17:42Z
+s2a_collect_w1 cmd=timeout 5400 python scripts/18_stage2a_pilot.py collect --plan runs/stage2a_001/plan.json --run runs/stage2a_001 --start 3 --stop 24 --step 6 --label w1
+s2a_collect_w1 start=2026-11-14T17:38:17Z
+s2a_collect_w1 exit=0 end=2026-11-14T18:25:40Z
+s2a_collect_w2 cmd=timeout 5400 python scripts/18_stage2a_pilot.py collect --plan runs/stage2a_001/plan.json --run runs/stage2a_001 --start 4 --stop 24 --step 6 --label w2
+s2a_collect_w2 start=2026-11-14T17:38:17Z
+s2a_collect_w2 exit=0 end=2026-11-14T18:20:19Z
+s2a_collect_w3 cmd=timeout 5400 python scripts/18_stage2a_pilot.py collect --plan runs/stage2a_001/plan.json --run runs/stage2a_001 --start 5 --stop 24 --step 6 --label w3
+s2a_collect_w3 start=2026-11-14T17:38:17Z
+s2a_collect_w3 exit=0 end=2026-11-14T18:17:03Z
+s2a_collect_w4 cmd=timeout 5400 python scripts/18_stage2a_pilot.py collect --plan runs/stage2a_001/plan.json --run runs/stage2a_001 --start 6 --stop 24 --step 6 --label w4
+s2a_collect_w4 start=2026-11-14T17:38:17Z
+s2a_collect_w4 exit=0 end=2026-11-14T18:09:19Z
+s2a_collect_w5 cmd=timeout 5400 python scripts/18_stage2a_pilot.py collect --plan runs/stage2a_001/plan.json --run runs/stage2a_001 --start 7 --stop 24 --step 6 --label w5
+s2a_collect_w5 start=2026-11-14T17:38:17Z
+s2a_collect_w5 exit=0 end=2026-11-14T18:15:31Z
+REST_DONE scenes=24 workers=6
+PHASE_EXIT rest 0
+s2a_finalize cmd=python scripts/18_stage2a_pilot.py finalize --plan runs/stage2a_001/plan.json --run runs/stage2a_001 --results runs/stage2a_001/results
+s2a_finalize start=2026-11-14T18:25:40Z
+s2a_finalize exit=0 end=2026-11-14T18:25:42Z
+FINAL_DONE
+PHASE_EXIT final 0

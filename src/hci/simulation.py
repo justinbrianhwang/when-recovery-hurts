@@ -41,15 +41,17 @@ def save_env(env):
          'env_rng':{a:rng_state(getattr(env,a)) for a in RNG_ATTRS if hasattr(env,a)}}
     return out
 
-def restore_env(env,s,seed,actions,atol):
+def restore_env(env,s,seed,actions,atol,live=None):
     """Restore by prefix action replay: reset(seed), re-execute the logged actions, verify, then restore RNGs.
 
     env.set_state_dict is NOT used. Measured on the pinned ManiSkill/PhysX CPU backend: rewriting rigid-actor
     state (even with identical values) changes the next contact solve (7e-5 after one step, 6e-3 after eight),
     while reset(seed)+same actions is bit-identical. Valid only for the SAME seed/scene.
     """
-    env.reset(seed=int(seed))
-    for a in actions:env.step(torch.as_tensor(np.asarray(a,np.float32)[None],device=env.device))
+    obs=env.reset(seed=int(seed))[0]
+    for a in actions:obs=env.step(torch.as_tensor(np.asarray(a,np.float32)[None],device=env.device))[0]
+    # the observation the environment itself returned at the restored step (not the snapshot's cached copy)
+    if live is not None:live['raw']=obs
     err=maxdiff(clone(env.get_state_dict()),s['state'])
     if err>atol:raise RuntimeError(f'Prefix replay did not reproduce the snapshot state (max abs {err} > {atol})')
     if maxdiff(env._elapsed_steps,s['elapsed'])!=0:raise RuntimeError('Prefix replay step counter mismatch')
@@ -93,7 +95,8 @@ class Runtime:
     def restore(self,s):
         if s['episode']!=self.episode:raise ValueError('Snapshot belongs to a different episode/scene')
         atol=self.c.get('audit',{}).get('state_atol',0.)
-        self.replay_error=restore_env(self.env,s['env'],self.episode,s['actions'],atol)
+        live={};self.replay_error=restore_env(self.env,s['env'],self.episode,s['actions'],atol,live)
+        self.replay_raw=live['raw']   # for audits: compare with s['raw']; the runtime keeps using the cached copy
         self.actions=clone(s['actions']);self.policy.restore(s['policy']);self.raw=clone(s['raw'])
         for k in ('t','done','y','reason','repeat','intervention','intervention_t','tcp_history','retreat_info'):
             setattr(self,k,clone(s[k]))
