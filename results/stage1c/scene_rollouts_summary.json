@@ -1,0 +1,293 @@
+{
+  "cells": {
+    "F_expert/train": {
+      "n": 10,
+      "success": 10,
+      "furthest_stage": {
+        "success": 10
+      },
+      "success_traj_ids": [
+        0,
+        11,
+        22,
+        33,
+        44,
+        55,
+        66,
+        77,
+        88,
+        99
+      ],
+      "reasons": [
+        "success"
+      ],
+      "init_cubes_state_max_abs_vs_file_max": 0.008406233042478561,
+      "init_robot_state_max_abs_vs_file_max": 1.4901161193847656e-08,
+      "replay_proprio_max_abs": 0.0,
+      "replay_cubes_state_max_abs": 0.008406233042478561,
+      "replay_base_rgb_mae_u8_mean": 0.4836082924204904,
+      "replay_hand_rgb_mae_u8_mean": 0.4711610866256636
+    },
+    "F_expert/heldout": {
+      "n": 10,
+      "success": 10,
+      "furthest_stage": {
+        "success": 10
+      },
+      "success_traj_ids": [
+        100,
+        102,
+        104,
+        106,
+        108,
+        111,
+        113,
+        115,
+        117,
+        119
+      ],
+      "reasons": [
+        "success"
+      ],
+      "init_cubes_state_max_abs_vs_file_max": 0.0058640725910663605,
+      "init_robot_state_max_abs_vs_file_max": 1.4901161193847656e-08,
+      "replay_proprio_max_abs": 0.5506148934364319,
+      "replay_cubes_state_max_abs": 6.4335222244262695,
+      "replay_base_rgb_mae_u8_mean": 0.4845897203628251,
+      "replay_hand_rgb_mae_u8_mean": 0.5178687017530824
+    },
+    "F_policy/train": {
+      "n": 10,
+      "success": 6,
+      "furthest_stage": {
+        "success": 6,
+        "grasped_not_lifted": 1,
+        "aligned_no_success": 2,
+        "lifted_not_aligned": 1
+      },
+      "success_traj_ids": [
+        0,
+        11,
+        22,
+        33,
+        55,
+        99
+      ],
+      "reasons": [
+        "horizon",
+        "success"
+      ],
+      "init_cubes_state_max_abs_vs_file_max": 0.008406233042478561,
+      "init_robot_state_max_abs_vs_file_max": 1.4901161193847656e-08
+    },
+    "F_policy/heldout": {
+      "n": 10,
+      "success": 0,
+      "furthest_stage": {
+        "not_near": 6,
+        "grasped_not_lifted": 2,
+        "lifted_not_aligned": 2
+      },
+      "success_traj_ids": [],
+      "reasons": [
+        "horizon"
+      ],
+      "init_cubes_state_max_abs_vs_file_max": 0.0058640725910663605,
+      "init_robot_state_max_abs_vs_file_max": 1.4901161193847656e-08
+    },
+    "R_expert/train": {
+      "n": 10,
+      "success": 10,
+      "furthest_stage": {
+        "success": 10
+      },
+      "success_traj_ids": [
+        0,
+        11,
+        22,
+        33,
+        44,
+        55,
+        66,
+        77,
+        88,
+        99
+      ],
+      "reasons": [
+        "success"
+      ],
+      "init_cubes_state_max_abs_vs_file_max": 0.008406233042478561,
+      "init_robot_state_max_abs_vs_file_max": 0.0,
+      "replay_proprio_max_abs": 0.0002418607473373413,
+      "replay_cubes_state_max_abs": 0.3601570129394531,
+      "replay_base_rgb_mae_u8_mean": 0.48380985734993276,
+      "replay_hand_rgb_mae_u8_mean": 0.47225132337654124
+    },
+    "R_expert/heldout": {
+      "n": 10,
+      "success": 10,
+      "furthest_stage": {
+        "success": 10
+      },
+      "success_traj_ids": [
+        100,
+        102,
+        104,
+        106,
+        108,
+        111,
+        113,
+        115,
+        117,
+        119
+      ],
+      "reasons": [
+        "success"
+      ],
+      "init_cubes_state_max_abs_vs_file_max": 0.0058640725910663605,
+      "init_robot_state_max_abs_vs_file_max": 0.0,
+      "replay_proprio_max_abs": 0.21369238197803497,
+      "replay_cubes_state_max_abs": 3.4844515323638916,
+      "replay_base_rgb_mae_u8_mean": 0.4851808823838867,
+      "replay_hand_rgb_mae_u8_mean": 0.49810935434282816
+    },
+    "R_policy/train": {
+      "n": 10,
+      "success": 5,
+      "furthest_stage": {
+        "success": 5,
+        "grasped_not_lifted": 1,
+        "aligned_no_success": 3,
+        "lifted_not_aligned": 1
+      },
+      "success_traj_ids": [
+        0,
+        11,
+        22,
+        33,
+        99
+      ],
+      "reasons": [
+        "horizon",
+        "success"
+      ],
+      "init_cubes_state_max_abs_vs_file_max": 0.008406233042478561,
+      "init_robot_state_max_abs_vs_file_max": 0.0
+    },
+    "R_policy/heldout": {
+      "n": 10,
+      "success": 0,
+      "furthest_stage": {
+        "not_near": 6,
+        "grasped_not_lifted": 3,
+        "lifted_not_aligned": 1
+      },
+      "success_traj_ids": [],
+      "reasons": [
+        "horizon"
+      ],
+      "init_cubes_state_max_abs_vs_file_max": 0.0058640725910663605,
+      "init_robot_state_max_abs_vs_file_max": 0.0
+    },
+    "Fdemo_expert/train": {
+      "n": 10,
+      "success": 10,
+      "furthest_stage": {
+        "success": 10
+      },
+      "success_traj_ids": [
+        0,
+        11,
+        22,
+        33,
+        44,
+        55,
+        66,
+        77,
+        88,
+        99
+      ],
+      "reasons": [
+        "success"
+      ],
+      "init_cubes_state_max_abs_vs_file_max": 0.008406233042478561,
+      "init_robot_state_max_abs_vs_file_max": 1.4901161193847656e-08,
+      "replay_proprio_max_abs": 0.001558154821395874,
+      "replay_cubes_state_max_abs": 0.11352062225341797,
+      "replay_base_rgb_mae_u8_mean": 4.9862053876366115e-05,
+      "replay_hand_rgb_mae_u8_mean": 0.0018128775508025959
+    },
+    "Fdemo_expert/heldout": {
+      "n": 10,
+      "success": 10,
+      "furthest_stage": {
+        "success": 10
+      },
+      "success_traj_ids": [
+        100,
+        102,
+        104,
+        106,
+        108,
+        111,
+        113,
+        115,
+        117,
+        119
+      ],
+      "reasons": [
+        "success"
+      ],
+      "init_cubes_state_max_abs_vs_file_max": 0.0058640725910663605,
+      "init_robot_state_max_abs_vs_file_max": 1.4901161193847656e-08,
+      "replay_proprio_max_abs": 0.5506148934364319,
+      "replay_cubes_state_max_abs": 6.4335222244262695,
+      "replay_base_rgb_mae_u8_mean": 0.0014287600727201258,
+      "replay_hand_rgb_mae_u8_mean": 0.05805051833317846
+    }
+  },
+  "n_rollouts": 100,
+  "demo_env_kwargs_used_for_Fdemo": {
+    "obs_mode": "rgb",
+    "control_mode": "pd_ee_delta_pos",
+    "render_mode": "rgb_array",
+    "reward_mode": null,
+    "sensor_configs": {
+      "shader_pack": "default"
+    },
+    "human_render_camera_configs": {
+      "shader_pack": "default"
+    },
+    "viewer_camera_configs": {
+      "shader_pack": "default"
+    },
+    "sim_backend": "physx_cpu",
+    "num_envs": 1
+  },
+  "limit": null,
+  "horizon": 200,
+  "policy": "artifacts/policies/stack_1b_s1_d100_i060000",
+  "manifest_sha256": "a820d606f8415908625d06a7d39ffea955d72741edebcdc48e68be514cd0de76",
+  "wall_seconds": 522.029656377621,
+  "runtime": {
+    "python": "3.10.12 (main, Aug 31 2026, 10:18:17) [GCC 11.4.0]",
+    "platform": "Linux-5.15.0-101-generic-x86_64-with-glibc2.35",
+    "packages": {
+      "torch": "2.6.0+cu124",
+      "torchvision": "0.21.0+cu124",
+      "mani_skill": "3.0.1",
+      "sapien": "3.0.3",
+      "gymnasium": "0.29.1",
+      "diffusers": "0.30.3",
+      "numpy": "1.26.4",
+      "scipy": "1.13.1",
+      "PyYAML": "6.0.2"
+    },
+    "nvidia_smi": {
+      "returncode": 0,
+      "stdout": "name, driver_version, memory.total [MiB]\nNVIDIA GeForce RTX 3090, 535.161.07, 24576 MiB\n",
+      "stderr": ""
+    }
+  },
+  "scope": "Development diagnosis on demonstration scenes. Training-scene success measures fit, not generalisation. Small n: counts, not rates to compare. Not a qualification, not calibration, not the final Test."
+}

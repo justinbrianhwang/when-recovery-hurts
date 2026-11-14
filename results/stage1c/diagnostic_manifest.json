@@ -1,0 +1,1179 @@
+{
+  "stage": "1C",
+  "purpose": "Diagnosis of the preserved 60k EMA policy. No training, no qualification, not calibration, not the final Test.",
+  "code": {
+    "git_head": "ce2f17af2f50cd1f16120bc7e33846eef334d2a3",
+    "uncommitted_files": [
+      "?? scripts/13_stage1c_manifest.py",
+      "?? scripts/14_scene_rollouts.py",
+      "?? scripts/15_offline_action_diag.py",
+      "?? scripts/stage1c/",
+      "?? src/hci/diagnostics.py",
+      "?? tests/test_diagnostics.py"
+    ],
+    "stage1b_report_code": "700bb1e",
+    "upstream_commit": {
+      "repository": "https://github.com/mani-skill/ManiSkill.git",
+      "tag": "v3.0.1",
+      "commit": "a4a4f9272ad64b1564035874b605ceb687b63ed8",
+      "reviewed_date": "2026-11-12",
+      "policy": "examples/baselines/diffusion_policy/train_rgbd.py",
+      "runtime_validation": "NOT_RUN_IN_BUILDER"
+    }
+  },
+  "config_sha256": "c8cc0a581f7d4e9de4042490bd6939e9b80da1dd333df081cb9107c29427dfbd",
+  "hashes": {
+    "demo_h5": {
+      "path": "data_backup\\demos_stack_002\\trajectory.rgb.pd_ee_delta_pos.physx_cpu.h5",
+      "sha256": "60465211ad0913582881586d946e80fe36b871ca34fa21db26b6d167a2ea7a1e",
+      "expected": "60465211ad0913582881586d946e80fe36b871ca34fa21db26b6d167a2ea7a1e",
+      "match": true
+    },
+    "demo_json": {
+      "path": "data_backup\\demos_stack_002\\trajectory.rgb.pd_ee_delta_pos.physx_cpu.json",
+      "sha256": "2354f29e4903e881c72868c728754a60fc36c9a7b3502a598766a1fddc964a35",
+      "expected": "2354f29e4903e881c72868c728754a60fc36c9a7b3502a598766a1fddc964a35",
+      "match": true
+    },
+    "source_h5": {
+      "path": "data_backup\\demos_stack_002\\trajectory.h5",
+      "sha256": "61d07df7b52f303d2088e977df5f863be7d2274348ff05791f3a815359815523",
+      "expected": "61d07df7b52f303d2088e977df5f863be7d2274348ff05791f3a815359815523",
+      "match": true
+    },
+    "source_json": {
+      "path": "data_backup\\demos_stack_002\\trajectory.json",
+      "sha256": "48cb1119c9f5a8f0d7187fc83674a2c401b41466cb1930b2a5c26b706ba3bd81",
+      "expected": "48cb1119c9f5a8f0d7187fc83674a2c401b41466cb1930b2a5c26b706ba3bd81",
+      "match": true
+    },
+    "checkpoint_60k": {
+      "path": "runs\\policy\\stack_1b_s1_d100\\checkpoints\\full_060000.pt",
+      "sha256": "96352d4f1c79683f8fd5328422c01ef513f2732c22decf45679cc44287c389e3",
+      "expected": "96352d4f1c79683f8fd5328422c01ef513f2732c22decf45679cc44287c389e3",
+      "match": true
+    },
+    "policy_weights": {
+      "path": "artifacts\\policies\\stack_1b_s1_d100_i060000\\weights.pt",
+      "sha256": "1bbafd760d09e05a7e90ed292e53bd3935c162400ad8a3f0ebe6033a9c54ed6b",
+      "expected": "1bbafd760d09e05a7e90ed292e53bd3935c162400ad8a3f0ebe6033a9c54ed6b",
+      "match": true
+    },
+    "policy_meta": {
+      "path": "artifacts\\policies\\stack_1b_s1_d100_i060000\\policy_meta.json",
+      "sha256": "42f96a068fccb0d20f0da6df35110fb21e8e2c1591f40b0b9092bf8aa8026f1e",
+      "expected": "42f96a068fccb0d20f0da6df35110fb21e8e2c1591f40b0b9092bf8aa8026f1e",
+      "match": true
+    }
+  },
+  "policy": "artifacts/policies/stack_1b_s1_d100_i060000",
+  "checkpoint": "runs/policy/stack_1b_s1_d100/checkpoints/full_060000.pt",
+  "policy_iteration_tag": 60000,
+  "kept_results": {
+    "qualify_A": "4/100",
+    "previous_io_audit_pass": true,
+    "previous_io_audit_policy": "artifacts/policies/stack_s1_d99"
+  },
+  "demo_structure": {
+    "state_keys": {
+      "qpos": [
+        9
+      ],
+      "qvel": [
+        9
+      ],
+      "tcp_pose": [
+        7
+      ]
+    },
+    "cameras_sorted": [
+      "base_camera",
+      "hand_camera"
+    ],
+    "rgb_shape": [
+      128,
+      128,
+      3
+    ],
+    "rgb_dtype": "uint8",
+    "action_dim": 4,
+    "action_dtype": "float32",
+    "env_state_keys": [
+      "actors/cubeA",
+      "actors/cubeB",
+      "actors/table-workspace",
+      "articulations/panda_wristcam"
+    ],
+    "env_kwargs": {
+      "obs_mode": "rgb",
+      "control_mode": "pd_ee_delta_pos",
+      "render_mode": "rgb_array",
+      "reward_mode": null,
+      "sensor_configs": {
+        "shader_pack": "default"
+      },
+      "human_render_camera_configs": {
+        "shader_pack": "default"
+      },
+      "viewer_camera_configs": {
+        "shader_pack": "default"
+      },
+      "sim_backend": "physx_cpu",
+      "num_envs": 1
+    },
+    "source_action_dim": 8,
+    "source_control_mode": "pd_joint_pos",
+    "action_min": [
+      -0.2748476564884186,
+      -0.5631155967712402,
+      -0.3194408118724823,
+      -1.0
+    ],
+    "action_max": [
+      0.22935345768928528,
+      0.575280487537384,
+      0.5174815654754639,
+      1.0
+    ],
+    "rgb_value_range_sampled": [
+      0,
+      255
+    ],
+    "gripper_values": [
+      -1.0,
+      1.0
+    ]
+  },
+  "demo_lengths": {
+    "train_steps_min_mean_max": [
+      85,
+      108.43,
+      205
+    ],
+    "first_success_min_mean_max": [
+      81,
+      103.65833333333333,
+      201
+    ],
+    "steps_after_first_success_min_max": [
+      3,
+      5
+    ],
+    "trajectories_with_first_success_after_horizon": [
+      30
+    ],
+    "horizon": 200,
+    "note": "A demonstration whose first success comes after the horizon cannot succeed under the evaluation horizon; a short tail after the first success is not such a case."
+  },
+  "selection_rule": "10 of the training ids and 10 of the held-out ids at equal spacing over the ascending id list; windows at [0.0, 0.2, 0.4, 0.6, 0.8] of the range [0, steps-8] so that all 8 executed actions are recorded (no padding in the executed segment)",
+  "phase_rule": "From the demonstration gripper commands only: approach = executed segment ends before the first close; transport = between first close and re-open; place = at/after re-open; boundary = segment crosses a change; unknown = no close/re-open found",
+  "scenes": [
+    {
+      "traj_id": 0,
+      "set": "train",
+      "source_episode_id": 0,
+      "scene_seed": 0,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 0
+      },
+      "steps": 107,
+      "first_success_step": 102,
+      "success_steps": 6,
+      "steps_after_first_success": 5,
+      "first_success_after_horizon": false,
+      "source_steps": 107,
+      "gripper_first_close_step": 45,
+      "gripper_reopen_step": 101,
+      "converted_vs_source_first_env_state_max_abs": 0.002431220840662718,
+      "windows": [
+        {
+          "t": 0,
+          "fraction": 0.0,
+          "phase": "approach"
+        },
+        {
+          "t": 20,
+          "fraction": 0.2,
+          "phase": "approach"
+        },
+        {
+          "t": 40,
+          "fraction": 0.4,
+          "phase": "boundary"
+        },
+        {
+          "t": 59,
+          "fraction": 0.6,
+          "phase": "transport"
+        },
+        {
+          "t": 79,
+          "fraction": 0.8,
+          "phase": "transport"
+        }
+      ]
+    },
+    {
+      "traj_id": 11,
+      "set": "train",
+      "source_episode_id": 11,
+      "scene_seed": 11,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 11
+      },
+      "steps": 111,
+      "first_success_step": 107,
+      "success_steps": 5,
+      "steps_after_first_success": 4,
+      "first_success_after_horizon": false,
+      "source_steps": 111,
+      "gripper_first_close_step": 52,
+      "gripper_reopen_step": 105,
+      "converted_vs_source_first_env_state_max_abs": 0.008406233042478561,
+      "windows": [
+        {
+          "t": 0,
+          "fraction": 0.0,
+          "phase": "approach"
+        },
+        {
+          "t": 21,
+          "fraction": 0.2,
+          "phase": "approach"
+        },
+        {
+          "t": 41,
+          "fraction": 0.4,
+          "phase": "approach"
+        },
+        {
+          "t": 62,
+          "fraction": 0.6,
+          "phase": "transport"
+        },
+        {
+          "t": 82,
+          "fraction": 0.8,
+          "phase": "transport"
+        }
+      ]
+    },
+    {
+      "traj_id": 22,
+      "set": "train",
+      "source_episode_id": 22,
+      "scene_seed": 22,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 22
+      },
+      "steps": 101,
+      "first_success_step": 96,
+      "success_steps": 6,
+      "steps_after_first_success": 5,
+      "first_success_after_horizon": false,
+      "source_steps": 101,
+      "gripper_first_close_step": 50,
+      "gripper_reopen_step": 95,
+      "converted_vs_source_first_env_state_max_abs": 0.008021538145840168,
+      "windows": [
+        {
+          "t": 0,
+          "fraction": 0.0,
+          "phase": "approach"
+        },
+        {
+          "t": 19,
+          "fraction": 0.2,
+          "phase": "approach"
+        },
+        {
+          "t": 37,
+          "fraction": 0.4,
+          "phase": "approach"
+        },
+        {
+          "t": 56,
+          "fraction": 0.6,
+          "phase": "transport"
+        },
+        {
+          "t": 74,
+          "fraction": 0.8,
+          "phase": "transport"
+        }
+      ]
+    },
+    {
+      "traj_id": 33,
+      "set": "train",
+      "source_episode_id": 34,
+      "scene_seed": 35,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 35
+      },
+      "steps": 98,
+      "first_success_step": 93,
+      "success_steps": 6,
+      "steps_after_first_success": 5,
+      "first_success_after_horizon": false,
+      "source_steps": 98,
+      "gripper_first_close_step": 40,
+      "gripper_reopen_step": 92,
+      "converted_vs_source_first_env_state_max_abs": 0.005748791620135307,
+      "windows": [
+        {
+          "t": 0,
+          "fraction": 0.0,
+          "phase": "approach"
+        },
+        {
+          "t": 18,
+          "fraction": 0.2,
+          "phase": "approach"
+        },
+        {
+          "t": 36,
+          "fraction": 0.4,
+          "phase": "boundary"
+        },
+        {
+          "t": 54,
+          "fraction": 0.6,
+          "phase": "transport"
+        },
+        {
+          "t": 72,
+          "fraction": 0.8,
+          "phase": "transport"
+        }
+      ]
+    },
+    {
+      "traj_id": 44,
+      "set": "train",
+      "source_episode_id": 45,
+      "scene_seed": 46,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 46
+      },
+      "steps": 103,
+      "first_success_step": 98,
+      "success_steps": 6,
+      "steps_after_first_success": 5,
+      "first_success_after_horizon": false,
+      "source_steps": 103,
+      "gripper_first_close_step": 40,
+      "gripper_reopen_step": 97,
+      "converted_vs_source_first_env_state_max_abs": 0.002818565582856536,
+      "windows": [
+        {
+          "t": 0,
+          "fraction": 0.0,
+          "phase": "approach"
+        },
+        {
+          "t": 19,
+          "fraction": 0.2,
+          "phase": "approach"
+        },
+        {
+          "t": 38,
+          "fraction": 0.4,
+          "phase": "boundary"
+        },
+        {
+          "t": 57,
+          "fraction": 0.6,
+          "phase": "transport"
+        },
+        {
+          "t": 76,
+          "fraction": 0.8,
+          "phase": "transport"
+        }
+      ]
+    },
+    {
+      "traj_id": 55,
+      "set": "train",
+      "source_episode_id": 56,
+      "scene_seed": 57,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 57
+      },
+      "steps": 112,
+      "first_success_step": 107,
+      "success_steps": 6,
+      "steps_after_first_success": 5,
+      "first_success_after_horizon": false,
+      "source_steps": 112,
+      "gripper_first_close_step": 48,
+      "gripper_reopen_step": 106,
+      "converted_vs_source_first_env_state_max_abs": 0.0045509738847613335,
+      "windows": [
+        {
+          "t": 0,
+          "fraction": 0.0,
+          "phase": "approach"
+        },
+        {
+          "t": 21,
+          "fraction": 0.2,
+          "phase": "approach"
+        },
+        {
+          "t": 42,
+          "fraction": 0.4,
+          "phase": "boundary"
+        },
+        {
+          "t": 62,
+          "fraction": 0.6,
+          "phase": "transport"
+        },
+        {
+          "t": 83,
+          "fraction": 0.8,
+          "phase": "transport"
+        }
+      ]
+    },
+    {
+      "traj_id": 66,
+      "set": "train",
+      "source_episode_id": 67,
+      "scene_seed": 68,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 68
+      },
+      "steps": 125,
+      "first_success_step": 120,
+      "success_steps": 6,
+      "steps_after_first_success": 5,
+      "first_success_after_horizon": false,
+      "source_steps": 125,
+      "gripper_first_close_step": 53,
+      "gripper_reopen_step": 119,
+      "converted_vs_source_first_env_state_max_abs": 0.0025370141956955194,
+      "windows": [
+        {
+          "t": 0,
+          "fraction": 0.0,
+          "phase": "approach"
+        },
+        {
+          "t": 23,
+          "fraction": 0.2,
+          "phase": "approach"
+        },
+        {
+          "t": 47,
+          "fraction": 0.4,
+          "phase": "boundary"
+        },
+        {
+          "t": 70,
+          "fraction": 0.6,
+          "phase": "transport"
+        },
+        {
+          "t": 94,
+          "fraction": 0.8,
+          "phase": "transport"
+        }
+      ]
+    },
+    {
+      "traj_id": 77,
+      "set": "train",
+      "source_episode_id": 78,
+      "scene_seed": 79,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 79
+      },
+      "steps": 98,
+      "first_success_step": 94,
+      "success_steps": 5,
+      "steps_after_first_success": 4,
+      "first_success_after_horizon": false,
+      "source_steps": 98,
+      "gripper_first_close_step": 36,
+      "gripper_reopen_step": 92,
+      "converted_vs_source_first_env_state_max_abs": 0.0029276960995048285,
+      "windows": [
+        {
+          "t": 0,
+          "fraction": 0.0,
+          "phase": "approach"
+        },
+        {
+          "t": 18,
+          "fraction": 0.2,
+          "phase": "approach"
+        },
+        {
+          "t": 36,
+          "fraction": 0.4,
+          "phase": "transport"
+        },
+        {
+          "t": 54,
+          "fraction": 0.6,
+          "phase": "transport"
+        },
+        {
+          "t": 72,
+          "fraction": 0.8,
+          "phase": "transport"
+        }
+      ]
+    },
+    {
+      "traj_id": 88,
+      "set": "train",
+      "source_episode_id": 89,
+      "scene_seed": 90,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 90
+      },
+      "steps": 115,
+      "first_success_step": 110,
+      "success_steps": 6,
+      "steps_after_first_success": 5,
+      "first_success_after_horizon": false,
+      "source_steps": 115,
+      "gripper_first_close_step": 55,
+      "gripper_reopen_step": 109,
+      "converted_vs_source_first_env_state_max_abs": 0.001362817594781518,
+      "windows": [
+        {
+          "t": 0,
+          "fraction": 0.0,
+          "phase": "approach"
+        },
+        {
+          "t": 21,
+          "fraction": 0.2,
+          "phase": "approach"
+        },
+        {
+          "t": 43,
+          "fraction": 0.4,
+          "phase": "approach"
+        },
+        {
+          "t": 64,
+          "fraction": 0.6,
+          "phase": "transport"
+        },
+        {
+          "t": 86,
+          "fraction": 0.8,
+          "phase": "transport"
+        }
+      ]
+    },
+    {
+      "traj_id": 99,
+      "set": "train",
+      "source_episode_id": 100,
+      "scene_seed": 101,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 101
+      },
+      "steps": 126,
+      "first_success_step": 121,
+      "success_steps": 6,
+      "steps_after_first_success": 5,
+      "first_success_after_horizon": false,
+      "source_steps": 126,
+      "gripper_first_close_step": 55,
+      "gripper_reopen_step": 120,
+      "converted_vs_source_first_env_state_max_abs": 0.008319848217070103,
+      "windows": [
+        {
+          "t": 0,
+          "fraction": 0.0,
+          "phase": "approach"
+        },
+        {
+          "t": 24,
+          "fraction": 0.2,
+          "phase": "approach"
+        },
+        {
+          "t": 47,
+          "fraction": 0.4,
+          "phase": "approach"
+        },
+        {
+          "t": 71,
+          "fraction": 0.6,
+          "phase": "transport"
+        },
+        {
+          "t": 94,
+          "fraction": 0.8,
+          "phase": "transport"
+        }
+      ]
+    },
+    {
+      "traj_id": 100,
+      "set": "heldout",
+      "source_episode_id": 101,
+      "scene_seed": 102,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 102
+      },
+      "steps": 117,
+      "first_success_step": 112,
+      "success_steps": 6,
+      "steps_after_first_success": 5,
+      "first_success_after_horizon": false,
+      "source_steps": 117,
+      "gripper_first_close_step": 54,
+      "gripper_reopen_step": 111,
+      "converted_vs_source_first_env_state_max_abs": 0.0031868023797869682,
+      "windows": [
+        {
+          "t": 0,
+          "fraction": 0.0,
+          "phase": "approach"
+        },
+        {
+          "t": 22,
+          "fraction": 0.2,
+          "phase": "approach"
+        },
+        {
+          "t": 44,
+          "fraction": 0.4,
+          "phase": "approach"
+        },
+        {
+          "t": 65,
+          "fraction": 0.6,
+          "phase": "transport"
+        },
+        {
+          "t": 87,
+          "fraction": 0.8,
+          "phase": "transport"
+        }
+      ]
+    },
+    {
+      "traj_id": 102,
+      "set": "heldout",
+      "source_episode_id": 103,
+      "scene_seed": 104,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 104
+      },
+      "steps": 106,
+      "first_success_step": 101,
+      "success_steps": 6,
+      "steps_after_first_success": 5,
+      "first_success_after_horizon": false,
+      "source_steps": 106,
+      "gripper_first_close_step": 42,
+      "gripper_reopen_step": 100,
+      "converted_vs_source_first_env_state_max_abs": 0.005359852220863104,
+      "windows": [
+        {
+          "t": 0,
+          "fraction": 0.0,
+          "phase": "approach"
+        },
+        {
+          "t": 20,
+          "fraction": 0.2,
+          "phase": "approach"
+        },
+        {
+          "t": 39,
+          "fraction": 0.4,
+          "phase": "boundary"
+        },
+        {
+          "t": 59,
+          "fraction": 0.6,
+          "phase": "transport"
+        },
+        {
+          "t": 78,
+          "fraction": 0.8,
+          "phase": "transport"
+        }
+      ]
+    },
+    {
+      "traj_id": 104,
+      "set": "heldout",
+      "source_episode_id": 105,
+      "scene_seed": 107,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 107
+      },
+      "steps": 104,
+      "first_success_step": 100,
+      "success_steps": 5,
+      "steps_after_first_success": 4,
+      "first_success_after_horizon": false,
+      "source_steps": 104,
+      "gripper_first_close_step": 52,
+      "gripper_reopen_step": 98,
+      "converted_vs_source_first_env_state_max_abs": 0.0058640725910663605,
+      "windows": [
+        {
+          "t": 0,
+          "fraction": 0.0,
+          "phase": "approach"
+        },
+        {
+          "t": 19,
+          "fraction": 0.2,
+          "phase": "approach"
+        },
+        {
+          "t": 38,
+          "fraction": 0.4,
+          "phase": "approach"
+        },
+        {
+          "t": 58,
+          "fraction": 0.6,
+          "phase": "transport"
+        },
+        {
+          "t": 77,
+          "fraction": 0.8,
+          "phase": "transport"
+        }
+      ]
+    },
+    {
+      "traj_id": 106,
+      "set": "heldout",
+      "source_episode_id": 107,
+      "scene_seed": 110,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 110
+      },
+      "steps": 94,
+      "first_success_step": 90,
+      "success_steps": 5,
+      "steps_after_first_success": 4,
+      "first_success_after_horizon": false,
+      "source_steps": 94,
+      "gripper_first_close_step": 39,
+      "gripper_reopen_step": 88,
+      "converted_vs_source_first_env_state_max_abs": 0.002147198189049959,
+      "windows": [
+        {
+          "t": 0,
+          "fraction": 0.0,
+          "phase": "approach"
+        },
+        {
+          "t": 17,
+          "fraction": 0.2,
+          "phase": "approach"
+        },
+        {
+          "t": 34,
+          "fraction": 0.4,
+          "phase": "boundary"
+        },
+        {
+          "t": 52,
+          "fraction": 0.6,
+          "phase": "transport"
+        },
+        {
+          "t": 69,
+          "fraction": 0.8,
+          "phase": "transport"
+        }
+      ]
+    },
+    {
+      "traj_id": 108,
+      "set": "heldout",
+      "source_episode_id": 109,
+      "scene_seed": 112,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 112
+      },
+      "steps": 107,
+      "first_success_step": 102,
+      "success_steps": 6,
+      "steps_after_first_success": 5,
+      "first_success_after_horizon": false,
+      "source_steps": 107,
+      "gripper_first_close_step": 41,
+      "gripper_reopen_step": 101,
+      "converted_vs_source_first_env_state_max_abs": 0.0024532070383429527,
+      "windows": [
+        {
+          "t": 0,
+          "fraction": 0.0,
+          "phase": "approach"
+        },
+        {
+          "t": 20,
+          "fraction": 0.2,
+          "phase": "approach"
+        },
+        {
+          "t": 40,
+          "fraction": 0.4,
+          "phase": "boundary"
+        },
+        {
+          "t": 59,
+          "fraction": 0.6,
+          "phase": "transport"
+        },
+        {
+          "t": 79,
+          "fraction": 0.8,
+          "phase": "transport"
+        }
+      ]
+    },
+    {
+      "traj_id": 111,
+      "set": "heldout",
+      "source_episode_id": 112,
+      "scene_seed": 115,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 115
+      },
+      "steps": 119,
+      "first_success_step": 115,
+      "success_steps": 5,
+      "steps_after_first_success": 4,
+      "first_success_after_horizon": false,
+      "source_steps": 119,
+      "gripper_first_close_step": 55,
+      "gripper_reopen_step": 113,
+      "converted_vs_source_first_env_state_max_abs": 0.0018099278677254915,
+      "windows": [
+        {
+          "t": 0,
+          "fraction": 0.0,
+          "phase": "approach"
+        },
+        {
+          "t": 22,
+          "fraction": 0.2,
+          "phase": "approach"
+        },
+        {
+          "t": 44,
+          "fraction": 0.4,
+          "phase": "approach"
+        },
+        {
+          "t": 67,
+          "fraction": 0.6,
+          "phase": "transport"
+        },
+        {
+          "t": 89,
+          "fraction": 0.8,
+          "phase": "transport"
+        }
+      ]
+    },
+    {
+      "traj_id": 113,
+      "set": "heldout",
+      "source_episode_id": 114,
+      "scene_seed": 117,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 117
+      },
+      "steps": 109,
+      "first_success_step": 105,
+      "success_steps": 5,
+      "steps_after_first_success": 4,
+      "first_success_after_horizon": false,
+      "source_steps": 109,
+      "gripper_first_close_step": 43,
+      "gripper_reopen_step": 103,
+      "converted_vs_source_first_env_state_max_abs": 0.0025953524746000767,
+      "windows": [
+        {
+          "t": 0,
+          "fraction": 0.0,
+          "phase": "approach"
+        },
+        {
+          "t": 20,
+          "fraction": 0.2,
+          "phase": "approach"
+        },
+        {
+          "t": 40,
+          "fraction": 0.4,
+          "phase": "boundary"
+        },
+        {
+          "t": 61,
+          "fraction": 0.6,
+          "phase": "transport"
+        },
+        {
+          "t": 81,
+          "fraction": 0.8,
+          "phase": "transport"
+        }
+      ]
+    },
+    {
+      "traj_id": 115,
+      "set": "heldout",
+      "source_episode_id": 116,
+      "scene_seed": 119,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 119
+      },
+      "steps": 100,
+      "first_success_step": 96,
+      "success_steps": 5,
+      "steps_after_first_success": 4,
+      "first_success_after_horizon": false,
+      "source_steps": 100,
+      "gripper_first_close_step": 46,
+      "gripper_reopen_step": 94,
+      "converted_vs_source_first_env_state_max_abs": 0.0028464640490710735,
+      "windows": [
+        {
+          "t": 0,
+          "fraction": 0.0,
+          "phase": "approach"
+        },
+        {
+          "t": 18,
+          "fraction": 0.2,
+          "phase": "approach"
+        },
+        {
+          "t": 37,
+          "fraction": 0.4,
+          "phase": "approach"
+        },
+        {
+          "t": 55,
+          "fraction": 0.6,
+          "phase": "transport"
+        },
+        {
+          "t": 74,
+          "fraction": 0.8,
+          "phase": "transport"
+        }
+      ]
+    },
+    {
+      "traj_id": 117,
+      "set": "heldout",
+      "source_episode_id": 118,
+      "scene_seed": 121,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 121
+      },
+      "steps": 96,
+      "first_success_step": 91,
+      "success_steps": 6,
+      "steps_after_first_success": 5,
+      "first_success_after_horizon": false,
+      "source_steps": 96,
+      "gripper_first_close_step": 43,
+      "gripper_reopen_step": 90,
+      "converted_vs_source_first_env_state_max_abs": 0.0031069661490619183,
+      "windows": [
+        {
+          "t": 0,
+          "fraction": 0.0,
+          "phase": "approach"
+        },
+        {
+          "t": 18,
+          "fraction": 0.2,
+          "phase": "approach"
+        },
+        {
+          "t": 35,
+          "fraction": 0.4,
+          "phase": "approach"
+        },
+        {
+          "t": 53,
+          "fraction": 0.6,
+          "phase": "transport"
+        },
+        {
+          "t": 70,
+          "fraction": 0.8,
+          "phase": "transport"
+        }
+      ]
+    },
+    {
+      "traj_id": 119,
+      "set": "heldout",
+      "source_episode_id": 120,
+      "scene_seed": 123,
+      "reset_kwargs": {
+        "options": {},
+        "seed": 123
+      },
+      "steps": 100,
+      "first_success_step": 96,
+      "success_steps": 5,
+      "steps_after_first_success": 4,
+      "first_success_after_horizon": false,
+      "source_steps": 100,
+      "gripper_first_close_step": 48,
+      "gripper_reopen_step": 94,
+      "converted_vs_source_first_env_state_max_abs": 0.0024560007732361555,
+      "windows": [
+        {
+          "t": 0,
+          "fraction": 0.0,
+          "phase": "approach"
+        },
+        {
+          "t": 18,
+          "fraction": 0.2,
+          "phase": "approach"
+        },
+        {
+          "t": 37,
+          "fraction": 0.4,
+          "phase": "approach"
+        },
+        {
+          "t": 55,
+          "fraction": 0.6,
+          "phase": "transport"
+        },
+        {
+          "t": 74,
+          "fraction": 0.8,
+          "phase": "transport"
+        }
+      ]
+    }
+  ],
+  "scene_order": [
+    0,
+    11,
+    22,
+    33,
+    44,
+    55,
+    66,
+    77,
+    88,
+    99,
+    100,
+    102,
+    104,
+    106,
+    108,
+    111,
+    113,
+    115,
+    117,
+    119
+  ],
+  "n_histories": 100,
+  "noise_seeds": [
+    910001,
+    910002,
+    910003,
+    910004
+  ],
+  "loss_timesteps": [
+    0,
+    10,
+    25,
+    50,
+    75,
+    99
+  ],
+  "rollout_cells": {
+    "F_expert": "converted-data initialisation, recorded actions",
+    "F_policy": "converted-data initialisation, 60k EMA closed loop",
+    "R_expert": "runtime reset(seed), recorded actions",
+    "R_policy": "runtime reset(seed), 60k EMA closed loop",
+    "Fdemo_expert": "environment built from the demo JSON kwargs, converted-data initialisation, recorded actions (observation reproducibility only)"
+  },
+  "F_definition": "env.reset(**reset_kwargs) then set_state_dict(first env state of the SOURCE trajectory), as replay_trajectory --use-first-env-state does at the pinned commit; the stored state is used at the initial step only",
+  "video_rule": "fixed before results: F_policy for the first three selected training and first three selected held-out scenes, R_policy for the first of each",
+  "videos": [
+    {
+      "cell": "F_policy",
+      "traj_id": 0
+    },
+    {
+      "cell": "F_policy",
+      "traj_id": 11
+    },
+    {
+      "cell": "F_policy",
+      "traj_id": 22
+    },
+    {
+      "cell": "F_policy",
+      "traj_id": 100
+    },
+    {
+      "cell": "F_policy",
+      "traj_id": 102
+    },
+    {
+      "cell": "F_policy",
+      "traj_id": 104
+    },
+    {
+      "cell": "R_policy",
+      "traj_id": 0
+    },
+    {
+      "cell": "R_policy",
+      "traj_id": 100
+    }
+  ],
+  "usage_note": "The 20 held-out demonstrations are used for development diagnosis from this stage on. Training-scene rollouts measure fit, not generalisation.",
+  "limits": {
+    "max_rollouts": 100,
+    "max_histories": 100,
+    "noise_draws": 4,
+    "budget_usd_cap": 1.0
+  }
+}

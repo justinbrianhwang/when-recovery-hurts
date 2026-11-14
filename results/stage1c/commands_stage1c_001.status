@@ -1,0 +1,30 @@
+s1c_doctor cmd=python -m hci doctor --out runs/stage1c_001/doctor
+s1c_doctor start=2026-11-14T02:07:16Z
+s1c_doctor exit=2 end=2026-11-14T02:07:20Z
+PHASE_EXIT=1
+container fix: moved /etc/ld.so.conf.d/*compat* out (image ships libcuda 550 forward-compat; host driver 535.161.07 -> CUDA error 804). No host driver change.
+s1c_doctor_b cmd=python -m hci doctor --out runs/stage1c_001/doctor_b
+s1c_doctor_b start=2026-11-14T02:08:34Z
+s1c_doctor_b exit=0 end=2026-11-14T02:08:38Z
+s1c_pytest_b cmd=python -m pytest -q
+s1c_pytest_b start=2026-11-14T02:08:38Z
+s1c_pytest_b exit=0 end=2026-11-14T02:08:41Z
+s1c_probe_rollouts_b cmd=python scripts/14_scene_rollouts.py --config configs/stackcube.yaml --manifest runs/stage1c_001/manifest/diagnostic_manifest.json --demo data_backup/demos_stack_002/trajectory.rgb.pd_ee_delta_pos.physx_cpu.h5 --source data_backup/demos_stack_002/trajectory.h5 --policy artifacts/policies/stack_1b_s1_d100_i060000 --limit 1 --out runs/stage1c_001/probe_rollouts_b
+s1c_probe_rollouts_b start=2026-11-14T02:08:41Z
+s1c_probe_rollouts_b exit=0 end=2026-11-14T02:09:35Z
+s1c_probe_offline_b cmd=python scripts/15_offline_action_diag.py --config configs/stackcube.yaml --manifest runs/stage1c_001/manifest/diagnostic_manifest.json --demo data_backup/demos_stack_002/trajectory.rgb.pd_ee_delta_pos.physx_cpu.h5 --policy artifacts/policies/stack_1b_s1_d100_i060000 --replay-obs runs/stage1c_001/probe_rollouts_b/replay_obs --raw-checkpoint runs/policy/stack_1b_s1_d100/checkpoints/full_060000.pt --limit 1 --out runs/stage1c_001/probe_offline_b
+s1c_probe_offline_b start=2026-11-14T02:09:35Z
+s1c_probe_offline_b exit=0 end=2026-11-14T02:12:27Z
+PROBE_DONE
+PHASE_EXIT_b=0
+s1c_io_parity_60k cmd=python scripts/08_policy_io_audit.py --config configs/stackcube.yaml --policy artifacts/policies/stack_1b_s1_d100_i060000 --checkpoint runs/policy/stack_1b_s1_d100/checkpoints/full_060000.pt --demo data_backup/demos_stack_002/trajectory.rgb.pd_ee_delta_pos.physx_cpu.h5 --out runs/stage1c_001/io_parity_60k
+s1c_io_parity_60k start=2026-11-14T02:13:03Z
+s1c_io_parity_60k exit=0 end=2026-11-14T02:14:39Z
+s1c_scene_rollouts cmd=python scripts/14_scene_rollouts.py --config configs/stackcube.yaml --manifest runs/stage1c_001/manifest/diagnostic_manifest.json --demo data_backup/demos_stack_002/trajectory.rgb.pd_ee_delta_pos.physx_cpu.h5 --source data_backup/demos_stack_002/trajectory.h5 --policy artifacts/policies/stack_1b_s1_d100_i060000 --out runs/stage1c_001/scene_rollouts
+s1c_scene_rollouts start=2026-11-14T02:14:39Z
+s1c_scene_rollouts exit=0 end=2026-11-14T02:23:26Z
+s1c_offline cmd=python scripts/15_offline_action_diag.py --config configs/stackcube.yaml --manifest runs/stage1c_001/manifest/diagnostic_manifest.json --demo data_backup/demos_stack_002/trajectory.rgb.pd_ee_delta_pos.physx_cpu.h5 --policy artifacts/policies/stack_1b_s1_d100_i060000 --replay-obs runs/stage1c_001/scene_rollouts/replay_obs --out runs/stage1c_001/offline
+s1c_offline start=2026-11-14T02:23:26Z
+s1c_offline exit=0 end=2026-11-14T02:45:36Z
+MAIN_DONE
+PHASE_EXIT_main=0
