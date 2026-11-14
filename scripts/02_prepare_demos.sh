@@ -8,6 +8,14 @@ case "$TASK" in
   PegInsertionSide-v1) CONTROL=pd_ee_delta_pose ;;
   *) echo 'Only the three registered starter tasks are supported.' >&2; exit 2 ;;
 esac
+# GUARD (AMENDMENT_004): at the pinned ManiSkill commit a FAILED replay is not saved but its record buffer is kept, so
+# the next saved trajectory starts with the failed episode, a reset entry and a sampled dummy action. Converted files
+# must pass the episode-content check (scripts/17_stage1d_clean.py / hci.integrity) before any use as training data.
+if [[ "${HCI_CONVERSION_ACK:-}" != "content-integrity-check-required" ]]; then
+  echo 'Refusing to convert: output of this converter needs the episode-content integrity check before use.' >&2
+  echo 'Read amendments/AMENDMENT_004 and set HCI_CONVERSION_ACK=content-integrity-check-required to proceed.' >&2
+  exit 2
+fi
 [[ "$COUNT" =~ ^[1-9][0-9]*$ ]] || { echo 'COUNT must be a positive integer'; exit 2; }
 DEMO_ROOT=$(python -c 'from mani_skill import DEMO_DIR; print(DEMO_DIR)')
 SRC="$DEMO_ROOT/$TASK/motionplanning/trajectory.h5"
@@ -20,4 +28,5 @@ python -m mani_skill.trajectory.replay_trajectory \
   -b physx_cpu --num-envs 1 --count "$COUNT" --save-traj
 [[ -f "$DST" ]] || { echo 'Replay output path differed; inspect files before training.'; exit 2; }
 echo "RGB dataset: $DST"
+echo 'WARNING: run the episode-content integrity check on this file before training (AMENDMENT_004).'
 echo 'Inspect actual replay success count. COUNT is an upper bound on requested demonstrations, not a success guarantee.'

@@ -38,6 +38,8 @@ case "$1" in
     run s1d_pytest${X} python -m pytest -q || exit 1
     echo "ENV_DONE" >> $ST ;;
   data)  # new conversion with the Stage 1B command and flags, restricted to the source episodes declared in the plan
+    # GUARD (AMENDMENT_004): this phase produced the contaminated stage1d_001 file; its output needs the episode-content check.
+    [[ "${HCI_CONVERSION_ACK:-}" == "content-integrity-check-required" ]] || { echo "data: conversion refused without HCI_CONVERSION_ACK (see AMENDMENT_004)" >> $ST; exit 2; }
     N=$(python -c "import json;print(json.load(open('$PLAN'))['new_candidates']['window'])") || exit 1
     run s1d_subset${X} python scripts/16_stage1d_data.py subset --plan $PLAN --source $SRC --out-dir $NEW || exit 1
     run s1d_convert${X} python -m mani_skill.trajectory.replay_trajectory --traj-path $NEW/trajectory.h5 --use-first-env-state -c pd_ee_delta_pos -o rgb \
