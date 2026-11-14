@@ -82,6 +82,7 @@ def main():
     p.add_argument('--upstream', default='third_party/ManiSkill'); p.add_argument('--cells', nargs='+', default=list(CELLS), choices=CELLS)
     p.add_argument('--limit', type=int, help='first N scenes of each set only (throughput probe; not a result)')
     p.add_argument('--dry-run', action='store_true', help='print the plan and exit')
+    p.add_argument('--other-policy', action='store_true', help='Stage 1D: run a policy other than the one fixed in the manifest on the same fixed scenes, histories and noise (demo files are still checked)')
     a = p.parse_args(); c = load_config(a.config); m = read_json(a.manifest); horizon = c['env']['horizon']
     if c['env']['id'] != 'StackCube-v1' or c['env']['control_mode'] != 'pd_ee_delta_pos': p.error('StackCube-v1 with pd_ee_delta_pos only')
     scenes = m['scenes']
@@ -90,6 +91,7 @@ def main():
     print(f"cells={a.cells} scenes={[s['traj_id'] for s in scenes]} rollouts={len(a.cells) * len(scenes)}", flush=True)
     if a.dry_run: return
     for key, path in (('demo_h5', a.demo), ('source_h5', a.source), ('policy_weights', Path(a.policy) / 'weights.pt')):
+        if key == 'policy_weights' and a.other_policy: continue
         if sha256(path) != m['hashes'][key]['sha256']: raise SystemExit(f'{key} is not the file fixed in the manifest')
     import gymnasium as gym
     import imageio.v2 as imageio

@@ -51,6 +51,7 @@ def main():
     p.add_argument('--raw-checkpoint', help='full checkpoint; adds the non-EMA model (D5-B)')
     p.add_argument('--limit', type=int, help='first N scenes of each set only (throughput probe; not a result)')
     p.add_argument('--device', default='cuda', choices=['cuda', 'cpu']); p.add_argument('--dry-run', action='store_true')
+    p.add_argument('--other-policy', action='store_true', help='Stage 1D: run a policy other than the one fixed in the manifest on the same fixed scenes, histories and noise (demo files are still checked)')
     a = p.parse_args(); c = load_config(a.config); m = read_json(a.manifest)
     if c['env']['id'] != 'StackCube-v1' or c['env']['control_mode'] != 'pd_ee_delta_pos': p.error('StackCube-v1 with pd_ee_delta_pos only')
     scenes = m['scenes']
@@ -58,7 +59,7 @@ def main():
     seeds = m['noise_seeds']; n_hist = sum(len(s['windows']) for s in scenes)
     print(f'histories={n_hist} noise_seeds={seeds} get_action_calls(S)={n_hist * len(seeds)} loss_timesteps={m["loss_timesteps"]}', flush=True)
     if a.dry_run: return
-    if sha256(a.demo) != m['hashes']['demo_h5']['sha256'] or sha256(Path(a.policy) / 'weights.pt') != m['hashes']['policy_weights']['sha256']:
+    if sha256(a.demo) != m['hashes']['demo_h5']['sha256'] or (not a.other_policy and sha256(Path(a.policy) / 'weights.pt') != m['hashes']['policy_weights']['sha256']):
         raise SystemExit('Demo or policy is not the file fixed in the manifest')
     device = torch.device(a.device); out = new_run(a.out, 'stage1c-offline-actions', c); started = time.perf_counter()
     from hci.observations import install_training_patches, StrictRGBObservationWrapper
