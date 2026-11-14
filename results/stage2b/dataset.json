@@ -1,0 +1,146 @@
+{
+  "role": "stage2b_exploratory_dev",
+  "arms": [
+    "continue",
+    "continue_alt_noise",
+    "refresh",
+    "retreat_retry"
+  ],
+  "scheduled_scenes": [
+    10024,
+    10025,
+    10026,
+    10027,
+    10028,
+    10029,
+    10030,
+    10031,
+    10032,
+    10033,
+    10034,
+    10035,
+    10036,
+    10037,
+    10038,
+    10039,
+    10040,
+    10041,
+    10042,
+    10043,
+    10044,
+    10045,
+    10046,
+    10047
+  ],
+  "recorded_scenes": [
+    10024,
+    10025,
+    10026,
+    10027,
+    10028,
+    10029,
+    10030,
+    10031,
+    10032,
+    10033,
+    10034,
+    10035,
+    10036,
+    10037,
+    10038,
+    10039,
+    10040,
+    10041,
+    10042,
+    10043,
+    10044,
+    10045,
+    10046,
+    10047
+  ],
+  "completed": true,
+  "problems": [],
+  "snapshots": 84,
+  "blocks": 336,
+  "continuations": 1344,
+  "extra_reproducibility_continuations": 12,
+  "reproducibility_ok": true,
+  "wall_seconds_sum_over_scenes": 13944.264660015702,
+  "planned_scenes": 24,
+  "decided_scenes": 24,
+  "policy_sha256": "faacd2d86464c725a4fb95563a5ed5808019a8b420795b9a2a931822ed89db0e",
+  "config_sha256": "c8cc0a581f7d4e9de4042490bd6939e9b80da1dd333df081cb9107c29427dfbd",
+  "plan_sha256": "9bbe7aa53df47281c9498a406d4a6df42a92093b65caac0294ca5cb78254facf",
+  "status": {
+    "base_policy_qualification": "BELOW_ORIGINAL_GATE (37/100 < 50/100)",
+    "stage2a": "COMPLETED_EXPLORATORY_ONLY",
+    "stage2b": "EXPLORATORY_FOUR_ARM_CONTROL",
+    "formal_study_ready": "NOT_ESTABLISHED",
+    "calibration": "NOT_RUN",
+    "final_test": "NOT_RUN"
+  },
+  "coupling": {
+    "past": "identical for the four arms: same scene seed, same executed action prefix (prefix replay), same policy history and queue",
+    "continue_alt_noise": "restored and verified like every arm; then only Runtime.repeat is set to r + 4. No force, no clear, no extra inference, no extra action. Until the old queue is used up it must be the same rollout as continue (commands, simulator state, observation returned by the environment); a block that violates this is an error, not data",
+    "refresh_and_retreat": "unchanged from Stage 2A: physical-step noise key r; calls at other steps than Continue draw other noise by design",
+    "reference": "pairs are joined on (scene, checkpoint, block_repeat_id) only"
+  },
+  "noise": {
+    "seed_rule": "seed_for(scene, physical_step_of_the_call, policy_noise_repeat_id, 'dp'), set immediately before each Agent.get_action inside torch.random.fork_rng (unchanged code path; covers the initial noise and the reverse-diffusion draws of that call)",
+    "block_repeat_id": "pairing key r in [0,1,2,3]",
+    "alt_noise_ids": [
+      4,
+      5,
+      6,
+      7
+    ],
+    "not_in_the_seed": [
+      "execution order",
+      "worker id",
+      "wall-clock time",
+      "arm name"
+    ],
+    "seed_check": {
+      "scenes": 24,
+      "steps": 200,
+      "alt_seed_equals_block_seed_at_same_step": 0,
+      "alt_seed_equals_any_block_seed": 0
+    },
+    "caveat": "different integer seeds give another pseudo-random realisation; this is not a proof of statistical independence. C0 and C1 may well have the same outcome; no check requires them to differ."
+  },
+  "source_type": "real_sim",
+  "success_definition": "success_once_absorbing",
+  "runtime": {
+    "python": "3.10.12 (main, Aug 31 2026, 10:18:17) [GCC 11.4.0]",
+    "platform": "Linux-6.8.0-87-generic-x86_64-with-glibc2.35",
+    "packages": {
+      "torch": "2.6.0+cu124",
+      "torchvision": "0.21.0+cu124",
+      "mani_skill": "3.0.1",
+      "sapien": "3.0.3",
+      "gymnasium": "0.29.1",
+      "diffusers": "0.30.3",
+      "numpy": "1.26.4",
+      "scipy": "1.13.1",
+      "PyYAML": "6.0.2"
+    },
+    "nvidia_smi": {
+      "returncode": 0,
+      "stdout": "name, driver_version, memory.total [MiB]\nNVIDIA GeForce RTX 3090, 580.65.06, 24576 MiB\n",
+      "stderr": ""
+    }
+  },
+  "not_run_in_this_stage": [
+    "base policy retraining",
+    "checkpoint re-selection",
+    "qualification A/B rerun",
+    "Retreat change",
+    "action chunk / inference step change",
+    "Q / Rescue / Harm predictor training",
+    "online selector evaluation",
+    "LTT / calibration",
+    "final Test",
+    "5,760-continuation collection"
+  ],
+  "ready_for_interpretation": true
+}

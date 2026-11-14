@@ -1,0 +1,22 @@
+{
+  "online_inputs_file": "branches/inputs/<scene>.npz, arrays named t<checkpoint>_<field>; written once per snapshot before any continuation is run",
+  "online_inputs": {
+    "rgb_history": "uint8 [obs_horizon, H, W, 3 x cameras]; cameras in sorted name order, exactly what the policy receives",
+    "state_history": "float32 [obs_horizon, D]; qpos, qvel, tcp_pose (the whitelist of src/hci/schema.py)",
+    "last_action": "float32 [4]; last executed command",
+    "queue": "float32 [n, 4]; unexecuted commands of the current chunk",
+    "t": "physical step of the snapshot",
+    "remaining_budget": "horizon - t",
+    "policy_feature": "float32; fixed encoder output of the frozen policy for the same history, + last action, t/horizon, queue fraction"
+  },
+  "diagnostic_privileged_only": {
+    "scene JSON: initial_state, snapshots[].state_at_checkpoint, snapshots[].stage_so_far, cells[].stage": "cube poses, grasp/on-cube/static flags, stage labels read from simulator ground truth",
+    "branches/traces/<scene>.npz": "per-step TCP, cube positions, flags, success, executed action",
+    "y_C0, y_C1, y_F, y_R and every pair class": "future outcomes (labels)"
+  },
+  "rule": "Nothing of the second group is written into the online input file, and none of it is given to the policy. No model was trained in this stage.",
+  "cameras": [
+    "base_camera",
+    "hand_camera"
+  ]
+}

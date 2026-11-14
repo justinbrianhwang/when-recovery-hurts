@@ -193,6 +193,7 @@ Last updated 2026-11-14. Host: one rented RTX 3090 (24 GB), Ubuntu 22.04, Python
 | 1C | Generated actions on recorded histories, 4 fixed noise seeds | error about 3× larger and denoising loss about 46× larger on unseen demonstrations |
 | 1C | Does the file-vs-live RGB difference change the actions? | the difference is almost entirely ±1 intensity; swapping it in changes the action by about 5–6% of the seed-to-seed variation |
 | 2A | Exploratory recovery pilot with the fixed D500-clean policy (base policy still below the gate; see below) | restore audit pass at 18 checkpoints; 24 train scenes, 364 paired blocks, 1,092 branch continuations, all reproducibility checks identical. Descriptive only |
+| 2B | Four-arm control on 24 new train scenes: Continue, Continue with another future noise key, Refresh, Retreat–Retry (same policy, still below the gate; see below) | restore audit pass at 18 checkpoints; 336 blocks, 1,344 continuations; the noise-only arm matched Continue exactly until the old action queue was used up in 336/336 blocks. In this sample the mean outcome of Refresh was within 0.03 of both Continue arms and that of forced Retreat–Retry was 0.16–0.25 lower. Descriptive only |
 | 3–6 | Pilot, development, calibration, final test | not run |
 
 What this does **not** show: that the base policy solves the task, that any selector helps, or that any hypothesis holds. Unit tests check Python logic on mock physics; they say nothing about manipulation success.
@@ -269,6 +270,31 @@ The restore audit was rerun for this policy and extended to the whole runtime st
 | Retreat–Retry | 33 | 26 | 41 | 264 | 9 | 8 |
 
 Harm is counted over the 67 blocks whose Continue succeeded, Rescue over the 297 whose Continue failed. Blocks of one scene share their past and are not independent, so no interval is given. Continue itself changes with the future noise (in 14 of 91 snapshots its outcome differed between repeats), and both interventions also draw other noise than their block's Continue; a reference computed afterwards from the saved records shows flips of a similar size at the earliest checkpoint. These counts therefore do not separate the effect of an intervention from the effect of re-drawn noise, and they are not the value or the harm rate of an online selector. Report: [`reports/STAGE_REPORT_stage2a_001.md`](reports/STAGE_REPORT_stage2a_001.md) (Korean); data: [`results/stage2a/`](results/stage2a/); change record: [`amendments/AMENDMENT_005_stage2a_exploratory_scope.md`](amendments/AMENDMENT_005_stage2a_exploratory_scope.md).
+
+**Stage 2B: the same pilot with a noise-only control arm, on new scenes.**
+
+```text
+base_policy_qualification: BELOW_ORIGINAL_GATE (37/100 < 50/100)
+stage2a: COMPLETED_EXPLORATORY_ONLY
+stage2b: EXPLORATORY_FOUR_ARM_CONTROL (completed)
+formal_study_ready: NOT_ESTABLISHED
+calibration: NOT_RUN
+final_test: NOT_RUN
+```
+
+Stage 2A could not tell an intervention apart from a re-draw of the policy's noise. Stage 2B, designed after seeing that, adds a fourth arm to every block: `continue_alt_noise` (C1) is restored and verified like the others, then only the key of the future policy noise is changed (block repeat r → r + 4). It keeps the queue, adds no inference and no action, and is never counted as an intervention. In all 336 blocks it was the same rollout as Continue (C0) while the 4 queued actions were executed (commands, simulator state and returned observation: difference 0.0), and its first new inference came at the same step with another seed. The 24 scenes are new train scenes (seeds 10024–10047); the policy, checkpoints, repeats and Retreat settings are unchanged.
+
+| 336 blocks from 24 scenes, arm − reference | fail → success | success → fail | Mean difference per block | Mean over scenes | Scenes + / − / 0 |
+|---|---:|---:|---:|---:|---|
+| Refresh − C0 | 21 | 20 | +0.003 | −0.012 | 6 / 6 / 12 |
+| Refresh − C1 | 18 | 22 | −0.012 | −0.026 | 5 / 7 / 12 |
+| Retreat–Retry − C0 | 15 | 69 | −0.161 | −0.235 | 4 / 11 / 9 |
+| Retreat–Retry − C1 | 14 | 73 | −0.176 | −0.249 | 3 / 11 / 10 |
+| C1 − C0 (noise only) | 18 | 13 | +0.015 | +0.014 | 4 / 1 / 19 |
+
+Successful blocks: C0 93, C1 98, Refresh 94, Retreat–Retry 39. Retreat–Retry alone succeeded (C0 and Refresh both failed) in 12 blocks from 5 scenes, which is not more than the 18 blocks in which changing only the noise turned a failed Continue into a success; it failed in 53 of the 73 blocks where C0 and Refresh both succeeded. The Stage 2A direction for Refresh (+20 blocks) did not reappear on the new scenes; the two stages use different scenes and are not pooled.
+
+These are forced choices at fixed checkpoints on 24 scenes, with no interval or p-value. They are not the value or the harm rate of an online selector that intervenes only when needed, and the control arm does not separate the components of Refresh. Inputs an online model could read at each snapshot (image and proprioception history, last action, queue, time) were saved separately from ground-truth diagnostics; nothing was trained. Report: [`reports/STAGE_REPORT_stage2b_001.md`](reports/STAGE_REPORT_stage2b_001.md) (Korean); data: [`results/stage2b/`](results/stage2b/); change record: [`amendments/AMENDMENT_006_stage2b_noise_control.md`](amendments/AMENDMENT_006_stage2b_noise_control.md).
 
 At the same state, Refresh discarded the 4 remaining queued actions, triggered one new inference, and changed the next action by at most 0.007 in normalized units.
 

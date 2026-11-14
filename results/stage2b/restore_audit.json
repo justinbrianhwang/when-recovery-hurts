@@ -1,0 +1,5587 @@
+{
+  "pass": true,
+  "branches_executed": {
+    "retreat_retry": 18,
+    "refresh": 18,
+    "continue_alt_noise": 18
+  },
+  "results": [
+    {
+      "seed": 100,
+      "checkpoints": [
+        {
+          "checkpoint": 12,
+          "reached": true,
+          "eligible": [
+            true,
+            true,
+            true
+          ],
+          "trace_steps": 20,
+          "branches": {
+            "retreat_retry": {
+              "executed": true,
+              "success": 0,
+              "steps": 200,
+              "retreat": {
+                "mode": "up",
+                "start_tcp": [
+                  -0.034874532371759415,
+                  0.009782861918210983,
+                  0.1410181075334549
+                ],
+                "target_tcp": [
+                  -0.034874532371759415,
+                  0.009782861918210983,
+                  0.19101810753345488
+                ],
+                "final_tcp": [
+                  -0.03494676202535629,
+                  0.009983450174331665,
+                  0.1868194341659546
+                ],
+                "commanded_distance_m": 0.04999999999999999,
+                "achieved_displacement_m": 0.04580182209610939,
+                "target_error_m": 0.004204082636950482,
+                "steps_used": 25,
+                "max_steps": 40,
+                "arrival_tolerance_m": 0.005,
+                "command_saturated_steps": 25,
+                "gripper_command": 1.0,
+                "reached": true,
+                "end_reason": "reached"
+              }
+            },
+            "refresh": {
+              "executed": true,
+              "success": 1,
+              "steps": 103,
+              "retreat": null
+            },
+            "continue_alt_noise": {
+              "executed": true,
+              "success": 1,
+              "steps": 103,
+              "policy_noise_repeat_id": 4,
+              "queue_and_intervention_untouched": true,
+              "pass": true
+            }
+          },
+          "checks": {
+            "repeat_restored": {
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              },
+              "discrete_equal": {
+                "t": true,
+                "done": true,
+                "y": true,
+                "reason": true,
+                "repeat": true,
+                "intervention": true,
+                "intervention_t": true,
+                "queue_len": true,
+                "history_len": true,
+                "n_actions": true,
+                "inference_calls": true,
+                "retreat_info": true,
+                "rng": true
+              },
+              "failed": [],
+              "pass": true,
+              "prefix_replay_state_error": 0.0,
+              "live_observation": {
+                "state_max_abs": 0.0,
+                "rgb_max_abs": 0.0
+              },
+              "live_observation_pass": true
+            },
+            "repeat_trace": {
+              "pass": true,
+              "failed": [],
+              "steps": [
+                20,
+                20
+              ],
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              }
+            },
+            "after_retreat_retry_restored": {
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              },
+              "discrete_equal": {
+                "t": true,
+                "done": true,
+                "y": true,
+                "reason": true,
+                "repeat": true,
+                "intervention": true,
+                "intervention_t": true,
+                "queue_len": true,
+                "history_len": true,
+                "n_actions": true,
+                "inference_calls": true,
+                "retreat_info": true,
+                "rng": true
+              },
+              "failed": [],
+              "pass": true,
+              "prefix_replay_state_error": 0.0,
+              "live_observation": {
+                "state_max_abs": 0.0,
+                "rgb_max_abs": 0.0
+              },
+              "live_observation_pass": true
+            },
+            "after_retreat_retry_trace": {
+              "pass": true,
+              "failed": [],
+              "steps": [
+                20,
+                20
+              ],
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              }
+            },
+            "after_refresh_restored": {
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              },
+              "discrete_equal": {
+                "t": true,
+                "done": true,
+                "y": true,
+                "reason": true,
+                "repeat": true,
+                "intervention": true,
+                "intervention_t": true,
+                "queue_len": true,
+                "history_len": true,
+                "n_actions": true,
+                "inference_calls": true,
+                "retreat_info": true,
+                "rng": true
+              },
+              "failed": [],
+              "pass": true,
+              "prefix_replay_state_error": 0.0,
+              "live_observation": {
+                "state_max_abs": 0.0,
+                "rgb_max_abs": 0.0
+              },
+              "live_observation_pass": true
+            },
+            "after_refresh_trace": {
+              "pass": true,
+              "failed": [],
+              "steps": [
+                20,
+                20
+              ],
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              }
+            },
+            "after_continue_alt_noise_restored": {
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              },
+              "discrete_equal": {
+                "t": true,
+                "done": true,
+                "y": true,
+                "reason": true,
+                "repeat": true,
+                "intervention": true,
+                "intervention_t": true,
+                "queue_len": true,
+                "history_len": true,
+                "n_actions": true,
+                "inference_calls": true,
+                "retreat_info": true,
+                "rng": true
+              },
+              "failed": [],
+              "pass": true,
+              "prefix_replay_state_error": 0.0,
+              "live_observation": {
+                "state_max_abs": 0.0,
+                "rgb_max_abs": 0.0
+              },
+              "live_observation_pass": true
+            },
+            "after_continue_alt_noise_trace": {
+              "pass": true,
+              "failed": [],
+              "steps": [
+                20,
+                20
+              ],
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              }
+            }
+          },
+          "input_saving_changes_nothing": {
+            "numeric_max_abs": {
+              "env_state": 0.0,
+              "elapsed": 0.0,
+              "history_state": 0.0,
+              "history_rgb": 0.0,
+              "queue": 0.0,
+              "last_action": 0.0,
+              "actions": 0.0,
+              "tcp_history": 0.0
+            },
+            "discrete_equal": {
+              "t": true,
+              "done": true,
+              "y": true,
+              "reason": true,
+              "repeat": true,
+              "intervention": true,
+              "intervention_t": true,
+              "queue_len": true,
+              "history_len": true,
+              "n_actions": true,
+              "inference_calls": true,
+              "retreat_info": true,
+              "rng": true
+            },
+            "failed": [],
+            "pass": true
+          },
+          "pass": true
+        },
+        {
+          "checkpoint": 52,
+          "reached": true,
+          "eligible": [
+            true,
+            true,
+            true
+          ],
+          "trace_steps": 20,
+          "branches": {
+            "retreat_retry": {
+              "executed": true,
+              "success": 0,
+              "steps": 200,
+              "retreat": {
+                "mode": "up",
+                "start_tcp": [
+                  -0.12519393861293793,
+                  0.05572555959224701,
+                  0.021966442465782166
+                ],
+                "target_tcp": [
+                  -0.12519393861293793,
+                  0.05572555959224701,
+                  0.07196644246578217
+                ],
+                "final_tcp": [
+                  -0.12562529742717743,
+                  0.055645283311605453,
+                  0.06794136017560959
+                ],
+                "commanded_distance_m": 0.05,
+                "achieved_displacement_m": 0.04597701132297516,
+                "target_error_m": 0.0040489260490303705,
+                "steps_used": 25,
+                "max_steps": 40,
+                "arrival_tolerance_m": 0.005,
+                "command_saturated_steps": 25,
+                "gripper_command": -1.0,
+                "reached": true,
+                "end_reason": "reached"
+              }
+            },
+            "refresh": {
+              "executed": true,
+              "success": 1,
+              "steps": 101,
+              "retreat": null
+            },
+            "continue_alt_noise": {
+              "executed": true,
+              "success": 1,
+              "steps": 101,
+              "policy_noise_repeat_id": 4,
+              "queue_and_intervention_untouched": true,
+              "pass": true
+            }
+          },
+          "checks": {
+            "repeat_restored": {
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              },
+              "discrete_equal": {
+                "t": true,
+                "done": true,
+                "y": true,
+                "reason": true,
+                "repeat": true,
+                "intervention": true,
+                "intervention_t": true,
+                "queue_len": true,
+                "history_len": true,
+                "n_actions": true,
+                "inference_calls": true,
+                "retreat_info": true,
+                "rng": true
+              },
+              "failed": [],
+              "pass": true,
+              "prefix_replay_state_error": 0.0,
+              "live_observation": {
+                "state_max_abs": 0.0,
+                "rgb_max_abs": 0.0
+              },
+              "live_observation_pass": true
+            },
+            "repeat_trace": {
+              "pass": true,
+              "failed": [],
+              "steps": [
+                20,
+                20
+              ],
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              }
+            },
+            "after_retreat_retry_restored": {
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              },
+              "discrete_equal": {
+                "t": true,
+                "done": true,
+                "y": true,
+                "reason": true,
+                "repeat": true,
+                "intervention": true,
+                "intervention_t": true,
+                "queue_len": true,
+                "history_len": true,
+                "n_actions": true,
+                "inference_calls": true,
+                "retreat_info": true,
+                "rng": true
+              },
+              "failed": [],
+              "pass": true,
+              "prefix_replay_state_error": 0.0,
+              "live_observation": {
+                "state_max_abs": 0.0,
+                "rgb_max_abs": 0.0
+              },
+              "live_observation_pass": true
+            },
+            "after_retreat_retry_trace": {
+              "pass": true,
+              "failed": [],
+              "steps": [
+                20,
+                20
+              ],
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              }
+            },
+            "after_refresh_restored": {
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              },
+              "discrete_equal": {
+                "t": true,
+                "done": true,
+                "y": true,
+                "reason": true,
+                "repeat": true,
+                "intervention": true,
+                "intervention_t": true,
+                "queue_len": true,
+                "history_len": true,
+                "n_actions": true,
+                "inference_calls": true,
+                "retreat_info": true,
+                "rng": true
+              },
+              "failed": [],
+              "pass": true,
+              "prefix_replay_state_error": 0.0,
+              "live_observation": {
+                "state_max_abs": 0.0,
+                "rgb_max_abs": 0.0
+              },
+              "live_observation_pass": true
+            },
+            "after_refresh_trace": {
+              "pass": true,
+              "failed": [],
+              "steps": [
+                20,
+                20
+              ],
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              }
+            },
+            "after_continue_alt_noise_restored": {
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              },
+              "discrete_equal": {
+                "t": true,
+                "done": true,
+                "y": true,
+                "reason": true,
+                "repeat": true,
+                "intervention": true,
+                "intervention_t": true,
+                "queue_len": true,
+                "history_len": true,
+                "n_actions": true,
+                "inference_calls": true,
+                "retreat_info": true,
+                "rng": true
+              },
+              "failed": [],
+              "pass": true,
+              "prefix_replay_state_error": 0.0,
+              "live_observation": {
+                "state_max_abs": 0.0,
+                "rgb_max_abs": 0.0
+              },
+              "live_observation_pass": true
+            },
+            "after_continue_alt_noise_trace": {
+              "pass": true,
+              "failed": [],
+              "steps": [
+                20,
+                20
+              ],
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              }
+            }
+          },
+          "input_saving_changes_nothing": {
+            "numeric_max_abs": {
+              "env_state": 0.0,
+              "elapsed": 0.0,
+              "history_state": 0.0,
+              "history_rgb": 0.0,
+              "queue": 0.0,
+              "last_action": 0.0,
+              "actions": 0.0,
+              "tcp_history": 0.0
+            },
+            "discrete_equal": {
+              "t": true,
+              "done": true,
+              "y": true,
+              "reason": true,
+              "repeat": true,
+              "intervention": true,
+              "intervention_t": true,
+              "queue_len": true,
+              "history_len": true,
+              "n_actions": true,
+              "inference_calls": true,
+              "retreat_info": true,
+              "rng": true
+            },
+            "failed": [],
+            "pass": true
+          },
+          "pass": true
+        },
+        {
+          "checkpoint": 92,
+          "reached": true,
+          "eligible": [
+            true,
+            true,
+            true
+          ],
+          "trace_steps": 9,
+          "branches": {
+            "retreat_retry": {
+              "executed": true,
+              "success": 1,
+              "steps": 140,
+              "retreat": {
+                "mode": "up",
+                "start_tcp": [
+                  -0.0661168247461319,
+                  0.12853720784187317,
+                  0.07410255074501038
+                ],
+                "target_tcp": [
+                  -0.0661168247461319,
+                  0.12853720784187317,
+                  0.12410255074501038
+                ],
+                "final_tcp": [
+                  -0.06668262928724289,
+                  0.1286066472530365,
+                  0.1196557804942131
+                ],
+                "commanded_distance_m": 0.05,
+                "achieved_displacement_m": 0.045556798577308655,
+                "target_error_m": 0.0044831598537125785,
+                "steps_used": 26,
+                "max_steps": 40,
+                "arrival_tolerance_m": 0.005,
+                "command_saturated_steps": 26,
+                "gripper_command": -0.999457836151123,
+                "reached": true,
+                "end_reason": "reached"
+              }
+            },
+            "refresh": {
+              "executed": true,
+              "success": 1,
+              "steps": 101,
+              "retreat": null
+            },
+            "continue_alt_noise": {
+              "executed": true,
+              "success": 1,
+              "steps": 101,
+              "policy_noise_repeat_id": 4,
+              "queue_and_intervention_untouched": true,
+              "pass": true
+            }
+          },
+          "checks": {
+            "repeat_restored": {
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              },
+              "discrete_equal": {
+                "t": true,
+                "done": true,
+                "y": true,
+                "reason": true,
+                "repeat": true,
+                "intervention": true,
+                "intervention_t": true,
+                "queue_len": true,
+                "history_len": true,
+                "n_actions": true,
+                "inference_calls": true,
+                "retreat_info": true,
+                "rng": true
+              },
+              "failed": [],
+              "pass": true,
+              "prefix_replay_state_error": 0.0,
+              "live_observation": {
+                "state_max_abs": 0.0,
+                "rgb_max_abs": 0.0
+              },
+              "live_observation_pass": true
+            },
+            "repeat_trace": {
+              "pass": true,
+              "failed": [],
+              "steps": [
+                9,
+                9
+              ],
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              }
+            },
+            "after_retreat_retry_restored": {
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              },
+              "discrete_equal": {
+                "t": true,
+                "done": true,
+                "y": true,
+                "reason": true,
+                "repeat": true,
+                "intervention": true,
+                "intervention_t": true,
+                "queue_len": true,
+                "history_len": true,
+                "n_actions": true,
+                "inference_calls": true,
+                "retreat_info": true,
+                "rng": true
+              },
+              "failed": [],
+              "pass": true,
+              "prefix_replay_state_error": 0.0,
+              "live_observation": {
+                "state_max_abs": 0.0,
+                "rgb_max_abs": 0.0
+              },
+              "live_observation_pass": true
+            },
+            "after_retreat_retry_trace": {
+              "pass": true,
+              "failed": [],
+              "steps": [
+                9,
+                9
+              ],
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              }
+            },
+            "after_refresh_restored": {
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              },
+              "discrete_equal": {
+                "t": true,
+                "done": true,
+                "y": true,
+                "reason": true,
+                "repeat": true,
+                "intervention": true,
+                "intervention_t": true,
+                "queue_len": true,
+                "history_len": true,
+                "n_actions": true,
+                "inference_calls": true,
+                "retreat_info": true,
+                "rng": true
+              },
+              "failed": [],
+              "pass": true,
+              "prefix_replay_state_error": 0.0,
+              "live_observation": {
+                "state_max_abs": 0.0,
+                "rgb_max_abs": 0.0
+              },
+              "live_observation_pass": true
+            },
+            "after_refresh_trace": {
+              "pass": true,
+              "failed": [],
+              "steps": [
+                9,
+                9
+              ],
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              }
+            },
+            "after_continue_alt_noise_restored": {
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              },
+              "discrete_equal": {
+                "t": true,
+                "done": true,
+                "y": true,
+                "reason": true,
+                "repeat": true,
+                "intervention": true,
+                "intervention_t": true,
+                "queue_len": true,
+                "history_len": true,
+                "n_actions": true,
+                "inference_calls": true,
+                "retreat_info": true,
+                "rng": true
+              },
+              "failed": [],
+              "pass": true,
+              "prefix_replay_state_error": 0.0,
+              "live_observation": {
+                "state_max_abs": 0.0,
+                "rgb_max_abs": 0.0
+              },
+              "live_observation_pass": true
+            },
+            "after_continue_alt_noise_trace": {
+              "pass": true,
+              "failed": [],
+              "steps": [
+                9,
+                9
+              ],
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              }
+            }
+          },
+          "input_saving_changes_nothing": {
+            "numeric_max_abs": {
+              "env_state": 0.0,
+              "elapsed": 0.0,
+              "history_state": 0.0,
+              "history_rgb": 0.0,
+              "queue": 0.0,
+              "last_action": 0.0,
+              "actions": 0.0,
+              "tcp_history": 0.0
+            },
+            "discrete_equal": {
+              "t": true,
+              "done": true,
+              "y": true,
+              "reason": true,
+              "repeat": true,
+              "intervention": true,
+              "intervention_t": true,
+              "queue_len": true,
+              "history_len": true,
+              "n_actions": true,
+              "inference_calls": true,
+              "retreat_info": true,
+              "rng": true
+            },
+            "failed": [],
+            "pass": true
+          },
+          "pass": true
+        },
+        {
+          "checkpoint": 132,
+          "reached": false,
+          "reason": "trunk ended at step 101 (success)"
+        }
+      ],
+      "reached": 3,
+      "pass": true,
+      "wall_seconds": 65.06890449579805
+    },
+    {
+      "seed": 101,
+      "checkpoints": [
+        {
+          "checkpoint": 12,
+          "reached": true,
+          "eligible": [
+            true,
+            true,
+            true
+          ],
+          "trace_steps": 20,
+          "branches": {
+            "retreat_retry": {
+              "executed": true,
+              "success": 0,
+              "steps": 200,
+              "retreat": {
+                "mode": "up",
+                "start_tcp": [
+                  -0.031313683837652206,
+                  0.058869369328022,
+                  0.1499919891357422
+                ],
+                "target_tcp": [
+                  -0.031313683837652206,
+                  0.058869369328022,
+                  0.19999198913574218
+                ],
+                "final_tcp": [
+                  -0.0313573032617569,
+                  0.059054404497146606,
+                  0.19639194011688232
+                ],
+                "commanded_distance_m": 0.04999999999999999,
+                "achieved_displacement_m": 0.04640033841133118,
+                "target_error_m": 0.0036050649933345143,
+                "steps_used": 25,
+                "max_steps": 40,
+                "arrival_tolerance_m": 0.005,
+                "command_saturated_steps": 25,
+                "gripper_command": 1.0,
+                "reached": true,
+                "end_reason": "reached"
+              }
+            },
+            "refresh": {
+              "executed": true,
+              "success": 1,
+              "steps": 125,
+              "retreat": null
+            },
+            "continue_alt_noise": {
+              "executed": true,
+              "success": 0,
+              "steps": 200,
+              "policy_noise_repeat_id": 4,
+              "queue_and_intervention_untouched": true,
+              "pass": true
+            }
+          },
+          "checks": {
+            "repeat_restored": {
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              },
+              "discrete_equal": {
+                "t": true,
+                "done": true,
+                "y": true,
+                "reason": true,
+                "repeat": true,
+                "intervention": true,
+                "intervention_t": true,
+                "queue_len": true,
+                "history_len": true,
+                "n_actions": true,
+                "inference_calls": true,
+                "retreat_info": true,
+                "rng": true
+              },
+              "failed": [],
+              "pass": true,
+              "prefix_replay_state_error": 0.0,
+              "live_observation": {
+                "state_max_abs": 0.0,
+                "rgb_max_abs": 0.0
+              },
+              "live_observation_pass": true
+            },
+            "repeat_trace": {
+              "pass": true,
+              "failed": [],
+              "steps": [
+                20,
+                20
+              ],
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              }
+            },
+            "after_retreat_retry_restored": {
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              },
+              "discrete_equal": {
+                "t": true,
+                "done": true,
+                "y": true,
+                "reason": true,
+                "repeat": true,
+                "intervention": true,
+                "intervention_t": true,
+                "queue_len": true,
+                "history_len": true,
+                "n_actions": true,
+                "inference_calls": true,
+                "retreat_info": true,
+                "rng": true
+              },
+              "failed": [],
+              "pass": true,
+              "prefix_replay_state_error": 0.0,
+              "live_observation": {
+                "state_max_abs": 0.0,
+                "rgb_max_abs": 0.0
+              },
+              "live_observation_pass": true
+            },
+            "after_retreat_retry_trace": {
+              "pass": true,
+              "failed": [],
+              "steps": [
+                20,
+                20
+              ],
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              }
+            },
+            "after_refresh_restored": {
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              },
+              "discrete_equal": {
+                "t": true,
+                "done": true,
+                "y": true,
+                "reason": true,
+                "repeat": true,
+                "intervention": true,
+                "intervention_t": true,
+                "queue_len": true,
+                "history_len": true,
+                "n_actions": true,
+                "inference_calls": true,
+                "retreat_info": true,
+                "rng": true
+              },
+              "failed": [],
+              "pass": true,
+              "prefix_replay_state_error": 0.0,
+              "live_observation": {
+                "state_max_abs": 0.0,
+                "rgb_max_abs": 0.0
+              },
+              "live_observation_pass": true
+            },
+            "after_refresh_trace": {
+              "pass": true,
+              "failed": [],
+              "steps": [
+                20,
+                20
+              ],
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              }
+            },
+            "after_continue_alt_noise_restored": {
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              },
+              "discrete_equal": {
+                "t": true,
+                "done": true,
+                "y": true,
+                "reason": true,
+                "repeat": true,
+                "intervention": true,
+                "intervention_t": true,
+                "queue_len": true,
+                "history_len": true,
+                "n_actions": true,
+                "inference_calls": true,
+                "retreat_info": true,
+                "rng": true
+              },
+              "failed": [],
+              "pass": true,
+              "prefix_replay_state_error": 0.0,
+              "live_observation": {
+                "state_max_abs": 0.0,
+                "rgb_max_abs": 0.0
+              },
+              "live_observation_pass": true
+            },
+            "after_continue_alt_noise_trace": {
+              "pass": true,
+              "failed": [],
+              "steps": [
+                20,
+                20
+              ],
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              }
+            }
+          },
+          "input_saving_changes_nothing": {
+            "numeric_max_abs": {
+              "env_state": 0.0,
+              "elapsed": 0.0,
+              "history_state": 0.0,
+              "history_rgb": 0.0,
+              "queue": 0.0,
+              "last_action": 0.0,
+              "actions": 0.0,
+              "tcp_history": 0.0
+            },
+            "discrete_equal": {
+              "t": true,
+              "done": true,
+              "y": true,
+              "reason": true,
+              "repeat": true,
+              "intervention": true,
+              "intervention_t": true,
+              "queue_len": true,
+              "history_len": true,
+              "n_actions": true,
+              "inference_calls": true,
+              "retreat_info": true,
+              "rng": true
+            },
+            "failed": [],
+            "pass": true
+          },
+          "pass": true
+        },
+        {
+          "checkpoint": 52,
+          "reached": true,
+          "eligible": [
+            true,
+            true,
+            true
+          ],
+          "trace_steps": 20,
+          "branches": {
+            "retreat_retry": {
+              "executed": true,
+              "success": 0,
+              "steps": 200,
+              "retreat": {
+                "mode": "up",
+                "start_tcp": [
+                  -0.14970330893993378,
+                  0.1458863466978073,
+                  0.03219468146562576
+                ],
+                "target_tcp": [
+                  -0.14970330893993378,
+                  0.1458863466978073,
+                  0.08219468146562577
+                ],
+                "final_tcp": [
+                  -0.14970120787620544,
+                  0.14588171243667603,
+                  0.07894717901945114
+                ],
+                "commanded_distance_m": 0.05,
+                "achieved_displacement_m": 0.04675249755382538,
+                "target_error_m": 0.0032475064324424658,
+                "steps_used": 25,
+                "max_steps": 40,
+                "arrival_tolerance_m": 0.005,
+                "command_saturated_steps": 25,
+                "gripper_command": 0.9995652437210083,
+                "reached": true,
+                "end_reason": "reached"
+              }
+            },
+            "refresh": {
+              "executed": true,
+              "success": 1,
+              "steps": 122,
+              "retreat": null
+            },
+            "continue_alt_noise": {
+              "executed": true,
+              "success": 1,
+              "steps": 120,
+              "policy_noise_repeat_id": 4,
+              "queue_and_intervention_untouched": true,
+              "pass": true
+            }
+          },
+          "checks": {
+            "repeat_restored": {
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              },
+              "discrete_equal": {
+                "t": true,
+                "done": true,
+                "y": true,
+                "reason": true,
+                "repeat": true,
+                "intervention": true,
+                "intervention_t": true,
+                "queue_len": true,
+                "history_len": true,
+                "n_actions": true,
+                "inference_calls": true,
+                "retreat_info": true,
+                "rng": true
+              },
+              "failed": [],
+              "pass": true,
+              "prefix_replay_state_error": 0.0,
+              "live_observation": {
+                "state_max_abs": 0.0,
+                "rgb_max_abs": 0.0
+              },
+              "live_observation_pass": true
+            },
+            "repeat_trace": {
+              "pass": true,
+              "failed": [],
+              "steps": [
+                20,
+                20
+              ],
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              }
+            },
+            "after_retreat_retry_restored": {
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              },
+              "discrete_equal": {
+                "t": true,
+                "done": true,
+                "y": true,
+                "reason": true,
+                "repeat": true,
+                "intervention": true,
+                "intervention_t": true,
+                "queue_len": true,
+                "history_len": true,
+                "n_actions": true,
+                "inference_calls": true,
+                "retreat_info": true,
+                "rng": true
+              },
+              "failed": [],
+              "pass": true,
+              "prefix_replay_state_error": 0.0,
+              "live_observation": {
+                "state_max_abs": 0.0,
+                "rgb_max_abs": 0.0
+              },
+              "live_observation_pass": true
+            },
+            "after_retreat_retry_trace": {
+              "pass": true,
+              "failed": [],
+              "steps": [
+                20,
+                20
+              ],
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              }
+            },
+            "after_refresh_restored": {
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              },
+              "discrete_equal": {
+                "t": true,
+                "done": true,
+                "y": true,
+                "reason": true,
+                "repeat": true,
+                "intervention": true,
+                "intervention_t": true,
+                "queue_len": true,
+                "history_len": true,
+                "n_actions": true,
+                "inference_calls": true,
+                "retreat_info": true,
+                "rng": true
+              },
+              "failed": [],
+              "pass": true,
+              "prefix_replay_state_error": 0.0,
+              "live_observation": {
+                "state_max_abs": 0.0,
+                "rgb_max_abs": 0.0
+              },
+              "live_observation_pass": true
+            },
+            "after_refresh_trace": {
+              "pass": true,
+              "failed": [],
+              "steps": [
+                20,
+                20
+              ],
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              }
+            },
+            "after_continue_alt_noise_restored": {
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              },
+              "discrete_equal": {
+                "t": true,
+                "done": true,
+                "y": true,
+                "reason": true,
+                "repeat": true,
+                "intervention": true,
+                "intervention_t": true,
+                "queue_len": true,
+                "history_len": true,
+                "n_actions": true,
+                "inference_calls": true,
+                "retreat_info": true,
+                "rng": true
+              },
+              "failed": [],
+              "pass": true,
+              "prefix_replay_state_error": 0.0,
+              "live_observation": {
+                "state_max_abs": 0.0,
+                "rgb_max_abs": 0.0
+              },
+              "live_observation_pass": true
+            },
+            "after_continue_alt_noise_trace": {
+              "pass": true,
+              "failed": [],
+              "steps": [
+                20,
+                20
+              ],
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              }
+            }
+          },
+          "input_saving_changes_nothing": {
+            "numeric_max_abs": {
+              "env_state": 0.0,
+              "elapsed": 0.0,
+              "history_state": 0.0,
+              "history_rgb": 0.0,
+              "queue": 0.0,
+              "last_action": 0.0,
+              "actions": 0.0,
+              "tcp_history": 0.0
+            },
+            "discrete_equal": {
+              "t": true,
+              "done": true,
+              "y": true,
+              "reason": true,
+              "repeat": true,
+              "intervention": true,
+              "intervention_t": true,
+              "queue_len": true,
+              "history_len": true,
+              "n_actions": true,
+              "inference_calls": true,
+              "retreat_info": true,
+              "rng": true
+            },
+            "failed": [],
+            "pass": true
+          },
+          "pass": true
+        },
+        {
+          "checkpoint": 92,
+          "reached": true,
+          "eligible": [
+            true,
+            true,
+            true
+          ],
+          "trace_steps": 20,
+          "branches": {
+            "retreat_retry": {
+              "executed": true,
+              "success": 0,
+              "steps": 200,
+              "retreat": {
+                "mode": "up",
+                "start_tcp": [
+                  -0.1449889838695526,
+                  0.11818355321884155,
+                  0.11374542117118835
+                ],
+                "target_tcp": [
+                  -0.1449889838695526,
+                  0.11818355321884155,
+                  0.16374542117118834
+                ],
+                "final_tcp": [
+                  -0.1453496217727661,
+                  0.11762939393520355,
+                  0.15884730219841003
+                ],
+                "commanded_distance_m": 0.04999999999999999,
+                "achieved_displacement_m": 0.04510672762989998,
+                "target_error_m": 0.0049425420261609565,
+                "steps_used": 25,
+                "max_steps": 40,
+                "arrival_tolerance_m": 0.005,
+                "command_saturated_steps": 25,
+                "gripper_command": -0.9988839626312256,
+                "reached": true,
+                "end_reason": "reached"
+              }
+            },
+            "refresh": {
+              "executed": true,
+              "success": 1,
+              "steps": 120,
+              "retreat": null
+            },
+            "continue_alt_noise": {
+              "executed": true,
+              "success": 1,
+              "steps": 120,
+              "policy_noise_repeat_id": 4,
+              "queue_and_intervention_untouched": true,
+              "pass": true
+            }
+          },
+          "checks": {
+            "repeat_restored": {
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              },
+              "discrete_equal": {
+                "t": true,
+                "done": true,
+                "y": true,
+                "reason": true,
+                "repeat": true,
+                "intervention": true,
+                "intervention_t": true,
+                "queue_len": true,
+                "history_len": true,
+                "n_actions": true,
+                "inference_calls": true,
+                "retreat_info": true,
+                "rng": true
+              },
+              "failed": [],
+              "pass": true,
+              "prefix_replay_state_error": 0.0,
+              "live_observation": {
+                "state_max_abs": 0.0,
+                "rgb_max_abs": 0.0
+              },
+              "live_observation_pass": true
+            },
+            "repeat_trace": {
+              "pass": true,
+              "failed": [],
+              "steps": [
+                20,
+                20
+              ],
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              }
+            },
+            "after_retreat_retry_restored": {
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              },
+              "discrete_equal": {
+                "t": true,
+                "done": true,
+                "y": true,
+                "reason": true,
+                "repeat": true,
+                "intervention": true,
+                "intervention_t": true,
+                "queue_len": true,
+                "history_len": true,
+                "n_actions": true,
+                "inference_calls": true,
+                "retreat_info": true,
+                "rng": true
+              },
+              "failed": [],
+              "pass": true,
+              "prefix_replay_state_error": 0.0,
+              "live_observation": {
+                "state_max_abs": 0.0,
+                "rgb_max_abs": 0.0
+              },
+              "live_observation_pass": true
+            },
+            "after_retreat_retry_trace": {
+              "pass": true,
+              "failed": [],
+              "steps": [
+                20,
+                20
+              ],
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              }
+            },
+            "after_refresh_restored": {
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              },
+              "discrete_equal": {
+                "t": true,
+                "done": true,
+                "y": true,
+                "reason": true,
+                "repeat": true,
+                "intervention": true,
+                "intervention_t": true,
+                "queue_len": true,
+                "history_len": true,
+                "n_actions": true,
+                "inference_calls": true,
+                "retreat_info": true,
+                "rng": true
+              },
+              "failed": [],
+              "pass": true,
+              "prefix_replay_state_error": 0.0,
+              "live_observation": {
+                "state_max_abs": 0.0,
+                "rgb_max_abs": 0.0
+              },
+              "live_observation_pass": true
+            },
+            "after_refresh_trace": {
+              "pass": true,
+              "failed": [],
+              "steps": [
+                20,
+                20
+              ],
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              }
+            },
+            "after_continue_alt_noise_restored": {
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              },
+              "discrete_equal": {
+                "t": true,
+                "done": true,
+                "y": true,
+                "reason": true,
+                "repeat": true,
+                "intervention": true,
+                "intervention_t": true,
+                "queue_len": true,
+                "history_len": true,
+                "n_actions": true,
+                "inference_calls": true,
+                "retreat_info": true,
+                "rng": true
+              },
+              "failed": [],
+              "pass": true,
+              "prefix_replay_state_error": 0.0,
+              "live_observation": {
+                "state_max_abs": 0.0,
+                "rgb_max_abs": 0.0
+              },
+              "live_observation_pass": true
+            },
+            "after_continue_alt_noise_trace": {
+              "pass": true,
+              "failed": [],
+              "steps": [
+                20,
+                20
+              ],
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              }
+            }
+          },
+          "input_saving_changes_nothing": {
+            "numeric_max_abs": {
+              "env_state": 0.0,
+              "elapsed": 0.0,
+              "history_state": 0.0,
+              "history_rgb": 0.0,
+              "queue": 0.0,
+              "last_action": 0.0,
+              "actions": 0.0,
+              "tcp_history": 0.0
+            },
+            "discrete_equal": {
+              "t": true,
+              "done": true,
+              "y": true,
+              "reason": true,
+              "repeat": true,
+              "intervention": true,
+              "intervention_t": true,
+              "queue_len": true,
+              "history_len": true,
+              "n_actions": true,
+              "inference_calls": true,
+              "retreat_info": true,
+              "rng": true
+            },
+            "failed": [],
+            "pass": true
+          },
+          "pass": true
+        },
+        {
+          "checkpoint": 132,
+          "reached": false,
+          "reason": "trunk ended at step 120 (success)"
+        }
+      ],
+      "reached": 3,
+      "pass": true,
+      "wall_seconds": 83.90728724654764
+    },
+    {
+      "seed": 102,
+      "checkpoints": [
+        {
+          "checkpoint": 12,
+          "reached": true,
+          "eligible": [
+            true,
+            true,
+            true
+          ],
+          "trace_steps": 20,
+          "branches": {
+            "retreat_retry": {
+              "executed": true,
+              "success": 0,
+              "steps": 200,
+              "retreat": {
+                "mode": "up",
+                "start_tcp": [
+                  -0.04089052975177765,
+                  0.03828778490424156,
+                  0.1386169046163559
+                ],
+                "target_tcp": [
+                  -0.04089052975177765,
+                  0.03828778490424156,
+                  0.18861690461635588
+                ],
+                "final_tcp": [
+                  -0.04090669006109238,
+                  0.03834915533661842,
+                  0.18535378575325012
+                ],
+                "commanded_distance_m": 0.04999999999999999,
+                "achieved_displacement_m": 0.04673692211508751,
+                "target_error_m": 0.003263735926867233,
+                "steps_used": 25,
+                "max_steps": 40,
+                "arrival_tolerance_m": 0.005,
+                "command_saturated_steps": 25,
+                "gripper_command": 1.0,
+                "reached": true,
+                "end_reason": "reached"
+              }
+            },
+            "refresh": {
+              "executed": true,
+              "success": 0,
+              "steps": 200,
+              "retreat": null
+            },
+            "continue_alt_noise": {
+              "executed": true,
+              "success": 0,
+              "steps": 200,
+              "policy_noise_repeat_id": 4,
+              "queue_and_intervention_untouched": true,
+              "pass": true
+            }
+          },
+          "checks": {
+            "repeat_restored": {
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              },
+              "discrete_equal": {
+                "t": true,
+                "done": true,
+                "y": true,
+                "reason": true,
+                "repeat": true,
+                "intervention": true,
+                "intervention_t": true,
+                "queue_len": true,
+                "history_len": true,
+                "n_actions": true,
+                "inference_calls": true,
+                "retreat_info": true,
+                "rng": true
+              },
+              "failed": [],
+              "pass": true,
+              "prefix_replay_state_error": 0.0,
+              "live_observation": {
+                "state_max_abs": 0.0,
+                "rgb_max_abs": 0.0
+              },
+              "live_observation_pass": true
+            },
+            "repeat_trace": {
+              "pass": true,
+              "failed": [],
+              "steps": [
+                20,
+                20
+              ],
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              }
+            },
+            "after_retreat_retry_restored": {
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              },
+              "discrete_equal": {
+                "t": true,
+                "done": true,
+                "y": true,
+                "reason": true,
+                "repeat": true,
+                "intervention": true,
+                "intervention_t": true,
+                "queue_len": true,
+                "history_len": true,
+                "n_actions": true,
+                "inference_calls": true,
+                "retreat_info": true,
+                "rng": true
+              },
+              "failed": [],
+              "pass": true,
+              "prefix_replay_state_error": 0.0,
+              "live_observation": {
+                "state_max_abs": 0.0,
+                "rgb_max_abs": 0.0
+              },
+              "live_observation_pass": true
+            },
+            "after_retreat_retry_trace": {
+              "pass": true,
+              "failed": [],
+              "steps": [
+                20,
+                20
+              ],
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              }
+            },
+            "after_refresh_restored": {
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              },
+              "discrete_equal": {
+                "t": true,
+                "done": true,
+                "y": true,
+                "reason": true,
+                "repeat": true,
+                "intervention": true,
+                "intervention_t": true,
+                "queue_len": true,
+                "history_len": true,
+                "n_actions": true,
+                "inference_calls": true,
+                "retreat_info": true,
+                "rng": true
+              },
+              "failed": [],
+              "pass": true,
+              "prefix_replay_state_error": 0.0,
+              "live_observation": {
+                "state_max_abs": 0.0,
+                "rgb_max_abs": 0.0
+              },
+              "live_observation_pass": true
+            },
+            "after_refresh_trace": {
+              "pass": true,
+              "failed": [],
+              "steps": [
+                20,
+                20
+              ],
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              }
+            },
+            "after_continue_alt_noise_restored": {
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              },
+              "discrete_equal": {
+                "t": true,
+                "done": true,
+                "y": true,
+                "reason": true,
+                "repeat": true,
+                "intervention": true,
+                "intervention_t": true,
+                "queue_len": true,
+                "history_len": true,
+                "n_actions": true,
+                "inference_calls": true,
+                "retreat_info": true,
+                "rng": true
+              },
+              "failed": [],
+              "pass": true,
+              "prefix_replay_state_error": 0.0,
+              "live_observation": {
+                "state_max_abs": 0.0,
+                "rgb_max_abs": 0.0
+              },
+              "live_observation_pass": true
+            },
+            "after_continue_alt_noise_trace": {
+              "pass": true,
+              "failed": [],
+              "steps": [
+                20,
+                20
+              ],
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              }
+            }
+          },
+          "input_saving_changes_nothing": {
+            "numeric_max_abs": {
+              "env_state": 0.0,
+              "elapsed": 0.0,
+              "history_state": 0.0,
+              "history_rgb": 0.0,
+              "queue": 0.0,
+              "last_action": 0.0,
+              "actions": 0.0,
+              "tcp_history": 0.0
+            },
+            "discrete_equal": {
+              "t": true,
+              "done": true,
+              "y": true,
+              "reason": true,
+              "repeat": true,
+              "intervention": true,
+              "intervention_t": true,
+              "queue_len": true,
+              "history_len": true,
+              "n_actions": true,
+              "inference_calls": true,
+              "retreat_info": true,
+              "rng": true
+            },
+            "failed": [],
+            "pass": true
+          },
+          "pass": true
+        },
+        {
+          "checkpoint": 52,
+          "reached": true,
+          "eligible": [
+            true,
+            true,
+            true
+          ],
+          "trace_steps": 20,
+          "branches": {
+            "retreat_retry": {
+              "executed": true,
+              "success": 0,
+              "steps": 200,
+              "retreat": {
+                "mode": "up",
+                "start_tcp": [
+                  -0.18758834898471832,
+                  0.04509727656841278,
+                  0.024204649031162262
+                ],
+                "target_tcp": [
+                  -0.18758834898471832,
+                  0.04509727656841278,
+                  0.07420464903116226
+                ],
+                "final_tcp": [
+                  -0.18755470216274261,
+                  0.04507041722536087,
+                  0.06972764432430267
+                ],
+                "commanded_distance_m": 0.05,
+                "achieved_displacement_m": 0.0455230176448822,
+                "target_error_m": 0.00447721170799206,
+                "steps_used": 24,
+                "max_steps": 40,
+                "arrival_tolerance_m": 0.005,
+                "command_saturated_steps": 24,
+                "gripper_command": 0.9993975162506104,
+                "reached": true,
+                "end_reason": "reached"
+              }
+            },
+            "refresh": {
+              "executed": true,
+              "success": 0,
+              "steps": 200,
+              "retreat": null
+            },
+            "continue_alt_noise": {
+              "executed": true,
+              "success": 0,
+              "steps": 200,
+              "policy_noise_repeat_id": 4,
+              "queue_and_intervention_untouched": true,
+              "pass": true
+            }
+          },
+          "checks": {
+            "repeat_restored": {
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              },
+              "discrete_equal": {
+                "t": true,
+                "done": true,
+                "y": true,
+                "reason": true,
+                "repeat": true,
+                "intervention": true,
+                "intervention_t": true,
+                "queue_len": true,
+                "history_len": true,
+                "n_actions": true,
+                "inference_calls": true,
+                "retreat_info": true,
+                "rng": true
+              },
+              "failed": [],
+              "pass": true,
+              "prefix_replay_state_error": 0.0,
+              "live_observation": {
+                "state_max_abs": 0.0,
+                "rgb_max_abs": 0.0
+              },
+              "live_observation_pass": true
+            },
+            "repeat_trace": {
+              "pass": true,
+              "failed": [],
+              "steps": [
+                20,
+                20
+              ],
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              }
+            },
+            "after_retreat_retry_restored": {
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              },
+              "discrete_equal": {
+                "t": true,
+                "done": true,
+                "y": true,
+                "reason": true,
+                "repeat": true,
+                "intervention": true,
+                "intervention_t": true,
+                "queue_len": true,
+                "history_len": true,
+                "n_actions": true,
+                "inference_calls": true,
+                "retreat_info": true,
+                "rng": true
+              },
+              "failed": [],
+              "pass": true,
+              "prefix_replay_state_error": 0.0,
+              "live_observation": {
+                "state_max_abs": 0.0,
+                "rgb_max_abs": 0.0
+              },
+              "live_observation_pass": true
+            },
+            "after_retreat_retry_trace": {
+              "pass": true,
+              "failed": [],
+              "steps": [
+                20,
+                20
+              ],
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              }
+            },
+            "after_refresh_restored": {
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              },
+              "discrete_equal": {
+                "t": true,
+                "done": true,
+                "y": true,
+                "reason": true,
+                "repeat": true,
+                "intervention": true,
+                "intervention_t": true,
+                "queue_len": true,
+                "history_len": true,
+                "n_actions": true,
+                "inference_calls": true,
+                "retreat_info": true,
+                "rng": true
+              },
+              "failed": [],
+              "pass": true,
+              "prefix_replay_state_error": 0.0,
+              "live_observation": {
+                "state_max_abs": 0.0,
+                "rgb_max_abs": 0.0
+              },
+              "live_observation_pass": true
+            },
+            "after_refresh_trace": {
+              "pass": true,
+              "failed": [],
+              "steps": [
+                20,
+                20
+              ],
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              }
+            },
+            "after_continue_alt_noise_restored": {
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              },
+              "discrete_equal": {
+                "t": true,
+                "done": true,
+                "y": true,
+                "reason": true,
+                "repeat": true,
+                "intervention": true,
+                "intervention_t": true,
+                "queue_len": true,
+                "history_len": true,
+                "n_actions": true,
+                "inference_calls": true,
+                "retreat_info": true,
+                "rng": true
+              },
+              "failed": [],
+              "pass": true,
+              "prefix_replay_state_error": 0.0,
+              "live_observation": {
+                "state_max_abs": 0.0,
+                "rgb_max_abs": 0.0
+              },
+              "live_observation_pass": true
+            },
+            "after_continue_alt_noise_trace": {
+              "pass": true,
+              "failed": [],
+              "steps": [
+                20,
+                20
+              ],
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              }
+            }
+          },
+          "input_saving_changes_nothing": {
+            "numeric_max_abs": {
+              "env_state": 0.0,
+              "elapsed": 0.0,
+              "history_state": 0.0,
+              "history_rgb": 0.0,
+              "queue": 0.0,
+              "last_action": 0.0,
+              "actions": 0.0,
+              "tcp_history": 0.0
+            },
+            "discrete_equal": {
+              "t": true,
+              "done": true,
+              "y": true,
+              "reason": true,
+              "repeat": true,
+              "intervention": true,
+              "intervention_t": true,
+              "queue_len": true,
+              "history_len": true,
+              "n_actions": true,
+              "inference_calls": true,
+              "retreat_info": true,
+              "rng": true
+            },
+            "failed": [],
+            "pass": true
+          },
+          "pass": true
+        },
+        {
+          "checkpoint": 92,
+          "reached": true,
+          "eligible": [
+            true,
+            true,
+            true
+          ],
+          "trace_steps": 20,
+          "branches": {
+            "retreat_retry": {
+              "executed": true,
+              "success": 0,
+              "steps": 200,
+              "retreat": {
+                "mode": "up",
+                "start_tcp": [
+                  -0.19021934270858765,
+                  0.038900431245565414,
+                  0.08744119852781296
+                ],
+                "target_tcp": [
+                  -0.19021934270858765,
+                  0.038900431245565414,
+                  0.13744119852781295
+                ],
+                "final_tcp": [
+                  -0.19020509719848633,
+                  0.038869164884090424,
+                  0.1326732337474823
+                ],
+                "commanded_distance_m": 0.04999999999999999,
+                "achieved_displacement_m": 0.045232050120830536,
+                "target_error_m": 0.004768088575770316,
+                "steps_used": 24,
+                "max_steps": 40,
+                "arrival_tolerance_m": 0.005,
+                "command_saturated_steps": 24,
+                "gripper_command": 0.9980188608169556,
+                "reached": true,
+                "end_reason": "reached"
+              }
+            },
+            "refresh": {
+              "executed": true,
+              "success": 0,
+              "steps": 200,
+              "retreat": null
+            },
+            "continue_alt_noise": {
+              "executed": true,
+              "success": 0,
+              "steps": 200,
+              "policy_noise_repeat_id": 4,
+              "queue_and_intervention_untouched": true,
+              "pass": true
+            }
+          },
+          "checks": {
+            "repeat_restored": {
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              },
+              "discrete_equal": {
+                "t": true,
+                "done": true,
+                "y": true,
+                "reason": true,
+                "repeat": true,
+                "intervention": true,
+                "intervention_t": true,
+                "queue_len": true,
+                "history_len": true,
+                "n_actions": true,
+                "inference_calls": true,
+                "retreat_info": true,
+                "rng": true
+              },
+              "failed": [],
+              "pass": true,
+              "prefix_replay_state_error": 0.0,
+              "live_observation": {
+                "state_max_abs": 0.0,
+                "rgb_max_abs": 0.0
+              },
+              "live_observation_pass": true
+            },
+            "repeat_trace": {
+              "pass": true,
+              "failed": [],
+              "steps": [
+                20,
+                20
+              ],
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              }
+            },
+            "after_retreat_retry_restored": {
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              },
+              "discrete_equal": {
+                "t": true,
+                "done": true,
+                "y": true,
+                "reason": true,
+                "repeat": true,
+                "intervention": true,
+                "intervention_t": true,
+                "queue_len": true,
+                "history_len": true,
+                "n_actions": true,
+                "inference_calls": true,
+                "retreat_info": true,
+                "rng": true
+              },
+              "failed": [],
+              "pass": true,
+              "prefix_replay_state_error": 0.0,
+              "live_observation": {
+                "state_max_abs": 0.0,
+                "rgb_max_abs": 0.0
+              },
+              "live_observation_pass": true
+            },
+            "after_retreat_retry_trace": {
+              "pass": true,
+              "failed": [],
+              "steps": [
+                20,
+                20
+              ],
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              }
+            },
+            "after_refresh_restored": {
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              },
+              "discrete_equal": {
+                "t": true,
+                "done": true,
+                "y": true,
+                "reason": true,
+                "repeat": true,
+                "intervention": true,
+                "intervention_t": true,
+                "queue_len": true,
+                "history_len": true,
+                "n_actions": true,
+                "inference_calls": true,
+                "retreat_info": true,
+                "rng": true
+              },
+              "failed": [],
+              "pass": true,
+              "prefix_replay_state_error": 0.0,
+              "live_observation": {
+                "state_max_abs": 0.0,
+                "rgb_max_abs": 0.0
+              },
+              "live_observation_pass": true
+            },
+            "after_refresh_trace": {
+              "pass": true,
+              "failed": [],
+              "steps": [
+                20,
+                20
+              ],
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              }
+            },
+            "after_continue_alt_noise_restored": {
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              },
+              "discrete_equal": {
+                "t": true,
+                "done": true,
+                "y": true,
+                "reason": true,
+                "repeat": true,
+                "intervention": true,
+                "intervention_t": true,
+                "queue_len": true,
+                "history_len": true,
+                "n_actions": true,
+                "inference_calls": true,
+                "retreat_info": true,
+                "rng": true
+              },
+              "failed": [],
+              "pass": true,
+              "prefix_replay_state_error": 0.0,
+              "live_observation": {
+                "state_max_abs": 0.0,
+                "rgb_max_abs": 0.0
+              },
+              "live_observation_pass": true
+            },
+            "after_continue_alt_noise_trace": {
+              "pass": true,
+              "failed": [],
+              "steps": [
+                20,
+                20
+              ],
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              }
+            }
+          },
+          "input_saving_changes_nothing": {
+            "numeric_max_abs": {
+              "env_state": 0.0,
+              "elapsed": 0.0,
+              "history_state": 0.0,
+              "history_rgb": 0.0,
+              "queue": 0.0,
+              "last_action": 0.0,
+              "actions": 0.0,
+              "tcp_history": 0.0
+            },
+            "discrete_equal": {
+              "t": true,
+              "done": true,
+              "y": true,
+              "reason": true,
+              "repeat": true,
+              "intervention": true,
+              "intervention_t": true,
+              "queue_len": true,
+              "history_len": true,
+              "n_actions": true,
+              "inference_calls": true,
+              "retreat_info": true,
+              "rng": true
+            },
+            "failed": [],
+            "pass": true
+          },
+          "pass": true
+        },
+        {
+          "checkpoint": 132,
+          "reached": true,
+          "eligible": [
+            true,
+            true,
+            true
+          ],
+          "trace_steps": 20,
+          "branches": {
+            "retreat_retry": {
+              "executed": true,
+              "success": 0,
+              "steps": 200,
+              "retreat": {
+                "mode": "up",
+                "start_tcp": [
+                  -0.19616876542568207,
+                  0.026507727801799774,
+                  0.074013352394104
+                ],
+                "target_tcp": [
+                  -0.19616876542568207,
+                  0.026507727801799774,
+                  0.124013352394104
+                ],
+                "final_tcp": [
+                  -0.19593985378742218,
+                  0.02652081847190857,
+                  0.11991064250469208
+                ],
+                "commanded_distance_m": 0.05,
+                "achieved_displacement_m": 0.04589786380529404,
+                "target_error_m": 0.004109111867600244,
+                "steps_used": 23,
+                "max_steps": 40,
+                "arrival_tolerance_m": 0.005,
+                "command_saturated_steps": 23,
+                "gripper_command": -0.9895333647727966,
+                "reached": true,
+                "end_reason": "reached"
+              }
+            },
+            "refresh": {
+              "executed": true,
+              "success": 0,
+              "steps": 200,
+              "retreat": null
+            },
+            "continue_alt_noise": {
+              "executed": true,
+              "success": 0,
+              "steps": 200,
+              "policy_noise_repeat_id": 4,
+              "queue_and_intervention_untouched": true,
+              "pass": true
+            }
+          },
+          "checks": {
+            "repeat_restored": {
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              },
+              "discrete_equal": {
+                "t": true,
+                "done": true,
+                "y": true,
+                "reason": true,
+                "repeat": true,
+                "intervention": true,
+                "intervention_t": true,
+                "queue_len": true,
+                "history_len": true,
+                "n_actions": true,
+                "inference_calls": true,
+                "retreat_info": true,
+                "rng": true
+              },
+              "failed": [],
+              "pass": true,
+              "prefix_replay_state_error": 0.0,
+              "live_observation": {
+                "state_max_abs": 0.0,
+                "rgb_max_abs": 0.0
+              },
+              "live_observation_pass": true
+            },
+            "repeat_trace": {
+              "pass": true,
+              "failed": [],
+              "steps": [
+                20,
+                20
+              ],
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              }
+            },
+            "after_retreat_retry_restored": {
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              },
+              "discrete_equal": {
+                "t": true,
+                "done": true,
+                "y": true,
+                "reason": true,
+                "repeat": true,
+                "intervention": true,
+                "intervention_t": true,
+                "queue_len": true,
+                "history_len": true,
+                "n_actions": true,
+                "inference_calls": true,
+                "retreat_info": true,
+                "rng": true
+              },
+              "failed": [],
+              "pass": true,
+              "prefix_replay_state_error": 0.0,
+              "live_observation": {
+                "state_max_abs": 0.0,
+                "rgb_max_abs": 0.0
+              },
+              "live_observation_pass": true
+            },
+            "after_retreat_retry_trace": {
+              "pass": true,
+              "failed": [],
+              "steps": [
+                20,
+                20
+              ],
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              }
+            },
+            "after_refresh_restored": {
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              },
+              "discrete_equal": {
+                "t": true,
+                "done": true,
+                "y": true,
+                "reason": true,
+                "repeat": true,
+                "intervention": true,
+                "intervention_t": true,
+                "queue_len": true,
+                "history_len": true,
+                "n_actions": true,
+                "inference_calls": true,
+                "retreat_info": true,
+                "rng": true
+              },
+              "failed": [],
+              "pass": true,
+              "prefix_replay_state_error": 0.0,
+              "live_observation": {
+                "state_max_abs": 0.0,
+                "rgb_max_abs": 0.0
+              },
+              "live_observation_pass": true
+            },
+            "after_refresh_trace": {
+              "pass": true,
+              "failed": [],
+              "steps": [
+                20,
+                20
+              ],
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              }
+            },
+            "after_continue_alt_noise_restored": {
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              },
+              "discrete_equal": {
+                "t": true,
+                "done": true,
+                "y": true,
+                "reason": true,
+                "repeat": true,
+                "intervention": true,
+                "intervention_t": true,
+                "queue_len": true,
+                "history_len": true,
+                "n_actions": true,
+                "inference_calls": true,
+                "retreat_info": true,
+                "rng": true
+              },
+              "failed": [],
+              "pass": true,
+              "prefix_replay_state_error": 0.0,
+              "live_observation": {
+                "state_max_abs": 0.0,
+                "rgb_max_abs": 0.0
+              },
+              "live_observation_pass": true
+            },
+            "after_continue_alt_noise_trace": {
+              "pass": true,
+              "failed": [],
+              "steps": [
+                20,
+                20
+              ],
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              }
+            }
+          },
+          "input_saving_changes_nothing": {
+            "numeric_max_abs": {
+              "env_state": 0.0,
+              "elapsed": 0.0,
+              "history_state": 0.0,
+              "history_rgb": 0.0,
+              "queue": 0.0,
+              "last_action": 0.0,
+              "actions": 0.0,
+              "tcp_history": 0.0
+            },
+            "discrete_equal": {
+              "t": true,
+              "done": true,
+              "y": true,
+              "reason": true,
+              "repeat": true,
+              "intervention": true,
+              "intervention_t": true,
+              "queue_len": true,
+              "history_len": true,
+              "n_actions": true,
+              "inference_calls": true,
+              "retreat_info": true,
+              "rng": true
+            },
+            "failed": [],
+            "pass": true
+          },
+          "pass": true
+        }
+      ],
+      "reached": 4,
+      "pass": true,
+      "wall_seconds": 128.1639258051291
+    },
+    {
+      "seed": 103,
+      "checkpoints": [
+        {
+          "checkpoint": 12,
+          "reached": true,
+          "eligible": [
+            true,
+            true,
+            true
+          ],
+          "trace_steps": 20,
+          "branches": {
+            "retreat_retry": {
+              "executed": true,
+              "success": 0,
+              "steps": 200,
+              "retreat": {
+                "mode": "up",
+                "start_tcp": [
+                  0.017485804855823517,
+                  -0.03706098720431328,
+                  0.15332883596420288
+                ],
+                "target_tcp": [
+                  0.017485804855823517,
+                  -0.03706098720431328,
+                  0.20332883596420287
+                ],
+                "final_tcp": [
+                  0.017425034195184708,
+                  -0.0374285988509655,
+                  0.19867368042469025
+                ],
+                "commanded_distance_m": 0.04999999999999999,
+                "achieved_displacement_m": 0.045346375554800034,
+                "target_error_m": 0.0046700433074013245,
+                "steps_used": 25,
+                "max_steps": 40,
+                "arrival_tolerance_m": 0.005,
+                "command_saturated_steps": 25,
+                "gripper_command": 1.0,
+                "reached": true,
+                "end_reason": "reached"
+              }
+            },
+            "refresh": {
+              "executed": true,
+              "success": 0,
+              "steps": 200,
+              "retreat": null
+            },
+            "continue_alt_noise": {
+              "executed": true,
+              "success": 0,
+              "steps": 200,
+              "policy_noise_repeat_id": 4,
+              "queue_and_intervention_untouched": true,
+              "pass": true
+            }
+          },
+          "checks": {
+            "repeat_restored": {
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              },
+              "discrete_equal": {
+                "t": true,
+                "done": true,
+                "y": true,
+                "reason": true,
+                "repeat": true,
+                "intervention": true,
+                "intervention_t": true,
+                "queue_len": true,
+                "history_len": true,
+                "n_actions": true,
+                "inference_calls": true,
+                "retreat_info": true,
+                "rng": true
+              },
+              "failed": [],
+              "pass": true,
+              "prefix_replay_state_error": 0.0,
+              "live_observation": {
+                "state_max_abs": 0.0,
+                "rgb_max_abs": 0.0
+              },
+              "live_observation_pass": true
+            },
+            "repeat_trace": {
+              "pass": true,
+              "failed": [],
+              "steps": [
+                20,
+                20
+              ],
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              }
+            },
+            "after_retreat_retry_restored": {
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              },
+              "discrete_equal": {
+                "t": true,
+                "done": true,
+                "y": true,
+                "reason": true,
+                "repeat": true,
+                "intervention": true,
+                "intervention_t": true,
+                "queue_len": true,
+                "history_len": true,
+                "n_actions": true,
+                "inference_calls": true,
+                "retreat_info": true,
+                "rng": true
+              },
+              "failed": [],
+              "pass": true,
+              "prefix_replay_state_error": 0.0,
+              "live_observation": {
+                "state_max_abs": 0.0,
+                "rgb_max_abs": 0.0
+              },
+              "live_observation_pass": true
+            },
+            "after_retreat_retry_trace": {
+              "pass": true,
+              "failed": [],
+              "steps": [
+                20,
+                20
+              ],
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              }
+            },
+            "after_refresh_restored": {
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              },
+              "discrete_equal": {
+                "t": true,
+                "done": true,
+                "y": true,
+                "reason": true,
+                "repeat": true,
+                "intervention": true,
+                "intervention_t": true,
+                "queue_len": true,
+                "history_len": true,
+                "n_actions": true,
+                "inference_calls": true,
+                "retreat_info": true,
+                "rng": true
+              },
+              "failed": [],
+              "pass": true,
+              "prefix_replay_state_error": 0.0,
+              "live_observation": {
+                "state_max_abs": 0.0,
+                "rgb_max_abs": 0.0
+              },
+              "live_observation_pass": true
+            },
+            "after_refresh_trace": {
+              "pass": true,
+              "failed": [],
+              "steps": [
+                20,
+                20
+              ],
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              }
+            },
+            "after_continue_alt_noise_restored": {
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              },
+              "discrete_equal": {
+                "t": true,
+                "done": true,
+                "y": true,
+                "reason": true,
+                "repeat": true,
+                "intervention": true,
+                "intervention_t": true,
+                "queue_len": true,
+                "history_len": true,
+                "n_actions": true,
+                "inference_calls": true,
+                "retreat_info": true,
+                "rng": true
+              },
+              "failed": [],
+              "pass": true,
+              "prefix_replay_state_error": 0.0,
+              "live_observation": {
+                "state_max_abs": 0.0,
+                "rgb_max_abs": 0.0
+              },
+              "live_observation_pass": true
+            },
+            "after_continue_alt_noise_trace": {
+              "pass": true,
+              "failed": [],
+              "steps": [
+                20,
+                20
+              ],
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              }
+            }
+          },
+          "input_saving_changes_nothing": {
+            "numeric_max_abs": {
+              "env_state": 0.0,
+              "elapsed": 0.0,
+              "history_state": 0.0,
+              "history_rgb": 0.0,
+              "queue": 0.0,
+              "last_action": 0.0,
+              "actions": 0.0,
+              "tcp_history": 0.0
+            },
+            "discrete_equal": {
+              "t": true,
+              "done": true,
+              "y": true,
+              "reason": true,
+              "repeat": true,
+              "intervention": true,
+              "intervention_t": true,
+              "queue_len": true,
+              "history_len": true,
+              "n_actions": true,
+              "inference_calls": true,
+              "retreat_info": true,
+              "rng": true
+            },
+            "failed": [],
+            "pass": true
+          },
+          "pass": true
+        },
+        {
+          "checkpoint": 52,
+          "reached": true,
+          "eligible": [
+            true,
+            true,
+            true
+          ],
+          "trace_steps": 20,
+          "branches": {
+            "retreat_retry": {
+              "executed": true,
+              "success": 0,
+              "steps": 200,
+              "retreat": {
+                "mode": "up",
+                "start_tcp": [
+                  0.07706786692142487,
+                  -0.1415780484676361,
+                  0.051010772585868835
+                ],
+                "target_tcp": [
+                  0.07706786692142487,
+                  -0.1415780484676361,
+                  0.10101077258586884
+                ],
+                "final_tcp": [
+                  0.0771053284406662,
+                  -0.14158141613006592,
+                  0.09661930054426193
+                ],
+                "commanded_distance_m": 0.05,
+                "achieved_displacement_m": 0.04560854285955429,
+                "target_error_m": 0.004391633112953453,
+                "steps_used": 24,
+                "max_steps": 40,
+                "arrival_tolerance_m": 0.005,
+                "command_saturated_steps": 24,
+                "gripper_command": -0.9961485862731934,
+                "reached": true,
+                "end_reason": "reached"
+              }
+            },
+            "refresh": {
+              "executed": true,
+              "success": 0,
+              "steps": 200,
+              "retreat": null
+            },
+            "continue_alt_noise": {
+              "executed": true,
+              "success": 0,
+              "steps": 200,
+              "policy_noise_repeat_id": 4,
+              "queue_and_intervention_untouched": true,
+              "pass": true
+            }
+          },
+          "checks": {
+            "repeat_restored": {
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              },
+              "discrete_equal": {
+                "t": true,
+                "done": true,
+                "y": true,
+                "reason": true,
+                "repeat": true,
+                "intervention": true,
+                "intervention_t": true,
+                "queue_len": true,
+                "history_len": true,
+                "n_actions": true,
+                "inference_calls": true,
+                "retreat_info": true,
+                "rng": true
+              },
+              "failed": [],
+              "pass": true,
+              "prefix_replay_state_error": 0.0,
+              "live_observation": {
+                "state_max_abs": 0.0,
+                "rgb_max_abs": 0.0
+              },
+              "live_observation_pass": true
+            },
+            "repeat_trace": {
+              "pass": true,
+              "failed": [],
+              "steps": [
+                20,
+                20
+              ],
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              }
+            },
+            "after_retreat_retry_restored": {
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              },
+              "discrete_equal": {
+                "t": true,
+                "done": true,
+                "y": true,
+                "reason": true,
+                "repeat": true,
+                "intervention": true,
+                "intervention_t": true,
+                "queue_len": true,
+                "history_len": true,
+                "n_actions": true,
+                "inference_calls": true,
+                "retreat_info": true,
+                "rng": true
+              },
+              "failed": [],
+              "pass": true,
+              "prefix_replay_state_error": 0.0,
+              "live_observation": {
+                "state_max_abs": 0.0,
+                "rgb_max_abs": 0.0
+              },
+              "live_observation_pass": true
+            },
+            "after_retreat_retry_trace": {
+              "pass": true,
+              "failed": [],
+              "steps": [
+                20,
+                20
+              ],
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              }
+            },
+            "after_refresh_restored": {
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              },
+              "discrete_equal": {
+                "t": true,
+                "done": true,
+                "y": true,
+                "reason": true,
+                "repeat": true,
+                "intervention": true,
+                "intervention_t": true,
+                "queue_len": true,
+                "history_len": true,
+                "n_actions": true,
+                "inference_calls": true,
+                "retreat_info": true,
+                "rng": true
+              },
+              "failed": [],
+              "pass": true,
+              "prefix_replay_state_error": 0.0,
+              "live_observation": {
+                "state_max_abs": 0.0,
+                "rgb_max_abs": 0.0
+              },
+              "live_observation_pass": true
+            },
+            "after_refresh_trace": {
+              "pass": true,
+              "failed": [],
+              "steps": [
+                20,
+                20
+              ],
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              }
+            },
+            "after_continue_alt_noise_restored": {
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              },
+              "discrete_equal": {
+                "t": true,
+                "done": true,
+                "y": true,
+                "reason": true,
+                "repeat": true,
+                "intervention": true,
+                "intervention_t": true,
+                "queue_len": true,
+                "history_len": true,
+                "n_actions": true,
+                "inference_calls": true,
+                "retreat_info": true,
+                "rng": true
+              },
+              "failed": [],
+              "pass": true,
+              "prefix_replay_state_error": 0.0,
+              "live_observation": {
+                "state_max_abs": 0.0,
+                "rgb_max_abs": 0.0
+              },
+              "live_observation_pass": true
+            },
+            "after_continue_alt_noise_trace": {
+              "pass": true,
+              "failed": [],
+              "steps": [
+                20,
+                20
+              ],
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              }
+            }
+          },
+          "input_saving_changes_nothing": {
+            "numeric_max_abs": {
+              "env_state": 0.0,
+              "elapsed": 0.0,
+              "history_state": 0.0,
+              "history_rgb": 0.0,
+              "queue": 0.0,
+              "last_action": 0.0,
+              "actions": 0.0,
+              "tcp_history": 0.0
+            },
+            "discrete_equal": {
+              "t": true,
+              "done": true,
+              "y": true,
+              "reason": true,
+              "repeat": true,
+              "intervention": true,
+              "intervention_t": true,
+              "queue_len": true,
+              "history_len": true,
+              "n_actions": true,
+              "inference_calls": true,
+              "retreat_info": true,
+              "rng": true
+            },
+            "failed": [],
+            "pass": true
+          },
+          "pass": true
+        },
+        {
+          "checkpoint": 92,
+          "reached": true,
+          "eligible": [
+            true,
+            true,
+            true
+          ],
+          "trace_steps": 20,
+          "branches": {
+            "retreat_retry": {
+              "executed": true,
+              "success": 0,
+              "steps": 200,
+              "retreat": {
+                "mode": "up",
+                "start_tcp": [
+                  0.13183726370334625,
+                  -0.13713842630386353,
+                  0.06478024274110794
+                ],
+                "target_tcp": [
+                  0.13183726370334625,
+                  -0.13713842630386353,
+                  0.11478024274110794
+                ],
+                "final_tcp": [
+                  0.13185656070709229,
+                  -0.13709190487861633,
+                  0.10982000082731247
+                ],
+                "commanded_distance_m": 0.05,
+                "achieved_displacement_m": 0.045039787888526917,
+                "target_error_m": 0.004960497602129649,
+                "steps_used": 24,
+                "max_steps": 40,
+                "arrival_tolerance_m": 0.005,
+                "command_saturated_steps": 24,
+                "gripper_command": 0.9996131658554077,
+                "reached": true,
+                "end_reason": "reached"
+              }
+            },
+            "refresh": {
+              "executed": true,
+              "success": 0,
+              "steps": 200,
+              "retreat": null
+            },
+            "continue_alt_noise": {
+              "executed": true,
+              "success": 0,
+              "steps": 200,
+              "policy_noise_repeat_id": 4,
+              "queue_and_intervention_untouched": true,
+              "pass": true
+            }
+          },
+          "checks": {
+            "repeat_restored": {
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              },
+              "discrete_equal": {
+                "t": true,
+                "done": true,
+                "y": true,
+                "reason": true,
+                "repeat": true,
+                "intervention": true,
+                "intervention_t": true,
+                "queue_len": true,
+                "history_len": true,
+                "n_actions": true,
+                "inference_calls": true,
+                "retreat_info": true,
+                "rng": true
+              },
+              "failed": [],
+              "pass": true,
+              "prefix_replay_state_error": 0.0,
+              "live_observation": {
+                "state_max_abs": 0.0,
+                "rgb_max_abs": 0.0
+              },
+              "live_observation_pass": true
+            },
+            "repeat_trace": {
+              "pass": true,
+              "failed": [],
+              "steps": [
+                20,
+                20
+              ],
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              }
+            },
+            "after_retreat_retry_restored": {
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              },
+              "discrete_equal": {
+                "t": true,
+                "done": true,
+                "y": true,
+                "reason": true,
+                "repeat": true,
+                "intervention": true,
+                "intervention_t": true,
+                "queue_len": true,
+                "history_len": true,
+                "n_actions": true,
+                "inference_calls": true,
+                "retreat_info": true,
+                "rng": true
+              },
+              "failed": [],
+              "pass": true,
+              "prefix_replay_state_error": 0.0,
+              "live_observation": {
+                "state_max_abs": 0.0,
+                "rgb_max_abs": 0.0
+              },
+              "live_observation_pass": true
+            },
+            "after_retreat_retry_trace": {
+              "pass": true,
+              "failed": [],
+              "steps": [
+                20,
+                20
+              ],
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              }
+            },
+            "after_refresh_restored": {
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              },
+              "discrete_equal": {
+                "t": true,
+                "done": true,
+                "y": true,
+                "reason": true,
+                "repeat": true,
+                "intervention": true,
+                "intervention_t": true,
+                "queue_len": true,
+                "history_len": true,
+                "n_actions": true,
+                "inference_calls": true,
+                "retreat_info": true,
+                "rng": true
+              },
+              "failed": [],
+              "pass": true,
+              "prefix_replay_state_error": 0.0,
+              "live_observation": {
+                "state_max_abs": 0.0,
+                "rgb_max_abs": 0.0
+              },
+              "live_observation_pass": true
+            },
+            "after_refresh_trace": {
+              "pass": true,
+              "failed": [],
+              "steps": [
+                20,
+                20
+              ],
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              }
+            },
+            "after_continue_alt_noise_restored": {
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              },
+              "discrete_equal": {
+                "t": true,
+                "done": true,
+                "y": true,
+                "reason": true,
+                "repeat": true,
+                "intervention": true,
+                "intervention_t": true,
+                "queue_len": true,
+                "history_len": true,
+                "n_actions": true,
+                "inference_calls": true,
+                "retreat_info": true,
+                "rng": true
+              },
+              "failed": [],
+              "pass": true,
+              "prefix_replay_state_error": 0.0,
+              "live_observation": {
+                "state_max_abs": 0.0,
+                "rgb_max_abs": 0.0
+              },
+              "live_observation_pass": true
+            },
+            "after_continue_alt_noise_trace": {
+              "pass": true,
+              "failed": [],
+              "steps": [
+                20,
+                20
+              ],
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              }
+            }
+          },
+          "input_saving_changes_nothing": {
+            "numeric_max_abs": {
+              "env_state": 0.0,
+              "elapsed": 0.0,
+              "history_state": 0.0,
+              "history_rgb": 0.0,
+              "queue": 0.0,
+              "last_action": 0.0,
+              "actions": 0.0,
+              "tcp_history": 0.0
+            },
+            "discrete_equal": {
+              "t": true,
+              "done": true,
+              "y": true,
+              "reason": true,
+              "repeat": true,
+              "intervention": true,
+              "intervention_t": true,
+              "queue_len": true,
+              "history_len": true,
+              "n_actions": true,
+              "inference_calls": true,
+              "retreat_info": true,
+              "rng": true
+            },
+            "failed": [],
+            "pass": true
+          },
+          "pass": true
+        },
+        {
+          "checkpoint": 132,
+          "reached": true,
+          "eligible": [
+            true,
+            true,
+            true
+          ],
+          "trace_steps": 20,
+          "branches": {
+            "retreat_retry": {
+              "executed": true,
+              "success": 0,
+              "steps": 200,
+              "retreat": {
+                "mode": "up",
+                "start_tcp": [
+                  0.1539301872253418,
+                  -0.13100916147232056,
+                  0.05260274559259415
+                ],
+                "target_tcp": [
+                  0.1539301872253418,
+                  -0.13100916147232056,
+                  0.10260274559259415
+                ],
+                "final_tcp": [
+                  0.15398499369621277,
+                  -0.1310133934020996,
+                  0.09855711460113525
+                ],
+                "commanded_distance_m": 0.05,
+                "achieved_displacement_m": 0.04595440253615379,
+                "target_error_m": 0.004046004421343565,
+                "steps_used": 24,
+                "max_steps": 40,
+                "arrival_tolerance_m": 0.005,
+                "command_saturated_steps": 24,
+                "gripper_command": 1.0,
+                "reached": true,
+                "end_reason": "reached"
+              }
+            },
+            "refresh": {
+              "executed": true,
+              "success": 0,
+              "steps": 200,
+              "retreat": null
+            },
+            "continue_alt_noise": {
+              "executed": true,
+              "success": 0,
+              "steps": 200,
+              "policy_noise_repeat_id": 4,
+              "queue_and_intervention_untouched": true,
+              "pass": true
+            }
+          },
+          "checks": {
+            "repeat_restored": {
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              },
+              "discrete_equal": {
+                "t": true,
+                "done": true,
+                "y": true,
+                "reason": true,
+                "repeat": true,
+                "intervention": true,
+                "intervention_t": true,
+                "queue_len": true,
+                "history_len": true,
+                "n_actions": true,
+                "inference_calls": true,
+                "retreat_info": true,
+                "rng": true
+              },
+              "failed": [],
+              "pass": true,
+              "prefix_replay_state_error": 0.0,
+              "live_observation": {
+                "state_max_abs": 0.0,
+                "rgb_max_abs": 0.0
+              },
+              "live_observation_pass": true
+            },
+            "repeat_trace": {
+              "pass": true,
+              "failed": [],
+              "steps": [
+                20,
+                20
+              ],
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              }
+            },
+            "after_retreat_retry_restored": {
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              },
+              "discrete_equal": {
+                "t": true,
+                "done": true,
+                "y": true,
+                "reason": true,
+                "repeat": true,
+                "intervention": true,
+                "intervention_t": true,
+                "queue_len": true,
+                "history_len": true,
+                "n_actions": true,
+                "inference_calls": true,
+                "retreat_info": true,
+                "rng": true
+              },
+              "failed": [],
+              "pass": true,
+              "prefix_replay_state_error": 0.0,
+              "live_observation": {
+                "state_max_abs": 0.0,
+                "rgb_max_abs": 0.0
+              },
+              "live_observation_pass": true
+            },
+            "after_retreat_retry_trace": {
+              "pass": true,
+              "failed": [],
+              "steps": [
+                20,
+                20
+              ],
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              }
+            },
+            "after_refresh_restored": {
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              },
+              "discrete_equal": {
+                "t": true,
+                "done": true,
+                "y": true,
+                "reason": true,
+                "repeat": true,
+                "intervention": true,
+                "intervention_t": true,
+                "queue_len": true,
+                "history_len": true,
+                "n_actions": true,
+                "inference_calls": true,
+                "retreat_info": true,
+                "rng": true
+              },
+              "failed": [],
+              "pass": true,
+              "prefix_replay_state_error": 0.0,
+              "live_observation": {
+                "state_max_abs": 0.0,
+                "rgb_max_abs": 0.0
+              },
+              "live_observation_pass": true
+            },
+            "after_refresh_trace": {
+              "pass": true,
+              "failed": [],
+              "steps": [
+                20,
+                20
+              ],
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              }
+            },
+            "after_continue_alt_noise_restored": {
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              },
+              "discrete_equal": {
+                "t": true,
+                "done": true,
+                "y": true,
+                "reason": true,
+                "repeat": true,
+                "intervention": true,
+                "intervention_t": true,
+                "queue_len": true,
+                "history_len": true,
+                "n_actions": true,
+                "inference_calls": true,
+                "retreat_info": true,
+                "rng": true
+              },
+              "failed": [],
+              "pass": true,
+              "prefix_replay_state_error": 0.0,
+              "live_observation": {
+                "state_max_abs": 0.0,
+                "rgb_max_abs": 0.0
+              },
+              "live_observation_pass": true
+            },
+            "after_continue_alt_noise_trace": {
+              "pass": true,
+              "failed": [],
+              "steps": [
+                20,
+                20
+              ],
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              }
+            }
+          },
+          "input_saving_changes_nothing": {
+            "numeric_max_abs": {
+              "env_state": 0.0,
+              "elapsed": 0.0,
+              "history_state": 0.0,
+              "history_rgb": 0.0,
+              "queue": 0.0,
+              "last_action": 0.0,
+              "actions": 0.0,
+              "tcp_history": 0.0
+            },
+            "discrete_equal": {
+              "t": true,
+              "done": true,
+              "y": true,
+              "reason": true,
+              "repeat": true,
+              "intervention": true,
+              "intervention_t": true,
+              "queue_len": true,
+              "history_len": true,
+              "n_actions": true,
+              "inference_calls": true,
+              "retreat_info": true,
+              "rng": true
+            },
+            "failed": [],
+            "pass": true
+          },
+          "pass": true
+        }
+      ],
+      "reached": 4,
+      "pass": true,
+      "wall_seconds": 130.27626942284405
+    },
+    {
+      "seed": 104,
+      "checkpoints": [
+        {
+          "checkpoint": 12,
+          "reached": true,
+          "eligible": [
+            true,
+            true,
+            true
+          ],
+          "trace_steps": 20,
+          "branches": {
+            "retreat_retry": {
+              "executed": true,
+              "success": 0,
+              "steps": 200,
+              "retreat": {
+                "mode": "up",
+                "start_tcp": [
+                  0.021372389048337936,
+                  0.0023139286786317825,
+                  0.1251104176044464
+                ],
+                "target_tcp": [
+                  0.021372389048337936,
+                  0.0023139286786317825,
+                  0.1751104176044464
+                ],
+                "final_tcp": [
+                  0.021205078810453415,
+                  0.0024366192519664764,
+                  0.17102134227752686
+                ],
+                "commanded_distance_m": 0.04999999999999999,
+                "achieved_displacement_m": 0.04591139405965805,
+                "target_error_m": 0.004094335443232315,
+                "steps_used": 27,
+                "max_steps": 40,
+                "arrival_tolerance_m": 0.005,
+                "command_saturated_steps": 27,
+                "gripper_command": 0.9997158050537109,
+                "reached": true,
+                "end_reason": "reached"
+              }
+            },
+            "refresh": {
+              "executed": true,
+              "success": 0,
+              "steps": 200,
+              "retreat": null
+            },
+            "continue_alt_noise": {
+              "executed": true,
+              "success": 0,
+              "steps": 200,
+              "policy_noise_repeat_id": 4,
+              "queue_and_intervention_untouched": true,
+              "pass": true
+            }
+          },
+          "checks": {
+            "repeat_restored": {
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              },
+              "discrete_equal": {
+                "t": true,
+                "done": true,
+                "y": true,
+                "reason": true,
+                "repeat": true,
+                "intervention": true,
+                "intervention_t": true,
+                "queue_len": true,
+                "history_len": true,
+                "n_actions": true,
+                "inference_calls": true,
+                "retreat_info": true,
+                "rng": true
+              },
+              "failed": [],
+              "pass": true,
+              "prefix_replay_state_error": 0.0,
+              "live_observation": {
+                "state_max_abs": 0.0,
+                "rgb_max_abs": 0.0
+              },
+              "live_observation_pass": true
+            },
+            "repeat_trace": {
+              "pass": true,
+              "failed": [],
+              "steps": [
+                20,
+                20
+              ],
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              }
+            },
+            "after_retreat_retry_restored": {
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              },
+              "discrete_equal": {
+                "t": true,
+                "done": true,
+                "y": true,
+                "reason": true,
+                "repeat": true,
+                "intervention": true,
+                "intervention_t": true,
+                "queue_len": true,
+                "history_len": true,
+                "n_actions": true,
+                "inference_calls": true,
+                "retreat_info": true,
+                "rng": true
+              },
+              "failed": [],
+              "pass": true,
+              "prefix_replay_state_error": 0.0,
+              "live_observation": {
+                "state_max_abs": 0.0,
+                "rgb_max_abs": 0.0
+              },
+              "live_observation_pass": true
+            },
+            "after_retreat_retry_trace": {
+              "pass": true,
+              "failed": [],
+              "steps": [
+                20,
+                20
+              ],
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              }
+            },
+            "after_refresh_restored": {
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              },
+              "discrete_equal": {
+                "t": true,
+                "done": true,
+                "y": true,
+                "reason": true,
+                "repeat": true,
+                "intervention": true,
+                "intervention_t": true,
+                "queue_len": true,
+                "history_len": true,
+                "n_actions": true,
+                "inference_calls": true,
+                "retreat_info": true,
+                "rng": true
+              },
+              "failed": [],
+              "pass": true,
+              "prefix_replay_state_error": 0.0,
+              "live_observation": {
+                "state_max_abs": 0.0,
+                "rgb_max_abs": 0.0
+              },
+              "live_observation_pass": true
+            },
+            "after_refresh_trace": {
+              "pass": true,
+              "failed": [],
+              "steps": [
+                20,
+                20
+              ],
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              }
+            },
+            "after_continue_alt_noise_restored": {
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              },
+              "discrete_equal": {
+                "t": true,
+                "done": true,
+                "y": true,
+                "reason": true,
+                "repeat": true,
+                "intervention": true,
+                "intervention_t": true,
+                "queue_len": true,
+                "history_len": true,
+                "n_actions": true,
+                "inference_calls": true,
+                "retreat_info": true,
+                "rng": true
+              },
+              "failed": [],
+              "pass": true,
+              "prefix_replay_state_error": 0.0,
+              "live_observation": {
+                "state_max_abs": 0.0,
+                "rgb_max_abs": 0.0
+              },
+              "live_observation_pass": true
+            },
+            "after_continue_alt_noise_trace": {
+              "pass": true,
+              "failed": [],
+              "steps": [
+                20,
+                20
+              ],
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              }
+            }
+          },
+          "input_saving_changes_nothing": {
+            "numeric_max_abs": {
+              "env_state": 0.0,
+              "elapsed": 0.0,
+              "history_state": 0.0,
+              "history_rgb": 0.0,
+              "queue": 0.0,
+              "last_action": 0.0,
+              "actions": 0.0,
+              "tcp_history": 0.0
+            },
+            "discrete_equal": {
+              "t": true,
+              "done": true,
+              "y": true,
+              "reason": true,
+              "repeat": true,
+              "intervention": true,
+              "intervention_t": true,
+              "queue_len": true,
+              "history_len": true,
+              "n_actions": true,
+              "inference_calls": true,
+              "retreat_info": true,
+              "rng": true
+            },
+            "failed": [],
+            "pass": true
+          },
+          "pass": true
+        },
+        {
+          "checkpoint": 52,
+          "reached": true,
+          "eligible": [
+            true,
+            true,
+            true
+          ],
+          "trace_steps": 20,
+          "branches": {
+            "retreat_retry": {
+              "executed": true,
+              "success": 0,
+              "steps": 200,
+              "retreat": {
+                "mode": "up",
+                "start_tcp": [
+                  0.07248412072658539,
+                  0.01868477277457714,
+                  0.06017477065324783
+                ],
+                "target_tcp": [
+                  0.07248412072658539,
+                  0.01868477277457714,
+                  0.11017477065324784
+                ],
+                "final_tcp": [
+                  0.07260953634977341,
+                  0.01868123561143875,
+                  0.10533937811851501
+                ],
+                "commanded_distance_m": 0.05,
+                "achieved_displacement_m": 0.04516478255391121,
+                "target_error_m": 0.004837020007712662,
+                "steps_used": 23,
+                "max_steps": 40,
+                "arrival_tolerance_m": 0.005,
+                "command_saturated_steps": 23,
+                "gripper_command": -0.9971153140068054,
+                "reached": true,
+                "end_reason": "reached"
+              }
+            },
+            "refresh": {
+              "executed": true,
+              "success": 0,
+              "steps": 200,
+              "retreat": null
+            },
+            "continue_alt_noise": {
+              "executed": true,
+              "success": 0,
+              "steps": 200,
+              "policy_noise_repeat_id": 4,
+              "queue_and_intervention_untouched": true,
+              "pass": true
+            }
+          },
+          "checks": {
+            "repeat_restored": {
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              },
+              "discrete_equal": {
+                "t": true,
+                "done": true,
+                "y": true,
+                "reason": true,
+                "repeat": true,
+                "intervention": true,
+                "intervention_t": true,
+                "queue_len": true,
+                "history_len": true,
+                "n_actions": true,
+                "inference_calls": true,
+                "retreat_info": true,
+                "rng": true
+              },
+              "failed": [],
+              "pass": true,
+              "prefix_replay_state_error": 0.0,
+              "live_observation": {
+                "state_max_abs": 0.0,
+                "rgb_max_abs": 0.0
+              },
+              "live_observation_pass": true
+            },
+            "repeat_trace": {
+              "pass": true,
+              "failed": [],
+              "steps": [
+                20,
+                20
+              ],
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              }
+            },
+            "after_retreat_retry_restored": {
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              },
+              "discrete_equal": {
+                "t": true,
+                "done": true,
+                "y": true,
+                "reason": true,
+                "repeat": true,
+                "intervention": true,
+                "intervention_t": true,
+                "queue_len": true,
+                "history_len": true,
+                "n_actions": true,
+                "inference_calls": true,
+                "retreat_info": true,
+                "rng": true
+              },
+              "failed": [],
+              "pass": true,
+              "prefix_replay_state_error": 0.0,
+              "live_observation": {
+                "state_max_abs": 0.0,
+                "rgb_max_abs": 0.0
+              },
+              "live_observation_pass": true
+            },
+            "after_retreat_retry_trace": {
+              "pass": true,
+              "failed": [],
+              "steps": [
+                20,
+                20
+              ],
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              }
+            },
+            "after_refresh_restored": {
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              },
+              "discrete_equal": {
+                "t": true,
+                "done": true,
+                "y": true,
+                "reason": true,
+                "repeat": true,
+                "intervention": true,
+                "intervention_t": true,
+                "queue_len": true,
+                "history_len": true,
+                "n_actions": true,
+                "inference_calls": true,
+                "retreat_info": true,
+                "rng": true
+              },
+              "failed": [],
+              "pass": true,
+              "prefix_replay_state_error": 0.0,
+              "live_observation": {
+                "state_max_abs": 0.0,
+                "rgb_max_abs": 0.0
+              },
+              "live_observation_pass": true
+            },
+            "after_refresh_trace": {
+              "pass": true,
+              "failed": [],
+              "steps": [
+                20,
+                20
+              ],
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              }
+            },
+            "after_continue_alt_noise_restored": {
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              },
+              "discrete_equal": {
+                "t": true,
+                "done": true,
+                "y": true,
+                "reason": true,
+                "repeat": true,
+                "intervention": true,
+                "intervention_t": true,
+                "queue_len": true,
+                "history_len": true,
+                "n_actions": true,
+                "inference_calls": true,
+                "retreat_info": true,
+                "rng": true
+              },
+              "failed": [],
+              "pass": true,
+              "prefix_replay_state_error": 0.0,
+              "live_observation": {
+                "state_max_abs": 0.0,
+                "rgb_max_abs": 0.0
+              },
+              "live_observation_pass": true
+            },
+            "after_continue_alt_noise_trace": {
+              "pass": true,
+              "failed": [],
+              "steps": [
+                20,
+                20
+              ],
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              }
+            }
+          },
+          "input_saving_changes_nothing": {
+            "numeric_max_abs": {
+              "env_state": 0.0,
+              "elapsed": 0.0,
+              "history_state": 0.0,
+              "history_rgb": 0.0,
+              "queue": 0.0,
+              "last_action": 0.0,
+              "actions": 0.0,
+              "tcp_history": 0.0
+            },
+            "discrete_equal": {
+              "t": true,
+              "done": true,
+              "y": true,
+              "reason": true,
+              "repeat": true,
+              "intervention": true,
+              "intervention_t": true,
+              "queue_len": true,
+              "history_len": true,
+              "n_actions": true,
+              "inference_calls": true,
+              "retreat_info": true,
+              "rng": true
+            },
+            "failed": [],
+            "pass": true
+          },
+          "pass": true
+        },
+        {
+          "checkpoint": 92,
+          "reached": true,
+          "eligible": [
+            true,
+            true,
+            true
+          ],
+          "trace_steps": 20,
+          "branches": {
+            "retreat_retry": {
+              "executed": true,
+              "success": 0,
+              "steps": 200,
+              "retreat": {
+                "mode": "up",
+                "start_tcp": [
+                  0.06710085272789001,
+                  0.021021096035838127,
+                  0.06304578483104706
+                ],
+                "target_tcp": [
+                  0.06710085272789001,
+                  0.021021096035838127,
+                  0.11304578483104706
+                ],
+                "final_tcp": [
+                  0.06713760644197464,
+                  0.021017344668507576,
+                  0.1086791455745697
+                ],
+                "commanded_distance_m": 0.05,
+                "achieved_displacement_m": 0.04563337564468384,
+                "target_error_m": 0.0043667955418664845,
+                "steps_used": 24,
+                "max_steps": 40,
+                "arrival_tolerance_m": 0.005,
+                "command_saturated_steps": 24,
+                "gripper_command": 0.997999906539917,
+                "reached": true,
+                "end_reason": "reached"
+              }
+            },
+            "refresh": {
+              "executed": true,
+              "success": 1,
+              "steps": 171,
+              "retreat": null
+            },
+            "continue_alt_noise": {
+              "executed": true,
+              "success": 0,
+              "steps": 200,
+              "policy_noise_repeat_id": 4,
+              "queue_and_intervention_untouched": true,
+              "pass": true
+            }
+          },
+          "checks": {
+            "repeat_restored": {
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              },
+              "discrete_equal": {
+                "t": true,
+                "done": true,
+                "y": true,
+                "reason": true,
+                "repeat": true,
+                "intervention": true,
+                "intervention_t": true,
+                "queue_len": true,
+                "history_len": true,
+                "n_actions": true,
+                "inference_calls": true,
+                "retreat_info": true,
+                "rng": true
+              },
+              "failed": [],
+              "pass": true,
+              "prefix_replay_state_error": 0.0,
+              "live_observation": {
+                "state_max_abs": 0.0,
+                "rgb_max_abs": 0.0
+              },
+              "live_observation_pass": true
+            },
+            "repeat_trace": {
+              "pass": true,
+              "failed": [],
+              "steps": [
+                20,
+                20
+              ],
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              }
+            },
+            "after_retreat_retry_restored": {
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              },
+              "discrete_equal": {
+                "t": true,
+                "done": true,
+                "y": true,
+                "reason": true,
+                "repeat": true,
+                "intervention": true,
+                "intervention_t": true,
+                "queue_len": true,
+                "history_len": true,
+                "n_actions": true,
+                "inference_calls": true,
+                "retreat_info": true,
+                "rng": true
+              },
+              "failed": [],
+              "pass": true,
+              "prefix_replay_state_error": 0.0,
+              "live_observation": {
+                "state_max_abs": 0.0,
+                "rgb_max_abs": 0.0
+              },
+              "live_observation_pass": true
+            },
+            "after_retreat_retry_trace": {
+              "pass": true,
+              "failed": [],
+              "steps": [
+                20,
+                20
+              ],
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              }
+            },
+            "after_refresh_restored": {
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              },
+              "discrete_equal": {
+                "t": true,
+                "done": true,
+                "y": true,
+                "reason": true,
+                "repeat": true,
+                "intervention": true,
+                "intervention_t": true,
+                "queue_len": true,
+                "history_len": true,
+                "n_actions": true,
+                "inference_calls": true,
+                "retreat_info": true,
+                "rng": true
+              },
+              "failed": [],
+              "pass": true,
+              "prefix_replay_state_error": 0.0,
+              "live_observation": {
+                "state_max_abs": 0.0,
+                "rgb_max_abs": 0.0
+              },
+              "live_observation_pass": true
+            },
+            "after_refresh_trace": {
+              "pass": true,
+              "failed": [],
+              "steps": [
+                20,
+                20
+              ],
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              }
+            },
+            "after_continue_alt_noise_restored": {
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              },
+              "discrete_equal": {
+                "t": true,
+                "done": true,
+                "y": true,
+                "reason": true,
+                "repeat": true,
+                "intervention": true,
+                "intervention_t": true,
+                "queue_len": true,
+                "history_len": true,
+                "n_actions": true,
+                "inference_calls": true,
+                "retreat_info": true,
+                "rng": true
+              },
+              "failed": [],
+              "pass": true,
+              "prefix_replay_state_error": 0.0,
+              "live_observation": {
+                "state_max_abs": 0.0,
+                "rgb_max_abs": 0.0
+              },
+              "live_observation_pass": true
+            },
+            "after_continue_alt_noise_trace": {
+              "pass": true,
+              "failed": [],
+              "steps": [
+                20,
+                20
+              ],
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              }
+            }
+          },
+          "input_saving_changes_nothing": {
+            "numeric_max_abs": {
+              "env_state": 0.0,
+              "elapsed": 0.0,
+              "history_state": 0.0,
+              "history_rgb": 0.0,
+              "queue": 0.0,
+              "last_action": 0.0,
+              "actions": 0.0,
+              "tcp_history": 0.0
+            },
+            "discrete_equal": {
+              "t": true,
+              "done": true,
+              "y": true,
+              "reason": true,
+              "repeat": true,
+              "intervention": true,
+              "intervention_t": true,
+              "queue_len": true,
+              "history_len": true,
+              "n_actions": true,
+              "inference_calls": true,
+              "retreat_info": true,
+              "rng": true
+            },
+            "failed": [],
+            "pass": true
+          },
+          "pass": true
+        },
+        {
+          "checkpoint": 132,
+          "reached": true,
+          "eligible": [
+            true,
+            true,
+            true
+          ],
+          "trace_steps": 20,
+          "branches": {
+            "retreat_retry": {
+              "executed": true,
+              "success": 0,
+              "steps": 200,
+              "retreat": {
+                "mode": "up",
+                "start_tcp": [
+                  0.09684836864471436,
+                  0.019709289073944092,
+                  0.10995198041200638
+                ],
+                "target_tcp": [
+                  0.09684836864471436,
+                  0.019709289073944092,
+                  0.15995198041200637
+                ],
+                "final_tcp": [
+                  0.09672620892524719,
+                  0.019684048369526863,
+                  0.15547047555446625
+                ],
+                "commanded_distance_m": 0.04999999999999999,
+                "achieved_displacement_m": 0.0455186665058136,
+                "target_error_m": 0.004483240555488347,
+                "steps_used": 26,
+                "max_steps": 40,
+                "arrival_tolerance_m": 0.005,
+                "command_saturated_steps": 26,
+                "gripper_command": 0.992845892906189,
+                "reached": true,
+                "end_reason": "reached"
+              }
+            },
+            "refresh": {
+              "executed": true,
+              "success": 0,
+              "steps": 200,
+              "retreat": null
+            },
+            "continue_alt_noise": {
+              "executed": true,
+              "success": 0,
+              "steps": 200,
+              "policy_noise_repeat_id": 4,
+              "queue_and_intervention_untouched": true,
+              "pass": true
+            }
+          },
+          "checks": {
+            "repeat_restored": {
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              },
+              "discrete_equal": {
+                "t": true,
+                "done": true,
+                "y": true,
+                "reason": true,
+                "repeat": true,
+                "intervention": true,
+                "intervention_t": true,
+                "queue_len": true,
+                "history_len": true,
+                "n_actions": true,
+                "inference_calls": true,
+                "retreat_info": true,
+                "rng": true
+              },
+              "failed": [],
+              "pass": true,
+              "prefix_replay_state_error": 0.0,
+              "live_observation": {
+                "state_max_abs": 0.0,
+                "rgb_max_abs": 0.0
+              },
+              "live_observation_pass": true
+            },
+            "repeat_trace": {
+              "pass": true,
+              "failed": [],
+              "steps": [
+                20,
+                20
+              ],
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              }
+            },
+            "after_retreat_retry_restored": {
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              },
+              "discrete_equal": {
+                "t": true,
+                "done": true,
+                "y": true,
+                "reason": true,
+                "repeat": true,
+                "intervention": true,
+                "intervention_t": true,
+                "queue_len": true,
+                "history_len": true,
+                "n_actions": true,
+                "inference_calls": true,
+                "retreat_info": true,
+                "rng": true
+              },
+              "failed": [],
+              "pass": true,
+              "prefix_replay_state_error": 0.0,
+              "live_observation": {
+                "state_max_abs": 0.0,
+                "rgb_max_abs": 0.0
+              },
+              "live_observation_pass": true
+            },
+            "after_retreat_retry_trace": {
+              "pass": true,
+              "failed": [],
+              "steps": [
+                20,
+                20
+              ],
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              }
+            },
+            "after_refresh_restored": {
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              },
+              "discrete_equal": {
+                "t": true,
+                "done": true,
+                "y": true,
+                "reason": true,
+                "repeat": true,
+                "intervention": true,
+                "intervention_t": true,
+                "queue_len": true,
+                "history_len": true,
+                "n_actions": true,
+                "inference_calls": true,
+                "retreat_info": true,
+                "rng": true
+              },
+              "failed": [],
+              "pass": true,
+              "prefix_replay_state_error": 0.0,
+              "live_observation": {
+                "state_max_abs": 0.0,
+                "rgb_max_abs": 0.0
+              },
+              "live_observation_pass": true
+            },
+            "after_refresh_trace": {
+              "pass": true,
+              "failed": [],
+              "steps": [
+                20,
+                20
+              ],
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              }
+            },
+            "after_continue_alt_noise_restored": {
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              },
+              "discrete_equal": {
+                "t": true,
+                "done": true,
+                "y": true,
+                "reason": true,
+                "repeat": true,
+                "intervention": true,
+                "intervention_t": true,
+                "queue_len": true,
+                "history_len": true,
+                "n_actions": true,
+                "inference_calls": true,
+                "retreat_info": true,
+                "rng": true
+              },
+              "failed": [],
+              "pass": true,
+              "prefix_replay_state_error": 0.0,
+              "live_observation": {
+                "state_max_abs": 0.0,
+                "rgb_max_abs": 0.0
+              },
+              "live_observation_pass": true
+            },
+            "after_continue_alt_noise_trace": {
+              "pass": true,
+              "failed": [],
+              "steps": [
+                20,
+                20
+              ],
+              "numeric_max_abs": {
+                "env_state": 0.0,
+                "elapsed": 0.0,
+                "history_state": 0.0,
+                "history_rgb": 0.0,
+                "queue": 0.0,
+                "last_action": 0.0,
+                "actions": 0.0,
+                "tcp_history": 0.0
+              }
+            }
+          },
+          "input_saving_changes_nothing": {
+            "numeric_max_abs": {
+              "env_state": 0.0,
+              "elapsed": 0.0,
+              "history_state": 0.0,
+              "history_rgb": 0.0,
+              "queue": 0.0,
+              "last_action": 0.0,
+              "actions": 0.0,
+              "tcp_history": 0.0
+            },
+            "discrete_equal": {
+              "t": true,
+              "done": true,
+              "y": true,
+              "reason": true,
+              "repeat": true,
+              "intervention": true,
+              "intervention_t": true,
+              "queue_len": true,
+              "history_len": true,
+              "n_actions": true,
+              "inference_calls": true,
+              "retreat_info": true,
+              "rng": true
+            },
+            "failed": [],
+            "pass": true
+          },
+          "pass": true
+        }
+      ],
+      "reached": 4,
+      "pass": true,
+      "wall_seconds": 125.87575324997306
+    }
+  ],
+  "compared": {
+    "numeric": {
+      "env_state": "state_atol",
+      "elapsed": null,
+      "history_state": "state_atol",
+      "history_rgb": "observation_atol",
+      "queue": "action_atol",
+      "last_action": "action_atol",
+      "actions": "action_atol",
+      "tcp_history": "state_atol"
+    },
+    "exact": [
+      "t",
+      "done",
+      "y",
+      "reason",
+      "repeat",
+      "intervention",
+      "intervention_t",
+      "queue_len",
+      "history_len",
+      "n_actions",
+      "inference_calls",
+      "retreat_info",
+      "rng"
+    ],
+    "added_in_stage2b": [
+      "restore and trace after a Continue-alt-noise branch",
+      "saving the policy inputs leaves the runtime unchanged (exact)"
+    ],
+    "not_compared": [
+      "policy.inference_seconds (wall-clock time)"
+    ]
+  },
+  "config_sha256": "c8cc0a581f7d4e9de4042490bd6939e9b80da1dd333df081cb9107c29427dfbd",
+  "policy_sha256": "faacd2d86464c725a4fb95563a5ed5808019a8b420795b9a2a931822ed89db0e",
+  "policy_metadata_sha256": "9976053598632fd58c48b89c9dffabf8f97b3d18ccf5062127c9c0be3de8a468",
+  "runtime": {
+    "python": "3.10.12 (main, Aug 31 2026, 10:18:17) [GCC 11.4.0]",
+    "platform": "Linux-6.8.0-87-generic-x86_64-with-glibc2.35",
+    "packages": {
+      "torch": "2.6.0+cu124",
+      "torchvision": "0.21.0+cu124",
+      "mani_skill": "3.0.1",
+      "sapien": "3.0.3",
+      "gymnasium": "0.29.1",
+      "diffusers": "0.30.3",
+      "numpy": "1.26.4",
+      "scipy": "1.13.1",
+      "PyYAML": "6.0.2"
+    },
+    "nvidia_smi": {
+      "returncode": 0,
+      "stdout": "name, driver_version, memory.total [MiB]\nNVIDIA GeForce RTX 3090, 580.65.06, 24576 MiB\n",
+      "stderr": ""
+    }
+  },
+  "plan_sha256": "9bbe7aa53df47281c9498a406d4a6df42a92093b65caac0294ca5cb78254facf",
+  "tolerances": {
+    "replay_steps": 20,
+    "state_atol": 1e-06,
+    "action_atol": 1e-06,
+    "observation_atol": 1.0
+  },
+  "restore_method": "prefix action replay from reset(seed); set_state_dict is not used",
+  "audit_seeds_also_demonstration_scenes": [
+    100,
+    101,
+    102,
+    103,
+    104
+  ],
+  "scope": "Same-scene restore of this policy and config at the tested states; not proof of global simulator determinism, not a performance sample."
+}

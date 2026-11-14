@@ -1,0 +1,63 @@
+install start=2026-11-14T19:56:41Z
+install_sys exit=0 end=2026-11-14T19:57:11Z
+bootstrap exit=0 end=2026-11-14T19:59:27Z
+PHASE_EXIT install 0
+s2b_doctor cmd=python -m hci doctor --out runs/stage2b_001/doctor
+s2b_doctor start=2026-11-14T19:59:27Z
+s2b_doctor exit=0 end=2026-11-14T19:59:31Z
+s2b_pytest cmd=python -m pytest -q
+s2b_pytest start=2026-11-14T19:59:31Z
+s2b_pytest exit=0 end=2026-11-14T19:59:48Z
+ENV_DONE
+PHASE_EXIT env 0
+s2b_scenes cmd=python scripts/20_stage2b_pilot.py scenes --plan runs/stage2b_001/plan.json --keys runs/stage2b_001/reference_scene_keys.json --out runs/stage2b_001/scenes.json
+s2b_scenes start=2026-11-14T19:59:48Z
+s2b_scenes exit=0 end=2026-11-14T20:00:32Z
+SCENES_DONE
+PHASE_EXIT scenes 0
+s2b_audit cmd=python scripts/20_stage2b_pilot.py audit --plan runs/stage2b_001/plan.json --out runs/stage2b_001/audit
+s2b_audit start=2026-11-14T20:00:32Z
+s2b_audit exit=0 end=2026-11-14T20:09:30Z
+AUDIT_DONE
+PHASE_EXIT audit 0
+s2b_collect_first2 cmd=python scripts/20_stage2b_pilot.py collect --plan runs/stage2b_001/plan.json --run runs/stage2b_001 --start 0 --stop 2 --label first2
+s2b_collect_first2 start=2026-11-14T20:09:30Z
+s2b_collect_first2 exit=0 end=2026-11-14T20:22:38Z
+s2b_techcheck cmd=python scripts/20_stage2b_pilot.py techcheck --plan runs/stage2b_001/plan.json --run runs/stage2b_001
+s2b_techcheck start=2026-11-14T20:22:38Z
+s2b_techcheck exit=0 end=2026-11-14T20:22:39Z
+FIRST2_DONE
+PHASE_EXIT first2 0
+PART_A_DONE 2026-11-14T20:22:39Z
+budget: all-in 0.26 USD/h (credit-based); spent so far 0.121; cap 1.50; WORKERS=6 COLLECT_LIMIT_S=7800
+s2b_scale cmd=python scripts/20_stage2b_pilot.py scale --plan runs/stage2b_001/plan.json --run runs/stage2b_001 --usd-per-hour 0.26 --spent-usd 0.121 --reserve-usd 0.25 --workers 6 --efficiency 0.7
+s2b_scale start=2026-11-14T20:22:56Z
+s2b_scale exit=0 end=2026-11-14T20:22:57Z
+SCALE_DONE
+PHASE_EXIT scale 0
+s2b_collect_w0 cmd=timeout 7800 python scripts/20_stage2b_pilot.py collect --plan runs/stage2b_001/plan.json --run runs/stage2b_001 --start 2 --stop 24 --step 6 --label w0
+s2b_collect_w0 start=2026-11-14T20:22:57Z
+s2b_collect_w0 exit=0 end=2026-11-14T20:53:16Z
+s2b_collect_w1 cmd=timeout 7800 python scripts/20_stage2b_pilot.py collect --plan runs/stage2b_001/plan.json --run runs/stage2b_001 --start 3 --stop 24 --step 6 --label w1
+s2b_collect_w1 start=2026-11-14T20:22:57Z
+s2b_collect_w1 exit=0 end=2026-11-14T20:58:36Z
+s2b_collect_w2 cmd=timeout 7800 python scripts/20_stage2b_pilot.py collect --plan runs/stage2b_001/plan.json --run runs/stage2b_001 --start 4 --stop 24 --step 6 --label w2
+s2b_collect_w2 start=2026-11-14T20:22:57Z
+s2b_collect_w2 exit=0 end=2026-11-14T21:03:35Z
+s2b_collect_w3 cmd=timeout 7800 python scripts/20_stage2b_pilot.py collect --plan runs/stage2b_001/plan.json --run runs/stage2b_001 --start 5 --stop 24 --step 6 --label w3
+s2b_collect_w3 start=2026-11-14T20:22:57Z
+s2b_collect_w3 exit=0 end=2026-11-14T21:02:27Z
+s2b_collect_w4 cmd=timeout 7800 python scripts/20_stage2b_pilot.py collect --plan runs/stage2b_001/plan.json --run runs/stage2b_001 --start 6 --stop 24 --step 6 --label w4
+s2b_collect_w4 start=2026-11-14T20:22:57Z
+s2b_collect_w4 exit=0 end=2026-11-14T21:00:49Z
+s2b_collect_w5 cmd=timeout 7800 python scripts/20_stage2b_pilot.py collect --plan runs/stage2b_001/plan.json --run runs/stage2b_001 --start 7 --stop 24 --step 6 --label w5
+s2b_collect_w5 start=2026-11-14T20:22:57Z
+s2b_collect_w5 exit=0 end=2026-11-14T20:59:08Z
+REST_DONE scenes=24 workers=6
+PHASE_EXIT rest 0
+s2b_finalize cmd=python scripts/20_stage2b_pilot.py finalize --plan runs/stage2b_001/plan.json --run runs/stage2b_001 --results runs/stage2b_001/results
+s2b_finalize start=2026-11-14T21:03:35Z
+s2b_finalize exit=0 end=2026-11-14T21:03:37Z
+FINAL_DONE
+PHASE_EXIT final 0
+PHASE_EXIT pack 0

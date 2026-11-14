@@ -79,7 +79,8 @@ class DiffusionPolicy(QueuePolicy):
     def generate(self,episode,t,repeat=0):
         devices=list(range(torch.cuda.device_count())) if self.device.type=='cuda' else []
         with torch.random.fork_rng(devices=devices):
-            torch.manual_seed(seed_for(episode,t,repeat,'dp'))
+            self.last_seed=seed_for(episode,t,repeat,'dp')   # logging only (Stage 2B inference trace); the seed rule is unchanged
+            torch.manual_seed(self.last_seed)
             a=self.agent.get_action(self.stacked())
             if self.device.type=='cuda':torch.cuda.synchronize()
         return np.clip(as_numpy(a[0]),-1,1).astype(np.float32)

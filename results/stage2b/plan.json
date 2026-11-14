@@ -1,0 +1,443 @@
+{
+  "run_id": "stage2b_001",
+  "stage": "Stage 2B exploratory four-arm control",
+  "created_utc": "2026-11-14T19:53:50.102656+00:00",
+  "pass": true,
+  "problems": [],
+  "status": {
+    "base_policy_qualification": "BELOW_ORIGINAL_GATE (37/100 < 50/100)",
+    "stage2a": "COMPLETED_EXPLORATORY_ONLY",
+    "stage2b": "EXPLORATORY_FOUR_ARM_CONTROL",
+    "formal_study_ready": "NOT_ESTABLISHED",
+    "calibration": "NOT_RUN",
+    "final_test": "NOT_RUN"
+  },
+  "role": "stage2b_exploratory_dev",
+  "nature": "Development experiment designed after the Stage 2A results were seen. Not a pre-registered confirmatory test and not an independent validation.",
+  "repository": {
+    "head": "d82168be6b3f37fa96224c55f37fb0490e1e388d",
+    "working_tree_changes_at_plan_time": [
+      "M src/hci/policies.py",
+      "?? amendments/AMENDMENT_006_stage2b_noise_control.md",
+      "?? scripts/20_stage2b_pilot.py",
+      "?? scripts/stage2b/",
+      "?? src/hci/pilot2b.py",
+      "?? tests/test_stage2b_pilot.py"
+    ],
+    "note": "the code that runs is fixed by the per-file SHA256 below, not by the commit"
+  },
+  "based_on": {
+    "stage2a_plan": "runs/stage2a_001/plan.json",
+    "stage2a_plan_sha256": "d040d8a8646ea11833becde17a352c1b20074597b0e71602471673ef7ebcdb69",
+    "stage2a_dataset_sha256": "88c475f67644bff6eafc08fd3fb50cf91d5c455899aebac196ca0778d6d5630c"
+  },
+  "policy": {
+    "path": "artifacts/policies/stack_1d_s1_d500_clean_v1_i080000",
+    "weights_sha256": "faacd2d86464c725a4fb95563a5ed5808019a8b420795b9a2a931822ed89db0e",
+    "policy_meta_sha256": "9976053598632fd58c48b89c9dffabf8f97b3d18ccf5062127c9c0be3de8a468",
+    "source_checkpoint_sha256": "fcbd79737c72a9dbd3d9e7e9f3d90dee8a10b15fdfe70cda5bd1fd589fe001fc",
+    "verified_against": {
+      "specification": {
+        "weights.pt": "faacd2d86464c725a4fb95563a5ed5808019a8b420795b9a2a931822ed89db0e",
+        "policy_meta.json": "9976053598632fd58c48b89c9dffabf8f97b3d18ccf5062127c9c0be3de8a468"
+      },
+      "backup_list": "results/stage1d_clean/backup_sha256_stage1d_clean_002.txt",
+      "backup_list_sha256": "8ea55c5f616f6eed141c767f97f9f07710005989571c06e239b1ca0657042233",
+      "stage2a_plan": true
+    },
+    "qualification": {
+      "file": "runs/qualify_stack_1d_s1_d500_clean_v1/policy_eval.json",
+      "set": "policy_qualify_B",
+      "success_once": 37,
+      "n": 100
+    },
+    "settings": {
+      "obs_horizon": 2,
+      "act_horizon": 8,
+      "pred_horizon": 16
+    },
+    "unchanged": "weights, schedule, DDPM steps, action clip"
+  },
+  "config": {
+    "path": "configs/stackcube.yaml",
+    "file_sha256": "b145ca59607f4edf45f20bd45624f1bd4c8ff028a035ee4ab12b7de40bb08d8b",
+    "config_sha256": "c8cc0a581f7d4e9de4042490bd6939e9b80da1dd333df081cb9107c29427dfbd",
+    "env": {
+      "id": "StackCube-v1",
+      "robot_uid": "panda_wristcam",
+      "sim_backend": "physx_cpu",
+      "num_envs": 1,
+      "obs_mode": "rgb",
+      "control_mode": "pd_ee_delta_pos",
+      "horizon": 200
+    },
+    "protocol": {
+      "max_interventions": 1,
+      "success_definition": "success_once_absorbing",
+      "min_intervention_step": 12,
+      "decision_stride": 4,
+      "minimum_post_retreat_steps": 8
+    },
+    "retreat": {
+      "mode": "up",
+      "distance_m": 0.05,
+      "max_translation_per_step_m": 0.005,
+      "max_steps": 40,
+      "arrival_tolerance_m": 0.005,
+      "lookback_steps": 12
+    },
+    "audit": {
+      "replay_steps": 20,
+      "state_atol": 1e-06,
+      "action_atol": 1e-06,
+      "observation_atol": 1.0
+    }
+  },
+  "data_provenance": {
+    "manifest": "runs/stage1d_clean_002/data/train_d500_clean_manifest.json",
+    "manifest_sha256": "30615b3326bc6b90e153169a1f94e3493f4d81cea110ff49d621298e44ddbd1b",
+    "train_h5_sha256": "93416a4a8b7e2203d4cca1fe3c5d1e577830fa720ea4f3855021a168ea65f342",
+    "name": "train_d500_clean_v1"
+  },
+  "code": {
+    "src/hci/pilot2b.py": "625ba28e118e04095a0a0adcfd5b6a1f41416c85eab7c988c7e92a8ab2ba5e34",
+    "src/hci/pilot.py": "4e730c36abdbcaa84d71c8643078b7aece7b01de958c81f4f67a75c62cebfac6",
+    "src/hci/simulation.py": "c42626728cac7eb9ebeffd5372683fc4ba01e41ef9d050f01e51134b0208fe9d",
+    "src/hci/policies.py": "d9083dfe1eff702bae087b96840d2703dbb609fb7947c01eb49864bbd0eb9157",
+    "src/hci/experiment.py": "b7425dcfcff7ff188992bde22e1e2308292aea58eb8a11c557a1ced8ff595d29",
+    "src/hci/io.py": "60f2701b2e52ba80fc7e05142a06ae56c306c4298cd749ca5e418b54cb454a44",
+    "src/hci/diagnostics.py": "49c79927d8cf5f8a208189647c75de1c67c3d4ee873fb87074db506e6534769d",
+    "src/hci/schema.py": "52ef9c07a41ef6e007b5d57429fa062bb66d56b9047e4db0d731117e08589db6",
+    "src/hci/trees.py": "5f0fc7c28a89b32175abea983ac5202ffe535a0fe105e1ff6e855299177d8a60",
+    "scripts/20_stage2b_pilot.py": "615a1ece5060a25202e47b83cc6e935f5444789cb5da126ec268c5782e345ec5",
+    "scripts/18_stage2a_pilot.py": "3739db21bf352f21b20affdd1b0c3a5214e26fc86490a427c8cceabf5a0149ee",
+    "scripts/stage2b/run.sh": "750228f7d6bd4502544a475c8bfba12e686604c2d7f477173fb261e8682c51ed"
+  },
+  "upstream_commit": "a4a4f9272ad64b1564035874b605ceb687b63ed8",
+  "splits": {
+    "path": "configs/splits.json",
+    "file_sha256": "828b8f131d85e7ba6a3e720cfdaff022165f6848dd29e0b714bba609797e3224",
+    "digest": "a61fa30d96e63e80fc2b3d97c4dd6a3221f274654c027b455cecba1301a64872"
+  },
+  "policy_eval_splits": {
+    "path": "configs/policy_eval_splits.json",
+    "file_sha256": "579d59ade70f9fe9a6262abaf2598c091da6cb2d6d1a1e9964183965ce6128f0"
+  },
+  "scenes": {
+    "rule": "first 24 seeds of splits/train in ascending order that are not Stage 2A scenes and are declared for no other use; a seed whose initial cube placement equals a placement on record is replaced by the next train seed. Outcomes of this policy are never an input.",
+    "list": [
+      10024,
+      10025,
+      10026,
+      10027,
+      10028,
+      10029,
+      10030,
+      10031,
+      10032,
+      10033,
+      10034,
+      10035,
+      10036,
+      10037,
+      10038,
+      10039,
+      10040,
+      10041,
+      10042,
+      10043,
+      10044,
+      10045,
+      10046,
+      10047
+    ],
+    "seed_level_skipped": [
+      {
+        "seed": 10000,
+        "reason": "also declared as stage2a/stage2a_exploratory_dev"
+      },
+      {
+        "seed": 10001,
+        "reason": "also declared as stage2a/stage2a_exploratory_dev"
+      },
+      {
+        "seed": 10002,
+        "reason": "also declared as stage2a/stage2a_exploratory_dev"
+      },
+      {
+        "seed": 10003,
+        "reason": "also declared as stage2a/stage2a_exploratory_dev"
+      },
+      {
+        "seed": 10004,
+        "reason": "also declared as stage2a/stage2a_exploratory_dev"
+      },
+      {
+        "seed": 10005,
+        "reason": "also declared as stage2a/stage2a_exploratory_dev"
+      },
+      {
+        "seed": 10006,
+        "reason": "also declared as stage2a/stage2a_exploratory_dev"
+      },
+      {
+        "seed": 10007,
+        "reason": "also declared as stage2a/stage2a_exploratory_dev"
+      },
+      {
+        "seed": 10008,
+        "reason": "also declared as stage2a/stage2a_exploratory_dev"
+      },
+      {
+        "seed": 10009,
+        "reason": "also declared as stage2a/stage2a_exploratory_dev"
+      },
+      {
+        "seed": 10010,
+        "reason": "also declared as stage2a/stage2a_exploratory_dev"
+      },
+      {
+        "seed": 10011,
+        "reason": "also declared as stage2a/stage2a_exploratory_dev"
+      },
+      {
+        "seed": 10012,
+        "reason": "also declared as stage2a/stage2a_exploratory_dev"
+      },
+      {
+        "seed": 10013,
+        "reason": "also declared as stage2a/stage2a_exploratory_dev"
+      },
+      {
+        "seed": 10014,
+        "reason": "also declared as stage2a/stage2a_exploratory_dev"
+      },
+      {
+        "seed": 10015,
+        "reason": "also declared as stage2a/stage2a_exploratory_dev"
+      },
+      {
+        "seed": 10016,
+        "reason": "also declared as stage2a/stage2a_exploratory_dev"
+      },
+      {
+        "seed": 10017,
+        "reason": "also declared as stage2a/stage2a_exploratory_dev"
+      },
+      {
+        "seed": 10018,
+        "reason": "also declared as stage2a/stage2a_exploratory_dev"
+      },
+      {
+        "seed": 10019,
+        "reason": "also declared as stage2a/stage2a_exploratory_dev"
+      },
+      {
+        "seed": 10020,
+        "reason": "also declared as stage2a/stage2a_exploratory_dev"
+      },
+      {
+        "seed": 10021,
+        "reason": "also declared as stage2a/stage2a_exploratory_dev"
+      },
+      {
+        "seed": 10022,
+        "reason": "also declared as stage2a/stage2a_exploratory_dev"
+      },
+      {
+        "seed": 10023,
+        "reason": "also declared as stage2a/stage2a_exploratory_dev"
+      }
+    ],
+    "stage2a_scenes_excluded": [
+      10000,
+      10001,
+      10002,
+      10003,
+      10004,
+      10005,
+      10006,
+      10007,
+      10008,
+      10009,
+      10010,
+      10011,
+      10012,
+      10013,
+      10014,
+      10015,
+      10016,
+      10017,
+      10018,
+      10019,
+      10020,
+      10021,
+      10022,
+      10023
+    ],
+    "scene_identity": "server step `scenes` (cube placement within 1e-05 m counts as identical); references: demonstrations and Stage 2A scenes from stored keys, audit/dev/policy-evaluation scenes by reset; calibration and Test by seed only, never reset",
+    "shrink_ladder": [
+      24,
+      12,
+      2
+    ],
+    "shrink_rule": "prefix of the list, chosen from measured time and cost of the first two scenes only",
+    "future_use": "Stage 2A and Stage 2B scenes stay development data; they are never moved to calibration or Test"
+  },
+  "audit": {
+    "seeds": [
+      100,
+      101,
+      102,
+      103,
+      104
+    ],
+    "also_demonstration_scenes": [
+      100,
+      101,
+      102,
+      103,
+      104
+    ],
+    "use": "engineering check of restore; not a performance sample and not a denominator",
+    "protocol": "Stage 2A audit (same compared items, same tolerances) + a Continue-alt-noise branch run to the end before another restore and trace + exact check that saving the policy inputs leaves the runtime unchanged"
+  },
+  "checkpoints": [
+    12,
+    52,
+    92,
+    132
+  ],
+  "repeats": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "arms": {
+    "continue": {
+      "short": "C0",
+      "runtime_force": null,
+      "queue_at_snapshot": "kept",
+      "first_later_inference": "natural chunk boundary",
+      "policy_noise_repeat_id": "r"
+    },
+    "continue_alt_noise": {
+      "short": "C1",
+      "runtime_force": null,
+      "queue_at_snapshot": "kept",
+      "first_later_inference": "natural chunk boundary (same step as continue)",
+      "policy_noise_repeat_id": "r + 4"
+    },
+    "refresh": {
+      "short": "F",
+      "runtime_force": 1,
+      "queue_at_snapshot": "discarded",
+      "first_later_inference": "at the checkpoint",
+      "policy_noise_repeat_id": "r"
+    },
+    "retreat_retry": {
+      "short": "R",
+      "runtime_force": 2,
+      "queue_at_snapshot": "discarded",
+      "first_later_inference": "after the retreat ends",
+      "policy_noise_repeat_id": "r"
+    }
+  },
+  "noise": {
+    "seed_rule": "seed_for(scene, physical_step_of_the_call, policy_noise_repeat_id, 'dp'), set immediately before each Agent.get_action inside torch.random.fork_rng (unchanged code path; covers the initial noise and the reverse-diffusion draws of that call)",
+    "block_repeat_id": "pairing key r in [0,1,2,3]",
+    "alt_noise_ids": [
+      4,
+      5,
+      6,
+      7
+    ],
+    "not_in_the_seed": [
+      "execution order",
+      "worker id",
+      "wall-clock time",
+      "arm name"
+    ],
+    "seed_check": {
+      "scenes": 24,
+      "steps": 200,
+      "alt_seed_equals_block_seed_at_same_step": 0,
+      "alt_seed_equals_any_block_seed": 0
+    },
+    "caveat": "different integer seeds give another pseudo-random realisation; this is not a proof of statistical independence. C0 and C1 may well have the same outcome; no check requires them to differ."
+  },
+  "max": {
+    "scenes": 24,
+    "snapshots": 96,
+    "blocks": 384,
+    "continuations": 1536,
+    "first_two_scenes_continuations": 128,
+    "extra_reproducibility_continuations_first_two_scenes": 16,
+    "trunks": 24
+  },
+  "coupling": {
+    "past": "identical for the four arms: same scene seed, same executed action prefix (prefix replay), same policy history and queue",
+    "continue_alt_noise": "restored and verified like every arm; then only Runtime.repeat is set to r + 4. No force, no clear, no extra inference, no extra action. Until the old queue is used up it must be the same rollout as continue (commands, simulator state, observation returned by the environment); a block that violates this is an error, not data",
+    "refresh_and_retreat": "unchanged from Stage 2A: physical-step noise key r; calls at other steps than Continue draw other noise by design",
+    "reference": "pairs are joined on (scene, checkpoint, block_repeat_id) only"
+  },
+  "reproducibility_checks": {
+    "every_snapshot": "continue with block repeat 0 must reproduce the never-restored trunk (actions, outcome, steps, final state)",
+    "first_two_scenes": "after all other branches of a snapshot: continue_alt_noise of repeat 0 once more, and continue of repeat 1 once more",
+    "every_block": "C0/C1 queue-prefix parity",
+    "on_mismatch": "flagged, never subtracted; the data set is not marked complete"
+  },
+  "observation_fields": {
+    "online_inputs_file": "branches/inputs/<scene>.npz, arrays named t<checkpoint>_<field>; written once per snapshot before any continuation is run",
+    "online_inputs": {
+      "rgb_history": "uint8 [obs_horizon, H, W, 3 x cameras]; cameras in sorted name order, exactly what the policy receives",
+      "state_history": "float32 [obs_horizon, D]; qpos, qvel, tcp_pose (the whitelist of src/hci/schema.py)",
+      "last_action": "float32 [4]; last executed command",
+      "queue": "float32 [n, 4]; unexecuted commands of the current chunk",
+      "t": "physical step of the snapshot",
+      "remaining_budget": "horizon - t",
+      "policy_feature": "float32; fixed encoder output of the frozen policy for the same history, + last action, t/horizon, queue fraction"
+    },
+    "diagnostic_privileged_only": {
+      "scene JSON: initial_state, snapshots[].state_at_checkpoint, snapshots[].stage_so_far, cells[].stage": "cube poses, grasp/on-cube/static flags, stage labels read from simulator ground truth",
+      "branches/traces/<scene>.npz": "per-step TCP, cube positions, flags, success, executed action",
+      "y_C0, y_C1, y_F, y_R and every pair class": "future outcomes (labels)"
+    },
+    "rule": "Nothing of the second group is written into the online input file, and none of it is given to the policy. No model was trained in this stage."
+  },
+  "video_rule": "first two scenes, first usable checkpoint, block repeat 0, the four arms (at most 8 files); no outcome-selected example is added",
+  "analysis": {
+    "pairs": [
+      "F vs C0",
+      "R vs C0",
+      "C1 vs C0",
+      "F vs C1",
+      "R vs C1",
+      "R vs F"
+    ],
+    "primary_summary": "scene-equal weighting: mean over reached checkpoints and repeats within a scene, then over scenes",
+    "not_computed": [
+      "p-values",
+      "confidence bounds",
+      "any threshold chosen after the results"
+    ]
+  },
+  "budget": {
+    "stage2b_cap_usd": 1.5,
+    "kept_separate_from": "Stage 2A 0.38 USD and Stage 1D",
+    "cost_basis": "credit difference, not hourly price x time"
+  },
+  "not_run_in_this_stage": [
+    "base policy retraining",
+    "checkpoint re-selection",
+    "qualification A/B rerun",
+    "Retreat change",
+    "action chunk / inference step change",
+    "Q / Rescue / Harm predictor training",
+    "online selector evaluation",
+    "LTT / calibration",
+    "final Test",
+    "5,760-continuation collection"
+  ]
+}
