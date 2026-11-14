@@ -1,0 +1,36 @@
+s1d_doctor cmd=python -m hci doctor --out runs/stage1d_001/doctor
+s1d_doctor start=2026-11-14T04:46:03Z
+s1d_doctor exit=0 end=2026-11-14T04:46:06Z
+s1d_pytest cmd=python -m pytest -q
+s1d_pytest start=2026-11-14T04:46:06Z
+s1d_pytest exit=0 end=2026-11-14T04:46:11Z
+ENV_DONE
+PHASE_EXIT env 0
+s1d_subset cmd=python scripts/16_stage1d_data.py subset --plan runs/stage1d_001/plan/stage1d_plan.json --source data_backup/demos_stack_002/trajectory.h5 --out-dir runs/stage1d_001/new_source
+s1d_subset start=2026-11-14T04:46:11Z
+s1d_subset exit=0 end=2026-11-14T04:46:11Z
+s1d_convert cmd=python -m mani_skill.trajectory.replay_trajectory --traj-path runs/stage1d_001/new_source/trajectory.h5 --use-first-env-state -c pd_ee_delta_pos -o rgb -b physx_cpu --num-envs 1 --count 420 --save-traj
+s1d_convert start=2026-11-14T04:46:11Z
+s1d_convert exit=0 end=2026-11-14T04:54:19Z
+s1d_build cmd=python scripts/16_stage1d_data.py build --config configs/stackcube.yaml --plan runs/stage1d_001/plan/stage1d_plan.json --old-demo data_backup/demos_stack_002/trajectory.rgb.pd_ee_delta_pos.physx_cpu.h5 --new-demo runs/stage1d_001/new_source/trajectory.rgb.pd_ee_delta_pos.physx_cpu.h5 --source data_backup/demos_stack_002/trajectory.h5 --out runs/stage1d_001/data
+s1d_build start=2026-11-14T04:54:19Z
+s1d_build exit=0 end=2026-11-14T04:55:45Z
+s1d_validate cmd=python scripts/16_stage1d_data.py validate --config configs/stackcube.yaml --data runs/stage1d_001/data --out runs/stage1d_001/validate
+s1d_validate start=2026-11-14T04:55:45Z
+s1d_validate exit=0 end=2026-11-14T04:55:56Z
+s1d_io_dataset_path cmd=python scripts/08_policy_io_audit.py --config configs/stackcube.yaml --policy artifacts/policies/stack_1b_s1_d100_i060000 --checkpoint runs/policy/stack_1b_s1_d100/checkpoints/full_060000.pt --demo runs/stage1d_001/data/io_parity_sample/trajectory.rgb.pd_ee_delta_pos.physx_cpu.h5 --out runs/stage1d_001/io_dataset_path_60k
+s1d_io_dataset_path start=2026-11-14T04:55:56Z
+s1d_io_dataset_path exit=0 end=2026-11-14T04:57:31Z
+DATA_DONE
+PHASE_EXIT data 0
+s1d_probe_b256 cmd=python scripts/03_train_dp.py --config configs/stackcube.yaml --demo runs/stage1d_001/data/train_d500/trajectory.rgb.pd_ee_delta_pos.physx_cpu.h5 --run stack_1d_probe_b256 --num-demos 500 --total-iters 1000 --batch-size 256 --eval-freq 500 --num-eval-episodes 2 --data-manifest runs/stage1d_001/data/train_d500_manifest.json --execute
+s1d_probe_b256 start=2026-11-14T04:57:53Z
+s1d_probe_b256 exit=0 end=2026-11-14T05:00:49Z
+PROBE_DONE
+PHASE_EXIT probe 0
+budget: rental 0.2833 USD/h; probe 19.2 it/s, VRAM 11.7 GB, RAM 16.8 GB; TRAIN_LIMIT_S=9000
+train_stack_1d_s1_d500 cmd=timeout 9000 python scripts/03_train_dp.py --config configs/stackcube.yaml --demo runs/stage1d_001/data/train_d500/trajectory.rgb.pd_ee_delta_pos.physx_cpu.h5 --run stack_1d_s1_d500 --num-demos 500 --total-iters 100000 --batch-size 256 --eval-freq 10000 --num-eval-episodes 5 --seed 1 --data-manifest runs/stage1d_001/data/train_d500_manifest.json --execute
+train_stack_1d_s1_d500 start=2026-11-14T05:01:30Z
+train_stack_1d_s1_d500 STOPPED BY OPERATOR 2026-11-14T05:05:07Z at about 2k of 100k updates (started 05:01:30Z, stopped about 05:04:40Z); no checkpoint was written
+STOP REASON: 4 of 500 training trajectories (train ids 30, 199, 350, 381) hold the unsaved failed replay of the previous source episode, then a scene jump and one spurious action, then the adopted episode (the pinned RecordEpisode buffer is not cleared after a failed replay). Spec section 4: stop training and report. No candidate was exported or evaluated; policy_qualify_B was not used.
+check exit=0
