@@ -1,0 +1,23 @@
+{
+  "train_hours_both_runs": 10.046144211844695,
+  "evaluation_hours": 0.8888888888888888,
+  "projected_remaining_hours": 12.862788065843619,
+  "projected_total_usd": 6.438419503086418,
+  "cap_usd": 5.0,
+  "fits_cap": false,
+  "monitoring_hours_bound": 1.1,
+  "inputs": {
+    "monitor_seconds_per_episode": 36.0,
+    "updates_per_second": 6.21,
+    "usd_per_hour": 0.4539,
+    "spent_usd": 0.3,
+    "reserve_usd": 0.3,
+    "eval_seconds_per_episode": 8.0,
+    "fixed_seconds": 900,
+    "margin": 1.15
+  },
+  "rule": "if the projection exceeds the cap, training does not start; seeds, scenes and architecture are not reduced",
+  "peak_vram_mib": 18312.0,
+  "probe_log": "logs/v1_probe.log",
+  "status": "BUDGET_BLOCKED"
+}

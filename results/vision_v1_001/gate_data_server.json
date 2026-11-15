@@ -1,0 +1,41 @@
+{
+  "ok": true,
+  "problems": [],
+  "layers": {
+    "structural_validation": {
+      "status": "PASS",
+      "n": 500,
+      "problems": []
+    },
+    "source_and_split_validation": {
+      "status": "PASS",
+      "problems": [],
+      "protected_overlap": [],
+      "distinct_initial_placements": 529
+    },
+    "episode_content_integrity": {
+      "status": "PASS",
+      "n_pass": 500,
+      "n": 500
+    },
+    "sampled_action_replay": {
+      "status": "PASS",
+      "report": "runs/stage1d_clean_002/data/sampled_action_replay.json",
+      "same_file": true,
+      "coverage_ok": true
+    },
+    "policy_io_parity": {
+      "status": "PASS",
+      "report": "runs/stage1d_clean_002/data/policy_io_parity.json",
+      "same_file": true,
+      "coverage_ok": true
+    }
+  },
+  "required": [
+    "structural_validation",
+    "source_and_split_validation",
+    "episode_content_integrity"
+  ],
+  "budget": null,
+  "train_h5_sha256": "93416a4a8b7e2203d4cca1fe3c5d1e577830fa720ea4f3855021a168ea65f342"
+}

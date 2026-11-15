@@ -1,0 +1,53 @@
+install start=2026-11-15T18:51:27Z
+install_sys exit=0 end=2026-11-15T18:53:06Z
+bootstrap exit=0 end=2026-11-15T18:57:04Z
+PHASE_EXIT install 0
+v1_doctor cmd=python -m hci doctor --out runs/vision_v1_001/doctor
+v1_doctor start=2026-11-15T18:57:04Z
+v1_doctor exit=0 end=2026-11-15T18:57:11Z
+v1_versions cmd=python -c import torch,torchvision;print(torch.__version__,torchvision.__version__,torch.cuda.get_device_name(0))
+v1_versions start=2026-11-15T18:57:11Z
+v1_versions exit=0 end=2026-11-15T18:57:14Z
+v1_pytest cmd=python -m pytest -q
+v1_pytest start=2026-11-15T18:57:14Z
+v1_pytest exit=0 end=2026-11-15T18:58:48Z
+ENV_DONE
+PHASE_EXIT env 0
+v1_data_sha cmd=bash -c echo '93416a4a8b7e2203d4cca1fe3c5d1e577830fa720ea4f3855021a168ea65f342  runs/stage1d_clean_002/data/train_d500_clean_v1.h5' | sha256sum -c - && echo 'f37072fd47e89c5e827621c5baffa7500819f7896bbacec160b1a16c560e07ec  artifacts/pretrained/resnet18-f37072fd.pth' | sha256sum -c -
+v1_data_sha start=2026-11-15T18:58:48Z
+v1_data_sha exit=0 end=2026-11-15T18:58:58Z
+v1_gate_data cmd=python scripts/17_stage1d_clean.py gate --data runs/stage1d_clean_002/data --qualify-set vision_v1_qualify --out runs/vision_v1_001/gate_data_server.json
+v1_gate_data start=2026-11-15T18:58:58Z
+v1_gate_data exit=0 end=2026-11-15T18:59:08Z
+v1_replay cmd=python scripts/17_stage1d_clean.py replay --config configs/stackcube.yaml --data runs/vision_v1_001/data_recheck --out runs/vision_v1_001/replay
+v1_replay start=2026-11-15T18:59:08Z
+v1_replay exit=0 end=2026-11-15T18:59:35Z
+DATA_DONE
+PHASE_EXIT data 0
+v1_scenes cmd=python scripts/29_vision_v1.py scenes --plan runs/vision_v1_001/plan.json --keys runs/vision_v1_001/reference_scene_keys.json --out runs/vision_v1_001/scenes.json
+v1_scenes start=2026-11-15T18:59:35Z
+v1_scenes exit=0 end=2026-11-15T19:01:15Z
+SCENES_DONE
+PHASE_EXIT scenes 0
+v1_probe cmd=python scripts/27_vision_v1_train.py --config configs/stackcube.yaml --demo runs/stage1d_clean_002/data/train_d500_clean_v1.h5 --run vision_v1_probe --pretrained artifacts/pretrained/resnet18-f37072fd.pth --num-demos 500 --total-iters 300 --batch-size 256 --eval-freq 300 --num-eval-episodes 1 --seed 0 --data-manifest runs/stage1d_clean_002/data/train_d500_clean_manifest.json --probe --execute --plan runs/vision_v1_001/plan.json --auth-run runs/vision_v1_001
+v1_probe start=2026-11-15T19:01:15Z
+v1_probe exit=0 end=2026-11-15T19:04:24Z
+PROBE_DONE peak_vram_mib=18312
+PHASE_EXIT probe 0
+PART_A_DONE 2026-11-15T19:04:24Z
+budget inputs: 0.4539 USD/h; spent so far 0.30; cap 5.00; peak VRAM 18312 MiB; TRAIN_LIMIT_S=20000 per run
+v1_budget cmd=python scripts/29_vision_v1.py budget --plan runs/vision_v1_001/plan.json --run runs/vision_v1_001 --probe-log logs/v1_probe.log --usd-per-hour 0.4539 --spent-usd 0.30 --peak-vram-mib 18312 --eval-seconds-per-episode 8
+v1_budget start=2026-11-15T19:05:53Z
+v1_budget exit=2 end=2026-11-15T19:05:55Z
+BUDGET_BLOCKED: training not started
+PHASE_EXIT budget 1
+PHASE_SKIPPED train 1 (an earlier phase did not pass)
+PHASE_SKIPPED train 2 (an earlier phase did not pass)
+PHASE_SKIPPED export 1 (an earlier phase did not pass)
+PHASE_SKIPPED export 2 (an earlier phase did not pass)
+PHASE_SKIPPED select 1 (an earlier phase did not pass)
+PHASE_SKIPPED select 2 (an earlier phase did not pass)
+PHASE_SKIPPED choose (an earlier phase did not pass)
+PHASE_SKIPPED qualify (an earlier phase did not pass)
+PHASE_EXIT pack 1
+PART_B_END 2026-11-15T19:05:55Z
