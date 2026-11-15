@@ -1,0 +1,111 @@
+{
+  "problems": [],
+  "stages": {
+    "2B": {
+      "recount": {
+        "scenes": 24,
+        "snapshots": 84,
+        "blocks": 336,
+        "trunk_success": 8,
+        "success_continue": 93,
+        "success_retreat5": 39
+      },
+      "matches_reports": true,
+      "input_archives": 24,
+      "input_archives_match_backup_list": true,
+      "saved_inputs_match_the_hash_taken_at_the_snapshot": true,
+      "policy_feature_shape": [
+        [
+          568
+        ]
+      ],
+      "policy_feature_dtype": [
+        "float32"
+      ],
+      "policy_feature_tail_max_abs_difference": {
+        "t_over_horizon": 2.622604367008563e-08,
+        "queue_fraction": 0.0,
+        "last_action": 0.0
+      },
+      "continue_repeat0_equals_trunk_snapshots": 84,
+      "skipped_checkpoints": {
+        "trunk_succeeded_before_checkpoint": 12
+      }
+    },
+    "2D": {
+      "recount": {
+        "scenes": 12,
+        "snapshots": 44,
+        "blocks": 176,
+        "trunk_success": 3,
+        "success_continue": 25,
+        "success_retreat5": 32
+      },
+      "matches_reports": true,
+      "input_archives": 12,
+      "input_archives_match_backup_list": true,
+      "saved_inputs_match_the_hash_taken_at_the_snapshot": true,
+      "policy_feature_shape": [
+        [
+          568
+        ]
+      ],
+      "policy_feature_dtype": [
+        "float32"
+      ],
+      "policy_feature_tail_max_abs_difference": {
+        "t_over_horizon": 2.622604367008563e-08,
+        "queue_fraction": 0.0,
+        "last_action": 0.0
+      },
+      "continue_repeat0_equals_trunk_snapshots": 44,
+      "skipped_checkpoints": {
+        "trunk_succeeded_before_checkpoint": 4
+      }
+    }
+  },
+  "pool": {
+    "scenes": 36,
+    "snapshots": 128,
+    "blocks": 512
+  },
+  "commonality": {
+    "pass": true,
+    "checks": {
+      "same_policy_weights_and_metadata": true,
+      "same_config_incl_horizon_retreat_protocol": true,
+      "same_checkpoints_and_repeats": true,
+      "same_success_definition": true,
+      "same_runtime_and_policy_code": true,
+      "same_cameras_and_online_field_definitions": true,
+      "same_noise_key_rule": true,
+      "scenes_disjoint": true,
+      "2d_r5_is_runtime_force2": true,
+      "2d_reference_run_leaves_state_and_noise_unchanged": true,
+      "inputs_saved_before_outcomes": true,
+      "both_datasets_completed": true
+    },
+    "code_files_that_differ_between_the_stages": [
+      "scripts/23_stage2d_pilot.py",
+      "scripts/stage1b/common.sh",
+      "scripts/stage2b/run.sh",
+      "scripts/stage2d/run.sh",
+      "src/hci/pilot2d.py"
+    ],
+    "note_on_code_differences": "the listed files are the stage-specific collectors and drivers, or are named in only one of the two plans; simulation.py (Runtime.force/retreat), policies.py (features, seeds) and pilot.py are byte-identical in both plans, and the Stage 2D collector calls Runtime.force(2) for R5",
+    "host_and_driver": {
+      "2B": {
+        "nvidia_smi": "name, driver_version, memory.total [MiB]\nNVIDIA GeForce RTX 3090, 580.65.06, 24576 MiB\n",
+        "torch": null,
+        "platform": "Linux-6.8.0-87-generic-x86_64-with-glibc2.35"
+      },
+      "2D": {
+        "nvidia_smi": "name, driver_version, memory.total [MiB]\nNVIDIA GeForce RTX 3090, 595.99.02, 24576 MiB\n",
+        "torch": null,
+        "platform": "Linux-5.15.0-198-generic-x86_64-with-glibc2.35"
+      }
+    },
+    "host_note": "the stages ran on different hosts and GPU drivers; kept as stage metadata, never a model input, cause of any stage difference not separated"
+  },
+  "pass": true
+}

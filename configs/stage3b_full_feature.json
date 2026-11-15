@@ -1,0 +1,57 @@
+{
+  "run_id": "stage3b_001",
+  "nature": "Development comparison decided after the Stage 2B, 2C, 2D and 3A results were seen. One CPU run. Not a confirmatory test, not an independent validation, not a final Test. The entry criteria below are operating criteria for spending budget, set on data already looked at; they are not significance or generalisation criteria.",
+  "question": "With a fixed manipulation policy, can the decision to intervene be made from run-time observations alone so that task success increases while degradation of baseline-successful runs stays limited?",
+  "status": {
+    "base_policy_qualification": "BELOW_ORIGINAL_GATE (37/100 < 50/100)",
+    "stage3b": "DEV_REPRESENTATION_COMPARISON",
+    "new_simulator_rollouts": "NOT_RUN",
+    "base_policy_retraining": "NOT_RUN",
+    "calibration": "NOT_RUN",
+    "final_test": "NOT_RUN"
+  },
+  "stage3a": {
+    "config": "configs/stage3a_selector.json",
+    "code": "scripts/24_stage3a_selector.py",
+    "manifest": "results/stage3a/analysis_manifest.json",
+    "summary": "results/stage3a/stage_separated_summary.json",
+    "predictions": "results/stage3a/oof_predictions.csv",
+    "model_config": "results/stage3a/model_config.json"
+  },
+  "fixed": {
+    "task": "pinned StackCube-v1 / ManiSkill, existing runtime semantics",
+    "base_policy": "D500-clean 80k EMA, existing weights and metadata hashes",
+    "policy_inference": "observation / action / prediction horizon 2 / 8 / 16, DDPM 100 steps",
+    "episode": "200 steps, success_once_absorbing",
+    "choices": ["Continue", "existing 5 cm R5"],
+    "interventions_per_episode": 1,
+    "decision_steps": [12, 52, 92, 132],
+    "data": "common C0 / R5 records of Stage 2B and Stage 2D only",
+    "folds_rows_weights_models_decision_rule_evaluators": "exactly those of Stage 3A"
+  },
+  "only_change": "model input: all 568 saved policy_feature dimensions, standardised on the unique training snapshots of the fold, plus the checkpoint one-hot; no PCA",
+  "candidates": {
+    "M_Q_full": "568 standardised policy_feature + checkpoint one-hot; two binary heads; score = q_R - q_C",
+    "M_pair_full": "same input; multinomial over the four joint outcomes; score = p(Rescue) - p(Harm)"
+  },
+  "controls_from_stage3a": ["never", "training_selected_timer", "M_time", "M_Q", "M_pair"],
+  "decision_rule": "R5 if score > 0, otherwise Continue (a score of exactly 0 is Continue). 0 is the net-gain boundary, not a harm tolerance; no risk constraint is claimed.",
+  "forbidden": ["GPU rental", "simulator rollout", "base policy inference or retraining", "new data", "search over C / dimensions / threshold / penalty / seed", "new RGB encoder or hand-made features", "privileged object state", "R2M / H0M / Refresh / new recovery actions", "stage-transfer fits or new ablations", "qualification, calibration, final Test", "overwriting earlier results"],
+  "entry_criteria": {
+    "evaluation": "cached single-intervention reading on repeat 0, leave-one-scene-out",
+    "1": "in Stage 2B and in Stage 2D separately: successful scenes not fewer than Never and not fewer than the training-selected timer",
+    "2": "over both stages: at least 2 more successful scenes than Never and at least 2 more than the training-selected timer",
+    "3": "scenes turned from baseline success into failure: at most 1 over both stages",
+    "4": "net gain over Never of at least 1 scene in Stage 2B and in Stage 2D",
+    "5": "all folds and integrity checks complete, no scene missing, every fit converged",
+    "tie_break_if_both_pass": ["more successful scenes", "fewer scenes lost", "fewer interventions", "M_Q_full"]
+  },
+  "if_no_candidate_passes": {
+    "stage3b": "COMPLETED_DEV_NO_GATE_PASS",
+    "current_configuration_next_rollout": "NOT_AUTHORIZED",
+    "current_configuration_model_search": "CLOSED_FOR_THIS_CYCLE",
+    "calibration": "NOT_RUN",
+    "final_test": "NOT_RUN"
+  },
+  "if_a_candidate_passes": "the only next step is a real run of that one fixed candidate against Never and a fixed timer on 24 new development scenes (at most 72 full episodes), after a sample and cost report and a separate approval; nothing is rented automatically"
+}

@@ -1,0 +1,46 @@
+{
+  "logistic_regression": {
+    "solver": "lbfgs",
+    "C": 1.0,
+    "fit_intercept": true,
+    "class_weight": null,
+    "tol": 1e-07,
+    "max_iter": 2000,
+    "retry_max_iter": 10000
+  },
+  "weights": "row weight 1 / (snapshots of its scene in the training fold * 4), then scaled to mean 1 over the training rows; the same rows and weights for every model",
+  "decision_rule": "R5 if score > 0, otherwise Continue (a score of exactly 0 is Continue). 0 is the net-gain boundary, not a harm tolerance; no risk constraint is claimed.",
+  "candidates": {
+    "M_Q_full": "568 standardised policy_feature + checkpoint one-hot; two binary heads; score = q_R - q_C",
+    "M_pair_full": "same input; multinomial over the four joint outcomes; score = p(Rescue) - p(Harm)"
+  },
+  "input_of_the_candidates": {
+    "columns": 572,
+    "order": "StandardScaler(policy_feature, all 568 dimensions) -> append checkpoint one-hot [12, 52, 92, 132]",
+    "fit_on": "unique training snapshots of the fold only"
+  },
+  "changed_against_stage3a": {
+    "item": "model input representation",
+    "stage3a": "StandardScaler(policy_feature) -> PCA(8) -> StandardScaler(PC scores) -> append checkpoint one-hot [12, 52, 92, 132]",
+    "stage3b": "model input: all 568 saved policy_feature dimensions, standardised on the unique training snapshots of the fold, plus the checkpoint one-hot; no PCA"
+  },
+  "unchanged_against_stage3a": [
+    "folds",
+    "rows",
+    "row weights",
+    "estimator and its settings",
+    "single-class rule",
+    "convergence retry rule",
+    "score > 0 rule",
+    "snapshot-level and cached-episode evaluators",
+    "library versions"
+  ],
+  "note": "standardising 568 dimensions instead of 8 components also changes the geometry of the L2 penalty; a difference in results is not evidence that the PCA was the cause of the Stage 3A result",
+  "versions": {
+    "python": "3.14.4",
+    "numpy": "2.5.4",
+    "scikit_learn": "1.9.0",
+    "scipy": "1.18.0",
+    "platform": "Windows-11-10.0.26300-SP0"
+  }
+}

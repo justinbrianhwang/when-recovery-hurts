@@ -1,0 +1,145 @@
+{
+  "criteria_definition": {
+    "evaluation": "cached single-intervention reading on repeat 0, leave-one-scene-out",
+    "1": "in Stage 2B and in Stage 2D separately: successful scenes not fewer than Never and not fewer than the training-selected timer",
+    "2": "over both stages: at least 2 more successful scenes than Never and at least 2 more than the training-selected timer",
+    "3": "scenes turned from baseline success into failure: at most 1 over both stages",
+    "4": "net gain over Never of at least 1 scene in Stage 2B and in Stage 2D",
+    "5": "all folds and integrity checks complete, no scene missing, every fit converged",
+    "tie_break_if_both_pass": [
+      "more successful scenes",
+      "fewer scenes lost",
+      "fewer interventions",
+      "M_Q_full"
+    ]
+  },
+  "candidates": [
+    {
+      "candidate": "M_Q_full",
+      "pass": false,
+      "criteria": {
+        "1_not_below_never_and_timer_in_each_stage": false,
+        "2_at_least_two_more_scenes_than_never_and_than_timer_over_both_stages": false,
+        "3_at_most_one_baseline_success_lost_over_both_stages": false,
+        "4_net_gain_of_at_least_one_scene_in_each_stage": false,
+        "5_all_folds_and_checks_complete": true
+      },
+      "numbers": {
+        "2B": {
+          "candidate": 6,
+          "never": 8,
+          "training_selected_timer": 8,
+          "scenes": 24,
+          "net_gain_over_never": -2,
+          "scenes_gained": [],
+          "scenes_lost": [
+            10027,
+            10032
+          ],
+          "scenes_intervened": 18
+        },
+        "2D": {
+          "candidate": 3,
+          "never": 3,
+          "training_selected_timer": 3,
+          "scenes": 12,
+          "net_gain_over_never": 0,
+          "scenes_gained": [
+            10054
+          ],
+          "scenes_lost": [
+            10051
+          ],
+          "scenes_intervened": 8
+        },
+        "pool": {
+          "candidate": 9,
+          "never": 11,
+          "training_selected_timer": 11,
+          "scenes": 36,
+          "net_gain_over_never": -2,
+          "scenes_gained": [
+            10054
+          ],
+          "scenes_lost": [
+            10027,
+            10032,
+            10051
+          ],
+          "scenes_intervened": 26
+        }
+      }
+    },
+    {
+      "candidate": "M_pair_full",
+      "pass": false,
+      "criteria": {
+        "1_not_below_never_and_timer_in_each_stage": false,
+        "2_at_least_two_more_scenes_than_never_and_than_timer_over_both_stages": false,
+        "3_at_most_one_baseline_success_lost_over_both_stages": false,
+        "4_net_gain_of_at_least_one_scene_in_each_stage": false,
+        "5_all_folds_and_checks_complete": true
+      },
+      "numbers": {
+        "2B": {
+          "candidate": 7,
+          "never": 8,
+          "training_selected_timer": 8,
+          "scenes": 24,
+          "net_gain_over_never": -1,
+          "scenes_gained": [
+            10043
+          ],
+          "scenes_lost": [
+            10027,
+            10046
+          ],
+          "scenes_intervened": 17
+        },
+        "2D": {
+          "candidate": 3,
+          "never": 3,
+          "training_selected_timer": 3,
+          "scenes": 12,
+          "net_gain_over_never": 0,
+          "scenes_gained": [
+            10054
+          ],
+          "scenes_lost": [
+            10051
+          ],
+          "scenes_intervened": 9
+        },
+        "pool": {
+          "candidate": 10,
+          "never": 11,
+          "training_selected_timer": 11,
+          "scenes": 36,
+          "net_gain_over_never": -1,
+          "scenes_gained": [
+            10043,
+            10054
+          ],
+          "scenes_lost": [
+            10027,
+            10046,
+            10051
+          ],
+          "scenes_intervened": 26
+        }
+      }
+    }
+  ],
+  "selected_candidate": null,
+  "status": {
+    "base_policy_qualification": "BELOW_ORIGINAL_GATE (37/100 < 50/100)",
+    "stage3b": "COMPLETED_DEV_NO_GATE_PASS",
+    "new_simulator_rollouts": "NOT_RUN",
+    "base_policy_retraining": "NOT_RUN",
+    "calibration": "NOT_RUN",
+    "final_test": "NOT_RUN",
+    "current_configuration_next_rollout": "NOT_AUTHORIZED",
+    "current_configuration_model_search": "CLOSED_FOR_THIS_CYCLE"
+  },
+  "scope": "Operating criteria for the next development step, applied to data already looked at. Not a significance test, not a generalisation claim, not a harm-rate guarantee."
+}

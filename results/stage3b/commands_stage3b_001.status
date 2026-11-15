@@ -1,0 +1,8 @@
+s3b_manifest cmd=python scripts/25_stage3b_full_feature.py manifest --out runs/stage3b_001 start=2026-11-15T01:56:06Z
+s3b_manifest exit=0 end=2026-11-15T01:56:34Z
+s3b_verify_before cmd=python scripts/25_stage3b_full_feature.py verify --out runs/stage3b_001 --label input_hash_check_before start=2026-11-15T01:56:34Z
+s3b_verify_before exit=0 end=2026-11-15T01:56:34Z
+s3b_run cmd=python scripts/25_stage3b_full_feature.py run --out runs/stage3b_001 start=2026-11-15T01:56:34Z
+s3b_run exit=0 end=2026-11-15T01:57:37Z
+s3b_verify_after cmd=python scripts/25_stage3b_full_feature.py verify --out runs/stage3b_001 --label input_hash_check_after start=2026-11-15T01:57:37Z
+s3b_verify_after exit=0 end=2026-11-15T01:57:38Z

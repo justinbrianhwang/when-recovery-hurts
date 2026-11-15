@@ -197,6 +197,7 @@ Last updated 2026-11-14. Host: one rented RTX 3090 (24 GB), Ubuntu 22.04, Python
 | 2C | Offline review of the saved Stage 2B records (no simulator, no GPU, nothing trained; planned after the 2B results were seen) | the 2B counts were reproduced from the raw rows; choosing an arm from three noise repeats of a state and reading it on the fourth gave scene means 0.01–0.03 above Continue, carried by 2–4 of 24 scenes; during the retreat itself the recorded grasp, lift and alignment flags never switched off. Descriptive only |
 | 2D | Three control arms that hand control back at the same step, on 12 new train scenes: the existing 5 cm retreat, a 2 cm move then hold, and holding in place (same policy, still below the gate; see below) | restore audit pass at 18 checkpoints; 176 blocks, 704 continuations; first inference after the control part at the same step with the same seed in 176/176 blocks. Successful blocks: Continue 25, 5 cm 32, 2 cm 26, hold 29; the direction of the differences reversed between checkpoints. Descriptive only |
 | 3A | First observation-based selector between Continue and the existing 5 cm retreat, fitted on the saved Stage 2B and 2D records and read with whole scenes held out (CPU only, no new rollout; planned after those results were seen) | inputs intact and the two stages compatible on 12 checks; 38 fits converged. Scenes that succeed when one intervention is read from the stored paths: never intervening 8/24 and 3/12; the observation models 8/24 and 2–3/12; the time-only model 8/24 and 3/12. No gain over not intervening was found. Descriptive only |
+| 3B | The same selector with all 568 saved feature dimensions instead of 8 principal components; one CPU run with entry criteria fixed beforehand (decided after the 3A result was seen) | the Stage 3A controls were reproduced exactly; successful scenes when one intervention is read from the stored paths: never intervening 8/24 and 3/12, the two candidates 6–7/24 and 3/12. No entry criterion on outcomes was met; model search for this configuration is closed for this cycle. Descriptive only |
 | 3–6 | Pilot, development, calibration, final test | not run |
 
 What this does **not** show: that the base policy solves the task, that any selector helps, or that any hypothesis holds. Unit tests check Python logic on mock physics; they say nothing about manipulation success.
@@ -383,6 +384,33 @@ The only model inputs are the `policy_feature` vector saved at the snapshot befo
 The observation models did intervene (in 13–15 of the 24 and 10 of the 12 scenes), but mostly where neither arm succeeded: of the 31 Stage 2B snapshots at which `M_Q` chose R5, both arms failed all four repeats in 31. Of the 17 snapshots where R5 did better than Continue, the models chose R5 at 2. On the Stage 2D scenes they gave up two scenes the trunk had solved (10051, 10056) and gained one or two (10054, 10050). A rule fitted on Stage 2D alone and read on Stage 2B intervened at step 12 in every scene and left 2 of 24 successful.
 
 This is a negative result for these records, this representation (8 components of a saved feature) and these fixed linear models, on scenes whose outcomes had already been looked at several times; holding scenes out does not make it an independent validation. It does not show that selection from observations is impossible, and the table reads stored paths at four fixed checkpoints rather than running a selector in closed loop. Coefficients fitted on all 36 scenes are stored as `DEV_ONLY_NOT_INDEPENDENTLY_EVALUATED` and are not recommended for a run. Data: [`results/stage3a/`](results/stage3a/); change record: [`amendments/AMENDMENT_009_stage3a_observation_selector.md`](amendments/AMENDMENT_009_stage3a_observation_selector.md).
+
+**Stage 3B: the same selector with the whole saved feature, and a stopping rule.**
+
+```text
+base_policy_qualification: BELOW_ORIGINAL_GATE
+stage3b: COMPLETED_DEV_NO_GATE_PASS
+current_configuration_next_rollout: NOT_AUTHORIZED
+current_configuration_model_search: CLOSED_FOR_THIS_CYCLE
+calibration: NOT_RUN
+final_test: NOT_RUN
+```
+
+The research question was kept and the configuration fixed for this cycle (StackCube, the 80k policy, Continue against the existing 5 cm retreat). One thing was changed against Stage 3A: the two candidates `M_Q_full` and `M_pair_full` read all 568 saved feature dimensions, standardised on the training snapshots of each fold, instead of 8 principal components. Folds, rows, weights, the logistic-regression settings, the score > 0 rule and the evaluators are those of Stage 3A, whose models were refitted in the same run and reproduced the stored predictions and tables exactly.
+
+Entry criteria for a next real run were written down before the run: not below never intervening or the training-chosen timer in either stage, at least two more successful scenes than each over both stages, at most one baseline success lost, a net gain in each stage, and a complete run. They are operating criteria set on data already looked at, not significance or generalisation criteria.
+
+| Scenes that succeed when at most one intervention is read from the stored repeat-0 paths | Stage 2B scenes (24) | Stage 2D scenes (12) |
+|---|---:|---:|
+| Never intervene | 8 | 3 |
+| Timer chosen on the training scenes | 8 | 3 |
+| `M_Q` / `M_pair` (Stage 3A, 8 components) | 8 / 8 | 2 / 3 |
+| `M_Q_full` | 6 | 3 |
+| `M_pair_full` | 7 | 3 |
+
+Neither candidate met any of the four criteria on outcomes. `M_Q_full` gained one scene (10054) and lost three (10027, 10032, 10051); `M_pair_full` gained two (10043, 10054) and lost three (10027, 10046, 10051). On the Stage 2D scenes `M_Q_full` was above Continue when its choice is applied to all four repeats of a snapshot (30 against 25 successful blocks), but not on the Stage 2B scenes (82 against 93).
+
+By the rule fixed beforehand, no new rollout is authorised and no further model, distance, duration or training-amount search is added for this configuration in this cycle. This closes the development of the current configuration; it is not a statement that selection from observations is impossible, and since the change of input also changes how the penalty acts, it does not show whether the dimension reduction mattered. Stage record: [`results/stage3b/STAGE_REPORT_stage3b_001.md`](results/stage3b/STAGE_REPORT_stage3b_001.md); data: [`results/stage3b/`](results/stage3b/); change record: [`amendments/AMENDMENT_010_stage3b_direction_lock_full_feature.md`](amendments/AMENDMENT_010_stage3b_direction_lock_full_feature.md).
 
 At the same state, Refresh discarded the 4 remaining queued actions, triggered one new inference, and changed the next action by at most 0.007 in normalized units.
 
