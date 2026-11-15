@@ -196,6 +196,7 @@ Last updated 2026-11-14. Host: one rented RTX 3090 (24 GB), Ubuntu 22.04, Python
 | 2B | Four-arm control on 24 new train scenes: Continue, Continue with another future noise key, Refresh, Retreat–Retry (same policy, still below the gate; see below) | restore audit pass at 18 checkpoints; 336 blocks, 1,344 continuations; the noise-only arm matched Continue exactly until the old action queue was used up in 336/336 blocks. In this sample the mean outcome of Refresh was within 0.03 of both Continue arms and that of forced Retreat–Retry was 0.16–0.25 lower. Descriptive only |
 | 2C | Offline review of the saved Stage 2B records (no simulator, no GPU, nothing trained; planned after the 2B results were seen) | the 2B counts were reproduced from the raw rows; choosing an arm from three noise repeats of a state and reading it on the fourth gave scene means 0.01–0.03 above Continue, carried by 2–4 of 24 scenes; during the retreat itself the recorded grasp, lift and alignment flags never switched off. Descriptive only |
 | 2D | Three control arms that hand control back at the same step, on 12 new train scenes: the existing 5 cm retreat, a 2 cm move then hold, and holding in place (same policy, still below the gate; see below) | restore audit pass at 18 checkpoints; 176 blocks, 704 continuations; first inference after the control part at the same step with the same seed in 176/176 blocks. Successful blocks: Continue 25, 5 cm 32, 2 cm 26, hold 29; the direction of the differences reversed between checkpoints. Descriptive only |
+| 3A | First observation-based selector between Continue and the existing 5 cm retreat, fitted on the saved Stage 2B and 2D records and read with whole scenes held out (CPU only, no new rollout; planned after those results were seen) | inputs intact and the two stages compatible on 12 checks; 38 fits converged. Scenes that succeed when one intervention is read from the stored paths: never intervening 8/24 and 3/12; the observation models 8/24 and 2–3/12; the time-only model 8/24 and 3/12. No gain over not intervening was found. Descriptive only |
 | 3–6 | Pilot, development, calibration, final test | not run |
 
 What this does **not** show: that the base policy solves the task, that any selector helps, or that any hypothesis holds. Unit tests check Python logic on mock physics; they say nothing about manipulation success.
@@ -355,6 +356,33 @@ For every snapshot the control part of R5 was first run alone, without calling t
 Within a block, R2M against R5 was better in 18 and worse in 24; H0M against R5, 23 and 26; R2M against H0M, 9 and 12 (scene-mean differences −0.031, −0.030, −0.002). The lower outcome of the 5 cm retreat seen in Stage 2B did not reappear on these scenes as a whole (R5 against Continue: better in 25 blocks, worse in 18), and the differences between the control arms point in opposite directions at step 12 and at step 52. Of the 25 blocks where Continue succeeded (four scenes), R5 failed in 18, R2M in 14 and H0M, which is commanded to hold its position, in 13.
 
 This does not separate time from displacement: the three control arms differ in the whole path (speed, contact, observation history), and holding in place still contains the interruption, the discarded action chunk, the resumption and the spent budget. The two new arms need to know when R5 would end, so they are diagnostic variants and not recovery actions; returning right after a 2 cm move was not run. With 12 scenes and no interval or p-value, the stage ends with a recommendation to withhold any claim about the usefulness of this family of retreats; nothing was expanded automatically. Report: [`reports/STAGE_REPORT_stage2d_001.md`](reports/STAGE_REPORT_stage2d_001.md) (Korean); data: [`results/stage2d/`](results/stage2d/); change record: [`amendments/AMENDMENT_008_stage2d_duration_matched_controls.md`](amendments/AMENDMENT_008_stage2d_duration_matched_controls.md).
+
+**Stage 3A: can a small model tell from the saved observations when to retreat?**
+
+```text
+base_policy_qualification: BELOW_ORIGINAL_GATE
+stage3a: EXPLORATORY_OBSERVATION_BASED_SELECTOR_FEASIBILITY (completed)
+new_simulator_rollouts: NOT_RUN
+observation_based_selector: TRAINED_DEV_ONLY
+calibration: NOT_RUN
+final_test: NOT_RUN
+```
+
+Instead of looking for a better retreat, this stage fitted the first selector, on a CPU, from what Stages 2B and 2D had already saved: 36 scenes, 128 snapshots, and for each snapshot four noise repeats of Continue and of the existing 5 cm retreat (R5). The other arms and Stage 2A were not used. The stages were combined only after a check that the common arms were collected with the same policy, settings, runtime code, noise rule and input definition; they ran on different hosts and GPU drivers, which is kept as metadata and never given to a model.
+
+The only model inputs are the `policy_feature` vector saved at the snapshot before any outcome existed (the frozen policy's encoder output, last action, time and queue fraction) and the checkpoint. Per fold, on training snapshots only: standardise, keep 8 principal components, standardise again, append a one-hot of the checkpoint. Three logistic models with fixed settings and no search: `M_time` sees only the checkpoint; `M_Q` predicts the success of each arm; `M_pair` predicts the four joint outcomes. Each chooses R5 when its score is above zero. Every scene was held out as a whole (36 folds), and predictions were written and hashed before held-out outcomes were joined.
+
+| Scenes that succeed when at most one intervention is read from the stored repeat-0 paths | Stage 2B scenes (24) | Stage 2D scenes (12) |
+|---|---:|---:|
+| Never intervene (the stored trunk) | 8 | 3 |
+| Timer chosen on the training scenes | 8 | 3 |
+| `M_time` | 8 | 3 |
+| `M_Q` | 8 | 2 |
+| `M_pair` | 8 | 3 |
+
+The observation models did intervene (in 13–15 of the 24 and 10 of the 12 scenes), but mostly where neither arm succeeded: of the 31 Stage 2B snapshots at which `M_Q` chose R5, both arms failed all four repeats in 31. Of the 17 snapshots where R5 did better than Continue, the models chose R5 at 2. On the Stage 2D scenes they gave up two scenes the trunk had solved (10051, 10056) and gained one or two (10054, 10050). A rule fitted on Stage 2D alone and read on Stage 2B intervened at step 12 in every scene and left 2 of 24 successful.
+
+This is a negative result for these records, this representation (8 components of a saved feature) and these fixed linear models, on scenes whose outcomes had already been looked at several times; holding scenes out does not make it an independent validation. It does not show that selection from observations is impossible, and the table reads stored paths at four fixed checkpoints rather than running a selector in closed loop. Coefficients fitted on all 36 scenes are stored as `DEV_ONLY_NOT_INDEPENDENTLY_EVALUATED` and are not recommended for a run. Report: [`reports/STAGE_REPORT_stage3a_001.md`](reports/STAGE_REPORT_stage3a_001.md) (Korean); data: [`results/stage3a/`](results/stage3a/); change record: [`amendments/AMENDMENT_009_stage3a_observation_selector.md`](amendments/AMENDMENT_009_stage3a_observation_selector.md).
 
 At the same state, Refresh discarded the 4 remaining queued actions, triggered one new inference, and changed the next action by at most 0.007 in normalized units.
 

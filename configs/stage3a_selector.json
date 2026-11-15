@@ -1,0 +1,62 @@
+{
+  "run_id": "stage3a_001",
+  "nature": "Exploratory development experiment planned after the Stage 2B, 2C and 2D results were seen. CPU only. Not a confirmatory test, not an independent validation, not a final Test.",
+  "status": {
+    "base_policy_qualification": "BELOW_ORIGINAL_GATE (37/100 < 50/100)",
+    "stage3a": "EXPLORATORY_OBSERVATION_BASED_SELECTOR_FEASIBILITY",
+    "base_policy_retraining": "NOT_RUN",
+    "new_simulator_rollouts": "NOT_RUN",
+    "formal_study_ready": "NOT_ESTABLISHED",
+    "calibration": "NOT_RUN",
+    "final_test": "NOT_RUN"
+  },
+  "stages": {
+    "2B": {
+      "run": "runs/stage2b_001",
+      "results": "results/stage2b",
+      "pairs": "results/stage2b/pair_outcomes_four_arm.csv",
+      "backup_list": "results/stage2b/backup_sha256_stage2b_001.txt",
+      "retreat_column": "y_R",
+      "retreat_arm": "R",
+      "expected": {"scenes": 24, "snapshots": 84, "blocks": 336, "trunk_success": 8, "success_continue": 93, "success_retreat5": 39}
+    },
+    "2D": {
+      "run": "runs/stage2d_001",
+      "results": "results/stage2d",
+      "pairs": "results/stage2d/pair_outcomes.csv",
+      "backup_list": "results/stage2d/backup_sha256_stage2d_001.txt",
+      "retreat_column": "y_R5",
+      "retreat_arm": "R5",
+      "expected": {"scenes": 12, "snapshots": 44, "blocks": 176, "trunk_success": 3, "success_continue": 25, "success_retreat5": 32}
+    }
+  },
+  "checkpoints": [12, 52, 92, 132],
+  "repeats": [0, 1, 2, 3],
+  "horizon": 200,
+  "features": {
+    "source": "branches/inputs/<scene>.npz, array t<checkpoint>_policy_feature (saved once per snapshot before any continuation)",
+    "model_input": ["policy_feature", "checkpoint"],
+    "policy_feature_dim": 568,
+    "pca_components": 8,
+    "pca": {"svd_solver": "full", "whiten": false},
+    "order": "StandardScaler(policy_feature) -> PCA(8) -> StandardScaler(PC scores) -> append checkpoint one-hot [12, 52, 92, 132]",
+    "fit_on": "unique training snapshots of the fold only, before repeats are expanded",
+    "not_searched": ["other PCA dimensions", "RGB / queue / state_history features", "any new encoder"]
+  },
+  "weights": "row weight 1 / (snapshots of its scene in the training fold * 4), then scaled to mean 1 over the training rows; the same rows and weights for every model",
+  "logistic_regression": {"solver": "lbfgs", "C": 1.0, "fit_intercept": true, "class_weight": null, "tol": 1e-07, "max_iter": 2000, "retry_max_iter": 10000},
+  "models": {
+    "M_time": "checkpoint one-hot only; two binary heads (Continue success, R5 success); score = q_R - q_C",
+    "M_Q": "PC 8 + checkpoint one-hot; two binary heads; score = q_R - q_C (supervised success-value baseline, no Bellman backup)",
+    "M_pair": "PC 8 + checkpoint one-hot; multinomial over joint_label = 2*y_continue + y_retreat5; score = p(01) - p(10)"
+  },
+  "decision_rule": "R5 if score > 0, otherwise Continue. 0 is the expected-net-gain boundary, not a harm tolerance. No threshold, penalty or regularisation search.",
+  "evaluation": {
+    "primary": "leave-one-scene-out over the 36 scenes; results reported per stage, the 36-scene pool only as an auxiliary table",
+    "transfer": ["2B->2D", "2D->2B"],
+    "snapshot_level": "the arm chosen from the snapshot input is applied to all four repeats of that snapshot",
+    "cached_episode": "repeat 0 only; checkpoints read in order 12, 52, 92, 132; the first eligible checkpoint with score > 0 takes the stored R5 repeat-0 continuation; otherwise the stored trunk",
+    "timers": "Never, timer12, timer52, timer92, timer132; training-selected timer = the candidate with most successful training scenes, ties Never, 12, 52, 92, 132"
+  },
+  "not_done": ["GPU rental", "simulator rollout", "base policy inference or retraining", "Refresh / C1 / R2M / H0M as candidates or labels", "Stage 2A data", "threshold / dimension / C search", "p-values, calibration, risk bounds", "final Test"]
+}

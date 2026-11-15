@@ -1,0 +1,47 @@
+{
+  "logistic_regression": {
+    "solver": "lbfgs",
+    "C": 1.0,
+    "fit_intercept": true,
+    "class_weight": null,
+    "tol": 1e-07,
+    "max_iter": 2000,
+    "retry_max_iter": 10000
+  },
+  "models": {
+    "M_time": "checkpoint one-hot only; two binary heads (Continue success, R5 success); score = q_R - q_C",
+    "M_Q": "PC 8 + checkpoint one-hot; two binary heads; score = q_R - q_C (supervised success-value baseline, no Bellman backup)",
+    "M_pair": "PC 8 + checkpoint one-hot; multinomial over joint_label = 2*y_continue + y_retreat5; score = p(01) - p(10)"
+  },
+  "decision_rule": "R5 if score > 0, otherwise Continue. 0 is the expected-net-gain boundary, not a harm tolerance. No threshold, penalty or regularisation search.",
+  "weights": "row weight 1 / (snapshots of its scene in the training fold * 4), then scaled to mean 1 over the training rows; the same rows and weights for every model",
+  "features": {
+    "source": "branches/inputs/<scene>.npz, array t<checkpoint>_policy_feature (saved once per snapshot before any continuation)",
+    "model_input": [
+      "policy_feature",
+      "checkpoint"
+    ],
+    "policy_feature_dim": 568,
+    "pca_components": 8,
+    "pca": {
+      "svd_solver": "full",
+      "whiten": false
+    },
+    "order": "StandardScaler(policy_feature) -> PCA(8) -> StandardScaler(PC scores) -> append checkpoint one-hot [12, 52, 92, 132]",
+    "fit_on": "unique training snapshots of the fold only, before repeats are expanded",
+    "not_searched": [
+      "other PCA dimensions",
+      "RGB / queue / state_history features",
+      "any new encoder"
+    ]
+  },
+  "versions": {
+    "python": "3.14.4",
+    "numpy": "2.5.4",
+    "scikit_learn": "1.9.0",
+    "scipy": "1.18.0",
+    "platform": "Windows-11-10.0.26300-SP0"
+  },
+  "single_class_rule": "binary head: the constant training label; multinomial: classes seen in training only, absent classes get probability 0",
+  "convergence_rule": "one retry with max_iter 10000 for every model; a fit that still does not converge is recorded as failed, never dropped"
+}

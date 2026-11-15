@@ -1,0 +1,236 @@
+{
+  "run_id": "stage3a_001",
+  "created_utc": "2026-11-15T01:25:58.281007+00:00",
+  "nature": "Exploratory development experiment planned after the Stage 2B, 2C and 2D results were seen. CPU only. Not a confirmatory test, not an independent validation, not a final Test.",
+  "status": {
+    "base_policy_qualification": "BELOW_ORIGINAL_GATE (37/100 < 50/100)",
+    "stage3a": "EXPLORATORY_OBSERVATION_BASED_SELECTOR_FEASIBILITY",
+    "base_policy_retraining": "NOT_RUN",
+    "new_simulator_rollouts": "NOT_RUN",
+    "formal_study_ready": "NOT_ESTABLISHED",
+    "calibration": "NOT_RUN",
+    "final_test": "NOT_RUN"
+  },
+  "state": "INPUTS_PRESENT",
+  "missing": [],
+  "config": {
+    "path": "configs/stage3a_selector.json",
+    "sha256": "62cdf38693619ad0e870a9e4e4317f202c99ca82a6d1715faa25aa35537a60a5",
+    "content": {
+      "run_id": "stage3a_001",
+      "nature": "Exploratory development experiment planned after the Stage 2B, 2C and 2D results were seen. CPU only. Not a confirmatory test, not an independent validation, not a final Test.",
+      "status": {
+        "base_policy_qualification": "BELOW_ORIGINAL_GATE (37/100 < 50/100)",
+        "stage3a": "EXPLORATORY_OBSERVATION_BASED_SELECTOR_FEASIBILITY",
+        "base_policy_retraining": "NOT_RUN",
+        "new_simulator_rollouts": "NOT_RUN",
+        "formal_study_ready": "NOT_ESTABLISHED",
+        "calibration": "NOT_RUN",
+        "final_test": "NOT_RUN"
+      },
+      "stages": {
+        "2B": {
+          "run": "runs/stage2b_001",
+          "results": "results/stage2b",
+          "pairs": "results/stage2b/pair_outcomes_four_arm.csv",
+          "backup_list": "results/stage2b/backup_sha256_stage2b_001.txt",
+          "retreat_column": "y_R",
+          "retreat_arm": "R",
+          "expected": {
+            "scenes": 24,
+            "snapshots": 84,
+            "blocks": 336,
+            "trunk_success": 8,
+            "success_continue": 93,
+            "success_retreat5": 39
+          }
+        },
+        "2D": {
+          "run": "runs/stage2d_001",
+          "results": "results/stage2d",
+          "pairs": "results/stage2d/pair_outcomes.csv",
+          "backup_list": "results/stage2d/backup_sha256_stage2d_001.txt",
+          "retreat_column": "y_R5",
+          "retreat_arm": "R5",
+          "expected": {
+            "scenes": 12,
+            "snapshots": 44,
+            "blocks": 176,
+            "trunk_success": 3,
+            "success_continue": 25,
+            "success_retreat5": 32
+          }
+        }
+      },
+      "checkpoints": [
+        12,
+        52,
+        92,
+        132
+      ],
+      "repeats": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "horizon": 200,
+      "features": {
+        "source": "branches/inputs/<scene>.npz, array t<checkpoint>_policy_feature (saved once per snapshot before any continuation)",
+        "model_input": [
+          "policy_feature",
+          "checkpoint"
+        ],
+        "policy_feature_dim": 568,
+        "pca_components": 8,
+        "pca": {
+          "svd_solver": "full",
+          "whiten": false
+        },
+        "order": "StandardScaler(policy_feature) -> PCA(8) -> StandardScaler(PC scores) -> append checkpoint one-hot [12, 52, 92, 132]",
+        "fit_on": "unique training snapshots of the fold only, before repeats are expanded",
+        "not_searched": [
+          "other PCA dimensions",
+          "RGB / queue / state_history features",
+          "any new encoder"
+        ]
+      },
+      "weights": "row weight 1 / (snapshots of its scene in the training fold * 4), then scaled to mean 1 over the training rows; the same rows and weights for every model",
+      "logistic_regression": {
+        "solver": "lbfgs",
+        "C": 1.0,
+        "fit_intercept": true,
+        "class_weight": null,
+        "tol": 1e-07,
+        "max_iter": 2000,
+        "retry_max_iter": 10000
+      },
+      "models": {
+        "M_time": "checkpoint one-hot only; two binary heads (Continue success, R5 success); score = q_R - q_C",
+        "M_Q": "PC 8 + checkpoint one-hot; two binary heads; score = q_R - q_C (supervised success-value baseline, no Bellman backup)",
+        "M_pair": "PC 8 + checkpoint one-hot; multinomial over joint_label = 2*y_continue + y_retreat5; score = p(01) - p(10)"
+      },
+      "decision_rule": "R5 if score > 0, otherwise Continue. 0 is the expected-net-gain boundary, not a harm tolerance. No threshold, penalty or regularisation search.",
+      "evaluation": {
+        "primary": "leave-one-scene-out over the 36 scenes; results reported per stage, the 36-scene pool only as an auxiliary table",
+        "transfer": [
+          "2B->2D",
+          "2D->2B"
+        ],
+        "snapshot_level": "the arm chosen from the snapshot input is applied to all four repeats of that snapshot",
+        "cached_episode": "repeat 0 only; checkpoints read in order 12, 52, 92, 132; the first eligible checkpoint with score > 0 takes the stored R5 repeat-0 continuation; otherwise the stored trunk",
+        "timers": "Never, timer12, timer52, timer92, timer132; training-selected timer = the candidate with most successful training scenes, ties Never, 12, 52, 92, 132"
+      },
+      "not_done": [
+        "GPU rental",
+        "simulator rollout",
+        "base policy inference or retraining",
+        "Refresh / C1 / R2M / H0M as candidates or labels",
+        "Stage 2A data",
+        "threshold / dimension / C search",
+        "p-values, calibration, risk bounds",
+        "final Test"
+      ]
+    }
+  },
+  "code": {
+    "scripts/24_stage3a_selector.py": "4c5788c130718ab308343c71276f745b3ad5a6417f1080801357571079b04537"
+  },
+  "inputs": {
+    "results/stage2b/backup_sha256_stage2b_001.txt": "9170d62063764fe1ed1c9aa28a595d09628c4a2bedc6de08d53d328813f11549",
+    "results/stage2b/dataset.json": "9da08c8b45df162f3a0a1995866355650913bd60725a9b8e82eb52c4b05767bb",
+    "results/stage2b/observation_fields.json": "67cd36ad488c065fde18eaf816e2615786bcac0f7a417abb283436e93816f52b",
+    "results/stage2b/pair_outcomes_four_arm.csv": "5def797cc9d7c4b3a9b222b40ab0eb8dde92308984e8c844ec25eb94638f2652",
+    "results/stage2b/plan.json": "9bbe7aa53df47281c9498a406d4a6df42a92093b65caac0294ca5cb78254facf",
+    "results/stage2b/restore_audit.json": "006d4b234883ee12bd8e4d09390b2b47147e2bf346479b04a5028bce59afa1a6",
+    "results/stage2b/scenes/10024.json": "36e26cc912d7ffc9dc94c87807e523d41899a23350077c88208c0d8042fb6a67",
+    "results/stage2b/scenes/10025.json": "4e760b5c5cbaef3918d783b0e7eb367c2f9a8e691c7ef7cd6c0a403101f15f70",
+    "results/stage2b/scenes/10026.json": "791899dadd297745bee6fe9c6876d7967905eb87e0a22fe9250690d9d949bca6",
+    "results/stage2b/scenes/10027.json": "9e4bda2f1f4284269cf65867caed07e6c474294b35ce4f2078e379a2377970d7",
+    "results/stage2b/scenes/10028.json": "9cf660809285b375803d9ff37631acd9c840448e2bc5cd8f85e7c8f7d4fc4b6f",
+    "results/stage2b/scenes/10029.json": "d4907666a849083fbbc9e0dce481649793f8c7aae07fa8fb570ccd530f25ebee",
+    "results/stage2b/scenes/10030.json": "be1f27e09c98b99de593975b93d6e347249cbbe79f24aa443abda8fa3d80a877",
+    "results/stage2b/scenes/10031.json": "3df95681f825d246519b5740056b29c999f3844a88d99092818151f301965a93",
+    "results/stage2b/scenes/10032.json": "b1833dd9b88afc497ade32f66737a3eb6633d6b3c8c1882f23fdffa2f6b5e581",
+    "results/stage2b/scenes/10033.json": "c38041784d23aeb06cadee6f9ac640227dda3612e97cb1210110f9d4e52af1f5",
+    "results/stage2b/scenes/10034.json": "7b46f5644a4ea1978859f7864cc5a226048a34716b6c56d748e8b8fe0534c318",
+    "results/stage2b/scenes/10035.json": "db6fb36640df0efca1531631e4e2072bac6a60920ac2217426004e78bc396f20",
+    "results/stage2b/scenes/10036.json": "876f0ff0cbb207b6a72f9d7d1484ee5af6bf409e4b8cbcfe64937b62397cb238",
+    "results/stage2b/scenes/10037.json": "7010647b26b3a19cd7042bda9c4d4541da96d2d4ef0a8ac58f97814335164642",
+    "results/stage2b/scenes/10038.json": "dcbbfb48b97c79876dd316a2927b658df73e2fcfcf3ad74ad60a18365835ba53",
+    "results/stage2b/scenes/10039.json": "1641f5fd487eaf561a9f42466a3a776694dca26230992c64b6fd1f2e3e9b78c3",
+    "results/stage2b/scenes/10040.json": "b22ff45fbb24d5889085b9ca4808b07f928ef0ca1a39b18a7bdbb412f33018ff",
+    "results/stage2b/scenes/10041.json": "f39f8eb4971eac4853d2835d7f2d81707f9b54fed7bbad22fe53ea34f548af4f",
+    "results/stage2b/scenes/10042.json": "7c5032ea54aa1c4c6f6786a52374cd9b572bd2890e775aea7fb3f071383feb30",
+    "results/stage2b/scenes/10043.json": "4bfd16241edbfb664232750c46202725ebb6ff106cb6cfc11c0efdf8df429f34",
+    "results/stage2b/scenes/10044.json": "4ea1e505c19434c00c09a44e7d17cf80f966e5c0f8206dc20e48522bbde87b38",
+    "results/stage2b/scenes/10045.json": "39f04f802b1ec9cb897c72b3055305eddf99284d9a5e03e46cf6a2ced9fac5fa",
+    "results/stage2b/scenes/10046.json": "fe6b4459aff69c1b7ac0d9727abca88142cd1370e521b38f04fe4a81c75f89c6",
+    "results/stage2b/scenes/10047.json": "4085a82cc64da97c9e67b6a1d6689f60cf0286c97ecadef1163071734327fe39",
+    "results/stage2b/techcheck.json": "c06147762921a24d7beb56e4b0a92000c4525fb7d54cead809b50ce3a179b076",
+    "results/stage2d/backup_sha256_stage2d_001.txt": "d7f09539917302f14de8064cb4b60df41fbc251acdf71914c85f78d402a97eb2",
+    "results/stage2d/dataset.json": "26905530b22e8d2d13f1a6e25f7d2170947ad7297d837e5f91e290585d64356e",
+    "results/stage2d/observation_fields.json": "3c0861fd2693b0397db631165481bd94f8bcb921edb22d0a98d5f8b4e856d12c",
+    "results/stage2d/pair_outcomes.csv": "745d7846bef6327d7dd959beea7a6c2086ce541ba897cfff423ce70d7f2aad39",
+    "results/stage2d/plan.json": "8989c723a5dc62c5aad55a8f52cd20acf31568e83614b53e7051acd9cb0478fe",
+    "results/stage2d/restore_audit.json": "3820a4f46a775c3eec86629c193504759140fa3866256eb4f892ee623ed86e6e",
+    "results/stage2d/scenes/10048.json": "fb5e1cf578561a9f1ab24ffbc38507797e544b1f948fc2cf12333d9ed9fd849d",
+    "results/stage2d/scenes/10049.json": "7a547fc271b5bd6dda8d8f27c30c9283c205cf9ac5d581f8e655da37e239f72c",
+    "results/stage2d/scenes/10050.json": "d4ce6df19af55b760d895979f9728247e849b70f239ad097dfc54be53756aeb6",
+    "results/stage2d/scenes/10051.json": "961607e8cc67db1c7268a1410d301d94947b9c7cc5429fbdd5665740e076e775",
+    "results/stage2d/scenes/10052.json": "38f2f5bb720c682f494067c52ef2014e044dd1ec8a1d1c0afc217258587d8043",
+    "results/stage2d/scenes/10053.json": "49a15f562ffc710957d29dcecb4194bf07e20d7126b7d53a7ba72e4eb948ffdf",
+    "results/stage2d/scenes/10054.json": "6ca90619a3396a8984bd37cfeef72c06424182c232b3f372cd9b9fb5ce931a09",
+    "results/stage2d/scenes/10055.json": "177ff45335fd5336a1986f5f48611e4ba86d7d778b14a7c5b649668643bbefec",
+    "results/stage2d/scenes/10056.json": "3db3f042537c41cc9d7be491de0b7cbc5b0418ecca9b81fc0a56a5b7afc5cef3",
+    "results/stage2d/scenes/10057.json": "8780b0b1978be6ac9c02f80e712b34eb8867862b5f35684269de216ba384da4e",
+    "results/stage2d/scenes/10058.json": "b4c729d9ae36abdd4c8abc49ae082e191683d5dce68d7fbce55c667a4e76ac3a",
+    "results/stage2d/scenes/10059.json": "97ae4b50901c70b4c4630e240ba3c5983c9da3fbe250b96d795467d4c818d940",
+    "results/stage2d/techcheck.json": "a950d0dd15eaeb2f5e4b45db825fb03d65ca63147430f45a9e0ab125a87e32f5",
+    "runs/stage2b_001/branches/inputs/10024.npz": "d9635d02f6a3ef29d86eb9d710b735141d93f24f975bb6cff31732e666eee756",
+    "runs/stage2b_001/branches/inputs/10025.npz": "c78b06f9180eec615a3166794d8fd3d31d0b98e71ee2d11d25914da87d096542",
+    "runs/stage2b_001/branches/inputs/10026.npz": "7b4a3c61b7cad122e9f0a0ec8ab417d75394a867244311e29af5277d37552b37",
+    "runs/stage2b_001/branches/inputs/10027.npz": "d5221694dbda2af2b8fdda0f6a3f3aee1676a6c2c909e7be23aa15be56db4419",
+    "runs/stage2b_001/branches/inputs/10028.npz": "1962a64fede4cdd2fadace42482a3a64d7f3bc713ac237a94bc26c1d01c6f9c3",
+    "runs/stage2b_001/branches/inputs/10029.npz": "3d0fb3f7e689be76fe36af56f30140a0aeca278b3d9027388296817ca44c244a",
+    "runs/stage2b_001/branches/inputs/10030.npz": "4fb8963a334548664a61ac03e0506777e82a1b97455152de826194f4500466f7",
+    "runs/stage2b_001/branches/inputs/10031.npz": "3dbcfa2e74c35d427c865170a08139d78b4e09dda6798b33ec51c77a2d2f8992",
+    "runs/stage2b_001/branches/inputs/10032.npz": "9b82b1b669e39379223335394c061e495bec17f5e93f20f6a2b6463b2b1c79db",
+    "runs/stage2b_001/branches/inputs/10033.npz": "17363b7e578ec35f798510a2696e9c6b45e54878bbbdd7fad81d64be2eec82ca",
+    "runs/stage2b_001/branches/inputs/10034.npz": "3b600db47eb3158572419754f7684d84fb6f503389c4e116b395ecef07231406",
+    "runs/stage2b_001/branches/inputs/10035.npz": "410a425b794c3332a4100976d856a0133099d76202e129f167e5c24e45f57c1e",
+    "runs/stage2b_001/branches/inputs/10036.npz": "94f4d3f6920b55cea5459f600e3cb2faac64cf873ada4ab63d3b483ad51d25c7",
+    "runs/stage2b_001/branches/inputs/10037.npz": "f6c61ea71e9e1b275e6e815b239b5b2c810c040322fdfd93d2d4be3fb17e096b",
+    "runs/stage2b_001/branches/inputs/10038.npz": "1c937f2a357afe14bb1112c45a56601f6e38f0b60c4f3cf8f9cadf275207a2d9",
+    "runs/stage2b_001/branches/inputs/10039.npz": "c2e87bc39e62a55dcb315ddf06865a5447d17e82ba87389f0b6a3a87b479c48b",
+    "runs/stage2b_001/branches/inputs/10040.npz": "420268c8cc6fd37144136d528aa0fe86d537f6f3f82db5aaa3d6768fbb41db8d",
+    "runs/stage2b_001/branches/inputs/10041.npz": "12cadbe96193b85628d42df43cf1a182dd3bda8804587b9dabcc757c34d7a98e",
+    "runs/stage2b_001/branches/inputs/10042.npz": "bd1e015d25d46810e3d9f57cfc0123b43434981b3ebbc4e3204086bf58143e0f",
+    "runs/stage2b_001/branches/inputs/10043.npz": "4523bd3985277b96dca3a37211b3ab2bcbb1cf44a16f66f6867480ec41184dda",
+    "runs/stage2b_001/branches/inputs/10044.npz": "26b0b7119bbd184f0a05b64e60f44a0efb342dda4380d57817875d1d628cf36f",
+    "runs/stage2b_001/branches/inputs/10045.npz": "4cf9696f1a27a7ec2cc6138674eccdeed44737ac58289b907984b97ad34268d3",
+    "runs/stage2b_001/branches/inputs/10046.npz": "bbecfcd0c66d5e1b1f9e68f08dcb2d24187021319927716a43814010dc89e3df",
+    "runs/stage2b_001/branches/inputs/10047.npz": "84047f425a196177fa886f4747fa8fdb9853505c7c71aa8f8af6fd37d7289518",
+    "runs/stage2d_001/branches/inputs/10048.npz": "7b007b0242e223fa40760ade820cbc6004644adc517ae337ac0ebf97e946d119",
+    "runs/stage2d_001/branches/inputs/10049.npz": "8151d40576e6b76a91c29d4badd2ecd424875bc77163194597c9394c2d1f55e4",
+    "runs/stage2d_001/branches/inputs/10050.npz": "9e4d1318f52ff831d474dcfcf1d455c7b2341d9ce20bfefafc05967d68e54ebd",
+    "runs/stage2d_001/branches/inputs/10051.npz": "6a0cd1a34cff5a1baa4abae0273c543355a9f5f6ead07a047e50e335ea604876",
+    "runs/stage2d_001/branches/inputs/10052.npz": "206358f09a4c921d5ebeb16e41f58ff6ad4214aa55efd07063106f0836be5286",
+    "runs/stage2d_001/branches/inputs/10053.npz": "101fa8bfad50b29e5cf57298a095b1c91a7e00c7f275e9b9746d561ea0367941",
+    "runs/stage2d_001/branches/inputs/10054.npz": "e46a700510de43685afd5c7592a154300e578be22c0a1dc17a03f5c9e6214cad",
+    "runs/stage2d_001/branches/inputs/10055.npz": "fe18496ce8dc8a248dd364b65bb4d4bc26947e57ac8aff4de90ffed62e832f2c",
+    "runs/stage2d_001/branches/inputs/10056.npz": "8edd2b2bd1ea66a1695990ba6dfbb1b0005bd6c14bc85dbb87b06d7dd9b52fa6",
+    "runs/stage2d_001/branches/inputs/10057.npz": "c567579f96e24bf8b1514c0f06ff86a8acb5a5aa0f168bfe79fc211f93958f02",
+    "runs/stage2d_001/branches/inputs/10058.npz": "779fb6ed3359538bb9041e3e3b178fcba5cfb8e1f0b5c2a9439316b9f4778e4a",
+    "runs/stage2d_001/branches/inputs/10059.npz": "2fe7393668e4bbfc76412c12cbd7720d3f293921d23bc3cc25ab7af5d6f8ad69"
+  },
+  "input_count": 86,
+  "versions": {
+    "python": "3.14.4",
+    "numpy": "2.5.4",
+    "scikit_learn": "1.9.0",
+    "scipy": "1.18.0",
+    "platform": "Windows-11-10.0.26300-SP0"
+  },
+  "written_before": "any preprocessing, fit, prediction or evaluation of this stage"
+}

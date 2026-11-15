@@ -1,0 +1,33 @@
+{
+  "model_input_columns": [
+    "policy_feature",
+    "checkpoint"
+  ],
+  "policy_feature": {
+    "dim": 568,
+    "dtype": "float32",
+    "content": "fixed encoder output of the frozen policy for the snapshot history, then last action (4), t/horizon, queue fraction",
+    "source": "branches/inputs/<scene>.npz, array t<checkpoint>_policy_feature (saved once per snapshot before any continuation)"
+  },
+  "model_vector": {
+    "M_time": "4 = checkpoint one-hot [12, 52, 92, 132]",
+    "M_Q": "12 = 8 standardized PC scores + checkpoint one-hot",
+    "M_pair": "same 12 as M_Q"
+  },
+  "preprocessing": "StandardScaler(policy_feature) -> PCA(8) -> StandardScaler(PC scores) -> append checkpoint one-hot [12, 52, 92, 132]",
+  "fit_on": "unique training snapshots of the fold only, before repeats are expanded",
+  "never_an_input": [
+    "scene / episode id, seed, stage, host, driver, file name, path, hash, snapshot id, repeat id",
+    "cube pose, grasp / on-cube / static flag, stage label",
+    "success or failure, trunk outcome, success step, final state, any arm outcome or count",
+    "T_ref, R5 duration, achieved displacement, state after the return, future trace or noise"
+  ],
+  "read_for_integrity_only": [
+    "rgb_history",
+    "state_history",
+    "last_action",
+    "queue",
+    "t",
+    "remaining_budget"
+  ]
+}

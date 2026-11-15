@@ -1,0 +1,8 @@
+s3a_manifest cmd=python scripts/24_stage3a_selector.py manifest --out runs/stage3a_001 start=2026-11-15T01:25:57Z
+s3a_manifest exit=0 end=2026-11-15T01:26:05Z
+s3a_verify_before cmd=python scripts/24_stage3a_selector.py verify --out runs/stage3a_001 --label input_hash_check_before start=2026-11-15T01:26:05Z
+s3a_verify_before exit=0 end=2026-11-15T01:26:06Z
+s3a_run cmd=python scripts/24_stage3a_selector.py run --out runs/stage3a_001 start=2026-11-15T01:26:06Z
+s3a_run exit=0 end=2026-11-15T01:26:28Z
+s3a_verify_after cmd=python scripts/24_stage3a_selector.py verify --out runs/stage3a_001 --label input_hash_check_after start=2026-11-15T01:26:28Z
+s3a_verify_after exit=0 end=2026-11-15T01:26:31Z
