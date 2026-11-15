@@ -1,0 +1,56 @@
+{
+ "recorded_utc": "2026-11-15T05:53:45.143495+00:00",
+ "cap_usd": 1.0,
+ "credit_before": 7.985171390720495,
+ "credit_after": 7.655262524520509,
+ "total_cost_usd": 0.3299,
+ "cost_basis": "difference of the account credit before renting and after both instances were destroyed (includes storage and transfer)",
+ "within_cap": true,
+ "instances": [
+  {
+   "id": 60737590,
+   "offer": 35413600,
+   "gpu": "RTX 3090",
+   "cpu": "AMD EPYC 7R32",
+   "price_usd_per_hour": 0.2089,
+   "created_utc": "2026-11-15T04:18:55Z",
+   "destroyed_utc": "2026-11-15T04:41:05Z",
+   "credit_used_usd": 0.0502,
+   "what_ran": "system package installation only; no test, no policy, no simulator",
+   "why_destroyed": "network far slower than advertised (apt about 0.5 MB/s, PyTorch wheel about 1 MB/s; installation alone was projected at about one hour)",
+   "data_on_server_at_deletion": "the uploaded package only; nothing to back up",
+   "deletion_confirmed": "show instances -> No instances found"
+  },
+  {
+   "id": 60740152,
+   "offer": 41997153,
+   "gpu": "RTX 3090 24 GB, driver 580.126.09",
+   "cpu": "AMD EPYC 7532",
+   "price_usd_per_hour": 0.227,
+   "created_utc": "2026-11-15T04:41:40Z",
+   "destroyed_utc": "2026-11-15T05:50:11Z",
+   "credit_used_usd": 0.2797,
+   "what_ran": "the whole run (install, tests, placement check, audit, 12 scenes, tables, archive)",
+   "backup_before_deletion": {
+    "archive": "handoff_h1_out.tgz",
+    "sha256": "dab6767e1b0d10ee8c6bf93a130dee60040730211fcf2b0454981f9f085f69b4",
+    "files_verified": "101 of 101 after local extraction"
+   },
+   "deletion_confirmed": "show instances -> No instances found (checked again after the run)"
+  }
+ ],
+ "instances_left_running": 0,
+ "other_instances_touched": 0,
+ "one_instance_at_a_time": true,
+ "credit_checks_during_run": {
+  "after_audit_start": 7.810571450520541,
+  "after_first_two_scenes": 7.752416898520536,
+  "during_rest": 7.680590595520499,
+  "right_after_deletion": 7.660234485520505
+ },
+ "scale_decision_inputs": {
+  "usd_per_hour_all_in": 0.25,
+  "spent_usd": 0.233,
+  "projected_total_usd_for_12_scenes": 0.55
+ }
+}

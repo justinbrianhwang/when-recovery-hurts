@@ -1,0 +1,76 @@
+# local (before renting)
+h1_local_pytest cmd=python -m pytest -q start=2026-11-15T04:14:42Z
+h1_local_pytest exit=0 end=2026-11-15T04:17:20Z
+h1_plan cmd=python scripts/26_handoff_h1.py plan --out runs/handoff_h1_001 start=2026-11-15T04:17:20Z
+h1_plan exit=0 end=2026-11-15T04:17:27Z
+h1_inspect cmd=python scripts/26_handoff_h1.py inspect-inputs --out runs/handoff_h1_001 start=2026-11-15T04:17:27Z
+h1_inspect exit=0 end=2026-11-15T04:17:36Z
+h1_dryrun cmd=python scripts/26_handoff_h1.py dry-run --plan runs/handoff_h1_001/scope_plan.json --run runs/handoff_h1_001 --out runs/handoff_h1_001/dry_run.json start=2026-11-15T04:17:36Z
+h1_dryrun exit=0 end=2026-11-15T04:17:44Z
+# first host, instance 60737590 (abandoned during install because of a slow network; no policy or simulator command was run)
+install start=2026-11-15T04:28:17Z
+install_sys exit=0 end=2026-11-15T04:40:34Z
+# second host, instance 60740152
+install start=2026-11-15T04:42:43Z
+install_sys exit=0 end=2026-11-15T04:43:25Z
+bootstrap exit=0 end=2026-11-15T04:45:41Z
+PHASE_EXIT install 0
+h1_doctor cmd=python -m hci doctor --out runs/handoff_h1_001/doctor
+h1_doctor start=2026-11-15T04:45:42Z
+h1_doctor exit=0 end=2026-11-15T04:45:49Z
+h1_pytest cmd=python -m pytest -q
+h1_pytest start=2026-11-15T04:45:49Z
+h1_pytest exit=0 end=2026-11-15T04:46:45Z
+ENV_DONE
+PHASE_EXIT env 0
+h1_scenes cmd=python scripts/26_handoff_h1.py scenes --plan runs/handoff_h1_001/scope_plan.json --keys runs/handoff_h1_001/reference_scene_keys.json --out runs/handoff_h1_001/scenes.json
+h1_scenes start=2026-11-15T04:46:45Z
+h1_scenes exit=0 end=2026-11-15T04:48:27Z
+SCENES_DONE
+PHASE_EXIT scenes 0
+h1_audit cmd=python scripts/26_handoff_h1.py audit --plan runs/handoff_h1_001/scope_plan.json --out runs/handoff_h1_001/audit
+h1_audit start=2026-11-15T04:48:27Z
+h1_audit exit=0 end=2026-11-15T05:03:59Z
+AUDIT_DONE
+PHASE_EXIT audit 0
+h1_collect_first2 cmd=python scripts/26_handoff_h1.py collect --plan runs/handoff_h1_001/scope_plan.json --run runs/handoff_h1_001 --start 0 --stop 2 --label first2
+h1_collect_first2 start=2026-11-15T05:03:59Z
+h1_collect_first2 exit=0 end=2026-11-15T05:26:21Z
+h1_techcheck cmd=python scripts/26_handoff_h1.py techcheck --plan runs/handoff_h1_001/scope_plan.json --run runs/handoff_h1_001
+h1_techcheck start=2026-11-15T05:26:21Z
+h1_techcheck exit=0 end=2026-11-15T05:26:23Z
+FIRST2_DONE
+PHASE_EXIT first2 0
+PART_A_DONE 2026-11-15T05:26:23Z
+budget: all-in 0.25 USD/h (credit-based); spent so far 0.233; cap 1.00; WORKERS=6 COLLECT_LIMIT_S=5400
+h1_scale cmd=python scripts/26_handoff_h1.py scale --plan runs/handoff_h1_001/scope_plan.json --run runs/handoff_h1_001 --usd-per-hour 0.25 --spent-usd 0.233 --reserve-usd 0.20 --workers 6 --efficiency 0.7
+h1_scale start=2026-11-15T05:26:56Z
+h1_scale exit=0 end=2026-11-15T05:26:58Z
+SCALE_DONE
+PHASE_EXIT scale 0
+h1_collect_w0 cmd=timeout 5400 python scripts/26_handoff_h1.py collect --plan runs/handoff_h1_001/scope_plan.json --run runs/handoff_h1_001 --start 2 --stop 12 --step 6 --label w0
+h1_collect_w0 start=2026-11-15T05:26:58Z
+h1_collect_w0 exit=0 end=2026-11-15T05:49:05Z
+h1_collect_w1 cmd=timeout 5400 python scripts/26_handoff_h1.py collect --plan runs/handoff_h1_001/scope_plan.json --run runs/handoff_h1_001 --start 3 --stop 12 --step 6 --label w1
+h1_collect_w1 start=2026-11-15T05:26:58Z
+h1_collect_w1 exit=0 end=2026-11-15T05:44:33Z
+h1_collect_w2 cmd=timeout 5400 python scripts/26_handoff_h1.py collect --plan runs/handoff_h1_001/scope_plan.json --run runs/handoff_h1_001 --start 4 --stop 12 --step 6 --label w2
+h1_collect_w2 start=2026-11-15T05:26:58Z
+h1_collect_w2 exit=0 end=2026-11-15T05:44:41Z
+h1_collect_w3 cmd=timeout 5400 python scripts/26_handoff_h1.py collect --plan runs/handoff_h1_001/scope_plan.json --run runs/handoff_h1_001 --start 5 --stop 12 --step 6 --label w3
+h1_collect_w3 start=2026-11-15T05:26:58Z
+h1_collect_w3 exit=0 end=2026-11-15T05:48:17Z
+h1_collect_w4 cmd=timeout 5400 python scripts/26_handoff_h1.py collect --plan runs/handoff_h1_001/scope_plan.json --run runs/handoff_h1_001 --start 6 --stop 12 --step 6 --label w4
+h1_collect_w4 start=2026-11-15T05:26:58Z
+h1_collect_w4 exit=0 end=2026-11-15T05:38:57Z
+h1_collect_w5 cmd=timeout 5400 python scripts/26_handoff_h1.py collect --plan runs/handoff_h1_001/scope_plan.json --run runs/handoff_h1_001 --start 7 --stop 12 --step 6 --label w5
+h1_collect_w5 start=2026-11-15T05:26:58Z
+h1_collect_w5 exit=0 end=2026-11-15T05:39:06Z
+REST_DONE scenes=12 workers=6
+PHASE_EXIT rest 0
+h1_finalize cmd=python scripts/26_handoff_h1.py finalize --plan runs/handoff_h1_001/scope_plan.json --run runs/handoff_h1_001 --results runs/handoff_h1_001/results
+h1_finalize start=2026-11-15T05:49:05Z
+h1_finalize exit=0 end=2026-11-15T05:49:08Z
+FINAL_DONE
+PHASE_EXIT final 0
+PHASE_EXIT pack 0

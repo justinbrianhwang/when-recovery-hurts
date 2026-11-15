@@ -1,0 +1,696 @@
+{
+  "work_id": "handoff_h1_001",
+  "stage": "Handoff H1: one-shot latest-observation padding at handoff",
+  "created_utc": "2026-11-15T04:17:26.549764+00:00",
+  "pass": true,
+  "problems": [],
+  "status": {
+    "legacy_stage3b": "COMPLETED_DEV_NO_GATE_PASS",
+    "legacy_model_search": "CLOSED_FOR_THIS_CYCLE",
+    "base_policy_qualification": "BELOW_ORIGINAL_GATE (37/100 < 50/100)",
+    "handoff_h1": "PREPARATION_ONLY",
+    "new_training": "NOT_RUN",
+    "new_policy_inference": "NOT_RUN",
+    "new_simulator_rollouts": "NOT_RUN",
+    "paid_compute": "NOT_AUTHORIZED",
+    "calibration": "NOT_RUN",
+    "final_test": "NOT_RUN"
+  },
+  "role": "handoff_h1_exploratory_dev",
+  "authorization": {
+    "paid_compute_authorized": false,
+    "policy_inference_authorized": false,
+    "simulator_rollouts_authorized": false,
+    "required_file": "authorization.json in the run folder, written by the user side only: {\"approved_by\": \"user\", \"paid_compute_authorized\": true, \"cap_usd\": <number>, \"plan_sha256\": \"<sha256 of this plan>\"}",
+    "proposed_cap_usd": 1.0,
+    "proposed_cap_is": "a budget proposal, not an approval; earlier stage caps are not reused"
+  },
+  "nature": "Preparation of an exploratory development experiment, designed after the Stage 2B-3B results and an external feedback review were seen. Not a confirmatory test.",
+  "question": "With the fixed Diffusion Policy, right after R5 ends and with physical state, return step, remaining budget and policy noise held equal, does changing the observation history of the first re-inference from [previous, latest] to [latest, latest] change the generated action and the later task outcome?",
+  "neutral_name": "one-shot latest-observation padding at handoff",
+  "hypothesis_status": "\"history contamination\" is an untested hypothesis; no improvement and no OOD cause is assumed",
+  "repository": {
+    "head": "883a72a5d17658ba6c02b557c424b10169819b4f",
+    "remote": "https://github.com/justinbrianhwang/when-recovery-hurts.git",
+    "working_tree_changes_at_plan_time": [
+      "M scripts/26_handoff_h1.py"
+    ],
+    "files_identical_to_the_stage2d_run": {
+      "src/hci/pilot2d.py": true,
+      "src/hci/pilot2b.py": true,
+      "src/hci/pilot.py": true,
+      "src/hci/simulation.py": true,
+      "src/hci/policies.py": true,
+      "src/hci/experiment.py": true,
+      "src/hci/io.py": true,
+      "src/hci/diagnostics.py": true,
+      "src/hci/schema.py": true,
+      "src/hci/trees.py": true,
+      "scripts/20_stage2b_pilot.py": true,
+      "scripts/18_stage2a_pilot.py": true,
+      "scripts/stage1b/common.sh": true
+    }
+  },
+  "policy": {
+    "path": "artifacts/policies/stack_1d_s1_d500_clean_v1_i080000",
+    "weights_sha256": "faacd2d86464c725a4fb95563a5ed5808019a8b420795b9a2a931822ed89db0e",
+    "policy_meta_sha256": "9976053598632fd58c48b89c9dffabf8f97b3d18ccf5062127c9c0be3de8a468",
+    "verified_against": {
+      "backup_list": "results/stage1d_clean/backup_sha256_stage1d_clean_002.txt",
+      "backup_list_sha256": "8ea55c5f616f6eed141c767f97f9f07710005989571c06e239b1ca0657042233"
+    },
+    "settings": {
+      "obs_horizon": 2,
+      "act_horizon": 8,
+      "pred_horizon": 16,
+      "ddpm_steps": 100
+    },
+    "qualification": "37/100, below the 50/100 gate (unchanged)"
+  },
+  "config": {
+    "path": "configs/stackcube.yaml",
+    "file_sha256": "b145ca59607f4edf45f20bd45624f1bd4c8ff028a035ee4ab12b7de40bb08d8b",
+    "config_sha256": "c8cc0a581f7d4e9de4042490bd6939e9b80da1dd333df081cb9107c29427dfbd",
+    "env": {
+      "id": "StackCube-v1",
+      "robot_uid": "panda_wristcam",
+      "sim_backend": "physx_cpu",
+      "num_envs": 1,
+      "obs_mode": "rgb",
+      "control_mode": "pd_ee_delta_pos",
+      "horizon": 200
+    },
+    "protocol": {
+      "max_interventions": 1,
+      "success_definition": "success_once_absorbing",
+      "min_intervention_step": 12,
+      "decision_stride": 4,
+      "minimum_post_retreat_steps": 8
+    },
+    "retreat": {
+      "mode": "up",
+      "distance_m": 0.05,
+      "max_translation_per_step_m": 0.005,
+      "max_steps": 40,
+      "arrival_tolerance_m": 0.005,
+      "lookback_steps": 12
+    },
+    "audit": {
+      "replay_steps": 20,
+      "state_atol": 1e-06,
+      "action_atol": 1e-06,
+      "observation_atol": 1.0
+    }
+  },
+  "code": {
+    "src/hci/handoff_h1.py": "f65ed3d7c2b943ef9962a36c96048e560633ebd142933e6f75009ceb3a3cc6f9",
+    "src/hci/pilot2d.py": "efefdc292630bb565bb319b2fc6cb7a9834603b28b7677b36601403ade52ee0d",
+    "src/hci/pilot2b.py": "625ba28e118e04095a0a0adcfd5b6a1f41416c85eab7c988c7e92a8ab2ba5e34",
+    "src/hci/pilot.py": "4e730c36abdbcaa84d71c8643078b7aece7b01de958c81f4f67a75c62cebfac6",
+    "src/hci/simulation.py": "c42626728cac7eb9ebeffd5372683fc4ba01e41ef9d050f01e51134b0208fe9d",
+    "src/hci/policies.py": "d9083dfe1eff702bae087b96840d2703dbb609fb7947c01eb49864bbd0eb9157",
+    "src/hci/experiment.py": "b7425dcfcff7ff188992bde22e1e2308292aea58eb8a11c557a1ced8ff595d29",
+    "src/hci/io.py": "60f2701b2e52ba80fc7e05142a06ae56c306c4298cd749ca5e418b54cb454a44",
+    "src/hci/diagnostics.py": "49c79927d8cf5f8a208189647c75de1c67c3d4ee873fb87074db506e6534769d",
+    "src/hci/schema.py": "52ef9c07a41ef6e007b5d57429fa062bb66d56b9047e4db0d731117e08589db6",
+    "src/hci/trees.py": "5f0fc7c28a89b32175abea983ac5202ffe535a0fe105e1ff6e855299177d8a60",
+    "scripts/26_handoff_h1.py": "3158431778d9ccce482fe65417d61f01cc4a6c77a9285178cbafba65620aa587",
+    "scripts/23_stage2d_pilot.py": "34c47e42835f28193eb072f5552ee5730e9360348003f3d048727443c8254cf0",
+    "scripts/20_stage2b_pilot.py": "615a1ece5060a25202e47b83cc6e935f5444789cb5da126ec268c5782e345ec5",
+    "scripts/18_stage2a_pilot.py": "3739db21bf352f21b20affdd1b0c3a5214e26fc86490a427c8cceabf5a0149ee",
+    "scripts/handoff_h1/run.sh": "7e5fb4402ed08835e0601bb3ea91e186d93b5408e76c5bb60ce261839a527083",
+    "scripts/stage1b/common.sh": "af2f105e0fe8c8177daea33c5cddefd5266436f366a45e59be821378191db80a"
+  },
+  "upstream_commit": "a4a4f9272ad64b1564035874b605ceb687b63ed8",
+  "splits": {
+    "path": "configs/splits.json",
+    "file_sha256": "828b8f131d85e7ba6a3e720cfdaff022165f6848dd29e0b714bba609797e3224",
+    "digest": "a61fa30d96e63e80fc2b3d97c4dd6a3221f274654c027b455cecba1301a64872"
+  },
+  "policy_eval_splits": {
+    "path": "configs/policy_eval_splits.json",
+    "file_sha256": "579d59ade70f9fe9a6262abaf2598c091da6cb2d6d1a1e9964183965ce6128f0"
+  },
+  "scenes": {
+    "rule": "first 12 seeds of splits/train in ascending order with no recorded use (Stage 2A, 2B, 2D pilots, declared splits, policy-evaluation sets, demonstration seeds); a seed whose initial cube placement equals a placement on record is replaced by the next train seed at the server step `scenes`. Outcomes are never an input.",
+    "list": [
+      10060,
+      10061,
+      10062,
+      10063,
+      10064,
+      10065,
+      10066,
+      10067,
+      10068,
+      10069,
+      10070,
+      10071
+    ],
+    "seed_level_skipped_count": 60,
+    "ledger": {
+      "splits/audit": [
+        100,
+        104,
+        5
+      ],
+      "splits/dev": [
+        20000,
+        20099,
+        100
+      ],
+      "splits/calibration": [
+        30000,
+        30399,
+        400
+      ],
+      "splits/test": [
+        90000,
+        90399,
+        400
+      ],
+      "policy_eval/policy_monitor": [
+        50000,
+        50019,
+        20
+      ],
+      "policy_eval/policy_select": [
+        50100,
+        50149,
+        50
+      ],
+      "policy_eval/policy_qualify_A": [
+        50200,
+        50299,
+        100
+      ],
+      "policy_eval/policy_qualify_B": [
+        50300,
+        50399,
+        100
+      ],
+      "stage2a/exploratory_dev": [
+        10000,
+        10023,
+        24
+      ],
+      "stage2b/exploratory_dev": [
+        10024,
+        10047,
+        24
+      ],
+      "stage2d/exploratory_dev": [
+        10048,
+        10059,
+        12
+      ]
+    },
+    "excluded_prior_pilots": {
+      "stage2a": [
+        10000,
+        10001,
+        10002,
+        10003,
+        10004,
+        10005,
+        10006,
+        10007,
+        10008,
+        10009,
+        10010,
+        10011,
+        10012,
+        10013,
+        10014,
+        10015,
+        10016,
+        10017,
+        10018,
+        10019,
+        10020,
+        10021,
+        10022,
+        10023
+      ],
+      "stage2b": [
+        10024,
+        10025,
+        10026,
+        10027,
+        10028,
+        10029,
+        10030,
+        10031,
+        10032,
+        10033,
+        10034,
+        10035,
+        10036,
+        10037,
+        10038,
+        10039,
+        10040,
+        10041,
+        10042,
+        10043,
+        10044,
+        10045,
+        10046,
+        10047
+      ],
+      "stage2d": [
+        10048,
+        10049,
+        10050,
+        10051,
+        10052,
+        10053,
+        10054,
+        10055,
+        10056,
+        10057,
+        10058,
+        10059
+      ]
+    },
+    "seed_level_skipped": [
+      {
+        "seed": 10000,
+        "reason": "also declared as stage2a/exploratory_dev"
+      },
+      {
+        "seed": 10001,
+        "reason": "also declared as stage2a/exploratory_dev"
+      },
+      {
+        "seed": 10002,
+        "reason": "also declared as stage2a/exploratory_dev"
+      },
+      {
+        "seed": 10003,
+        "reason": "also declared as stage2a/exploratory_dev"
+      },
+      {
+        "seed": 10004,
+        "reason": "also declared as stage2a/exploratory_dev"
+      },
+      {
+        "seed": 10005,
+        "reason": "also declared as stage2a/exploratory_dev"
+      },
+      {
+        "seed": 10006,
+        "reason": "also declared as stage2a/exploratory_dev"
+      },
+      {
+        "seed": 10007,
+        "reason": "also declared as stage2a/exploratory_dev"
+      },
+      {
+        "seed": 10008,
+        "reason": "also declared as stage2a/exploratory_dev"
+      },
+      {
+        "seed": 10009,
+        "reason": "also declared as stage2a/exploratory_dev"
+      },
+      {
+        "seed": 10010,
+        "reason": "also declared as stage2a/exploratory_dev"
+      },
+      {
+        "seed": 10011,
+        "reason": "also declared as stage2a/exploratory_dev"
+      },
+      {
+        "seed": 10012,
+        "reason": "also declared as stage2a/exploratory_dev"
+      },
+      {
+        "seed": 10013,
+        "reason": "also declared as stage2a/exploratory_dev"
+      },
+      {
+        "seed": 10014,
+        "reason": "also declared as stage2a/exploratory_dev"
+      },
+      {
+        "seed": 10015,
+        "reason": "also declared as stage2a/exploratory_dev"
+      },
+      {
+        "seed": 10016,
+        "reason": "also declared as stage2a/exploratory_dev"
+      },
+      {
+        "seed": 10017,
+        "reason": "also declared as stage2a/exploratory_dev"
+      },
+      {
+        "seed": 10018,
+        "reason": "also declared as stage2a/exploratory_dev"
+      },
+      {
+        "seed": 10019,
+        "reason": "also declared as stage2a/exploratory_dev"
+      },
+      {
+        "seed": 10020,
+        "reason": "also declared as stage2a/exploratory_dev"
+      },
+      {
+        "seed": 10021,
+        "reason": "also declared as stage2a/exploratory_dev"
+      },
+      {
+        "seed": 10022,
+        "reason": "also declared as stage2a/exploratory_dev"
+      },
+      {
+        "seed": 10023,
+        "reason": "also declared as stage2a/exploratory_dev"
+      },
+      {
+        "seed": 10024,
+        "reason": "also declared as stage2b/exploratory_dev"
+      },
+      {
+        "seed": 10025,
+        "reason": "also declared as stage2b/exploratory_dev"
+      },
+      {
+        "seed": 10026,
+        "reason": "also declared as stage2b/exploratory_dev"
+      },
+      {
+        "seed": 10027,
+        "reason": "also declared as stage2b/exploratory_dev"
+      },
+      {
+        "seed": 10028,
+        "reason": "also declared as stage2b/exploratory_dev"
+      },
+      {
+        "seed": 10029,
+        "reason": "also declared as stage2b/exploratory_dev"
+      },
+      {
+        "seed": 10030,
+        "reason": "also declared as stage2b/exploratory_dev"
+      },
+      {
+        "seed": 10031,
+        "reason": "also declared as stage2b/exploratory_dev"
+      },
+      {
+        "seed": 10032,
+        "reason": "also declared as stage2b/exploratory_dev"
+      },
+      {
+        "seed": 10033,
+        "reason": "also declared as stage2b/exploratory_dev"
+      },
+      {
+        "seed": 10034,
+        "reason": "also declared as stage2b/exploratory_dev"
+      },
+      {
+        "seed": 10035,
+        "reason": "also declared as stage2b/exploratory_dev"
+      },
+      {
+        "seed": 10036,
+        "reason": "also declared as stage2b/exploratory_dev"
+      },
+      {
+        "seed": 10037,
+        "reason": "also declared as stage2b/exploratory_dev"
+      },
+      {
+        "seed": 10038,
+        "reason": "also declared as stage2b/exploratory_dev"
+      },
+      {
+        "seed": 10039,
+        "reason": "also declared as stage2b/exploratory_dev"
+      },
+      {
+        "seed": 10040,
+        "reason": "also declared as stage2b/exploratory_dev"
+      },
+      {
+        "seed": 10041,
+        "reason": "also declared as stage2b/exploratory_dev"
+      },
+      {
+        "seed": 10042,
+        "reason": "also declared as stage2b/exploratory_dev"
+      },
+      {
+        "seed": 10043,
+        "reason": "also declared as stage2b/exploratory_dev"
+      },
+      {
+        "seed": 10044,
+        "reason": "also declared as stage2b/exploratory_dev"
+      },
+      {
+        "seed": 10045,
+        "reason": "also declared as stage2b/exploratory_dev"
+      },
+      {
+        "seed": 10046,
+        "reason": "also declared as stage2b/exploratory_dev"
+      },
+      {
+        "seed": 10047,
+        "reason": "also declared as stage2b/exploratory_dev"
+      },
+      {
+        "seed": 10048,
+        "reason": "also declared as stage2d/exploratory_dev"
+      },
+      {
+        "seed": 10049,
+        "reason": "also declared as stage2d/exploratory_dev"
+      },
+      {
+        "seed": 10050,
+        "reason": "also declared as stage2d/exploratory_dev"
+      },
+      {
+        "seed": 10051,
+        "reason": "also declared as stage2d/exploratory_dev"
+      },
+      {
+        "seed": 10052,
+        "reason": "also declared as stage2d/exploratory_dev"
+      },
+      {
+        "seed": 10053,
+        "reason": "also declared as stage2d/exploratory_dev"
+      },
+      {
+        "seed": 10054,
+        "reason": "also declared as stage2d/exploratory_dev"
+      },
+      {
+        "seed": 10055,
+        "reason": "also declared as stage2d/exploratory_dev"
+      },
+      {
+        "seed": 10056,
+        "reason": "also declared as stage2d/exploratory_dev"
+      },
+      {
+        "seed": 10057,
+        "reason": "also declared as stage2d/exploratory_dev"
+      },
+      {
+        "seed": 10058,
+        "reason": "also declared as stage2d/exploratory_dev"
+      },
+      {
+        "seed": 10059,
+        "reason": "also declared as stage2d/exploratory_dev"
+      }
+    ],
+    "stage2a_scenes_excluded": [
+      10000,
+      10001,
+      10002,
+      10003,
+      10004,
+      10005,
+      10006,
+      10007,
+      10008,
+      10009,
+      10010,
+      10011,
+      10012,
+      10013,
+      10014,
+      10015,
+      10016,
+      10017,
+      10018,
+      10019,
+      10020,
+      10021,
+      10022,
+      10023
+    ],
+    "stage2b_scenes_excluded": [
+      10024,
+      10025,
+      10026,
+      10027,
+      10028,
+      10029,
+      10030,
+      10031,
+      10032,
+      10033,
+      10034,
+      10035,
+      10036,
+      10037,
+      10038,
+      10039,
+      10040,
+      10041,
+      10042,
+      10043,
+      10044,
+      10045,
+      10046,
+      10047,
+      10048,
+      10049,
+      10050,
+      10051,
+      10052,
+      10053,
+      10054,
+      10055,
+      10056,
+      10057,
+      10058,
+      10059
+    ],
+    "shrink_ladder": [
+      12,
+      6,
+      2
+    ],
+    "shrink_rule": "prefix of the list, from measured time and cost of the first two scenes only; never from outcomes",
+    "future_use": "development data; never moved to calibration or Test",
+    "not_reused": "earlier harm or rescue cases are not picked as the new main sample",
+    "calibration_and_test": "compared by seed number only; never reset, read or run"
+  },
+  "audit": {
+    "seeds": [
+      100,
+      101,
+      102,
+      103,
+      104
+    ],
+    "use": "engineering check; not a performance sample",
+    "protocol": "Stage 2A audit with the same tolerances + R5 control-only reference + R_KEEP and R_PAD_ONCE to the end + return state against the reference before the history is touched + only the earlier history entry changed + same first inference step and seed + restore and trace after each branch"
+  },
+  "checkpoints": [
+    12,
+    52,
+    92,
+    132
+  ],
+  "repeats": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "arms": {
+    "continue": {
+      "short": "C0",
+      "definition": "existing Continue; queue and history untouched; context only"
+    },
+    "r_keep": {
+      "short": "R_KEEP",
+      "definition": "existing R5 through Runtime.force(2); the policy resumes on the real last two observations [o_(tau-1), o_tau]"
+    },
+    "r_pad_once": {
+      "short": "R_PAD_ONCE",
+      "definition": "the same R5; immediately before the first inference and only once, policy.history becomes [copy(o_tau), o_tau]; afterwards the ordinary observe() FIFO continues"
+    },
+    "padding_rules": [
+      "the whole converted observation entry the policy receives is copied (RGB of both cameras and qpos/qvel/tcp_pose); no partial ablation",
+      "the latest entry is left untouched; the earlier entry is an independent copy (no shared memory)",
+      "no simulator, controller, raw-observation or object state is written",
+      "qvel is not set to zero; a duplicated observation is not a physical stop",
+      "no env.step, no waiting, no hold steps are added",
+      "queue (already empty after R5), last action, time, intervention record, inference count and RNG are identical in the two R5 arms",
+      "policy.reset() is not used; only policy.history is assigned",
+      "if the episode ends during R5 nothing is padded and the policy is not called",
+      "if the two last observations are identical the padding is a no-op; such blocks are kept"
+    ],
+    "primary_comparison": "R_PAD_ONCE vs R_KEEP",
+    "context_comparisons": [
+      "R_KEEP vs C0",
+      "R_PAD_ONCE vs C0"
+    ]
+  },
+  "noise": {
+    "seed_rule": "seed_for(scene, physical_step_of_the_call, block_repeat_id, 'dp') for every arm (unchanged code path in policies.DiffusionPolicy.generate)",
+    "handoff": "R_KEEP and R_PAD_ONCE make their first inference at tau = checkpoint + R5 steps with the same seed through the same generate() call; equal actions for different inputs are allowed"
+  },
+  "max": {
+    "scenes": 12,
+    "snapshots": 48,
+    "blocks": 192,
+    "continuations": 576,
+    "first_two_scenes_continuations": 96,
+    "reference_control_runs": 48,
+    "extra_reproducibility_continuations_first_two_scenes": 16,
+    "trunks": 12,
+    "audit_scenes": 5
+  },
+  "records": [
+    "R5 end step, steps used, reached, displacement, remaining budget",
+    "history hashes before padding and the actual policy input after it, dtype and shape",
+    "handoff inputs (real last two observations and the padded pair) as a small NPZ per scene, written before any outcome",
+    "first inference step and seed, the generated chunk",
+    "outcome, end reason and step; per-step trace with gripper command and gripper joint positions",
+    "object pose and task flags in diagnostic files only"
+  ],
+  "video_rule": "first two scenes, first usable checkpoint, block repeat 0, the three arms (at most 6 files); nothing is added after outcomes are seen",
+  "analysis": {
+    "primary": "Y_PAD - Y_KEEP within a block; mean over checkpoints and repeats within a scene, then equal weight per scene",
+    "reported": [
+      "KEEP fail -> PAD success, KEEP success -> PAD fail, both succeed, both fail: blocks and scenes",
+      "per-scene differences and +/-/0 scene counts; block totals auxiliary",
+      "first resumed chunk: mean and max absolute difference of the arm command, gripper sign differences (normalised controller units)",
+      "blocks with a real handoff, with a changed input, no-op blocks",
+      "rescue / harm of KEEP and of PAD against C0 with numerator and denominator (NA if the denominator is 0)",
+      "for ALL blocks grasped at the checkpoint: first open command, first grasp-flag release and outcome after the return, in all three arms"
+    ],
+    "not_computed": [
+      "p-values",
+      "pass criteria",
+      "risk bounds",
+      "online selector H(g)"
+    ],
+    "independent_units": "at most 12 scenes"
+  },
+  "stopping": "one run and one report; no other history length, padding frequency, wait steps, model or distance is added afterwards; no automatic follow-up",
+  "not_done_in_preparation": [
+    "GPU rental",
+    "policy inference",
+    "simulator rollout",
+    "training",
+    "calibration",
+    "final Test"
+  ]
+}

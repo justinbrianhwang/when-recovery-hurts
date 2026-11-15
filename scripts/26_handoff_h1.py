@@ -22,8 +22,8 @@ s2b = importlib.util.module_from_spec(_spec); _spec.loader.exec_module(s2b)
 bound, write_csv, IDENTICAL_M, USER_POLICY_SHA = s2b.bound, s2b.write_csv, s2b.IDENTICAL_M, s2b.USER_POLICY_SHA
 
 CODE = ['src/hci/handoff_h1.py', 'src/hci/pilot2d.py', 'src/hci/pilot2b.py', 'src/hci/pilot.py', 'src/hci/simulation.py', 'src/hci/policies.py', 'src/hci/experiment.py', 'src/hci/io.py',
-        'src/hci/diagnostics.py', 'src/hci/schema.py', 'src/hci/trees.py', 'scripts/26_handoff_h1.py', 'scripts/20_stage2b_pilot.py', 'scripts/18_stage2a_pilot.py',
-        'scripts/handoff_h1/run.sh', 'scripts/stage1b/common.sh']
+        'src/hci/diagnostics.py', 'src/hci/schema.py', 'src/hci/trees.py', 'scripts/26_handoff_h1.py', 'scripts/23_stage2d_pilot.py', 'scripts/20_stage2b_pilot.py', 'scripts/18_stage2a_pilot.py',
+        'scripts/handoff_h1/run.sh', 'scripts/stage1b/common.sh']      # 23 is loaded by the `scenes` command (placement check), so it is hashed too
 UNCHANGED_SINCE_2D = ['src/hci/pilot2d.py', 'src/hci/pilot2b.py', 'src/hci/pilot.py', 'src/hci/simulation.py', 'src/hci/policies.py', 'src/hci/experiment.py', 'src/hci/io.py',
                       'src/hci/diagnostics.py', 'src/hci/schema.py', 'src/hci/trees.py', 'scripts/20_stage2b_pilot.py', 'scripts/18_stage2a_pilot.py', 'scripts/stage1b/common.sh']
 STATUS = {'legacy_stage3b': 'COMPLETED_DEV_NO_GATE_PASS', 'legacy_model_search': 'CLOSED_FOR_THIS_CYCLE', 'base_policy_qualification': 'BELOW_ORIGINAL_GATE (37/100 < 50/100)',

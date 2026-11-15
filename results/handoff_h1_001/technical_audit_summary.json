@@ -1,0 +1,97 @@
+{
+ "audit": {
+  "pass": true,
+  "seeds": [
+   100,
+   101,
+   102,
+   103,
+   104
+  ],
+  "checkpoints_reached": 18,
+  "branches_executed": {
+   "refresh": 18,
+   "reference_r5_control": 18,
+   "r_keep": 18,
+   "r_pad_once": 18
+  },
+  "largest_difference_in_any_compared_item": {
+   "env_state": 0.0,
+   "elapsed": 0.0,
+   "history_state": 0.0,
+   "history_rgb": 0.0,
+   "queue": 0.0,
+   "last_action": 0.0,
+   "actions": 0.0,
+   "tcp_history": 0.0,
+   "live_state_max_abs": 0.0,
+   "live_rgb_max_abs": 0.0,
+   "return_env_state": 0.0,
+   "return_elapsed": 0.0,
+   "return_history_state": 0.0,
+   "return_history_rgb": 0.0,
+   "return_queue": 0.0,
+   "return_last_action": 0.0,
+   "return_actions": 0.0,
+   "return_tcp_history": 0.0
+  },
+  "first_inference_seeds_not_following_the_declared_key": [],
+  "tolerances": {
+   "replay_steps": 20,
+   "state_atol": 1e-06,
+   "action_atol": 1e-06,
+   "observation_atol": 1.0
+  }
+ },
+ "technical_check_first_two_scenes": {
+  "pass": true,
+  "checks": {
+   "audit_pass": true,
+   "records_valid": true,
+   "no_error_file": true,
+   "continuations_within_limit": true,
+   "trunk_reproduced_by_continue_repeat0": true,
+   "reproducibility_checks_present_and_matched": true,
+   "every_r5_branch_reproduces_the_reference_return_state": true,
+   "padding_only_in_r_pad_once_and_only_on_history": true,
+   "handoff_as_declared": true,
+   "every_inference_seed_follows_the_declared_key": true,
+   "traces_handoff_inputs_and_videos_written": true,
+   "online_inputs_saved_once_per_snapshot": true
+  },
+  "scenes": [
+   10060,
+   10061
+  ],
+  "snapshots": [
+   4,
+   4
+  ],
+  "continuations": [
+   48,
+   48
+  ],
+  "scope": "Technical conditions only. Which arm succeeded is not read here and does not decide whether collection goes on."
+ },
+ "collection": {
+  "blocks": 180,
+  "r5_branches_compared_with_reference": 360,
+  "r5_branches_equal_to_reference": 360,
+  "largest_return_state_difference": {
+   "runtime_tree": 0.0,
+   "controller_state": 0.0,
+   "raw_observation": 0.0
+  },
+  "paddings_applied": 180,
+  "paddings_that_changed_only_history": 180,
+  "paddings_with_latest_entry_unchanged": 180,
+  "handoff_checks_passed": 180,
+  "reproducibility": {
+   "no_intervention_duplicates": 45,
+   "duplicate_mismatches": 0,
+   "rechecks": 16,
+   "recheck_mismatches": 0,
+   "interpretation_withheld": false
+  }
+ }
+}

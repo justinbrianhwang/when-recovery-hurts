@@ -1,0 +1,132 @@
+{
+  "checked_utc": "2026-11-15T04:17:35.604675+00:00",
+  "stages": {
+    "2B": {
+      "input_archives": 24,
+      "input_fields": [
+        "last_action",
+        "policy_feature",
+        "queue",
+        "remaining_budget",
+        "rgb_history",
+        "state_history",
+        "t"
+      ],
+      "snapshots_in_inputs": 84,
+      "snapshots_saved_at_another_step_than_the_checkpoint": 0,
+      "inputs_are": "pre-intervention snapshots only (t equals the checkpoint in every saved set)",
+      "trace_archives": 24,
+      "trace_columns": [
+        "t",
+        "tcp_x",
+        "tcp_y",
+        "tcp_z",
+        "cubeA_x",
+        "cubeA_y",
+        "cubeA_z",
+        "cubeB_x",
+        "cubeB_y",
+        "cubeB_z",
+        "is_cubeA_grasped",
+        "is_cubeA_on_cubeB",
+        "is_cubeA_static",
+        "success",
+        "a_x",
+        "a_y",
+        "a_z",
+        "a_gripper"
+      ],
+      "trace_arrays": [
+        "b_<t>_<r>_C0",
+        "b_<t>_<r>_C1",
+        "b_<t>_<r>_F",
+        "b_<t>_<r>_R",
+        "columns",
+        "trunk"
+      ],
+      "traces_hold_rgb_or_policy_history": false,
+      "r5_branch_fields_about_the_return": [
+        "retreat"
+      ]
+    },
+    "2D": {
+      "input_archives": 12,
+      "input_fields": [
+        "last_action",
+        "policy_feature",
+        "queue",
+        "remaining_budget",
+        "rgb_history",
+        "state_history",
+        "t"
+      ],
+      "snapshots_in_inputs": 44,
+      "snapshots_saved_at_another_step_than_the_checkpoint": 0,
+      "inputs_are": "pre-intervention snapshots only (t equals the checkpoint in every saved set)",
+      "trace_archives": 12,
+      "trace_columns": [
+        "t",
+        "tcp_x",
+        "tcp_y",
+        "tcp_z",
+        "cubeA_x",
+        "cubeA_y",
+        "cubeA_z",
+        "cubeB_x",
+        "cubeB_y",
+        "cubeB_z",
+        "is_cubeA_grasped",
+        "is_cubeA_on_cubeB",
+        "is_cubeA_static",
+        "success",
+        "a_x",
+        "a_y",
+        "a_z",
+        "a_gripper",
+        "gripper_qpos_1",
+        "gripper_qpos_2",
+        "phase"
+      ],
+      "trace_arrays": [
+        "b_<t>_<r>_C0",
+        "b_<t>_<r>_H0M",
+        "b_<t>_<r>_R2M",
+        "b_<t>_<r>_R5",
+        "columns",
+        "phases",
+        "ref",
+        "trunk"
+      ],
+      "traces_hold_rgb_or_policy_history": false,
+      "r5_branch_fields_about_the_return": [
+        "control",
+        "control_inference_calls",
+        "control_steps",
+        "history_len_at_return",
+        "policy_resume_history_sha256",
+        "post_return_steps",
+        "queue_len_at_return"
+      ]
+    }
+  },
+  "policy": {
+    "path": "artifacts/policies/stack_1d_s1_d500_clean_v1_i080000",
+    "weights_present": true,
+    "weights_sha256": "faacd2d86464c725a4fb95563a5ed5808019a8b420795b9a2a931822ed89db0e",
+    "matches_record": true,
+    "metadata_matches_record": true
+  },
+  "post_handoff_observations_saved": false,
+  "what_exists": [
+    "pre-intervention online inputs per snapshot (two RGB frames per camera, qpos/qvel/tcp history, queue, last action)",
+    "executed actions and ground-truth step traces of the trunk and of every branch, including the R5 control steps",
+    "Stage 2D only: SHA256 of the policy history at the return step (a hash, not the observations)",
+    "policy weights and metadata with matching hashes"
+  ],
+  "what_is_missing": [
+    "the two observations (RGB and proprioception) of the policy history at the return step tau",
+    "the simulator state at tau as a restorable object"
+  ],
+  "reconstruction": "the return state can be reproduced only by replaying the logged action prefix on the simulator (reset(seed) + actions), which this free preparation stage does not do; the first-chunk comparison also needs policy inference",
+  "verdict": "REPLAY_REQUIRED"
+}
