@@ -1,0 +1,48 @@
+{
+  "chosen_scenes": 12,
+  "options": [
+    {
+      "scenes": 12,
+      "projected_extra_hours": 0.3502306310613976,
+      "projected_total_usd": 0.4105530451441215
+    },
+    {
+      "scenes": 6,
+      "projected_extra_hours": 0.14009225242455906,
+      "projected_total_usd": 0.3622212180576486
+    },
+    {
+      "scenes": 2,
+      "projected_extra_hours": 0.0,
+      "projected_total_usd": 0.33
+    }
+  ],
+  "measured_seconds_per_continuation": 6.139695236693717,
+  "assumed_seconds_per_scene": 529.5487141648331,
+  "inputs": {
+    "usd_per_hour": 0.23,
+    "spent_usd": 0.13,
+    "cap_usd": 1.0,
+    "reserve_usd": 0.2,
+    "workers": 6,
+    "parallel_efficiency": 0.7,
+    "per_scene_continuations": 69,
+    "margin": 1.25,
+    "ladder": [
+      12,
+      6,
+      2
+    ]
+  },
+  "rule": "first entry of the ladder whose projected total is within the cap; branch outcomes are not an input",
+  "fits_cap": true,
+  "measured_scenes": [
+    10048,
+    10049
+  ],
+  "measured_wall_seconds": [
+    455.6049299859442,
+    489.90813646488823
+  ],
+  "measured_runs_including_trunk_reference_and_reruns": 154
+}

@@ -195,6 +195,7 @@ Last updated 2026-11-14. Host: one rented RTX 3090 (24 GB), Ubuntu 22.04, Python
 | 2A | Exploratory recovery pilot with the fixed D500-clean policy (base policy still below the gate; see below) | restore audit pass at 18 checkpoints; 24 train scenes, 364 paired blocks, 1,092 branch continuations, all reproducibility checks identical. Descriptive only |
 | 2B | Four-arm control on 24 new train scenes: Continue, Continue with another future noise key, Refresh, Retreat–Retry (same policy, still below the gate; see below) | restore audit pass at 18 checkpoints; 336 blocks, 1,344 continuations; the noise-only arm matched Continue exactly until the old action queue was used up in 336/336 blocks. In this sample the mean outcome of Refresh was within 0.03 of both Continue arms and that of forced Retreat–Retry was 0.16–0.25 lower. Descriptive only |
 | 2C | Offline review of the saved Stage 2B records (no simulator, no GPU, nothing trained; planned after the 2B results were seen) | the 2B counts were reproduced from the raw rows; choosing an arm from three noise repeats of a state and reading it on the fourth gave scene means 0.01–0.03 above Continue, carried by 2–4 of 24 scenes; during the retreat itself the recorded grasp, lift and alignment flags never switched off. Descriptive only |
+| 2D | Three control arms that hand control back at the same step, on 12 new train scenes: the existing 5 cm retreat, a 2 cm move then hold, and holding in place (same policy, still below the gate; see below) | restore audit pass at 18 checkpoints; 176 blocks, 704 continuations; first inference after the control part at the same step with the same seed in 176/176 blocks. Successful blocks: Continue 25, 5 cm 32, 2 cm 26, hold 29; the direction of the differences reversed between checkpoints. Descriptive only |
 | 3–6 | Pilot, development, calibration, final test | not run |
 
 What this does **not** show: that the base policy solves the task, that any selector helps, or that any hypothesis holds. Unit tests check Python logic on mock physics; they say nothing about manipulation success.
@@ -321,6 +322,39 @@ When Retreat–Retry was chosen (26 held-out rows, 4 scenes) it turned a failed 
 *What happens around the retreat?* In none of the 336 blocks did the grasp flag turn off, the lift or alignment condition disappear, or the target cube move by 2 mm during the retreat itself. In the 69 blocks where Continue succeeded and Retreat–Retry failed, the branch always ran to step 200, and in 66 of them more steps were left when control returned than Continue had needed from the checkpoint (a comparison of step counts between different branches, which does not settle whether elapsed time matters). In 42 of the 69 the cube was held at the checkpoint: it was carried up about 4.5 cm, and when the policy later commanded the gripper to open, the cube was more than 2 cm (median 7.7 cm) from the target cube in all 42, while Continue in the same blocks released it on the target cube in all 42. This last reading was added after the main tables were seen.
 
 These are observations from step logs, not from videos, and they carry no cause: the records cannot separate the time spent on the retreat from the displacement it creates, and they do not show whether such states can be recognised from observations. Report: [`reports/STAGE_REPORT_stage2c_001.md`](reports/STAGE_REPORT_stage2c_001.md) (Korean); data: [`results/stage2c/`](results/stage2c/); change record: [`amendments/AMENDMENT_007_stage2c_offline_analysis.md`](amendments/AMENDMENT_007_stage2c_offline_analysis.md).
+
+**Stage 2D: is it the 5 cm move, or the steps that pass while it happens?**
+
+```text
+base_policy_qualification: BELOW_ORIGINAL_GATE
+stage2d: EXPLORATORY_DURATION_MATCHED_CONTROL (completed)
+observation_based_selector: NOT_TRAINED
+calibration: NOT_RUN
+final_test: NOT_RUN
+```
+
+Stage 2C could not tell the displacement of the retreat from the time it takes. This stage ran four arms from each snapshot on 12 new train scenes (designed after the Stage 2B and 2C results were seen; not a confirmatory test):
+
+| Arm | Control part | Policy resumes |
+|---|---|---|
+| C0 | none (Continue) | at the natural chunk boundary |
+| R5 | the existing Retreat–Retry, unchanged: 5 cm up | when the retreat ends (23–27 steps here) |
+| R2M | 2 cm up, then hold the position reached | at the step R5 would have ended |
+| H0M | hold the position of the snapshot | at the step R5 would have ended |
+
+For every snapshot the control part of R5 was first run alone, without calling the policy, to read how many steps it takes; the two new arms use that number. In all 176 blocks the three control arms made their first inference at the same step with the same noise seed and none called the policy during the control part. The measured displacement was about 4.6 cm, 1.6 cm and at most 0.5 cm (the 5 mm arrival tolerance was not tightened); holding in place was not exact, with up to 9.5 mm of excursion while holding.
+
+| 176 blocks, 12 scenes | C0 | R5 | R2M | H0M |
+|---|---:|---:|---:|---:|
+| Successful blocks | 25 | 32 | 26 | 29 |
+| at step 12 (48 blocks, cube not yet held) | 8 | 9 | 17 | 18 |
+| at step 52 (48 blocks) | 9 | 18 | 5 | 7 |
+| at step 92 (44 blocks) | 8 | 5 | 4 | 4 |
+| at step 132 (36 blocks) | 0 | 0 | 0 | 0 |
+
+Within a block, R2M against R5 was better in 18 and worse in 24; H0M against R5, 23 and 26; R2M against H0M, 9 and 12 (scene-mean differences −0.031, −0.030, −0.002). The lower outcome of the 5 cm retreat seen in Stage 2B did not reappear on these scenes as a whole (R5 against Continue: better in 25 blocks, worse in 18), and the differences between the control arms point in opposite directions at step 12 and at step 52. Of the 25 blocks where Continue succeeded (four scenes), R5 failed in 18, R2M in 14 and H0M, which is commanded to hold its position, in 13.
+
+This does not separate time from displacement: the three control arms differ in the whole path (speed, contact, observation history), and holding in place still contains the interruption, the discarded action chunk, the resumption and the spent budget. The two new arms need to know when R5 would end, so they are diagnostic variants and not recovery actions; returning right after a 2 cm move was not run. With 12 scenes and no interval or p-value, the stage ends with a recommendation to withhold any claim about the usefulness of this family of retreats; nothing was expanded automatically. Report: [`reports/STAGE_REPORT_stage2d_001.md`](reports/STAGE_REPORT_stage2d_001.md) (Korean); data: [`results/stage2d/`](results/stage2d/); change record: [`amendments/AMENDMENT_008_stage2d_duration_matched_controls.md`](amendments/AMENDMENT_008_stage2d_duration_matched_controls.md).
 
 At the same state, Refresh discarded the 4 remaining queued actions, triggered one new inference, and changed the next action by at most 0.007 in normalized units.
 

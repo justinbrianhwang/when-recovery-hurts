@@ -1,0 +1,53 @@
+{
+  "online_inputs_file": "branches/inputs/<scene>.npz, arrays named t<checkpoint>_<field>; written once per snapshot before any continuation is run",
+  "online_inputs": {
+    "rgb_history": "uint8 [obs_horizon, H, W, 3 x cameras]; cameras in sorted name order, exactly what the policy receives",
+    "state_history": "float32 [obs_horizon, D]; qpos, qvel, tcp_pose (the whitelist of src/hci/schema.py)",
+    "last_action": "float32 [4]; last executed command",
+    "queue": "float32 [n, 4]; unexecuted commands of the current chunk",
+    "t": "physical step of the snapshot",
+    "remaining_budget": "horizon - t",
+    "policy_feature": "float32; fixed encoder output of the frozen policy for the same history, + last action, t/horizon, queue fraction"
+  },
+  "diagnostic_privileged_only": {
+    "scene JSON: initial_state, snapshots[].state_at_checkpoint, snapshots[].stage_so_far, cells[].stage": "cube poses, grasp/on-cube/static flags, stage labels read from simulator ground truth",
+    "branches/traces/<scene>.npz": "per-step TCP, cube positions, flags, success, executed action, gripper joint positions, phase; `ref_<checkpoint>` is the R5 control-only reference run",
+    "y_C0, y_R5, y_R2M, y_H0M and every pair class": "future outcomes (labels)"
+  },
+  "rule": "Nothing of the diagnostic group is written into the online input file, given to the policy, or used for a control target. No model was trained in this stage.",
+  "online_proprioception_in_traces": "gripper_qpos_1/2 are the last two entries of the qpos observation the policy already receives; logged per step to tell the gripper command from the finger position. They are not a new policy input.",
+  "controller_inputs_of_the_matched_arms": "measured TCP position, the snapshot TCP position, the last gripper command, T_ref. No object pose, no task flag, no outcome.",
+  "cameras": [
+    "base_camera",
+    "hand_camera"
+  ],
+  "trace_columns": [
+    "t",
+    "tcp_x",
+    "tcp_y",
+    "tcp_z",
+    "cubeA_x",
+    "cubeA_y",
+    "cubeA_z",
+    "cubeB_x",
+    "cubeB_y",
+    "cubeB_z",
+    "is_cubeA_grasped",
+    "is_cubeA_on_cubeB",
+    "is_cubeA_static",
+    "success",
+    "a_x",
+    "a_y",
+    "a_z",
+    "a_gripper",
+    "gripper_qpos_1",
+    "gripper_qpos_2",
+    "phase"
+  ],
+  "phases": [
+    "continue",
+    "intervention_move",
+    "intervention_hold",
+    "policy_after_return"
+  ]
+}
