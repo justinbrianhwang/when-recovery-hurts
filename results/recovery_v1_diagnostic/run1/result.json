@@ -1,0 +1,214 @@
+{
+  "set": "recovery_v1_diag",
+  "seeds": [
+    50600,
+    50601,
+    50602,
+    50603,
+    50604,
+    50605,
+    50606,
+    50607,
+    50608,
+    50609,
+    50610,
+    50611,
+    50612,
+    50613,
+    50614,
+    50615,
+    50616,
+    50617,
+    50618,
+    50619,
+    50620,
+    50621,
+    50622,
+    50623,
+    50624,
+    50625,
+    50626,
+    50627,
+    50628,
+    50629,
+    50630,
+    50631,
+    50632,
+    50633,
+    50634,
+    50635,
+    50636,
+    50637,
+    50638,
+    50639,
+    50640,
+    50641,
+    50642,
+    50643,
+    50644,
+    50645,
+    50646,
+    50647,
+    50648,
+    50649,
+    50650,
+    50651,
+    50652,
+    50653,
+    50654,
+    50655,
+    50656,
+    50657,
+    50658,
+    50659,
+    50660,
+    50661,
+    50662,
+    50663,
+    50664,
+    50665,
+    50666,
+    50667,
+    50668,
+    50669,
+    50670,
+    50671,
+    50672,
+    50673,
+    50674,
+    50675,
+    50676,
+    50677,
+    50678,
+    50679,
+    50680,
+    50681,
+    50682,
+    50683,
+    50684,
+    50685,
+    50686,
+    50687,
+    50688,
+    50689,
+    50690,
+    50691,
+    50692,
+    50693,
+    50694,
+    50695,
+    50696,
+    50697,
+    50698,
+    50699
+  ],
+  "policy": "artifacts/policies/stack_v1_s1_d500_clean_resnet18_i080000",
+  "weights_sha256": "a37be25603d6c7b7d5cfa1872e6c1134c436f78de02b745c481c88d5d0f69629",
+  "n": 100,
+  "success_once": 79,
+  "failures": 21,
+  "failure_labels": {
+    "NO_APPROACH": {
+      "count": 5,
+      "seeds": [
+        50610,
+        50643,
+        50673,
+        50694,
+        50699
+      ],
+      "meaning": "the gripper never came within 3 cm of cubeA"
+    },
+    "EARLY_RELEASE_ABOVE": {
+      "count": 5,
+      "seeds": [
+        50613,
+        50668,
+        50683,
+        50685,
+        50686
+      ],
+      "meaning": "commanded release horizontally over cubeB but higher than the resting height (opened too early, dropped)"
+    },
+    "POST_RELEASE_UNSTABLE": {
+      "count": 5,
+      "seeds": [
+        50632,
+        50633,
+        50648,
+        50664,
+        50671
+      ],
+      "meaning": "released in the success pose, then cubeA left that pose (instability after contact)"
+    },
+    "RELEASE_OFF_TARGET_XY": {
+      "count": 3,
+      "seeds": [
+        50611,
+        50661,
+        50666
+      ],
+      "meaning": "commanded release with cubeA outside the horizontal tolerance over cubeB (position error)"
+    },
+    "GRASP_NOT_LIFTED": {
+      "count": 1,
+      "seeds": [
+        50618
+      ],
+      "meaning": "grasp flag true, cubeA never lifted 1 cm while grasped"
+    },
+    "HOLDING_NOT_PLACED": {
+      "count": 1,
+      "seeds": [
+        50629
+      ],
+      "meaning": "episode ended still holding cubeA, which was never in the success pose during that hold"
+    },
+    "IN_PLACE_NOT_STATIC": {
+      "count": 1,
+      "seeds": [
+        50691
+      ],
+      "meaning": "released in the success pose and stayed there, never static at a released step"
+    }
+  },
+  "largest_label": "NO_APPROACH",
+  "largest_is_tied": true,
+  "unknown": 0,
+  "thresholds": {
+    "near_m": 0.03,
+    "lift_m": 0.01,
+    "xy_tol_m": 0.0332842712474619,
+    "z_tol_m": 0.005,
+    "release_gap_steps": 3,
+    "open_window_steps": 5,
+    "in_place_steps": 3,
+    "cube_b_moved_m": 0.01,
+    "static_lin_m_s": 0.01,
+    "static_ang_rad_s": 0.5
+  },
+  "episodes_sha256": "62d909b11d10b79801bf380c7b9617e981a1196e7e9c96d6f6c471df08681dd4",
+  "wall_seconds": 961.3897390300408,
+  "plan_sha256": "26c9374041e143439ea1588da89e21170d68743c732bff0aeeae93f4a066fd35",
+  "runtime": {
+    "python": "3.10.12 (main, Aug 31 2026, 10:18:17) [GCC 11.4.0]",
+    "platform": "Linux-5.4.0-216-generic-x86_64-with-glibc2.35",
+    "packages": {
+      "torch": "2.6.0+cu124",
+      "torchvision": "0.21.0+cu124",
+      "mani_skill": "3.0.1",
+      "sapien": "3.0.3",
+      "gymnasium": "0.29.1",
+      "diffusers": "0.30.3",
+      "numpy": "1.26.4",
+      "scipy": "1.13.1",
+      "PyYAML": "6.0.2"
+    },
+    "nvidia_smi": {
+      "returncode": 0,
+      "stdout": "name, driver_version, memory.total [MiB]\nNVIDIA GeForce RTX 4090, 565.77, 24564 MiB\n",
+      "stderr": ""
+    }
+  },
+  "scope": "One development pass without intervention. Labels describe the logged mechanism of each failure by fixed rules; they are not causes proven by intervention."
+}

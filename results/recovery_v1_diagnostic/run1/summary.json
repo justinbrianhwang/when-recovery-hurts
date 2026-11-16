@@ -1,0 +1,786 @@
+{
+  "n": 100,
+  "success_once": 79,
+  "failures": 21,
+  "failure_labels": {
+    "NO_APPROACH": {
+      "count": 5,
+      "seeds": [
+        50610,
+        50643,
+        50673,
+        50694,
+        50699
+      ],
+      "meaning": "the gripper never came within 3 cm of cubeA"
+    },
+    "EARLY_RELEASE_ABOVE": {
+      "count": 5,
+      "seeds": [
+        50613,
+        50668,
+        50683,
+        50685,
+        50686
+      ],
+      "meaning": "commanded release horizontally over cubeB but higher than the resting height (opened too early, dropped)"
+    },
+    "POST_RELEASE_UNSTABLE": {
+      "count": 5,
+      "seeds": [
+        50632,
+        50633,
+        50648,
+        50664,
+        50671
+      ],
+      "meaning": "released in the success pose, then cubeA left that pose (instability after contact)"
+    },
+    "RELEASE_OFF_TARGET_XY": {
+      "count": 3,
+      "seeds": [
+        50611,
+        50661,
+        50666
+      ],
+      "meaning": "commanded release with cubeA outside the horizontal tolerance over cubeB (position error)"
+    },
+    "GRASP_NOT_LIFTED": {
+      "count": 1,
+      "seeds": [
+        50618
+      ],
+      "meaning": "grasp flag true, cubeA never lifted 1 cm while grasped"
+    },
+    "HOLDING_NOT_PLACED": {
+      "count": 1,
+      "seeds": [
+        50629
+      ],
+      "meaning": "episode ended still holding cubeA, which was never in the success pose during that hold"
+    },
+    "IN_PLACE_NOT_STATIC": {
+      "count": 1,
+      "seeds": [
+        50691
+      ],
+      "meaning": "released in the success pose and stayed there, never static at a released step"
+    }
+  },
+  "largest_label": "NO_APPROACH",
+  "largest_is_tied": true,
+  "unknown": 0,
+  "thresholds": {
+    "near_m": 0.03,
+    "lift_m": 0.01,
+    "xy_tol_m": 0.0332842712474619,
+    "z_tol_m": 0.005,
+    "release_gap_steps": 3,
+    "open_window_steps": 5,
+    "in_place_steps": 3,
+    "cube_b_moved_m": 0.01,
+    "static_lin_m_s": 0.01,
+    "static_ang_rad_s": 0.5
+  },
+  "episodes_sha256": "62d909b11d10b79801bf380c7b9617e981a1196e7e9c96d6f6c471df08681dd4",
+  "recomputed_labels_equal_stored": true,
+  "label_differences": [],
+  "rules_sha256": "84512bbf4e89661b9e4b2923d37b896461f4a7d0fd5ea93fd27b1341d2d40464",
+  "cases": {
+    "NO_APPROACH": [
+      {
+        "seed": 50610,
+        "steps": 200,
+        "furthest_stage": "not_near",
+        "evidence": {
+          "min_tcp_to_cubeA_m": 0.07700910419225693
+        },
+        "flags": {
+          "cubeB_moved": false,
+          "cubeB_max_xy_displacement_m": 3.0090477507309904e-06,
+          "holds": 0,
+          "carried_holds": 0
+        }
+      },
+      {
+        "seed": 50643,
+        "steps": 200,
+        "furthest_stage": "not_near",
+        "evidence": {
+          "min_tcp_to_cubeA_m": 0.032525982707738876
+        },
+        "flags": {
+          "cubeB_moved": true,
+          "cubeB_max_xy_displacement_m": 0.1038204552725757,
+          "holds": 0,
+          "carried_holds": 0
+        }
+      },
+      {
+        "seed": 50673,
+        "steps": 200,
+        "furthest_stage": "not_near",
+        "evidence": {
+          "min_tcp_to_cubeA_m": 0.03778235986828804
+        },
+        "flags": {
+          "cubeB_moved": false,
+          "cubeB_max_xy_displacement_m": 6.455080006705022e-07,
+          "holds": 0,
+          "carried_holds": 0
+        }
+      },
+      {
+        "seed": 50694,
+        "steps": 200,
+        "furthest_stage": "not_near",
+        "evidence": {
+          "min_tcp_to_cubeA_m": 0.03572797775268555
+        },
+        "flags": {
+          "cubeB_moved": false,
+          "cubeB_max_xy_displacement_m": 1.2117677056140883e-06,
+          "holds": 0,
+          "carried_holds": 0
+        }
+      },
+      {
+        "seed": 50699,
+        "steps": 200,
+        "furthest_stage": "not_near",
+        "evidence": {
+          "min_tcp_to_cubeA_m": 0.031088365241885185
+        },
+        "flags": {
+          "cubeB_moved": false,
+          "cubeB_max_xy_displacement_m": 0.00957451666890886,
+          "holds": 0,
+          "carried_holds": 0
+        }
+      }
+    ],
+    "EARLY_RELEASE_ABOVE": [
+      {
+        "seed": 50613,
+        "steps": 200,
+        "furthest_stage": "aligned_no_success",
+        "evidence": {
+          "release_step": 98,
+          "release_measured_at": "last grasped step",
+          "xy_offset_at_release_m": 0.01867263383365396,
+          "height_gap_at_release_m": 0.006480674296617507,
+          "cubeA_lift_at_release_m": 0.04648067429661751,
+          "in_place_at_release": false,
+          "first_step_without_grasp": 99,
+          "xy_offset_at_first_step_without_grasp_m": 0.018891289110137408,
+          "height_gap_at_first_step_without_grasp_m": 0.000312195196747779,
+          "in_place_at_first_step_without_grasp": true,
+          "gripper_commands_around_release": [
+            -1.0,
+            -0.9986978769302368,
+            -0.9979605078697205,
+            -1.0,
+            1.0
+          ],
+          "f_A_B_at_release": 0.0,
+          "tilt_at_release_deg": 1.0080481749874008,
+          "final_xy_offset_m": 0.0814169579564769,
+          "final_height_gap_m": -0.03999994784593582
+        },
+        "flags": {
+          "cubeB_moved": true,
+          "cubeB_max_xy_displacement_m": 0.028700550989760317,
+          "holds": 1,
+          "carried_holds": 1
+        }
+      },
+      {
+        "seed": 50668,
+        "steps": 200,
+        "furthest_stage": "aligned_no_success",
+        "evidence": {
+          "release_step": 95,
+          "release_measured_at": "last grasped step",
+          "xy_offset_at_release_m": 0.020527745613490637,
+          "height_gap_at_release_m": 0.012525671198964118,
+          "cubeA_lift_at_release_m": 0.0525255911052227,
+          "in_place_at_release": false,
+          "first_step_without_grasp": 96,
+          "xy_offset_at_first_step_without_grasp_m": 0.019953411432798968,
+          "height_gap_at_first_step_without_grasp_m": 0.0029726336151361457,
+          "in_place_at_first_step_without_grasp": true,
+          "gripper_commands_around_release": [
+            -0.999049186706543,
+            -1.0,
+            -0.9982579350471497,
+            -1.0,
+            1.0
+          ],
+          "f_A_B_at_release": 0.0,
+          "tilt_at_release_deg": 0.35984122353769143,
+          "final_xy_offset_m": 0.05549344550912796,
+          "final_height_gap_m": -0.04000002607703209
+        },
+        "flags": {
+          "cubeB_moved": false,
+          "cubeB_max_xy_displacement_m": 0.0029635298316574837,
+          "holds": 1,
+          "carried_holds": 1
+        }
+      },
+      {
+        "seed": 50683,
+        "steps": 200,
+        "furthest_stage": "aligned_no_success",
+        "evidence": {
+          "release_step": 110,
+          "release_measured_at": "last grasped step",
+          "xy_offset_at_release_m": 0.028226780988338685,
+          "height_gap_at_release_m": 0.006814842149615287,
+          "cubeA_lift_at_release_m": 0.04681476578116417,
+          "in_place_at_release": false,
+          "first_step_without_grasp": 111,
+          "xy_offset_at_first_step_without_grasp_m": 0.02787246589414894,
+          "height_gap_at_first_step_without_grasp_m": 5.2292868494986655e-05,
+          "in_place_at_first_step_without_grasp": true,
+          "gripper_commands_around_release": [
+            -1.0,
+            -1.0,
+            -1.0,
+            -0.9999925494194031,
+            0.9966201186180115
+          ],
+          "f_A_B_at_release": 0.0,
+          "tilt_at_release_deg": 1.1361774877988395,
+          "final_xy_offset_m": 0.04379148372777556,
+          "final_height_gap_m": -0.04000003352761269
+        },
+        "flags": {
+          "cubeB_moved": true,
+          "cubeB_max_xy_displacement_m": 0.023607030294328774,
+          "holds": 1,
+          "carried_holds": 1
+        }
+      },
+      {
+        "seed": 50685,
+        "steps": 200,
+        "furthest_stage": "aligned_no_success",
+        "evidence": {
+          "release_step": 98,
+          "release_measured_at": "last grasped step",
+          "xy_offset_at_release_m": 0.028151830922233712,
+          "height_gap_at_release_m": 0.005870425179600715,
+          "cubeA_lift_at_release_m": 0.04587041959166527,
+          "in_place_at_release": false,
+          "first_step_without_grasp": 99,
+          "xy_offset_at_first_step_without_grasp_m": 0.02903775273117505,
+          "height_gap_at_first_step_without_grasp_m": -0.0004318328201770791,
+          "in_place_at_first_step_without_grasp": true,
+          "gripper_commands_around_release": [
+            -0.9971351623535156,
+            -1.0,
+            -1.0,
+            -0.9992868304252625,
+            0.9939682483673096
+          ],
+          "f_A_B_at_release": 0.0,
+          "tilt_at_release_deg": 0.31678333186686497,
+          "final_xy_offset_m": 0.09099040272246718,
+          "final_height_gap_m": -0.04000000558793545
+        },
+        "flags": {
+          "cubeB_moved": true,
+          "cubeB_max_xy_displacement_m": 0.02220418051495269,
+          "holds": 1,
+          "carried_holds": 1
+        }
+      },
+      {
+        "seed": 50686,
+        "steps": 200,
+        "furthest_stage": "aligned_no_success",
+        "evidence": {
+          "release_step": 100,
+          "release_measured_at": "last grasped step",
+          "xy_offset_at_release_m": 0.017356068205205934,
+          "height_gap_at_release_m": 0.005795956626534461,
+          "cubeA_lift_at_release_m": 0.04579586908221245,
+          "in_place_at_release": false,
+          "first_step_without_grasp": 101,
+          "xy_offset_at_first_step_without_grasp_m": 0.01813045441388692,
+          "height_gap_at_first_step_without_grasp_m": 2.5904774665831687e-05,
+          "in_place_at_first_step_without_grasp": true,
+          "gripper_commands_around_release": [
+            -1.0,
+            -1.0,
+            -0.9985027313232422,
+            -0.9960364699363708,
+            0.9999350905418396
+          ],
+          "f_A_B_at_release": 0.0,
+          "tilt_at_release_deg": 1.3884515921340312,
+          "final_xy_offset_m": 0.06549792082168207,
+          "final_height_gap_m": -0.06312269434332848
+        },
+        "flags": {
+          "cubeB_moved": false,
+          "cubeB_max_xy_displacement_m": 0.002012971773874928,
+          "holds": 1,
+          "carried_holds": 1
+        }
+      }
+    ],
+    "POST_RELEASE_UNSTABLE": [
+      {
+        "seed": 50632,
+        "steps": 200,
+        "furthest_stage": "aligned_no_success",
+        "evidence": {
+          "release_step": 112,
+          "release_measured_at": "last grasped step",
+          "xy_offset_at_release_m": 0.025171812655476005,
+          "height_gap_at_release_m": 0.0010627890378236762,
+          "cubeA_lift_at_release_m": 0.04106271266937256,
+          "in_place_at_release": true,
+          "first_step_without_grasp": 113,
+          "xy_offset_at_first_step_without_grasp_m": 0.02586434052650835,
+          "height_gap_at_first_step_without_grasp_m": -5.8992728590966104e-05,
+          "in_place_at_first_step_without_grasp": true,
+          "gripper_commands_around_release": [
+            -0.9993823170661926,
+            -0.9999764561653137,
+            -1.0,
+            -0.9991932511329651,
+            0.9939870834350586
+          ],
+          "f_A_B_at_release": 0.0,
+          "tilt_at_release_deg": 2.2151680506558034,
+          "final_xy_offset_m": 0.08211695195409559,
+          "final_height_gap_m": -0.04000009499490261,
+          "steps_after_release": 88,
+          "first_step_out_of_place": 116,
+          "out_of_place_steps": 85,
+          "finger_contact_steps_after_release": 1,
+          "max_cubeA_speed_after_release_m_s": 0.5145259895229503,
+          "static_released_in_place_steps": 0
+        },
+        "flags": {
+          "cubeB_moved": true,
+          "cubeB_max_xy_displacement_m": 0.028761582822155022,
+          "holds": 1,
+          "carried_holds": 1
+        }
+      },
+      {
+        "seed": 50633,
+        "steps": 200,
+        "furthest_stage": "aligned_no_success",
+        "evidence": {
+          "release_step": 91,
+          "release_measured_at": "last grasped step",
+          "xy_offset_at_release_m": 0.024736284884142187,
+          "height_gap_at_release_m": 0.004713074341416358,
+          "cubeA_lift_at_release_m": 0.044712986797094345,
+          "in_place_at_release": true,
+          "first_step_without_grasp": 92,
+          "xy_offset_at_first_step_without_grasp_m": 0.025490838228867514,
+          "height_gap_at_first_step_without_grasp_m": 0.00015141539275646126,
+          "in_place_at_first_step_without_grasp": true,
+          "gripper_commands_around_release": [
+            -1.0,
+            -0.9973439574241638,
+            -0.9970470070838928,
+            -0.9996596574783325,
+            1.0
+          ],
+          "f_A_B_at_release": 0.0,
+          "tilt_at_release_deg": 2.2953166067700908,
+          "final_xy_offset_m": 0.07637561923278022,
+          "final_height_gap_m": -0.04000001862645149,
+          "steps_after_release": 109,
+          "first_step_out_of_place": 94,
+          "out_of_place_steps": 107,
+          "finger_contact_steps_after_release": 4,
+          "max_cubeA_speed_after_release_m_s": 0.5957173445097905,
+          "static_released_in_place_steps": 0
+        },
+        "flags": {
+          "cubeB_moved": false,
+          "cubeB_max_xy_displacement_m": 4.838704411238645e-05,
+          "holds": 2,
+          "carried_holds": 1,
+          "regrasp_without_lift_after_last_carry": true
+        }
+      },
+      {
+        "seed": 50648,
+        "steps": 200,
+        "furthest_stage": "aligned_no_success",
+        "evidence": {
+          "release_step": 107,
+          "release_measured_at": "last grasped step",
+          "xy_offset_at_release_m": 0.02652720350211807,
+          "height_gap_at_release_m": 0.0006238045543432227,
+          "cubeA_lift_at_release_m": 0.04062379151582718,
+          "in_place_at_release": true,
+          "first_step_without_grasp": 108,
+          "xy_offset_at_first_step_without_grasp_m": 0.029220114710290623,
+          "height_gap_at_first_step_without_grasp_m": -0.0008775973320007333,
+          "in_place_at_first_step_without_grasp": true,
+          "gripper_commands_around_release": [
+            -1.0,
+            -1.0,
+            -0.9996400475502014,
+            -0.9979848861694336,
+            0.9976032972335815
+          ],
+          "f_A_B_at_release": 0.0,
+          "tilt_at_release_deg": 0.870760607916185,
+          "final_xy_offset_m": 0.0560635694464185,
+          "final_height_gap_m": -0.03998289719223976,
+          "steps_after_release": 93,
+          "first_step_out_of_place": 109,
+          "out_of_place_steps": 92,
+          "finger_contact_steps_after_release": 29,
+          "max_cubeA_speed_after_release_m_s": 0.18784912627048503,
+          "static_released_in_place_steps": 0
+        },
+        "flags": {
+          "cubeB_moved": false,
+          "cubeB_max_xy_displacement_m": 0.008332978153183462,
+          "holds": 1,
+          "carried_holds": 1
+        }
+      },
+      {
+        "seed": 50664,
+        "steps": 200,
+        "furthest_stage": "aligned_no_success",
+        "evidence": {
+          "release_step": 92,
+          "release_measured_at": "last grasped step",
+          "xy_offset_at_release_m": 0.03147571857267484,
+          "height_gap_at_release_m": 2.355352044104697e-06,
+          "cubeA_lift_at_release_m": 0.04000204801559448,
+          "in_place_at_release": true,
+          "first_step_without_grasp": 93,
+          "xy_offset_at_first_step_without_grasp_m": 0.033433581404832054,
+          "height_gap_at_first_step_without_grasp_m": -0.0013966029137372979,
+          "in_place_at_first_step_without_grasp": false,
+          "gripper_commands_around_release": [
+            -1.0,
+            -1.0,
+            -0.9999310970306396,
+            -1.0,
+            1.0
+          ],
+          "f_A_B_at_release": 0.349369615316391,
+          "tilt_at_release_deg": 0.21938015817134668,
+          "final_xy_offset_m": 0.07041522834947767,
+          "final_height_gap_m": -0.03999997206032276,
+          "steps_after_release": 108,
+          "first_step_out_of_place": 93,
+          "out_of_place_steps": 108,
+          "finger_contact_steps_after_release": 6,
+          "max_cubeA_speed_after_release_m_s": 0.5886843405042212,
+          "static_released_in_place_steps": 0
+        },
+        "flags": {
+          "cubeB_moved": false,
+          "cubeB_max_xy_displacement_m": 0.002542351083544253,
+          "holds": 2,
+          "carried_holds": 1,
+          "regrasp_without_lift_after_last_carry": true
+        }
+      },
+      {
+        "seed": 50671,
+        "steps": 200,
+        "furthest_stage": "aligned_no_success",
+        "evidence": {
+          "release_step": 107,
+          "release_measured_at": "last grasped step",
+          "xy_offset_at_release_m": 0.024899028602588257,
+          "height_gap_at_release_m": 0.0005668318271636955,
+          "cubeA_lift_at_release_m": 0.04056748002767563,
+          "in_place_at_release": true,
+          "first_step_without_grasp": 108,
+          "xy_offset_at_first_step_without_grasp_m": 0.025552415744054147,
+          "height_gap_at_first_step_without_grasp_m": -9.073965251445854e-05,
+          "in_place_at_first_step_without_grasp": true,
+          "gripper_commands_around_release": [
+            -1.0,
+            -1.0,
+            -1.0,
+            -0.997442364692688,
+            1.0
+          ],
+          "f_A_B_at_release": 0.7660074234008789,
+          "tilt_at_release_deg": 1.7517795240012828,
+          "final_xy_offset_m": 0.06080310561242703,
+          "final_height_gap_m": -0.04000002235174179,
+          "steps_after_release": 93,
+          "first_step_out_of_place": 110,
+          "out_of_place_steps": 91,
+          "finger_contact_steps_after_release": 0,
+          "max_cubeA_speed_after_release_m_s": 0.5255384217764647,
+          "static_released_in_place_steps": 0
+        },
+        "flags": {
+          "cubeB_moved": false,
+          "cubeB_max_xy_displacement_m": 0.00432451643242017,
+          "holds": 1,
+          "carried_holds": 1
+        }
+      }
+    ],
+    "RELEASE_OFF_TARGET_XY": [
+      {
+        "seed": 50611,
+        "steps": 200,
+        "furthest_stage": "aligned_no_success",
+        "evidence": {
+          "release_step": 137,
+          "release_measured_at": "last grasped step",
+          "xy_offset_at_release_m": 0.0382183299539777,
+          "height_gap_at_release_m": -0.005734919533133508,
+          "cubeA_lift_at_release_m": 0.034265097230672836,
+          "in_place_at_release": false,
+          "first_step_without_grasp": 138,
+          "xy_offset_at_first_step_without_grasp_m": 0.04081762807899298,
+          "height_gap_at_first_step_without_grasp_m": -0.01043621726334095,
+          "in_place_at_first_step_without_grasp": false,
+          "gripper_commands_around_release": [
+            1.0,
+            1.0,
+            1.0,
+            -0.9039716124534607,
+            1.0
+          ],
+          "f_A_B_at_release": 0.0,
+          "tilt_at_release_deg": 32.145201605516824,
+          "final_xy_offset_m": 0.051291409351568285,
+          "final_height_gap_m": -0.040001633539795876
+        },
+        "flags": {
+          "cubeB_moved": true,
+          "cubeB_max_xy_displacement_m": 0.03525234135429401,
+          "holds": 3,
+          "carried_holds": 3
+        }
+      },
+      {
+        "seed": 50661,
+        "steps": 200,
+        "furthest_stage": "lifted_not_aligned",
+        "evidence": {
+          "release_step": 109,
+          "release_measured_at": "last grasped step",
+          "xy_offset_at_release_m": 0.03931797415710023,
+          "height_gap_at_release_m": 0.004526837766170501,
+          "cubeA_lift_at_release_m": 0.04452673718333244,
+          "in_place_at_release": false,
+          "first_step_without_grasp": 110,
+          "xy_offset_at_first_step_without_grasp_m": 0.04008632360206277,
+          "height_gap_at_first_step_without_grasp_m": -0.0024755065888166436,
+          "in_place_at_first_step_without_grasp": false,
+          "gripper_commands_around_release": [
+            -1.0,
+            -1.0,
+            -1.0,
+            -1.0,
+            0.9796693325042725
+          ],
+          "f_A_B_at_release": 0.0,
+          "tilt_at_release_deg": 2.5568832771906234,
+          "final_xy_offset_m": 0.07634810627911276,
+          "final_height_gap_m": -0.040000059604644776
+        },
+        "flags": {
+          "cubeB_moved": true,
+          "cubeB_max_xy_displacement_m": 0.010043257663876731,
+          "holds": 2,
+          "carried_holds": 1,
+          "regrasp_without_lift_after_last_carry": true
+        }
+      },
+      {
+        "seed": 50666,
+        "steps": 200,
+        "furthest_stage": "aligned_no_success",
+        "evidence": {
+          "release_step": 139,
+          "release_measured_at": "last grasped step",
+          "xy_offset_at_release_m": 0.047375414364365445,
+          "height_gap_at_release_m": 0.00021686688065528786,
+          "cubeA_lift_at_release_m": 0.0402168370783329,
+          "in_place_at_release": false,
+          "first_step_without_grasp": 140,
+          "xy_offset_at_first_step_without_grasp_m": 0.0494523534401156,
+          "height_gap_at_first_step_without_grasp_m": -0.008381330370903016,
+          "in_place_at_first_step_without_grasp": false,
+          "gripper_commands_around_release": [
+            -0.9999161958694458,
+            -1.0,
+            -1.0,
+            -1.0,
+            0.9792333841323853
+          ],
+          "f_A_B_at_release": 0.0,
+          "tilt_at_release_deg": 13.57091335396539,
+          "final_xy_offset_m": 0.08371403910615244,
+          "final_height_gap_m": -0.03999992921948433
+        },
+        "flags": {
+          "cubeB_moved": true,
+          "cubeB_max_xy_displacement_m": 0.048590127219715944,
+          "holds": 2,
+          "carried_holds": 2
+        }
+      }
+    ],
+    "GRASP_NOT_LIFTED": [
+      {
+        "seed": 50618,
+        "steps": 200,
+        "furthest_stage": "grasped_not_lifted",
+        "evidence": {
+          "first_grasp_step": 40,
+          "grasp_steps": 161,
+          "max_cubeA_lift_m": 0.002177217975258827,
+          "final_is_grasped": true
+        },
+        "flags": {
+          "cubeB_moved": false,
+          "cubeB_max_xy_displacement_m": 0.0048391795709201695,
+          "holds": 1,
+          "carried_holds": 0
+        }
+      }
+    ],
+    "HOLDING_NOT_PLACED": [
+      {
+        "seed": 50629,
+        "steps": 200,
+        "furthest_stage": "aligned_no_success",
+        "evidence": {
+          "in_place_steps_while_grasped": 0,
+          "min_abs_height_gap_while_within_xy_m": null,
+          "steps_within_xy_tol": 0,
+          "hold_steps": [
+            175,
+            200
+          ],
+          "hold_included_a_lift": true,
+          "open_command_steps_in_hold": 0,
+          "first_open_command_step_in_hold": null,
+          "min_xy_offset_m": 0.04563851762260404,
+          "final_xy_offset_m": 0.04563851762260404,
+          "final_height_gap_m": 0.014659795016050338,
+          "final_finger_width_m": 0.04004543088376522,
+          "final_gripper_command": -0.9884977340698242
+        },
+        "flags": {
+          "cubeB_moved": true,
+          "cubeB_max_xy_displacement_m": 0.09623914906749899,
+          "holds": 4,
+          "carried_holds": 2
+        }
+      }
+    ],
+    "IN_PLACE_NOT_STATIC": [
+      {
+        "seed": 50691,
+        "steps": 200,
+        "furthest_stage": "aligned_no_success",
+        "evidence": {
+          "release_step": 109,
+          "release_measured_at": "last grasped step",
+          "xy_offset_at_release_m": 0.022372981868396313,
+          "height_gap_at_release_m": 1.4343336224555137e-05,
+          "cubeA_lift_at_release_m": 0.040011558681726456,
+          "in_place_at_release": true,
+          "first_step_without_grasp": 110,
+          "xy_offset_at_first_step_without_grasp_m": 0.022174941233309552,
+          "height_gap_at_first_step_without_grasp_m": -8.621215820313333e-06,
+          "in_place_at_first_step_without_grasp": true,
+          "gripper_commands_around_release": [
+            -0.9996781349182129,
+            -1.0,
+            -0.9995718002319336,
+            -1.0,
+            0.9987511038780212
+          ],
+          "f_A_B_at_release": 2.160006046295166,
+          "tilt_at_release_deg": 0.27353317540986727,
+          "final_xy_offset_m": 0.022168964222099397,
+          "final_height_gap_m": -4.763677716256021e-06,
+          "steps_after_release": 91,
+          "first_step_out_of_place": null,
+          "out_of_place_steps": 0,
+          "finger_contact_steps_after_release": 0,
+          "max_cubeA_speed_after_release_m_s": 0.012982602588409652,
+          "static_released_in_place_steps": 0
+        },
+        "flags": {
+          "cubeB_moved": false,
+          "cubeB_max_xy_displacement_m": 6.862083463406353e-05,
+          "holds": 1,
+          "carried_holds": 1
+        }
+      }
+    ]
+  },
+  "stage_by_label": {
+    "NO_APPROACH": {
+      "aligned_no_success": 0,
+      "grasped_not_lifted": 0,
+      "lifted_not_aligned": 0,
+      "not_near": 5,
+      "success": 0
+    },
+    "EARLY_RELEASE_ABOVE": {
+      "aligned_no_success": 5,
+      "grasped_not_lifted": 0,
+      "lifted_not_aligned": 0,
+      "not_near": 0,
+      "success": 0
+    },
+    "POST_RELEASE_UNSTABLE": {
+      "aligned_no_success": 5,
+      "grasped_not_lifted": 0,
+      "lifted_not_aligned": 0,
+      "not_near": 0,
+      "success": 0
+    },
+    "RELEASE_OFF_TARGET_XY": {
+      "aligned_no_success": 2,
+      "grasped_not_lifted": 0,
+      "lifted_not_aligned": 1,
+      "not_near": 0,
+      "success": 0
+    },
+    "GRASP_NOT_LIFTED": {
+      "aligned_no_success": 0,
+      "grasped_not_lifted": 1,
+      "lifted_not_aligned": 0,
+      "not_near": 0,
+      "success": 0
+    },
+    "HOLDING_NOT_PLACED": {
+      "aligned_no_success": 1,
+      "grasped_not_lifted": 0,
+      "lifted_not_aligned": 0,
+      "not_near": 0,
+      "success": 0
+    },
+    "IN_PLACE_NOT_STATIC": {
+      "aligned_no_success": 1,
+      "grasped_not_lifted": 0,
+      "lifted_not_aligned": 0,
+      "not_near": 0,
+      "success": 0
+    }
+  }
+}

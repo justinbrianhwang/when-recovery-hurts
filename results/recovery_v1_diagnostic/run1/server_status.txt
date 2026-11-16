@@ -1,0 +1,41 @@
+install start=2026-11-16T15:07:36Z
+install_sys exit=0 end=2026-11-16T15:09:21Z
+bootstrap exit=0 end=2026-11-16T15:12:16Z
+PHASE_EXIT install 0
+rv1_doctor cmd=python -m hci doctor --out runs/recovery_v1_diagnostic_001/doctor
+rv1_doctor start=2026-11-16T15:12:16Z
+rv1_doctor exit=0 end=2026-11-16T15:12:20Z
+rv1_versions cmd=python -c import torch,torchvision;print(torch.__version__,torchvision.__version__,torch.cuda.get_device_name(0))
+rv1_versions start=2026-11-16T15:12:20Z
+rv1_versions exit=0 end=2026-11-16T15:12:23Z
+rv1_pytest cmd=python -m pytest -q
+rv1_pytest start=2026-11-16T15:12:23Z
+rv1_pytest exit=0 end=2026-11-16T15:13:13Z
+rv1_dry cmd=python scripts/30_recovery_v1_diag.py dry-run --plan runs/recovery_v1_diagnostic_001/plan.json --run runs/recovery_v1_diagnostic_001 --out runs/recovery_v1_diagnostic_001/dry_run_server.json
+rv1_dry start=2026-11-16T15:13:13Z
+rv1_dry exit=0 end=2026-11-16T15:13:13Z
+ENV_DONE
+PHASE_EXIT env 0
+rv1_scenes cmd=python scripts/30_recovery_v1_diag.py scenes --plan runs/recovery_v1_diagnostic_001/plan.json --run runs/recovery_v1_diagnostic_001
+rv1_scenes start=2026-11-16T15:13:13Z
+rv1_scenes exit=0 end=2026-11-16T15:14:47Z
+SCENES_DONE
+PHASE_EXIT scenes 0
+rv1_probe cmd=python scripts/30_recovery_v1_diag.py probe --plan runs/recovery_v1_diagnostic_001/plan.json --run runs/recovery_v1_diagnostic_001
+rv1_probe start=2026-11-16T15:14:47Z
+rv1_probe exit=0 end=2026-11-16T15:15:17Z
+PROBE_DONE
+PHASE_EXIT probe 0
+rv1_budget cmd=python scripts/30_recovery_v1_diag.py budget --plan runs/recovery_v1_diagnostic_001/plan.json --run runs/recovery_v1_diagnostic_001 --usd-per-hour 0.4111 --spent-usd 0.2904
+rv1_budget start=2026-11-16T15:15:17Z
+rv1_budget exit=0 end=2026-11-16T15:15:19Z
+BUDGET_OK
+PHASE_EXIT budget 0
+rv1_diag cmd=python scripts/30_recovery_v1_diag.py run --plan runs/recovery_v1_diagnostic_001/plan.json --run runs/recovery_v1_diagnostic_001
+rv1_diag start=2026-11-16T15:15:19Z
+rv1_diag exit=0 end=2026-11-16T15:31:22Z
+rv1_summary cmd=python scripts/30_recovery_v1_diag.py summarize --diagnostic runs/recovery_v1_diagnostic_001/diagnostic --out runs/recovery_v1_diagnostic_001/diagnostic/summary.json
+rv1_summary start=2026-11-16T15:31:22Z
+rv1_summary exit=0 end=2026-11-16T15:31:22Z
+DIAG_DONE
+PHASE_EXIT diag 0

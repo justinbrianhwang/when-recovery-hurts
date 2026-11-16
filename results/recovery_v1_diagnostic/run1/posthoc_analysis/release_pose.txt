@@ -1,0 +1,45 @@
+successes with a carry 79 failures with a carry 15
+xy success min/q1/med/q3/max [0.0014, 0.0057, 0.0096, 0.0134, 0.0226] | failure [0.0174, 0.0224, 0.0265, 0.0382, 0.0474]
+h success min/q1/med/q3/max [-0.0, 0.0005, 0.0027, 0.005, 0.013] | failure [-0.0057, 0.0002, 0.0045, 0.0065, 0.0147]
+xy_pre success min/q1/med/q3/max [0.0014, 0.0057, 0.0096, 0.0134, 0.0226] | failure [0.0174, 0.0219, 0.0258, 0.0332, 0.0474]
+h_pre success min/q1/med/q3/max [-0.0, 0.0005, 0.0027, 0.005, 0.013] | failure [-0.0057, 0.0002, 0.0028, 0.006, 0.0125]
+vz success min/q1/med/q3/max [-0.0416, -0.0175, -0.0104, -0.0028, 0.0065] | failure [-0.0555, -0.0086, -0.0002, 0.0006, 0.0066]
+tcp_xy_B success min/q1/med/q3/max [0.0007, 0.0049, 0.0091, 0.0132, 0.0226] | failure [0.0042, 0.0222, 0.026, 0.0298, 0.0458]
+grasp_off success min/q1/med/q3/max [0.0003, 0.0012, 0.0031, 0.0055, 0.0163] | failure [0.0002, 0.0023, 0.0045, 0.0097, 0.0186]
+tilt success min/q1/med/q3/max [0.0843, 0.789, 1.0891, 1.4757, 4.0089] | failure [0.2194, 0.3598, 1.1362, 2.2953, 32.1452]
+xy before first open command > 0.01: episodes 52, failures 14; below: 41 episodes, failures 0
+xy before first open command > 0.015: episodes 31, failures 14; below: 62 episodes, failures 0
+xy before first open command > 0.0175: episodes 20, failures 13; below: 73 episodes, failures 1
+xy before first open command > 0.02: episodes 14, failures 12; below: 79 episodes, failures 2
+xy before first open command > 0.0225: episodes 11, failures 10; below: 82 episodes, failures 4
+xy before first open command > 0.025: episodes 8, failures 8; below: 85 episodes, failures 6
+xy before first open command > 0.03: episodes 4, failures 4; below: 89 episodes, failures 10
+--- failures
+50613 EARLY_RELEASE_ABOVE t_rel 98 open 99 xy 0.0187 h 0.0065 xy_pre 0.0187 h_pre 0.0065 vz -0.0239 grasp_off 0.0071 tilt 1.0080
+50668 EARLY_RELEASE_ABOVE t_rel 95 open 96 xy 0.0205 h 0.0125 xy_pre 0.0205 h_pre 0.0125 vz -0.0086 grasp_off 0.0177 tilt 0.3598
+50683 EARLY_RELEASE_ABOVE t_rel 110 open 111 xy 0.0282 h 0.0068 xy_pre 0.0282 h_pre 0.0068 vz -0.0037 grasp_off 0.0045 tilt 1.1362
+50685 EARLY_RELEASE_ABOVE t_rel 98 open 99 xy 0.0282 h 0.0059 xy_pre 0.0282 h_pre 0.0059 vz 0.0053 grasp_off 0.0025 tilt 0.3168
+50686 EARLY_RELEASE_ABOVE t_rel 100 open 101 xy 0.0174 h 0.0058 xy_pre 0.0174 h_pre 0.0058 vz -0.0002 grasp_off 0.0028 tilt 1.3885
+50629 HOLDING_NOT_PLACED t_rel 200 open None xy 0.0456 h 0.0147 xy_pre None h_pre None vz -0.0555 grasp_off 0.0142 tilt 0.5948
+50691 IN_PLACE_NOT_STATIC t_rel 109 open 110 xy 0.0224 h 0.0000 xy_pre 0.0224 h_pre 0.0000 vz -0.0084 grasp_off 0.0023 tilt 0.2735
+50632 POST_RELEASE_UNSTABLE t_rel 112 open 113 xy 0.0252 h 0.0011 xy_pre 0.0252 h_pre 0.0011 vz 0.0006 grasp_off 0.0002 tilt 2.2152
+50633 POST_RELEASE_UNSTABLE t_rel 91 open 92 xy 0.0247 h 0.0047 xy_pre 0.0247 h_pre 0.0047 vz -0.0203 grasp_off 0.0053 tilt 2.2953
+50648 POST_RELEASE_UNSTABLE t_rel 107 open 108 xy 0.0265 h 0.0006 xy_pre 0.0265 h_pre 0.0006 vz 0.0021 grasp_off 0.0015 tilt 0.8708
+50664 POST_RELEASE_UNSTABLE t_rel 92 open 93 xy 0.0315 h 0.0000 xy_pre 0.0315 h_pre 0.0000 vz 0.0005 grasp_off 0.0069 tilt 0.2194
+50671 POST_RELEASE_UNSTABLE t_rel 107 open 108 xy 0.0249 h 0.0006 xy_pre 0.0249 h_pre 0.0006 vz -0.0034 grasp_off 0.0027 tilt 1.7518
+50611 RELEASE_OFF_TARGET_XY t_rel 137 open 138 xy 0.0382 h -0.0057 xy_pre 0.0382 h_pre -0.0057 vz 0.0000 grasp_off 0.0017 tilt 32.1452
+50661 RELEASE_OFF_TARGET_XY t_rel 109 open 110 xy 0.0393 h 0.0045 xy_pre 0.0393 h_pre 0.0045 vz 0.0004 grasp_off 0.0097 tilt 2.5569
+50666 RELEASE_OFF_TARGET_XY t_rel 139 open 140 xy 0.0474 h 0.0002 xy_pre 0.0474 h_pre 0.0002 vz 0.0066 grasp_off 0.0186 tilt 13.5709
+--- successes with the largest xy before the open command
+50640 t_rel 92 open 93 xy_pre 0.0226 h_pre 0.0031 xy 0.0226 h 0.0031
+50615 t_rel 147 open 148 xy_pre 0.0206 h_pre 0.0002 xy 0.0206 h 0.0002
+50646 t_rel 98 open 99 xy_pre 0.0198 h_pre 0.0044 xy 0.0198 h 0.0044
+50631 t_rel 98 open 99 xy_pre 0.0198 h_pre 0.0040 xy 0.0198 h 0.0040
+50602 t_rel 116 open 117 xy_pre 0.0181 h_pre 0.0015 xy 0.0181 h 0.0015
+50644 t_rel 103 open 104 xy_pre 0.0181 h_pre 0.0002 xy 0.0181 h 0.0002
+50605 t_rel 115 open 116 xy_pre 0.0180 h_pre 0.0041 xy 0.0180 h 0.0041
+50642 t_rel 87 open 88 xy_pre 0.0174 h_pre 0.0001 xy 0.0174 h 0.0001
+50684 t_rel 92 open 93 xy_pre 0.0170 h_pre 0.0012 xy 0.0170 h 0.0012
+50652 t_rel 100 open 101 xy_pre 0.0166 h_pre 0.0005 xy 0.0166 h 0.0005
+50649 t_rel 109 open 110 xy_pre 0.0165 h_pre 0.0015 xy 0.0165 h 0.0015
+50647 t_rel 91 open 92 xy_pre 0.0164 h_pre 0.0068 xy 0.0164 h 0.0068

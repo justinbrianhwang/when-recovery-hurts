@@ -1,0 +1,14 @@
+install start=2026-11-16T14:11:04Z
+install_sys exit=0 end=2026-11-16T14:12:00Z
+bootstrap exit=0 end=2026-11-16T14:15:29Z
+PHASE_EXIT install 0
+rv1_doctor cmd=python -m hci doctor --out runs/recovery_v1_diagnostic_001/doctor
+rv1_doctor start=2026-11-16T14:15:29Z
+rv1_doctor exit=2 end=2026-11-16T14:15:32Z
+PHASE_EXIT env 1
+PHASE_SKIPPED scenes (an earlier phase did not pass)
+PHASE_SKIPPED probe (an earlier phase did not pass)
+PHASE_SKIPPED budget (an earlier phase did not pass)
+PHASE_SKIPPED diag (an earlier phase did not pass)
+PHASE_EXIT pack 0
+CHAIN_END 2026-11-16T14:15:33Z
