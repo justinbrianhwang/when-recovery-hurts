@@ -1,0 +1,239 @@
+{
+ "source": "results/recovery_v1_diagnostic/run1 (100 stored traces of the consumed diagnostic set; development data)",
+ "not": "no simulator step and no policy inference were run for this file",
+ "tracking": {
+  "what": "achieved TCP displacement of one control step divided by the commanded increment (action x 0.1 m), steps with |command| > 2 mm, the policy's own motions",
+  "all_steps": {
+   "x": {
+    "n": 3921,
+    "least_squares": 0.3929744481384678,
+    "median": 0.3910166330278159,
+    "p10": 0.3373864918798345,
+    "p90": 0.44510380837141134
+   },
+   "y": {
+    "n": 4564,
+    "least_squares": 0.3920445378823023,
+    "median": 0.3874445733668521,
+    "p10": 0.30858134872424925,
+    "p90": 0.4645548504662809
+   },
+   "z": {
+    "n": 8216,
+    "least_squares": 0.37783371936913734,
+    "median": 0.39089509735630346,
+    "p10": 0.2910829192768102,
+    "p90": 0.465690667163169
+   }
+  },
+  "while_carrying": {
+   "x": {
+    "n": 1800,
+    "least_squares": 0.3930009105859693,
+    "median": 0.39103063720187337,
+    "p10": 0.34056482940569616,
+    "p90": 0.4419648206944282
+   },
+   "y": {
+    "n": 2188,
+    "least_squares": 0.3924976618218581,
+    "median": 0.38892573556605026,
+    "p10": 0.3030219863299287,
+    "p90": 0.4767223786054146
+   },
+   "z": {
+    "n": 3538,
+    "least_squares": 0.38836773624829013,
+    "median": 0.40035682510107456,
+    "p10": 0.32409278740437203,
+    "p90": 0.477040389631326
+   }
+  },
+  "reading": "about 0.39 of each commanded increment is achieved per control step (the controller re-targets from the measured pose every step). A 5 mm command moves the gripper about 2 mm. This agrees with the existing 5 cm retreat needing 23-27 steps.",
+  "consequence": {
+   "target_cap_reading": "at most 12 x 5 mm x 0.39 = about 2.3 cm of real correction; the 12-step limit binds before the 3 cm target cap",
+   "sum_of_commands_reading": "at most 3 cm x 0.39 = about 1.2 cm of real correction, after 6 steps"
+  }
+ },
+ "trigger_on_consumed_traces": {
+  "rule": {
+   "open_cmd_above": 0.0,
+   "close_run_min": 3,
+   "width_min_m": 0.02,
+   "width_max_m": 0.06
+  },
+  "fires_in": 94,
+  "of": 100,
+  "not_grasped_at_trigger": 0,
+  "not_lifted_1cm_at_trigger": 0,
+  "no_trigger": [
+   {
+    "seed": 50610,
+    "label": "NO_APPROACH"
+   },
+   {
+    "seed": 50618,
+    "label": "GRASP_NOT_LIFTED"
+   },
+   {
+    "seed": 50643,
+    "label": "NO_APPROACH"
+   },
+   {
+    "seed": 50673,
+    "label": "NO_APPROACH"
+   },
+   {
+    "seed": 50694,
+    "label": "NO_APPROACH"
+   },
+   {
+    "seed": 50699,
+    "label": "NO_APPROACH"
+   }
+  ],
+  "c0_success_among_triggered": 79,
+  "c0_failure_among_triggered": 15,
+  "trigger_step": {
+   "min": 87,
+   "median": 99.0,
+   "max": 197
+  },
+  "on_stage2_eligibility_grid": 13,
+  "fewer_than_48_steps_left": 1,
+  "fewer_than_12_steps_left": 1,
+  "offset_at_trigger_vs_outcome": [
+   {
+    "offset_cm": [
+     0,
+     1.0
+    ],
+    "scenes": 41,
+    "c0_failures": 0
+   },
+   {
+    "offset_cm": [
+     1.0,
+     1.5
+    ],
+    "scenes": 20,
+    "c0_failures": 0
+   },
+   {
+    "offset_cm": [
+     1.5,
+     2.0
+    ],
+    "scenes": 18,
+    "c0_failures": 3
+   },
+   {
+    "offset_cm": [
+     2.0,
+     2.5
+    ],
+    "scenes": 6,
+    "c0_failures": 4
+   },
+   {
+    "offset_cm": [
+     2.5,
+     3.3000000000000003
+    ],
+    "scenes": 6,
+    "c0_failures": 6
+   },
+   {
+    "offset_cm": [
+     3.3000000000000003,
+     null
+    ],
+    "scenes": 3,
+    "c0_failures": 2
+   }
+  ],
+  "without_the_width_and_run_conditions": "the first open-after-close command comes with empty fingers in 2 episodes (50610, 50626) and after a 1-step close in 1 (50636); the width window and the run length exclude these"
+ },
+ "predicted_correction": {
+  "model": "Linear tracking model: each step achieves g x the commanded increment; the carried cube moves with the gripper; cubeB does not move.",
+  "by_cap_reading_and_gain": {
+   "target_gain_0.31": {
+    "scenes_moved": 53,
+    "scenes_already_within_tolerance": 41,
+    "residual_within_1.0cm": 90,
+    "residual_within_1.5cm": 92,
+    "c0_failures_among_triggered": 15,
+    "c0_failures_residual_within_1.0cm": 12,
+    "c0_failures_residual_within_1.5cm": 14,
+    "steps_median_when_moved": 5.0,
+    "steps_max": 12,
+    "max_correction_m": 0.0186
+   },
+   "target_gain_0.39": {
+    "scenes_moved": 53,
+    "scenes_already_within_tolerance": 41,
+    "residual_within_1.0cm": 92,
+    "residual_within_1.5cm": 92,
+    "c0_failures_among_triggered": 15,
+    "c0_failures_residual_within_1.0cm": 14,
+    "c0_failures_residual_within_1.5cm": 14,
+    "steps_median_when_moved": 4.0,
+    "steps_max": 12,
+    "max_correction_m": 0.0234
+   },
+   "target_gain_0.47": {
+    "scenes_moved": 53,
+    "scenes_already_within_tolerance": 41,
+    "residual_within_1.0cm": 92,
+    "residual_within_1.5cm": 93,
+    "c0_failures_among_triggered": 15,
+    "c0_failures_residual_within_1.0cm": 14,
+    "c0_failures_residual_within_1.5cm": 15,
+    "steps_median_when_moved": 3.0,
+    "steps_max": 12,
+    "max_correction_m": 0.028199999999999996
+   },
+   "sum_of_commands_gain_0.31": {
+    "scenes_moved": 53,
+    "scenes_already_within_tolerance": 41,
+    "residual_within_1.0cm": 76,
+    "residual_within_1.5cm": 83,
+    "c0_failures_among_triggered": 15,
+    "c0_failures_residual_within_1.0cm": 2,
+    "c0_failures_residual_within_1.5cm": 5,
+    "steps_median_when_moved": 5.0,
+    "steps_max": 6,
+    "max_correction_m": 0.0093
+   },
+   "sum_of_commands_gain_0.39": {
+    "scenes_moved": 53,
+    "scenes_already_within_tolerance": 41,
+    "residual_within_1.0cm": 80,
+    "residual_within_1.5cm": 87,
+    "c0_failures_among_triggered": 15,
+    "c0_failures_residual_within_1.0cm": 4,
+    "c0_failures_residual_within_1.5cm": 9,
+    "steps_median_when_moved": 4.0,
+    "steps_max": 6,
+    "max_correction_m": 0.0117
+   },
+   "sum_of_commands_gain_0.47": {
+    "scenes_moved": 53,
+    "scenes_already_within_tolerance": 41,
+    "residual_within_1.0cm": 83,
+    "residual_within_1.5cm": 90,
+    "c0_failures_among_triggered": 15,
+    "c0_failures_residual_within_1.0cm": 5,
+    "c0_failures_residual_within_1.5cm": 12,
+    "steps_median_when_moved": 3.0,
+    "steps_max": 6,
+    "max_correction_m": 0.014099999999999998
+   }
+  },
+  "caveat": "a prediction about the controller, not about task success; the policy re-plans afterwards and may move again before it opens"
+ },
+ "episode_length": {
+  "mean_steps": 125.4,
+  "mean_trigger_step": 102.90425531914893
+ }
+}

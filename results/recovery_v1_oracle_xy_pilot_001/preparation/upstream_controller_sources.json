@@ -1,0 +1,17 @@
+{
+ "commit": "a4a4f9272ad64b1564035874b605ceb687b63ed8",
+ "fetched_from": "raw.githubusercontent.com/haosulab/ManiSkill at the pinned commit (this PC has no local checkout of the upstream repository)",
+ "files_sha256_first16": {
+  "mani_skill/agents/robots/panda/panda.py": "2a98a2133b49e5a9",
+  "mani_skill/agents/controllers/pd_ee_pose.py": "318110fe18cb879e",
+  "mani_skill/agents/controllers/pd_joint_pos.py": "ce05feb05c4370ec",
+  "mani_skill/agents/controllers/base_controller.py": "a39aa1ec3666ccca"
+ },
+ "read": {
+  "robot": "PandaWristCam (uid panda_wristcam) subclasses Panda and inherits its controller configurations",
+  "arm_pd_ee_delta_pos": "PDEEPosControllerConfig(pos_lower=-0.1, pos_upper=0.1, stiffness=1e3, damping=1e2, force_limit=100); frame root_translation, use_delta, no virtual target (use_target is True only in the separate pd_ee_target_delta_pos mode), normalised action. The 3 arm values in [-1, 1] are scaled to [-0.1, 0.1] m and added to the CURRENT end-effector position in the robot base frame; the IK joint target is then driven by the joint PD controller",
+  "gripper": "PDJointPosMimicControllerConfig(lower=-0.01, upper=0.04), absolute target, normalised action: command -1 -> -0.01 m per finger (closed, squeezing), +1 -> 0.04 m per finger (open)",
+  "consequence": "because there is no virtual target, the target is re-anchored at the measured pose every control step: the part of a commanded increment that was not achieved is not carried over to the next step"
+ },
+ "still_to_verify_on_the_server": "the same facts read from the live controller objects (audit step, controller_facts) and the achieved motion (tracking audit). Nothing in this file was executed"
+}
