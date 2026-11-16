@@ -1,0 +1,21 @@
+{
+ "approved_by": "user",
+ "paid_compute_authorized": true,
+ "cap_usd": 8.0,
+ "plan_sha256": "5fdee368fa529c0096464332e1af5dc2ac0eca39ff102ad7bc0fa8605ed3678e",
+ "work_id": "vision_v1_001",
+ "execution": "run2",
+ "recorded_utc": "2026-11-15",
+ "recorded_from": "explicit re-run approval message of the user after the BUDGET_BLOCKED report of the first execution",
+ "supersedes": "authorization.json (cap 5.00, first execution, BUDGET_BLOCKED); that file is kept unchanged and is not reused",
+ "scope": "same design: train seeds 1 and 2, 100000 updates each, batch 256, same D500-clean 500 demonstrations, ImageNet ResNet-18, fixed 80k EMA candidates, selection on vision_v1_select, paired qualification on vision_v1_qualify only if a candidate reaches 50/100; all-in cap US$8.00; stop before training if a new probe projects more",
+ "accounting": "the US$0.30 of the first execution is counted inside the US$8.00 (conservative reading)",
+ "forbidden": [
+  "changing updates, batch size, architecture, checkpoint or evaluation splits by results",
+  "reusing the first authorization",
+  "overwriting files of the first execution",
+  "reducing the experiment to fit the cost",
+  "modifying Stage 3B / H1 results",
+  "calibration, final Test, recovery-behaviour experiments"
+ ]
+}

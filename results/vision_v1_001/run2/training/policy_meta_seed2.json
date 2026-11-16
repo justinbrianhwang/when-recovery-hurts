@@ -1,0 +1,238 @@
+{
+  "args": {
+    "obs_horizon": 2,
+    "act_horizon": 8,
+    "pred_horizon": 16,
+    "diffusion_step_embed_dim": 64,
+    "unet_dims": [
+      64,
+      128,
+      256
+    ],
+    "n_groups": 8,
+    "env_id": "StackCube-v1",
+    "control_mode": "pd_ee_delta_pos",
+    "sim_backend": "physx_cpu",
+    "obs_mode": "rgb",
+    "max_episode_steps": 200,
+    "exp_name": "policy/stack_v1_s2_d500_clean_resnet18",
+    "seed": 2,
+    "demo_path": "/workspace/robot_harm_intervention_starter_v0_3/runs/stage1d_clean_002/data/train_d500_clean_v1.h5",
+    "num_demos": 500,
+    "total_iters": 100000,
+    "batch_size": 256,
+    "eval_freq": 10000,
+    "num_eval_envs": 1,
+    "num_eval_episodes": 5,
+    "capture_video": false,
+    "track": false
+  },
+  "observation_schema": "rgb_qpos_qvel_tcp_v1",
+  "architecture_id": "dp_resnet18_imagenet1k_v1_shared_twocam_fc256_v1",
+  "encoder": {
+    "architecture_id": "dp_resnet18_imagenet1k_v1_shared_twocam_fc256_v1",
+    "input": "float [N, 6, 128, 128] in [0, 1]; channels 0-2 = base_camera RGB, 3-5 = hand_camera RGB (sorted camera names)",
+    "cameras": [
+      "base_camera",
+      "hand_camera"
+    ],
+    "image_size": 128,
+    "resize": "none",
+    "augmentation": "none",
+    "normalisation": {
+      "mean": [
+        0.485,
+        0.456,
+        0.406
+      ],
+      "std": [
+        0.229,
+        0.224,
+        0.225
+      ]
+    },
+    "backbone": "torchvision resnet18, shared by both cameras, fc removed, global average pooling (512 per camera)",
+    "head": "Linear(1024, 256) + ReLU",
+    "feature_dim": 256,
+    "batchnorm": "eval mode in training and deployment (ImageNet running statistics, never updated); affine weight and bias trainable",
+    "trainable": "all backbone convolutions, BatchNorm affine parameters, head",
+    "pretrained": {
+      "name": "torchvision ResNet18_Weights.IMAGENET1K_V1",
+      "url": "https://download.pytorch.org/models/resnet18-f37072fd.pth",
+      "file": "resnet18-f37072fd.pth",
+      "sha256": "f37072fd47e89c5e827621c5baffa7500819f7896bbacec160b1a16c560e07ec",
+      "license": "torchvision (BSD-3-Clause); weights trained on ImageNet-1k",
+      "num_params_with_fc": 11689512
+    }
+  },
+  "upstream_commit": "a4a4f9272ad64b1564035874b605ceb687b63ed8",
+  "env_id": "StackCube-v1",
+  "control_mode": "pd_ee_delta_pos",
+  "horizon": 200,
+  "robot_uid": "panda_wristcam",
+  "weights_sha256": "52eff6a94a075bb3947e68756f8185bc1bfcb1893b691ee3529bbbc0c521b97b",
+  "weights": "EMA",
+  "iteration": 80000,
+  "train_seed": 2,
+  "source_checkpoint": "/workspace/robot_harm_intervention_starter_v0_3/runs/policy/stack_v1_s2_d500_clean_resnet18/checkpoints/full_080000.pt",
+  "source_checkpoint_sha256": "d47ccf88adfcc1778974ab087303a0c23f3ecdc9e0e7a8e2833744b034a50f63",
+  "pretrained_file_sha256": "f37072fd47e89c5e827621c5baffa7500819f7896bbacec160b1a16c560e07ec",
+  "state_dict_checks": "ResNet backbone present; head Linear(1024, 256); BatchNorm running statistics equal to the ImageNet file; convolution weights differ from it",
+  "source_training_metadata": {
+    "args": {
+      "obs_horizon": 2,
+      "act_horizon": 8,
+      "pred_horizon": 16,
+      "diffusion_step_embed_dim": 64,
+      "unet_dims": [
+        64,
+        128,
+        256
+      ],
+      "n_groups": 8,
+      "env_id": "StackCube-v1",
+      "control_mode": "pd_ee_delta_pos",
+      "sim_backend": "physx_cpu",
+      "obs_mode": "rgb",
+      "max_episode_steps": 200,
+      "exp_name": "policy/stack_v1_s2_d500_clean_resnet18",
+      "seed": 2,
+      "demo_path": "/workspace/robot_harm_intervention_starter_v0_3/runs/stage1d_clean_002/data/train_d500_clean_v1.h5",
+      "num_demos": 500,
+      "total_iters": 100000,
+      "batch_size": 256,
+      "eval_freq": 10000,
+      "num_eval_envs": 1,
+      "num_eval_episodes": 5,
+      "capture_video": false,
+      "track": false
+    },
+    "config": {
+      "version": "0.3.0",
+      "env": {
+        "id": "StackCube-v1",
+        "robot_uid": "panda_wristcam",
+        "sim_backend": "physx_cpu",
+        "num_envs": 1,
+        "obs_mode": "rgb",
+        "control_mode": "pd_ee_delta_pos",
+        "horizon": 200
+      },
+      "policy": {
+        "obs_horizon": 2,
+        "act_horizon": 8,
+        "pred_horizon": 16,
+        "diffusion_step_embed_dim": 64,
+        "unet_dims": [
+          64,
+          128,
+          256
+        ],
+        "n_groups": 8
+      },
+      "protocol": {
+        "max_interventions": 1,
+        "success_definition": "success_once_absorbing",
+        "min_intervention_step": 12,
+        "decision_stride": 4,
+        "minimum_post_retreat_steps": 8
+      },
+      "retreat": {
+        "mode": "up",
+        "distance_m": 0.05,
+        "max_translation_per_step_m": 0.005,
+        "max_steps": 40,
+        "arrival_tolerance_m": 0.005,
+        "lookback_steps": 12
+      },
+      "collection": {
+        "checkpoint_steps": [
+          12,
+          52,
+          92,
+          132
+        ],
+        "repeats": 4
+      },
+      "audit": {
+        "replay_steps": 20,
+        "state_atol": 1e-06,
+        "action_atol": 1e-06,
+        "observation_atol": 1.0
+      },
+      "notes": [
+        "Provisional development defaults; freeze after pilot, before calibration and final Test.",
+        "Refresh is evaluated inside an unexecuted action chunk, not at a natural replanning boundary.",
+        "Retreat is not assumed safe. This code must never control real hardware."
+      ]
+    },
+    "upstream_commit": "a4a4f9272ad64b1564035874b605ceb687b63ed8",
+    "observation_schema": "rgb_qpos_qvel_tcp_v1",
+    "architecture_id": "dp_resnet18_imagenet1k_v1_shared_twocam_fc256_v1",
+    "encoder": {
+      "architecture_id": "dp_resnet18_imagenet1k_v1_shared_twocam_fc256_v1",
+      "input": "float [N, 6, 128, 128] in [0, 1]; channels 0-2 = base_camera RGB, 3-5 = hand_camera RGB (sorted camera names)",
+      "cameras": [
+        "base_camera",
+        "hand_camera"
+      ],
+      "image_size": 128,
+      "resize": "none",
+      "augmentation": "none",
+      "normalisation": {
+        "mean": [
+          0.485,
+          0.456,
+          0.406
+        ],
+        "std": [
+          0.229,
+          0.224,
+          0.225
+        ]
+      },
+      "backbone": "torchvision resnet18, shared by both cameras, fc removed, global average pooling (512 per camera)",
+      "head": "Linear(1024, 256) + ReLU",
+      "feature_dim": 256,
+      "batchnorm": "eval mode in training and deployment (ImageNet running statistics, never updated); affine weight and bias trainable",
+      "trainable": "all backbone convolutions, BatchNorm affine parameters, head",
+      "pretrained": {
+        "name": "torchvision ResNet18_Weights.IMAGENET1K_V1",
+        "url": "https://download.pytorch.org/models/resnet18-f37072fd.pth",
+        "file": "resnet18-f37072fd.pth",
+        "sha256": "f37072fd47e89c5e827621c5baffa7500819f7896bbacec160b1a16c560e07ec",
+        "license": "torchvision (BSD-3-Clause); weights trained on ImageNet-1k",
+        "num_params_with_fc": 11689512
+      }
+    },
+    "pretrained_file_sha256": "f37072fd47e89c5e827621c5baffa7500819f7896bbacec160b1a16c560e07ec",
+    "probe": false,
+    "demo_sha256": "93416a4a8b7e2203d4cca1fe3c5d1e577830fa720ea4f3855021a168ea65f342",
+    "demo_path": "/workspace/robot_harm_intervention_starter_v0_3/runs/stage1d_clean_002/data/train_d500_clean_v1.h5",
+    "data_manifest_sha256": "30615b3326bc6b90e153169a1f94e3493f4d81cea110ff49d621298e44ddbd1b",
+    "data_manifest": "runs/stage1d_clean_002/data/train_d500_clean_manifest.json",
+    "project_source_sha256": "6af03b7011eba6ba9c07667e2de9a49415ae29a0fe18193e49f260d8e9bb2158",
+    "full_checkpoint_freq": 10000,
+    "runtime": {
+      "python": "3.10.12 (main, Aug 31 2026, 10:18:17) [GCC 11.4.0]",
+      "platform": "Linux-6.8.0-149-generic-x86_64-with-glibc2.35",
+      "packages": {
+        "torch": "2.6.0+cu124",
+        "torchvision": "0.21.0+cu124",
+        "mani_skill": "3.0.1",
+        "sapien": "3.0.3",
+        "gymnasium": "0.29.1",
+        "diffusers": "0.30.3",
+        "numpy": "1.26.4",
+        "scipy": "1.13.1",
+        "PyYAML": "6.0.2"
+      },
+      "nvidia_smi": {
+        "returncode": 0,
+        "stdout": "name, driver_version, memory.total [MiB]\nNVIDIA GeForce RTX 4090, 610.57.04, 24564 MiB\n",
+        "stderr": ""
+      }
+    },
+    "training_note": "Official algorithm and trainer; observation whitelist and ordering patched in memory as for the legacy policy; the visual encoder class is replaced in memory by hci.vision_v1.ResNet18TwoCamEncoder. Nothing else differs from the legacy training command."
+  }
+}

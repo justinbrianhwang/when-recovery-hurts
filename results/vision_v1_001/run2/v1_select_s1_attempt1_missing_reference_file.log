@@ -1,0 +1,18 @@
+Traceback (most recent call last):
+  File "/workspace/robot_harm_intervention_starter_v0_3/scripts/29_vision_v1.py", line 318, in <module>
+    main()
+  File "/workspace/robot_harm_intervention_starter_v0_3/scripts/29_vision_v1.py", line 314, in main
+    a = p.parse_args(); globals()['cmd_' + a.cmd.replace('-', '_')](a)
+  File "/workspace/robot_harm_intervention_starter_v0_3/scripts/29_vision_v1.py", line 257, in cmd_eval_select
+    m = check_candidate(plan, a.policy, a.train_seed); seeds = new_seeds(read_json(plan['seed_manifest']['path']), 'vision_v1_select', used_ledger())
+  File "/workspace/robot_harm_intervention_starter_v0_3/scripts/29_vision_v1.py", line 241, in used_ledger
+    return ledger_of_use(read_json('configs/splits.json'), read_json('configs/policy_eval_splits.json'), read_json(DATA['manifest'])['all_scene_seeds'])
+  File "/workspace/robot_harm_intervention_starter_v0_3/scripts/29_vision_v1.py", line 64, in ledger_of_use
+    for p in PRIOR_SCENES: used[p] = list(read_json(p)['list'])
+  File "/workspace/robot_harm_intervention_starter_v0_3/src/hci/io.py", line 33, in read_json
+    return json.loads(Path(path).read_text(encoding='utf-8'))
+  File "/usr/lib/python3.10/pathlib.py", line 1134, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+  File "/usr/lib/python3.10/pathlib.py", line 1119, in open
+    return self._accessor.open(self, mode, buffering, encoding, errors,
+FileNotFoundError: [Errno 2] No such file or directory: 'results/stage2a/scenes.json'
