@@ -1,0 +1,328 @@
+{
+  "work_id": "recovery_v1_diagnostic_001",
+  "stage": "Recovery-V1: diagnosis of the residual failures of the Vision-V1 base policy",
+  "created_utc": "2026-11-16T14:03:34.118449+00:00",
+  "pass": true,
+  "problems": [],
+  "status": {
+    "vision_v1": "EXECUTED_ONCE, TARGET_MET (79/100 on vision_v1_qualify), unchanged",
+    "base_policy": "FROZEN: Vision-V1 train seed 1, 80k EMA",
+    "recovery_v1_diagnostic": "PREPARATION_ONLY",
+    "diagnostic_rollouts": "NOT_RUN",
+    "paid_compute": "NOT_AUTHORIZED",
+    "new_training": "NOT_PLANNED",
+    "recovery_action": "NOT_DESIGNED (follows the diagnosis)",
+    "recovery_pilot": "NOT_RUN",
+    "calibration": "NOT_RUN",
+    "final_test": "NOT_RUN"
+  },
+  "authorization": {
+    "paid_compute_authorized": false,
+    "proposed_cap_usd": 2.0,
+    "proposed_cap_is": "a proposal by the user, explicitly not an approval; earlier approvals are not inherited",
+    "required_file": "authorization.json in the run folder: {\"approved_by\": \"user\", \"paid_compute_authorized\": true, \"cap_usd\": <number>, \"plan_sha256\": \"<sha256 of this plan>\"}"
+  },
+  "question": "By which mechanism do the remaining episodes of the frozen Vision-V1 policy fail, and which single mechanism is the most frequent?",
+  "repository": {
+    "head": "c1590ce15ae17540dac5c6330c8c9cc4ef0a6d5e",
+    "working_tree_changes_at_plan_time": [
+      "M configs/recovery_v1_splits.json"
+    ]
+  },
+  "base_policy": {
+    "path": "artifacts/policies/stack_v1_s1_d500_clean_resnet18_i080000",
+    "weights.pt": "a37be25603d6c7b7d5cfa1872e6c1134c436f78de02b745c481c88d5d0f69629",
+    "policy_meta.json": "4ccfba34ee42b3bab344f7d320c57c6a97011f5adf8b93c04a36b886303b138e",
+    "train_seed": 1,
+    "iteration": 80000,
+    "weights": "EMA",
+    "source_checkpoint_sha256": "5cd8e95d589154981569cad2a3a5f4c8cd670da4444ac7ecb8bf6971484652ed",
+    "checks": {
+      "weights_sha256_now": "a37be25603d6c7b7d5cfa1872e6c1134c436f78de02b745c481c88d5d0f69629",
+      "policy_meta_sha256_now": "4ccfba34ee42b3bab344f7d320c57c6a97011f5adf8b93c04a36b886303b138e",
+      "meta_weights_sha256": "a37be25603d6c7b7d5cfa1872e6c1134c436f78de02b745c481c88d5d0f69629",
+      "selection_weights_sha256": "a37be25603d6c7b7d5cfa1872e6c1134c436f78de02b745c481c88d5d0f69629",
+      "qualified_weights_sha256": "a37be25603d6c7b7d5cfa1872e6c1134c436f78de02b745c481c88d5d0f69629",
+      "backup_list_weights_sha256": "a37be25603d6c7b7d5cfa1872e6c1134c436f78de02b745c481c88d5d0f69629",
+      "backup_list_meta_sha256": "4ccfba34ee42b3bab344f7d320c57c6a97011f5adf8b93c04a36b886303b138e",
+      "backup_list_source_checkpoint_sha256": "5cd8e95d589154981569cad2a3a5f4c8cd670da4444ac7ecb8bf6971484652ed",
+      "qualification": "79/100 (TARGET_MET)",
+      "archive_present": true,
+      "archive_sha256_now": "3a8d7cbf0d08aa61c18b51b2199cd2d97ba331f3f900bd0bb3ef595f8642c8cb",
+      "extracted_source_checkpoint_sha256": "5cd8e95d589154981569cad2a3a5f4c8cd670da4444ac7ecb8bf6971484652ed",
+      "extracted_weights_sha256": "a37be25603d6c7b7d5cfa1872e6c1134c436f78de02b745c481c88d5d0f69629",
+      "vision_plan_sha256_now": "5fdee368fa529c0096464332e1af5dc2ac0eca39ff102ad7bc0fa8605ed3678e",
+      "inference_code_identical_to_the_vision_v1_plan": {
+        "src/hci/vision_v1.py": true,
+        "src/hci/policies.py": true,
+        "src/hci/simulation.py": true,
+        "src/hci/experiment.py": true,
+        "src/hci/observations.py": true,
+        "src/hci/io.py": true,
+        "src/hci/schema.py": true,
+        "src/hci/trees.py": true,
+        "src/hci/diagnostics.py": true,
+        "src/hci/pilot.py": true,
+        "src/hci/statistics.py": true
+      }
+    },
+    "rule": "frozen; not retrained, not fine-tuned, no other checkpoint"
+  },
+  "config": {
+    "path": "configs/stackcube.yaml",
+    "file_sha256": "b145ca59607f4edf45f20bd45624f1bd4c8ff028a035ee4ab12b7de40bb08d8b",
+    "config_sha256": "c8cc0a581f7d4e9de4042490bd6939e9b80da1dd333df081cb9107c29427dfbd",
+    "policy": {
+      "obs_horizon": 2,
+      "act_horizon": 8,
+      "pred_horizon": 16,
+      "diffusion_step_embed_dim": 64,
+      "unet_dims": [
+        64,
+        128,
+        256
+      ],
+      "n_groups": 8
+    },
+    "env": {
+      "id": "StackCube-v1",
+      "robot_uid": "panda_wristcam",
+      "sim_backend": "physx_cpu",
+      "num_envs": 1,
+      "obs_mode": "rgb",
+      "control_mode": "pd_ee_delta_pos",
+      "horizon": 200
+    }
+  },
+  "existing_traces": {
+    "vision_v1_per_episode_files": "seed, success_once, steps, end reason, policy calls, timing, furthest stage only",
+    "per_step_trace_of_the_new_policy": "none was stored in Vision-V1 (the stage label was computed in memory and the trace discarded)",
+    "sufficient_for": [
+      "furthest stage reached"
+    ],
+    "missing": [
+      "executed actions and gripper command per step",
+      "finger opening",
+      "cube poses, tilt and velocities per step",
+      "contact forces cube-cube, cube-finger, cube-table",
+      "time and pose of the release",
+      "whether the success pose was reached while still grasped",
+      "camera frames of failed episodes"
+    ],
+    "decision": "a new diagnostic pass is needed; vision_v1_select / vision_v1_qualify are not re-run for it (3 select scenes are re-run by `probe` for timing only)"
+  },
+  "seed_manifest": {
+    "path": "configs/recovery_v1_splits.json",
+    "sha256": "1809cc28432c24c69dfb7f5dd72e23875bf3bc12e3628e4eb3dc7d16486aba12",
+    "sets": {
+      "recovery_v1_diag": [
+        50600,
+        50699,
+        100
+      ],
+      "recovery_v1_pilot_reserved": [
+        50700,
+        50799,
+        100
+      ]
+    },
+    "runnable_here": [
+      "recovery_v1_diag"
+    ],
+    "diag": [
+      50600,
+      50699
+    ],
+    "reserved": "recovery_v1_pilot_reserved (50700-50799) is declared so that no other work takes it; no command of this work resets or runs it",
+    "seed_level_check": "no overlap with splits.json, policy_eval_splits.json, vision_v1_splits.json, the 550 demonstration scene seeds, or the scenes of Stage 2A / 2B / 2D / H1",
+    "placement_check": "server step `scenes`: cube placements of the 100 diagnostic seeds against stored placements (demonstrations, pilots) and, by reset, against audit / dev / policy-evaluation / Vision-V1 sets; calibration and Test by seed number only. An identical placement fails the step",
+    "untouched_sets": [
+      "calibration",
+      "test",
+      "vision_v1_qualify",
+      "policy_qualify_A",
+      "policy_qualify_B",
+      "recovery_v1_pilot_reserved"
+    ]
+  },
+  "recording": {
+    "per_step": [
+      "executed action (xyz delta, gripper command)",
+      "TCP position and orientation",
+      "finger joint positions (opening)",
+      "cubeA and cubeB position, orientation, linear and angular velocity",
+      "task flags: grasped, cubeA on cubeB, static, success",
+      "contact force magnitude: cubeA-cubeB, cubeA-each finger, cubeA-table, cubeB-each finger"
+    ],
+    "frames": "both policy cameras at every step, stored for failed episodes only (diagnostic evidence; the success flag decides storage, not any policy input)",
+    "privileged": "all of it is simulator ground truth, written to files after each step; the policy receives exactly the Vision-V1 observation and nothing from the recorder"
+  },
+  "classification": {
+    "labels": {
+      "SUCCESS": "task success",
+      "NO_APPROACH": "the gripper never came within 3 cm of cubeA",
+      "NO_GRASP": "near cubeA, grasp flag never true",
+      "GRASP_NOT_LIFTED": "grasp flag true, cubeA never lifted 1 cm while grasped",
+      "NOT_RELEASED_AT_PLACE": "cubeA was in the success pose on cubeB while still grasped and the episode ended with the grasp still on (did not let go)",
+      "HOLDING_NOT_PLACED": "episode ended still holding cubeA, which was never in the success pose during that hold",
+      "GRASP_LOST_WITHOUT_OPEN_COMMAND": "the lifted cube left the grasp while the gripper command was still \"close\" (slip or knock)",
+      "RELEASE_OFF_TARGET_XY": "commanded release with cubeA outside the horizontal tolerance over cubeB (position error)",
+      "EARLY_RELEASE_ABOVE": "commanded release horizontally over cubeB but higher than the resting height (opened too early, dropped)",
+      "RELEASE_BELOW_REST_HEIGHT": "commanded release horizontally over cubeB but lower than the resting height (pressed in or tilted)",
+      "POST_RELEASE_UNSTABLE": "released in the success pose, then cubeA left that pose (instability after contact)",
+      "IN_PLACE_NOT_STATIC": "released in the success pose and stayed there, never static at a released step",
+      "UNKNOWN": "no rule applies; the cause is not established by the log"
+    },
+    "rule_order": [
+      "SUCCESS",
+      "NO_APPROACH",
+      "NO_GRASP",
+      "GRASP_NOT_LIFTED",
+      "NOT_RELEASED_AT_PLACE",
+      "HOLDING_NOT_PLACED",
+      "GRASP_LOST_WITHOUT_OPEN_COMMAND",
+      "RELEASE_OFF_TARGET_XY",
+      "EARLY_RELEASE_ABOVE",
+      "RELEASE_BELOW_REST_HEIGHT",
+      "POST_RELEASE_UNSTABLE",
+      "IN_PLACE_NOT_STATIC",
+      "UNKNOWN"
+    ],
+    "thresholds": {
+      "near_m": 0.03,
+      "lift_m": 0.01,
+      "xy_tol_m": 0.0332842712474619,
+      "z_tol_m": 0.005,
+      "release_gap_steps": 3,
+      "open_window_steps": 5,
+      "in_place_steps": 3,
+      "cube_b_moved_m": 0.01,
+      "static_lin_m_s": 0.01,
+      "static_ang_rad_s": 0.5
+    },
+    "user_categories": {
+      "not opened": "NOT_RELEASED_AT_PLACE",
+      "opened too early": "EARLY_RELEASE_ABOVE",
+      "position error": [
+        "RELEASE_OFF_TARGET_XY",
+        "RELEASE_BELOW_REST_HEIGHT",
+        "HOLDING_NOT_PLACED"
+      ],
+      "unstable after contact": [
+        "POST_RELEASE_UNSTABLE",
+        "IN_PLACE_NOT_STATIC"
+      ]
+    },
+    "frozen": "rules and thresholds are fixed by the hash of src/hci/recovery_v1.py in this plan, before any diagnostic episode. A rule changed after seeing traces is reported as post hoc",
+    "unknown": "an episode no rule explains is UNKNOWN; it is counted, not forced into a label"
+  },
+  "probe": {
+    "seeds": [
+      50400,
+      50401,
+      50402
+    ],
+    "from": "vision_v1_select (already used)",
+    "purpose": "recorder works on this host; seconds per control step; does the run reproduce the recorded success and step count",
+    "reproduction_rule": "a difference from the record is reported and does not block (another GPU may change floating-point results); a recorder error blocks"
+  },
+  "run": {
+    "episodes": 100,
+    "intervention": "none",
+    "ledger": "artifacts/ledger/recovery_v1_diag.json, created exclusively before any rollout; no resume, no second pass",
+    "on_error": "the pass stops and stays INCOMPLETE; no episode is dropped or replaced"
+  },
+  "outputs_after_the_run": [
+    "counts and cases per mechanism label with the log evidence of every verdict",
+    "ONE proposed local recovery action for the most frequent mechanism (not a repeat of the 5 cm retreat by default)",
+    "a controlled pilot plan: C0 (no intervention), R5 (existing 5 cm retreat) and the new action from the same state with the same noise keys, on recovery_v1_pilot_reserved, triggered by a rule that does not use the outcome",
+    "projected GPU cost of that pilot"
+  ],
+  "pilot_design_constraints": {
+    "arms": [
+      "C0 no intervention",
+      "R5 existing retreat",
+      "ONE new corrective action"
+    ],
+    "same_state": "branches start from one snapshot restored by prefix action replay (hci.simulation.restore_env), same scene seed",
+    "same_noise": "policy noise keyed by seed_for(scene, physical step, repeat, 'dp') as in every earlier pilot",
+    "selection_of_states": "a trigger computed from quantities available at the decision step, fixed before the pilot; never chosen from the known outcome of the continuation",
+    "status": "constraints only; the action and the trigger are written after the diagnosis and need their own approval"
+  },
+  "volume": {
+    "placement_resets": 675,
+    "probe_episodes": 3,
+    "diagnostic_episodes": 100
+  },
+  "cost_estimate": {
+    "basis": "Vision-V1 run 2, RTX 4090 at US$0.4539/h: 19 s per episode on vision_v1_select with the same policy (1.1 s per policy call)",
+    "diagnostic_pass_minutes": 32,
+    "install_checks_transfer_minutes": 45,
+    "estimated_total_usd": [
+      0.6,
+      1.0
+    ],
+    "proposed_cap_usd": 2.0,
+    "gate": "the server `budget` step projects the total from the measured seconds per step at the full 200 steps for every episode and refuses above the approved cap"
+  },
+  "files_read_on_the_server": [
+    "artifacts/policies/stack_v1_s1_d500_clean_resnet18_i080000/policy_meta.json",
+    "artifacts/policies/stack_v1_s1_d500_clean_resnet18_i080000/weights.pt",
+    "configs/policy_eval_splits.json",
+    "configs/recovery_v1_splits.json",
+    "configs/splits.json",
+    "configs/stackcube.yaml",
+    "configs/vision_v1_splits.json",
+    "results/handoff_h1_001/scenes.json",
+    "results/stage2a/scenes.json",
+    "results/stage2b/scenes.json",
+    "results/stage2d/scenes.json",
+    "results/vision_v1_001/run2/select_seed1/episodes_select_seed1.jsonl",
+    "runs/stage1d_clean_002/data/train_d500_clean_manifest.json",
+    "runs/vision_v1_001/reference_scene_keys.json",
+    "scripts/30_recovery_v1_diag.py",
+    "scripts/recovery_v1/run.sh",
+    "scripts/stage1b/common.sh",
+    "src/hci/diagnostics.py",
+    "src/hci/experiment.py",
+    "src/hci/io.py",
+    "src/hci/observations.py",
+    "src/hci/pilot.py",
+    "src/hci/policies.py",
+    "src/hci/recovery_v1.py",
+    "src/hci/schema.py",
+    "src/hci/simulation.py",
+    "src/hci/statistics.py",
+    "src/hci/trees.py",
+    "src/hci/vision_v1.py"
+  ],
+  "code": {
+    "src/hci/vision_v1.py": "deab7d2697dea81a995519cc568622f9c0d90df256d9281f2e3517811f06c9f7",
+    "src/hci/policies.py": "d9083dfe1eff702bae087b96840d2703dbb609fb7947c01eb49864bbd0eb9157",
+    "src/hci/simulation.py": "c42626728cac7eb9ebeffd5372683fc4ba01e41ef9d050f01e51134b0208fe9d",
+    "src/hci/experiment.py": "b7425dcfcff7ff188992bde22e1e2308292aea58eb8a11c557a1ced8ff595d29",
+    "src/hci/observations.py": "f9736618c952a42c6836b77c07d77ab96ad032ef60a77ef6d8018820e6acd657",
+    "src/hci/io.py": "60f2701b2e52ba80fc7e05142a06ae56c306c4298cd749ca5e418b54cb454a44",
+    "src/hci/schema.py": "52ef9c07a41ef6e007b5d57429fa062bb66d56b9047e4db0d731117e08589db6",
+    "src/hci/trees.py": "5f0fc7c28a89b32175abea983ac5202ffe535a0fe105e1ff6e855299177d8a60",
+    "src/hci/diagnostics.py": "49c79927d8cf5f8a208189647c75de1c67c3d4ee873fb87074db506e6534769d",
+    "src/hci/pilot.py": "4e730c36abdbcaa84d71c8643078b7aece7b01de958c81f4f67a75c62cebfac6",
+    "src/hci/statistics.py": "2e43b5f3134359412913abeee3eca3f30e27681ece10f1ae195ae0490ce1f5ad",
+    "src/hci/recovery_v1.py": "84512bbf4e89661b9e4b2923d37b896461f4a7d0fd5ea93fd27b1341d2d40464",
+    "scripts/30_recovery_v1_diag.py": "3f104a1a95e23ee83ff0bf285b469fbbaaca738812b3225990158b470e64468b",
+    "scripts/recovery_v1/run.sh": "9173b7404f47a5ee7b274b3a55afa94726e92b001f594af961af36ad2c8cdfc7",
+    "scripts/stage1b/common.sh": "af2f105e0fe8c8177daea33c5cddefd5266436f366a45e59be821378191db80a",
+    "configs/stackcube.yaml": "b145ca59607f4edf45f20bd45624f1bd4c8ff028a035ee4ab12b7de40bb08d8b",
+    "configs/recovery_v1_splits.json": "1809cc28432c24c69dfb7f5dd72e23875bf3bc12e3628e4eb3dc7d16486aba12"
+  },
+  "upstream_commit": "a4a4f9272ad64b1564035874b605ceb687b63ed8",
+  "not_in_this_work": [
+    "policy training or fine-tuning",
+    "any recovery action",
+    "R5",
+    "selector training",
+    "calibration",
+    "final Test",
+    "the reserved pilot seeds"
+  ]
+}
