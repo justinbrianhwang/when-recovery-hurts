@@ -45,7 +45,7 @@ re-run with a thread limit: a refusal stops the stage, and a second attempt is a
 
 ## Cost
 
-US$0.44 (Vast credit 10.6034 → 10.1655), of the US$3.00 cap. No instance is left.
+US$0.47 (Vast credit 10.6034 → 10.1342, settled six minutes after deletion), of the US$3.00 cap. No instance is left.
 
 ## Deviations and judgment calls
 
