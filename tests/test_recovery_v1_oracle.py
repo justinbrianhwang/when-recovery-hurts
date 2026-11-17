@@ -471,6 +471,7 @@ def X():
 def test_every_server_command_refuses_without_an_explicit_authorization(X, tmp_path):
     plan = tmp_path / 'plan.json'; plan.write_text('{"code": {}}'); run = tmp_path / 'run'; run.mkdir()
     ns = lambda: argparse.Namespace(plan=str(plan), run=str(run), upstream='x', device='cpu', usd_per_hour=.4, spent_usd=0.)
+    had_ledger = Path(X.LEDGER).exists()                         # since the pilot was executed (2026-11-17) the machine that ran it holds the ledger; a refused command must not create or touch one
     for cmd in (X.cmd_scenes, X.cmd_audit, X.cmd_budget, X.cmd_run):
         with pytest.raises(SystemExit, match='no authorization'): cmd(ns())
     auth = {'approved_by': 'user', 'paid_compute_authorized': True, 'cap_usd': 2.5, 'plan_sha256': '0' * 64}
@@ -478,7 +479,7 @@ def test_every_server_command_refuses_without_an_explicit_authorization(X, tmp_p
         (run / 'authorization.json').write_text(json.dumps(bad))
         for cmd in (X.cmd_scenes, X.cmd_audit, X.cmd_budget, X.cmd_run):
             with pytest.raises(SystemExit, match='Refused'): cmd(ns())
-    assert not [p for p in run.iterdir() if p.is_dir()] and not Path(X.LEDGER).exists()      # iterdir, not glob('*/'): before Python 3.13 that pattern also returns files (server run, attempt 1)
+    assert not [p for p in run.iterdir() if p.is_dir()] and Path(X.LEDGER).exists() == had_ledger      # iterdir, not glob('*/'): before Python 3.13 that pattern also returns files (server run, attempt 1)
 
 
 def test_a_plan_that_failed_its_preparation_is_refused_even_with_an_authorization(X, tmp_path):
@@ -520,7 +521,9 @@ def test_shell_driver_matches_the_script_and_needs_the_gates():
 def test_audit_seeds_are_used_development_scenes_not_pilot_scenes(X):
     v = read_json('configs/vision_v1_splits.json')['splits']['vision_v1_select']; assert set(X.AUDIT_SEEDS) <= set(v) and not set(X.AUDIT_SEEDS) & set(range(50700, 50800))
     assert 'recovery_v1/recovery_v1_diag' in X.used_ledger() and O.pilot_seeds(read_json(X.MANIFEST), X.used_ledger()) == list(range(50700, 50800))
-    scan = X.recorded_use_scan(); assert not scan['files_naming_a_pilot_seed'] and not scan['pilot_ledger_exists']        # the server holds only part of results/, so no file count is asserted
+    scan = X.recorded_use_scan(); assert not scan['files_naming_a_pilot_seed']
+    if scan['pilot_ledger_exists']: assert read_json(X.LEDGER)['plan_sha256'] == 'b7078afbe705a5ffd8a7128951f9c9e7618bb7c2fed5c044a5474c2fc895730b'      # the one executed pass; before it, no ledger existed
+           # the server holds only part of results/, so no file count is asserted
 
 
 def test_summary_from_raw_records_and_refusal_of_a_partial_run(X, tmp_path):

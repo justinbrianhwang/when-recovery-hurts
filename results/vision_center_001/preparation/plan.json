@@ -1,0 +1,803 @@
+{
+  "work_id": "vision_center_001",
+  "stage": "Vision-CENTER (Phase A: preparation)",
+  "created_utc": "2026-11-17T07:01:20.030005+00:00",
+  "pass": true,
+  "problems": [],
+  "status": {
+    "vision_center": "PHASE_A_PREPARATION_ONLY",
+    "paid_compute": "NOT_AUTHORIZED",
+    "shadow_pass_on_used_scenes": "NOT_RUN",
+    "pilot_on_new_scenes": "NOT_RUN",
+    "base_policy": "FROZEN: Vision-V1 train seed 1, 80k EMA, unchanged",
+    "recovery_v1_oracle_xy_pilot": "EXECUTED_ONCE (ORACLE_GATE_PASS), unchanged",
+    "new_training": "NOT_PLANNED (no network is trained; perception is colour segmentation and projection)",
+    "calibration": "NOT_RUN",
+    "final_test": "NOT_RUN"
+  },
+  "authorization": {
+    "paid_compute_authorized": false,
+    "proposed_cap_usd": 3.0,
+    "proposed_cap_is": "a proposal, explicitly not an approval; earlier approvals are not inherited",
+    "needed": "a separate explicit user instruction that states an exact USD cap AND names the SHA256 of this plan file",
+    "required_file": "authorization.json in the run folder, written only after such an instruction: {\"approved_by\": \"user\", \"paid_compute_authorized\": true, \"cap_usd\": <number>, \"plan_sha256\": \"<sha256 of this plan>\"}"
+  },
+  "question": "Can the bounded centring move be driven by RGB and robot state alone, abstaining when the estimate is uncertain or no correction is needed, and how much of the oracle gain does it keep without harming scenes the policy already solves?",
+  "privileged_information": {
+    "vision_center": "none",
+    "offline_labels": "cube positions are used as labels in the offline evaluation and in after-the-fact error columns of the records",
+    "center_oracle": "unchanged reference arm; the only control code that reads cube positions",
+    "project_rule": "AGENTS.md: \"모니터/정책에 객체 정답 pose, task success, 미래 라벨을 입력하지 않습니다.\""
+  },
+  "repository": {
+    "head": "dd092e4006e188cd0f908307a6bba824004ee5b3",
+    "working_tree_changes_at_plan_time": [
+      "M README.md",
+      " M tests/test_recovery_v1_oracle.py",
+      "?? amendments/AMENDMENT_015_vision_center_preparation_DRAFT.md",
+      "?? configs/vision_center_splits.json",
+      "?? results/vision_center_001/",
+      "?? scripts/32_vision_center.py",
+      "?? scripts/vision_center/",
+      "?? src/hci/vision_center.py",
+      "?? tests/test_vision_center.py"
+    ]
+  },
+  "base_policy": {
+    "path": "artifacts/policies/stack_v1_s1_d500_clean_resnet18_i080000",
+    "weights.pt": "a37be25603d6c7b7d5cfa1872e6c1134c436f78de02b745c481c88d5d0f69629",
+    "policy_meta.json": "4ccfba34ee42b3bab344f7d320c57c6a97011f5adf8b93c04a36b886303b138e",
+    "train_seed": 1,
+    "iteration": 80000,
+    "weights": "EMA",
+    "source_checkpoint_sha256": "5cd8e95d589154981569cad2a3a5f4c8cd670da4444ac7ecb8bf6971484652ed",
+    "checks": {
+      "weights_sha256_now": "a37be25603d6c7b7d5cfa1872e6c1134c436f78de02b745c481c88d5d0f69629",
+      "policy_meta_sha256_now": "4ccfba34ee42b3bab344f7d320c57c6a97011f5adf8b93c04a36b886303b138e",
+      "meta_weights_sha256": "a37be25603d6c7b7d5cfa1872e6c1134c436f78de02b745c481c88d5d0f69629",
+      "selection_weights_sha256": "a37be25603d6c7b7d5cfa1872e6c1134c436f78de02b745c481c88d5d0f69629",
+      "qualified_weights_sha256": "a37be25603d6c7b7d5cfa1872e6c1134c436f78de02b745c481c88d5d0f69629",
+      "backup_list_weights_sha256": "a37be25603d6c7b7d5cfa1872e6c1134c436f78de02b745c481c88d5d0f69629",
+      "backup_list_meta_sha256": "4ccfba34ee42b3bab344f7d320c57c6a97011f5adf8b93c04a36b886303b138e",
+      "backup_list_source_checkpoint_sha256": "5cd8e95d589154981569cad2a3a5f4c8cd670da4444ac7ecb8bf6971484652ed",
+      "qualification": "79/100 (TARGET_MET)",
+      "archive_present": true,
+      "archive_sha256_now": "3a8d7cbf0d08aa61c18b51b2199cd2d97ba331f3f900bd0bb3ef595f8642c8cb",
+      "extracted_source_checkpoint_sha256": "5cd8e95d589154981569cad2a3a5f4c8cd670da4444ac7ecb8bf6971484652ed",
+      "extracted_weights_sha256": "a37be25603d6c7b7d5cfa1872e6c1134c436f78de02b745c481c88d5d0f69629",
+      "vision_plan_sha256_now": "5fdee368fa529c0096464332e1af5dc2ac0eca39ff102ad7bc0fa8605ed3678e",
+      "inference_code_identical_to_the_vision_v1_plan": {
+        "src/hci/vision_v1.py": true,
+        "src/hci/policies.py": true,
+        "src/hci/simulation.py": true,
+        "src/hci/experiment.py": true,
+        "src/hci/observations.py": true,
+        "src/hci/io.py": true,
+        "src/hci/schema.py": true,
+        "src/hci/trees.py": true,
+        "src/hci/diagnostics.py": true,
+        "src/hci/pilot.py": true,
+        "src/hci/statistics.py": true
+      }
+    },
+    "rule": "frozen; not retrained, not fine-tuned, no other checkpoint"
+  },
+  "config": {
+    "path": "configs/stackcube.yaml",
+    "file_sha256": "b145ca59607f4edf45f20bd45624f1bd4c8ff028a035ee4ab12b7de40bb08d8b",
+    "config_sha256": "c8cc0a581f7d4e9de4042490bd6939e9b80da1dd333df081cb9107c29427dfbd",
+    "env": {
+      "id": "StackCube-v1",
+      "robot_uid": "panda_wristcam",
+      "sim_backend": "physx_cpu",
+      "num_envs": 1,
+      "obs_mode": "rgb",
+      "control_mode": "pd_ee_delta_pos",
+      "horizon": 200
+    },
+    "policy": {
+      "obs_horizon": 2,
+      "act_horizon": 8,
+      "pred_horizon": 16,
+      "diffusion_step_embed_dim": 64,
+      "unet_dims": [
+        64,
+        128,
+        256
+      ],
+      "n_groups": 8
+    },
+    "audit": {
+      "replay_steps": 20,
+      "state_atol": 1e-06,
+      "action_atol": 1e-06,
+      "observation_atol": 1.0
+    }
+  },
+  "seed_registry": {
+    "path": "configs/vision_center_splits.json",
+    "sha256": "9f80c8cf1c63a3ba888f4ce4d183250c39ed2f47315bb012b0b6f48dfbb9e874",
+    "set": "vision_center_pilot",
+    "range": [
+      50800,
+      50899
+    ],
+    "n": 100,
+    "first_last": [
+      50800,
+      50899
+    ],
+    "seed_level_check": "no overlap with splits.json (audit, train, dev, calibration, test), policy_eval_splits.json, vision_v1_splits.json, recovery_v1_splits.json (both sets), the 550 demonstration scene seeds, or the scenes of Stage 2A / 2B / 2D / H1",
+    "placement_check": "server step `scenes`, as in the oracle pilot; an identical placement fails the step",
+    "shadow_scenes": {
+      "sets": [
+        [
+          "recovery_v1_diag",
+          [
+            50600,
+            50699
+          ]
+        ],
+        [
+          "recovery_v1_pilot_reserved",
+          [
+            50700,
+            50799
+          ]
+        ]
+      ],
+      "n": 200,
+      "status": "used; development data; no new scene is consumed by stage B1"
+    },
+    "untouched_sets": [
+      "calibration",
+      "test"
+    ],
+    "no_replacement": "no scene is replaced or dropped for any reason"
+  },
+  "arms": [
+    "C0",
+    "VISION_CENTER",
+    "CENTER_ORACLE"
+  ],
+  "semantics": {
+    "inputs": "hand_camera RGB (128 x 128) and extra/tcp_pose of the policy observation; fixed camera constants; for the trigger: pending and executed actions, agent/qpos. No cube pose, grasp flag, task flag, outcome or future information",
+    "trigger": {
+      "rule": "the oracle pilot trigger, unchanged (hci.recovery_v1_oracle.trigger_rule)",
+      "open_cmd_above": 0.0,
+      "close_run_min": 3,
+      "width_min_m": 0.02,
+      "width_max_m": 0.06
+    },
+    "perception": {
+      "target": "lit green pixels of the hand image are explained by a 4 cm square on the plane z = 0.04 m (the top face of the target cube); red and grey pixels are occluders and are not scored; accepted when the score is at least score_min and the best placement at least far_m away scores lower by margin_min",
+      "target_constants": {
+        "pixels_min": 40,
+        "score_min": 0.9,
+        "margin_min": 0.1,
+        "far_m": 0.004,
+        "stages": [
+          [
+            0.036,
+            0.004,
+            6
+          ],
+          [
+            0.004,
+            0.001,
+            5
+          ],
+          [
+            0.001,
+            0.0005,
+            3
+          ]
+        ]
+      },
+      "held_cube": "lit red pixels are explained by a 4 cm square at the depth of the held cube face (hold offset x, y, z and yaw in the gripper frame); the three best depths are re-scored with the outline of the whole cube against all red pixels; accepted when both scores and the lead over a different solution pass",
+      "held_cube_constants": {
+        "pixels_min": 200,
+        "iou_min": 0.9,
+        "outline_min": 0.85,
+        "margin_min": 0.02,
+        "far_m": 0.004,
+        "far_z_m": 0.006,
+        "z_span_m": 0.024,
+        "z_step_m": [
+          0.004,
+          0.001
+        ],
+        "stages": [
+          [
+            0.02,
+            0.004,
+            5
+          ],
+          [
+            0.004,
+            0.001,
+            5
+          ],
+          [
+            0.001,
+            0.0005,
+            3
+          ]
+        ]
+      },
+      "offset": "(TCP position + rotated hold offset) minus target, horizontal part",
+      "memory": "none: only the current image is used at the trigger; during control the target estimate of the trigger is kept while the target is hidden",
+      "base_camera": "not used for control (about 1 cm per pixel at the cubes; errors of several centimetres pass every single-image check)"
+    },
+    "abstain": {
+      "meaning": "nothing is touched: the pending queue, the history and the counters stay as they are, so the episode is the uninterrupted one (checked against the trunk in every scene)",
+      "reasons": {
+        "NO_HOLD_ESTIMATE": "held-cube fit missing or not accepted",
+        "NO_TARGET_ESTIMATE": "target not accepted in the current image (usually hidden by the held cube)",
+        "LOW_CARRY": "estimated height of the held cube centre below 0.058 m: the cube is beside the target, a horizontal move would push it",
+        "TOO_FEW_STEPS": "fewer than 20 steps left",
+        "ALIGNED": "estimated offset below 0.015 m"
+      },
+      "order": "as listed; the first that applies"
+    },
+    "VISION_CENTER": {
+      "acts_when": "estimated offset >= 0.015 m and no abstain reason",
+      "command": "as CENTER_ORACLE: horizontal only, at most 0.005 m per step, commanded target within 0.030 m of the TCP at the trigger, at most 12 steps, vertical command 0, held gripper command",
+      "stops_when": "estimated offset <= 0.01 m, or 12 steps, or the target cap, or the episode ends, or the held-cube fit is lost, or a new accepted target estimate is more than 0.005 m from the one at the trigger, or the held cube is estimated too low",
+      "after": "queue cleared, the unchanged policy re-infers",
+      "act_min_m": 0.015,
+      "residual_tol_m": 0.01,
+      "carry_z_min_m": 0.058,
+      "steps_left_min": 20,
+      "target_jump_max_m": 0.005
+    },
+    "CENTER_ORACLE": "hci.recovery_v1_oracle.center_oracle, unchanged (reads simulator cube positions; diagnostic reference, not deployable; allowed by the user for this arm only)",
+    "C0": "the pending action and the rest of the queue are executed; must equal the uninterrupted run, otherwise the run stops",
+    "noise": "repeat 0 only; every inference is keyed by seed_for(scene, physical step, 0, 'dp')",
+    "restore": "reset(seed) + prefix action replay; the restored runtime is compared with the snapshot before every branch",
+    "chosen_on": "ACT threshold, carry limit, step limit and all perception constants were chosen on used data: the 200 used scenes (traces), the 21 failed diagnostic episodes with frames, and the training demonstrations"
+  },
+  "analysis": {
+    "unit": "scene",
+    "stage_B1_shadow": {
+      "scenes": "200 used scenes (50600-50799), re-run on the server because no frames of them are stored",
+      "arms": [
+        "C0",
+        "VISION_CENTER"
+      ],
+      "pass_criteria": {
+        "acts_min": 10,
+        "unnecessary_acts_max": 2,
+        "harm_max": 2,
+        "rescue_minus_harm_min": 3,
+        "offset_error_at_act_median_max_m": 0.003,
+        "offset_error_at_act_max_m": 0.008
+      },
+      "reports": [
+        "estimation error at the trigger against logged ground truth",
+        "decisions by reason",
+        "unnecessary acts (acted, true offset <= 1.0 cm)",
+        "missed large offsets (abstained, true offset >= 2.0 cm)",
+        "paired outcome against C0",
+        "end reasons"
+      ],
+      "on_failure": "SHADOW_BLOCKED: the new scenes are not touched; no constant is tuned and re-tried under this plan; the observation limits are reported"
+    },
+    "stage_B2_pilot": {
+      "scenes": "100 new scenes (50800-50899)",
+      "arms": [
+        "C0",
+        "VISION_CENTER",
+        "CENTER_ORACLE"
+      ],
+      "primary": "paired success_once_absorbing, VISION_CENTER against C0, all 100 scenes: rescue / harm / net, Wilson intervals",
+      "reference": "CENTER_ORACLE against C0 on the same scenes; oracle rescues also rescued by vision",
+      "gate": {
+        "all_of": [
+          "VISION_CENTER rescues >= 4",
+          "net >= +3",
+          "harm <= 3"
+        ],
+        "rescue_min": 4,
+        "net_min": 3,
+        "harm_max": 3,
+        "otherwise": "NO_VISION_GATE_PASS: no extension, no tuning, no subset search"
+      }
+    },
+    "not_claimed": [
+      "statistical significance",
+      "transfer to real images (flat simulator colours, exact camera parameters, no noise)",
+      "anything beyond StackCube and this policy"
+    ]
+  },
+  "audit": {
+    "seeds": [
+      50400,
+      50401,
+      50402
+    ],
+    "does": [
+      "all three arms with every technical check of the pilot",
+      "seconds per environment step and per vision reading for the budget gates"
+    ],
+    "outcomes": "decide nothing"
+  },
+  "run": {
+    "order": [
+      "scenes",
+      "audit",
+      "budget --stage shadow",
+      "shadow",
+      "budget --stage pilot",
+      "run"
+    ],
+    "ledger": "artifacts/ledger/vision_center_pilot.json, created exclusively before any rollout on a new scene; no resume, no second pass",
+    "on_error": "the pass stops and stays INCOMPLETE; no scene is dropped or replaced; a partial run has no summary",
+    "stored": "one record per scene, per-step ground-truth traces (logging), hand-camera frames at the trigger and during Vision-CENTER control"
+  },
+  "offline_evaluation": {
+    "status": "OFFLINE, stored data only; ground truth is a label, never an input",
+    "decision_constants": {
+      "act_min_m": 0.015,
+      "residual_tol_m": 0.01,
+      "carry_z_min_m": 0.058,
+      "steps_left_min": 20,
+      "target_jump_max_m": 0.005
+    },
+    "full_view": {
+      "hand_camera": {
+        "ratio_min": 0.95,
+        "ratio_max": 1.05,
+        "pixels_min": 60
+      },
+      "base_camera": {
+        "ratio_min": 0.8,
+        "ratio_max": 1.25,
+        "pixels_min": 9
+      }
+    },
+    "partial_fit": {
+      "pixels_min": 40,
+      "score_min": 0.9,
+      "margin_min": 0.1,
+      "far_m": 0.004,
+      "stages": [
+        [
+          0.036,
+          0.004,
+          6
+        ],
+        [
+          0.004,
+          0.001,
+          5
+        ],
+        [
+          0.001,
+          0.0005,
+          3
+        ]
+      ]
+    },
+    "hold_fit": {
+      "pixels_min": 200,
+      "iou_min": 0.9,
+      "outline_min": 0.85,
+      "margin_min": 0.02,
+      "far_m": 0.004,
+      "far_z_m": 0.006,
+      "z_span_m": 0.024,
+      "z_step_m": [
+        0.004,
+        0.001
+      ],
+      "stages": [
+        [
+          0.02,
+          0.004,
+          5
+        ],
+        [
+          0.004,
+          0.001,
+          5
+        ],
+        [
+          0.001,
+          0.0005,
+          3
+        ]
+      ]
+    },
+    "inventory": {
+      "used_scenes": 200,
+      "triggered": 189,
+      "scenes_with_frames": 21,
+      "scenes_with_frames_list": [
+        50610,
+        50611,
+        50613,
+        50618,
+        50629,
+        50632,
+        50633,
+        50643,
+        50648,
+        50661,
+        50664,
+        50666,
+        50668,
+        50671,
+        50673,
+        50683,
+        50685,
+        50686,
+        50691,
+        50694,
+        50699
+      ],
+      "with_frames_by_set": {
+        "recovery_v1_diag": 21,
+        "recovery_v1_pilot_reserved": 0
+      },
+      "with_frames_and_trigger": 15,
+      "with_frames_and_success": 0,
+      "triggered_without_frames": 174,
+      "note": "frames were stored for failed diagnostic episodes only; the pilot stored no frames"
+    },
+    "ground_truth_counts": {
+      "triggered": 189,
+      "tcp_to_held_cube_xy_m": {
+        "n": 189,
+        "median": 2.87,
+        "p90": 7.6,
+        "max": 17.9
+      },
+      "tcp_only_error_above_5mm": 52,
+      "held_cube_below_carry_limit": [
+        50771,
+        50781
+      ],
+      "steps_left_below_limit": [
+        50626,
+        50792
+      ],
+      "target_moved_before_trigger_above_2mm": 6,
+      "by_true_offset": [
+        {
+          "from_m": 0,
+          "to_m": 0.01,
+          "scenes": 89,
+          "uninterrupted_success": 89
+        },
+        {
+          "from_m": 0.01,
+          "to_m": 0.015,
+          "scenes": 42,
+          "uninterrupted_success": 42
+        },
+        {
+          "from_m": 0.015,
+          "to_m": 0.02,
+          "scenes": 30,
+          "uninterrupted_success": 26
+        },
+        {
+          "from_m": 0.02,
+          "to_m": 0.03,
+          "scenes": 17,
+          "uninterrupted_success": 3
+        },
+        {
+          "from_m": 0.03,
+          "to_m": 0.06,
+          "scenes": 11,
+          "uninterrupted_success": 1
+        }
+      ],
+      "true_offset_at_least_act_min": 58,
+      "of_which_uninterrupted_failures": 28,
+      "uninterrupted_failures_below_act_min": 0
+    },
+    "failed_episodes": {
+      "episodes": 21,
+      "triggered": 15,
+      "decisions": {
+        "ACT": 7,
+        "NO_TARGET_ESTIMATE": 6,
+        "NO_HOLD_ESTIMATE": 2,
+        "LOW_CARRY": 0,
+        "TOO_FEW_STEPS": 0,
+        "ALIGNED": 0
+      },
+      "offset_error_m": {
+        "n": 7,
+        "median": 1.0,
+        "p90": 1.25,
+        "max": 1.29
+      },
+      "target_error_m": {
+        "n": 7,
+        "median": 0.2,
+        "p90": 0.3,
+        "max": 0.3
+      },
+      "hold_error_xy_m": {
+        "n": 15,
+        "median": 0.87,
+        "p90": 1.51,
+        "max": 1.88
+      },
+      "tcp_only_error_m": {
+        "n": 15,
+        "median": 2.8,
+        "p90": 10.01,
+        "max": 17.9
+      },
+      "unnecessary_acts": 0
+    },
+    "calibration_check": {
+      "max_abs_difference_to_stored_sensor_param": {
+        "base_extrinsic": 4.658508301336184e-09,
+        "intrinsic": 0.0,
+        "hand_rotation": 0.00010342544231578543,
+        "hand_position_m": 1.9985733409957906e-06
+      },
+      "demonstrations_checked": 50,
+      "meaning": "the constants in hci.vision_center reproduce the stored camera parameters; the hand camera pose follows from the TCP pose alone"
+    },
+    "target_estimate_on_demonstrations": {
+      "frames": 1168,
+      "hand_frames_with_lit_target_pixels": 544,
+      "hand_full_view_error_m": {
+        "n": 204,
+        "median": 0.18,
+        "p90": 0.39,
+        "max": 1.46
+      },
+      "hand_partial_view_fits": 266,
+      "hand_partial_view_accepted_error_m": {
+        "n": 254,
+        "median": 0.26,
+        "p90": 0.53,
+        "max": 1.78
+      },
+      "hand_partial_view_all_error_m": {
+        "n": 266,
+        "median": 0.26,
+        "p90": 0.61,
+        "max": 12.71
+      },
+      "base_full_view_error_m": {
+        "n": 835,
+        "median": 1.66,
+        "p90": 3.78,
+        "max": 58.49
+      },
+      "base_full_view_error_above_5mm": 77,
+      "base_full_view_error_above_10mm": 74
+    },
+    "demonstration_releases": {
+      "demonstrations": 167,
+      "triggered": 167,
+      "true_offset_m": {
+        "n": 167,
+        "median": 5.2,
+        "p90": 10.26,
+        "max": 18.44
+      },
+      "true_offset_above_10mm": 19,
+      "decisions": {
+        "ACT": 1,
+        "NO_TARGET_ESTIMATE": 71,
+        "NO_HOLD_ESTIMATE": 4,
+        "LOW_CARRY": 1,
+        "TOO_FEW_STEPS": 0,
+        "ALIGNED": 90
+      },
+      "unnecessary_acts": 0,
+      "hold_fit_valid": 163,
+      "hold_error_xy_m_valid": {
+        "n": 163,
+        "median": 0.89,
+        "p90": 1.56,
+        "max": 2.63
+      },
+      "abs_hold_error_z_m_valid": {
+        "n": 163,
+        "median": 0.77,
+        "p90": 1.99,
+        "max": 5.03
+      },
+      "tcp_only_error_m": {
+        "n": 167,
+        "median": 1.06,
+        "p90": 3.86,
+        "max": 11.4
+      },
+      "target_estimates": 94,
+      "target_error_m": {
+        "n": 94,
+        "median": 0.26,
+        "p90": 0.57,
+        "max": 1.89
+      },
+      "offset_error_m": {
+        "n": 92,
+        "median": 1.01,
+        "p90": 1.82,
+        "max": 2.71
+      },
+      "seconds_per_reading": 1.7913502618938149,
+      "limit": "motion-planner states, not policy states: the cube is placed centred, so these mostly test abstaining and the held-cube fit"
+    }
+  },
+  "frame_inventory": {
+    "used_scenes": 200,
+    "triggered": 189,
+    "scenes_with_frames": 21,
+    "scenes_with_frames_list": [
+      50610,
+      50611,
+      50613,
+      50618,
+      50629,
+      50632,
+      50633,
+      50643,
+      50648,
+      50661,
+      50664,
+      50666,
+      50668,
+      50671,
+      50673,
+      50683,
+      50685,
+      50686,
+      50691,
+      50694,
+      50699
+    ],
+    "with_frames_by_set": {
+      "recovery_v1_diag": 21,
+      "recovery_v1_pilot_reserved": 0
+    },
+    "with_frames_and_trigger": 15,
+    "with_frames_and_success": 0,
+    "triggered_without_frames": 174,
+    "note": "frames were stored for failed diagnostic episodes only; the pilot stored no frames"
+  },
+  "volume": {
+    "placement_resets": 875,
+    "audit_scenes": 3,
+    "shadow_scenes": 200,
+    "pilot_scenes": 100,
+    "steps_per_scene_bound": {
+      "shadow": 600,
+      "pilot": 800
+    },
+    "readings_per_scene_bound": 13
+  },
+  "cost_estimate": {
+    "basis": "oracle pilot on an RTX 4090 at US$0.44/h: 0.028 s per environment step; one vision reading about 1.8 s on the development machine (CPU, not measured on a server)",
+    "expected_minutes": {
+      "install_checks_audit_transfer": 25,
+      "shadow_200_scenes": [
+        45,
+        70
+      ],
+      "pilot_100_scenes": [
+        30,
+        45
+      ]
+    },
+    "estimated_total_usd": [
+      0.9,
+      1.4
+    ],
+    "worst_case_gate_projection_usd_at_0_44_per_hour": 2.51,
+    "worst_case_assumes": "US$0.20 spent before the first gate, 0.028 s per step, 1.8 s per reading",
+    "proposed_cap_usd": 3.0,
+    "gate": "each `budget` step projects the remaining stages from the measured seconds per step and per reading with every scene at its bound, margin 1.25, reserve US$0.20, and refuses above the approved cap"
+  },
+  "host": {
+    "gpu": "RTX 4090 class, 24 GB",
+    "create_options": "--env '-e NVIDIA_DRIVER_CAPABILITIES=all -e WANDB_MODE=disabled -e MS_SKIP_ASSET_DOWNLOAD_PROMPT=1'",
+    "first_check": "NVIDIA graphics libraries present (Vulkan) before installing",
+    "transfer_price": "offers filtered by per-GB transfer price"
+  },
+  "command_order": [
+    "local: tests, `plan`, `dry-run`",
+    "user: explicit approval naming a USD cap and this plan hash -> authorization.json",
+    "server: install",
+    "server: run.sh env",
+    "server: run.sh scenes",
+    "server: run.sh audit",
+    "server: run.sh shadow (budget gate first; SHADOW_BLOCKED stops here)",
+    "server: run.sh pilot (budget gate first)",
+    "server: run.sh pack",
+    "local: download, hash checks, `summarize` from the raw records",
+    "local: delete only the instances created for this run",
+    "Drive: report and small results to Robot Harm/results/vision_center_001/"
+  ],
+  "outputs": {
+    "local": "results/vision_center_001/",
+    "drive": "Robot Harm/results/vision_center_001/",
+    "report": "VISION_CENTER_EXECUTION_REPORT.md",
+    "amendment": "AMENDMENT_015 (execution)",
+    "report_md": "not modified unless asked"
+  },
+  "files_read_on_the_server": [
+    "artifacts/policies/stack_v1_s1_d500_clean_resnet18_i080000/policy_meta.json",
+    "artifacts/policies/stack_v1_s1_d500_clean_resnet18_i080000/weights.pt",
+    "configs/policy_eval_splits.json",
+    "configs/recovery_v1_splits.json",
+    "configs/splits.json",
+    "configs/stackcube.yaml",
+    "configs/vision_center_splits.json",
+    "configs/vision_v1_splits.json",
+    "results/handoff_h1_001/scenes.json",
+    "results/stage2a/scenes.json",
+    "results/stage2b/scenes.json",
+    "results/stage2d/scenes.json",
+    "runs/stage1d_clean_002/data/train_d500_clean_manifest.json",
+    "runs/vision_v1_001/reference_scene_keys.json",
+    "scripts/30_recovery_v1_diag.py",
+    "scripts/31_recovery_v1_oracle_xy.py",
+    "scripts/32_vision_center.py",
+    "scripts/stage1b/common.sh",
+    "scripts/vision_center/run.sh",
+    "src/hci/diagnostics.py",
+    "src/hci/experiment.py",
+    "src/hci/io.py",
+    "src/hci/observations.py",
+    "src/hci/pilot.py",
+    "src/hci/pilot2b.py",
+    "src/hci/pilot2d.py",
+    "src/hci/policies.py",
+    "src/hci/recovery_v1.py",
+    "src/hci/recovery_v1_oracle.py",
+    "src/hci/schema.py",
+    "src/hci/simulation.py",
+    "src/hci/statistics.py",
+    "src/hci/trees.py",
+    "src/hci/vision_center.py",
+    "src/hci/vision_v1.py"
+  ],
+  "code": {
+    "src/hci/vision_v1.py": "deab7d2697dea81a995519cc568622f9c0d90df256d9281f2e3517811f06c9f7",
+    "src/hci/policies.py": "d9083dfe1eff702bae087b96840d2703dbb609fb7947c01eb49864bbd0eb9157",
+    "src/hci/simulation.py": "c42626728cac7eb9ebeffd5372683fc4ba01e41ef9d050f01e51134b0208fe9d",
+    "src/hci/experiment.py": "b7425dcfcff7ff188992bde22e1e2308292aea58eb8a11c557a1ced8ff595d29",
+    "src/hci/observations.py": "f9736618c952a42c6836b77c07d77ab96ad032ef60a77ef6d8018820e6acd657",
+    "src/hci/io.py": "60f2701b2e52ba80fc7e05142a06ae56c306c4298cd749ca5e418b54cb454a44",
+    "src/hci/schema.py": "52ef9c07a41ef6e007b5d57429fa062bb66d56b9047e4db0d731117e08589db6",
+    "src/hci/trees.py": "5f0fc7c28a89b32175abea983ac5202ffe535a0fe105e1ff6e855299177d8a60",
+    "src/hci/diagnostics.py": "49c79927d8cf5f8a208189647c75de1c67c3d4ee873fb87074db506e6534769d",
+    "src/hci/pilot.py": "4e730c36abdbcaa84d71c8643078b7aece7b01de958c81f4f67a75c62cebfac6",
+    "src/hci/statistics.py": "2e43b5f3134359412913abeee3eca3f30e27681ece10f1ae195ae0490ce1f5ad",
+    "src/hci/recovery_v1.py": "84512bbf4e89661b9e4b2923d37b896461f4a7d0fd5ea93fd27b1341d2d40464",
+    "src/hci/recovery_v1_oracle.py": "f652ead0a47750bd55ff990391ff4bb02d4af44331d351d4adea7112a973e765",
+    "src/hci/vision_center.py": "cc4a743976eb33da0824c1954a0ac19d075fc87b1369e45139812c09dce2797d",
+    "src/hci/pilot2b.py": "625ba28e118e04095a0a0adcfd5b6a1f41416c85eab7c988c7e92a8ab2ba5e34",
+    "src/hci/pilot2d.py": "efefdc292630bb565bb319b2fc6cb7a9834603b28b7677b36601403ade52ee0d",
+    "scripts/30_recovery_v1_diag.py": "3f104a1a95e23ee83ff0bf285b469fbbaaca738812b3225990158b470e64468b",
+    "scripts/31_recovery_v1_oracle_xy.py": "c87c3576358ad6de7acbd55a1061550330c6d681d3568665096398b01c16ad15",
+    "scripts/32_vision_center.py": "06f0ef885cfaef9052fab9dae08cd1e8a16d484b695f2c8c13b26958df662ccf",
+    "scripts/vision_center/run.sh": "6e1b7cbdf6f43b9abeef3a10727e4c8579e827529f0ac730752062240ebe97dc",
+    "scripts/stage1b/common.sh": "af2f105e0fe8c8177daea33c5cddefd5266436f366a45e59be821378191db80a",
+    "configs/stackcube.yaml": "b145ca59607f4edf45f20bd45624f1bd4c8ff028a035ee4ab12b7de40bb08d8b",
+    "configs/vision_center_splits.json": "9f80c8cf1c63a3ba888f4ce4d183250c39ed2f47315bb012b0b6f48dfbb9e874",
+    "configs/recovery_v1_splits.json": "1809cc28432c24c69dfb7f5dd72e23875bf3bc12e3628e4eb3dc7d16486aba12"
+  },
+  "upstream_commit": "a4a4f9272ad64b1564035874b605ceb687b63ed8",
+  "not_in_this_work": [
+    "policy training or fine-tuning",
+    "any neural perception model",
+    "any change of constants after an outcome",
+    "a second pass",
+    "calibration",
+    "final Test"
+  ]
+}

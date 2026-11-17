@@ -1,0 +1,22 @@
+{"used_scenes": 200, "triggered": 189, "scenes_with_frames": 21, "scenes_with_frames_list": [50610, 50611, 50613, 50618, 50629, 50632, 50633, 50643, 50648, 50661, 50664, 50666, 50668, 50671, 50673, 50683, 50685, 50686, 50691, 50694, 50699], "with_frames_by_set": {"recovery_v1_diag": 21, "recovery_v1_pilot_reserved": 0}, "with_frames_and_trigger": 15, "with_frames_and_success": 0, "triggered_without_frames": 174, "note": "frames were stored for failed diagnostic episodes only; the pilot stored no frames"}
+{"triggered": 189, "tcp_to_held_cube_xy_m": {"n": 189, "median": 2.87, "p90": 7.6, "max": 17.9}, "tcp_only_error_above_5mm": 52, "held_cube_below_carry_limit": [50771, 50781], "steps_left_below_limit": [50626, 50792], "target_moved_before_trigger_above_2mm": 6, "by_true_offset": [{"from_m": 0, "to_m": 0.01, "scenes": 89, "uninterrupted_success": 89}, {"from_m": 0.01, "to_m": 0.015, "scenes": 42, "uninterrupted_success": 42}, {"from_m": 0.015, "to_m": 0.02, "scenes": 30, "uninterrupted_success": 26}, {"from_m": 0.02, "to_m": 0.03, "scenes": 17, "uninterrupted_success": 3}, {"from_m": 0.03, "to_m": 0.06, "scenes": 11, "uninterrupted_success": 1}], "true_offset_at_least_act_min": 58, "of_which_uninterrupted_failures": 28, "uninterrupted_failures_below_act_min": 0}
+F 50611 ACT true 27.7 est 28.4 err 0.72
+F 50613 NO_TARGET_ESTIMATE true 18.7 est None err None
+F 50629 NO_HOLD_ESTIMATE true 33.2 est None err None
+F 50632 ACT true 25.2 est 25.0 err 1.05
+F 50633 NO_TARGET_ESTIMATE true 24.7 est None err None
+F 50648 NO_TARGET_ESTIMATE true 26.5 est None err None
+F 50661 NO_TARGET_ESTIMATE true 39.3 est None err None
+F 50664 ACT true 31.5 est 30.9 err 0.75
+F 50666 NO_TARGET_ESTIMATE true 19.5 est None err None
+F 50668 NO_TARGET_ESTIMATE true 20.5 est None err None
+F 50671 ACT true 24.9 est 25.5 err 1.21
+F 50683 ACT true 28.2 est 28.4 err 1.29
+F 50685 ACT true 28.2 est 28.5 err 1.0
+F 50686 ACT true 17.4 est 17.9 err 0.73
+F 50691 NO_HOLD_ESTIMATE true 22.4 est None err None
+{"episodes": 21, "triggered": 15, "decisions": {"ACT": 7, "NO_TARGET_ESTIMATE": 6, "NO_HOLD_ESTIMATE": 2, "LOW_CARRY": 0, "TOO_FEW_STEPS": 0, "ALIGNED": 0}, "offset_error_m": {"n": 7, "median": 1.0, "p90": 1.25, "max": 1.29}, "target_error_m": {"n": 7, "median": 0.2, "p90": 0.3, "max": 0.3}, "hold_error_xy_m": {"n": 15, "median": 0.87, "p90": 1.51, "max": 1.88}, "tcp_only_error_m": {"n": 15, "median": 2.8, "p90": 10.01, "max": 17.9}, "unnecessary_acts": 0} {"n": 87, "valid": 75, "error_xy_m_valid": {"n": 75, "median": 0.87, "p90": 1.42, "max": 1.58}, "abs_error_z_m_valid": {"n": 75, "median": 0.64, "p90": 1.11, "max": 1.5}}
+{"max_abs_difference_to_stored_sensor_param": {"base_extrinsic": 4.658508301336184e-09, "intrinsic": 0.0, "hand_rotation": 0.00010342544231578543, "hand_position_m": 1.9985733409957906e-06}, "demonstrations_checked": 50, "meaning": "the constants in hci.vision_center reproduce the stored camera parameters; the hand camera pose follows from the TCP pose alone"}
+{"frames": 1168, "hand_frames_with_lit_target_pixels": 544, "hand_full_view_error_m": {"n": 204, "median": 0.18, "p90": 0.39, "max": 1.46}, "hand_partial_view_fits": 266, "hand_partial_view_accepted_error_m": {"n": 254, "median": 0.26, "p90": 0.53, "max": 1.78}, "hand_partial_view_all_error_m": {"n": 266, "median": 0.26, "p90": 0.61, "max": 12.71}, "base_full_view_error_m": {"n": 835, "median": 1.66, "p90": 3.78, "max": 58.49}, "base_full_view_error_above_5mm": 77, "base_full_view_error_above_10mm": 74}
+{"demonstrations": 167, "triggered": 167, "true_offset_m": {"n": 167, "median": 5.2, "p90": 10.26, "max": 18.44}, "true_offset_above_10mm": 19, "decisions": {"ACT": 1, "NO_TARGET_ESTIMATE": 71, "NO_HOLD_ESTIMATE": 4, "LOW_CARRY": 1, "TOO_FEW_STEPS": 0, "ALIGNED": 90}, "unnecessary_acts": 0, "hold_fit_valid": 163, "hold_error_xy_m_valid": {"n": 163, "median": 0.89, "p90": 1.56, "max": 2.63}, "abs_hold_error_z_m_valid": {"n": 163, "median": 0.77, "p90": 1.99, "max": 5.03}, "tcp_only_error_m": {"n": 167, "median": 1.06, "p90": 3.86, "max": 11.4}, "target_estimates": 94, "target_error_m": {"n": 94, "median": 0.26, "p90": 0.57, "max": 1.89}, "offset_error_m": {"n": 92, "median": 1.01, "p90": 1.82, "max": 2.71}, "seconds_per_reading": 1.7913502618938149, "limit": "motion-planner states, not policy states: the cube is placed centred, so these mostly test abstaining and the held-cube fit"}
+exit=0
