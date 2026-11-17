@@ -1,0 +1,15 @@
+{
+ "approved_by": "user",
+ "paid_compute_authorized": true,
+ "cap_usd": 2.50,
+ "plan_sha256": "b7078afbe705a5ffd8a7128951f9c9e7618bb7c2fed5c044a5474c2fc895730b",
+ "approval_text": "2026-11-16, user message: 'Recovery-V1 Oracle XY Pilot Phase B 유료 실행을 승인합니다.' Work ID recovery_v1_oracle_xy_pilot_001; Plan SHA256 b7078afbe705a5ffd8a7128951f9c9e7618bb7c2fed5c044a5474c2fc895730b; 총예산 상한 US$2.50; seeds 50700-50799; base policy Vision-V1 seed 1, 80k EMA; arms C0, R5, HOLD_MATCHED, CENTER_ORACLE.",
+ "design_decisions_by_user": [
+  "The 3 cm horizontal bound is the maximum displacement of the commanded target from the TCP position at the start, as in the plan; not a bound on the sum of commands.",
+  "Simulator ground-truth cube positions may be used only in the diagnostic control part of CENTER_ORACLE; never by the policy, the trigger, the monitor or the other arms.",
+  "R5 uses the unchanged Runtime.retreat() and bypasses the Stage 2 entry grid check at the first pending release command; the difference is to be stated in the result report.",
+  "Trigger, correction bounds, analysis and follow-up gate of the plan are not changed."
+ ],
+ "scope": "recovery_v1_oracle_xy_pilot_001 only: environment and placement checks, technical audit on already-used scenes, budget gate, one 100-scene four-arm pilot pass, backup, instance deletion, execution report. No retraining, no change of trigger or bounds, no selective re-run, no wrist-camera estimator, no calibration, no final Test, no spend above US$2.50, no top-up.",
+ "written_by": "the agent, recording the user's explicit approval (exact cap and plan hash stated by the user)"
+}

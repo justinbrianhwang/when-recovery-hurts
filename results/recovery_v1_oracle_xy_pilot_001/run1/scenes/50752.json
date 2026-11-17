@@ -1,0 +1,553 @@
+{
+  "scene": 50752,
+  "role": "recovery_v1_oracle_xy_pilot_dev",
+  "arms": [
+    "C0",
+    "R5",
+    "HOLD_MATCHED",
+    "CENTER_ORACLE"
+  ],
+  "initial_state": {
+    "t": 0,
+    "tcp": [
+      -0.003122391179203987,
+      -0.009747332893311977,
+      0.17008189857006073
+    ],
+    "cubeA": [
+      -0.008535221219062805,
+      -0.08957670629024506,
+      0.019999999552965164
+    ],
+    "cubeB": [
+      -0.021837547421455383,
+      -0.1620761603116989,
+      0.019999999552965164
+    ],
+    "tcp_to_cubeA": 0.17007823288440704,
+    "cubeA_to_cubeB_xy": 0.07370971888303757,
+    "is_cubeA_grasped": false,
+    "is_cubeA_on_cubeB": false,
+    "is_cubeA_static": true,
+    "success": false,
+    "action": null,
+    "tcp_q": [
+      -0.0019245094154030085,
+      0.6997698545455933,
+      0.7143519520759583,
+      -0.004448057617992163
+    ],
+    "finger_qpos": [
+      0.03999999910593033,
+      0.03999999910593033
+    ],
+    "cubeA_q": [
+      0.6073644161224365,
+      -0.0,
+      -0.0,
+      -0.7944234013557434
+    ],
+    "cubeB_q": [
+      0.2453097254037857,
+      0.0,
+      0.0,
+      0.969444751739502
+    ],
+    "cubeA_v": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "cubeA_w": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "cubeB_v": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "cubeB_w": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "f_A_B": 0.0,
+    "f_A_left": 0.0,
+    "f_A_right": 0.0,
+    "f_A_table": 0.0,
+    "f_B_left": 0.0,
+    "f_B_right": 0.0
+  },
+  "trunk": {
+    "policy_noise_repeat_id": 0,
+    "success": 1,
+    "steps": 80,
+    "reason": "success",
+    "policy_calls": 10,
+    "policy_inference_seconds": 7.047148026176728,
+    "inference_calls": [
+      {
+        "t": 0,
+        "policy_noise_repeat_id": 0,
+        "seed": 1446778185,
+        "chunk_sha256_16": "b7d5883c1bb65fff"
+      },
+      {
+        "t": 8,
+        "policy_noise_repeat_id": 0,
+        "seed": 916011137,
+        "chunk_sha256_16": "a8df1a405c0b63e8"
+      },
+      {
+        "t": 16,
+        "policy_noise_repeat_id": 0,
+        "seed": 888719149,
+        "chunk_sha256_16": "fd08d6628332e469"
+      },
+      {
+        "t": 24,
+        "policy_noise_repeat_id": 0,
+        "seed": 474428185,
+        "chunk_sha256_16": "e19852211c6bfc54"
+      },
+      {
+        "t": 32,
+        "policy_noise_repeat_id": 0,
+        "seed": 1079057018,
+        "chunk_sha256_16": "117e14266c46ff13"
+      },
+      {
+        "t": 40,
+        "policy_noise_repeat_id": 0,
+        "seed": 2076607768,
+        "chunk_sha256_16": "a583d53d25b45fb6"
+      },
+      {
+        "t": 48,
+        "policy_noise_repeat_id": 0,
+        "seed": 1744280487,
+        "chunk_sha256_16": "5c079690d700230a"
+      },
+      {
+        "t": 56,
+        "policy_noise_repeat_id": 0,
+        "seed": 1509328700,
+        "chunk_sha256_16": "3704a4a8a385dfb3"
+      },
+      {
+        "t": 64,
+        "policy_noise_repeat_id": 0,
+        "seed": 2108950133,
+        "chunk_sha256_16": "50ed70d6cb9c9bf3"
+      },
+      {
+        "t": 72,
+        "policy_noise_repeat_id": 0,
+        "seed": 1201264434,
+        "chunk_sha256_16": "75393bfca47761d6"
+      }
+    ]
+  },
+  "triggered": true,
+  "trigger": {
+    "step": 79,
+    "pending_gripper_command": 0.9990147948265076,
+    "close_run": 44,
+    "finger_width_m": 0.04093635827302933,
+    "fires": true,
+    "snapshot_id": "50752:79:be9c491132994b5a",
+    "queue_len": 1,
+    "remaining_budget": 121,
+    "held_gripper_command": -1.0,
+    "on_stage2_eligibility_grid": false,
+    "gt_for_diagnosis_only": {
+      "t": 79,
+      "grasped": true,
+      "offset_xy_m": 0.010001668005275443,
+      "height_gap_m": -3.40947508811959e-05,
+      "cubeA": [
+        -0.024733111262321472,
+        -0.1717578023672104,
+        0.06018656864762306
+      ],
+      "cubeB": [
+        -0.02166583575308323,
+        -0.16223807632923126,
+        0.020220663398504257
+      ],
+      "tcp": [
+        -0.024018853902816772,
+        -0.16876007616519928,
+        0.0619501918554306
+      ],
+      "cubeA_lift_m": 0.0401865690946579,
+      "false_trigger": false,
+      "false_trigger_rule": "cubeA not grasped, or not lifted 1 cm, at the trigger"
+    }
+  },
+  "reference": {
+    "t_center": 1,
+    "end_reason": "within_tolerance",
+    "ended_episode": false,
+    "offset_before_norm_m": 0.010001668005275443,
+    "offset_after_norm_m": 0.00969366794053044,
+    "commanded_path_m": 0.004999999999999996,
+    "tcp_xy_displacement_m": 0.0005084719173507058,
+    "tcp_dz_m": 0.0003211274743080139,
+    "policy_inference_calls": 0,
+    "oracle_reads": 4,
+    "commands_sha256": "f74c26fadc5fc0921508bc7e45852464a846da79d82bfb0eb39d1176d865c259",
+    "expected_return_step": 80,
+    "note": "controller-only preparation run; not a continuation; no outcome is read from it"
+  },
+  "cells": [
+    {
+      "arm": "C0",
+      "no_trigger": false,
+      "policy_noise_repeat_id": 0,
+      "y": 1,
+      "steps": 80,
+      "reason": "success",
+      "intervention": null,
+      "intervention_step": null,
+      "control": null,
+      "control_steps": 0,
+      "control_inference_calls": 0,
+      "ended_during_control": false,
+      "policy_resumed": false,
+      "queue_len_at_return": null,
+      "history_len_at_return": null,
+      "oracle_reads": 0,
+      "first_inference_step": null,
+      "inference_calls": [],
+      "policy_calls_after_trigger": 0,
+      "steps_after_trigger": 1,
+      "same_as_reference": null,
+      "gt_effect_of_control": null,
+      "gt_release_after_trigger": {
+        "found": true,
+        "release_step": 80,
+        "offset_xy_m": 0.010001668005275443,
+        "height_gap_m": -3.40947508811959e-05
+      },
+      "prefix_replay_state_error": 0.0,
+      "live_observation": {
+        "state_max_abs": 0.0,
+        "rgb_max_abs": 0.0
+      },
+      "wall_seconds": 0.7222922119544819
+    },
+    {
+      "arm": "R5",
+      "no_trigger": false,
+      "policy_noise_repeat_id": 0,
+      "y": 1,
+      "steps": 110,
+      "reason": "success",
+      "intervention": 2,
+      "intervention_step": 79,
+      "control": {
+        "mode": "up",
+        "start_tcp": [
+          -0.024018853902816772,
+          -0.16876007616519928,
+          0.0619501918554306
+        ],
+        "target_tcp": [
+          -0.024018853902816772,
+          -0.16876007616519928,
+          0.1119501918554306
+        ],
+        "final_tcp": [
+          -0.02443278208374977,
+          -0.16873802244663239,
+          0.10871585458517075
+        ],
+        "commanded_distance_m": 0.05,
+        "achieved_displacement_m": 0.046767499297857285,
+        "target_error_m": 0.003260791389105585,
+        "steps_used": 26,
+        "max_steps": 40,
+        "arrival_tolerance_m": 0.005,
+        "command_saturated_steps": 26,
+        "gripper_command": -1.0,
+        "reached": true,
+        "end_reason": "reached"
+      },
+      "control_steps": 26,
+      "control_inference_calls": 0,
+      "ended_during_control": false,
+      "policy_resumed": true,
+      "queue_len_at_return": 0,
+      "history_len_at_return": 2,
+      "oracle_reads": 0,
+      "first_inference_step": 105,
+      "inference_calls": [
+        {
+          "t": 105,
+          "policy_noise_repeat_id": 0,
+          "seed": 161223282,
+          "chunk_sha256_16": "0006ebd5d44d65ef"
+        }
+      ],
+      "policy_calls_after_trigger": 1,
+      "steps_after_trigger": 31,
+      "same_as_reference": null,
+      "gt_effect_of_control": {
+        "offset_xy_before_m": 0.010001668005275443,
+        "offset_xy_after_m": 0.010282642093378992,
+        "cubeA_xy_displacement_m": 0.0004563656193532866,
+        "cubeA_dz_m": 0.046700116246938705,
+        "cubeB_xy_displacement_m": 0.00018382727595043927,
+        "tcp_xy_displacement_m": 0.0004145152656695879,
+        "tcp_dz_m": 0.04676566272974014,
+        "grasped_before": true,
+        "grasped_after": true
+      },
+      "gt_release_after_trigger": {
+        "found": true,
+        "release_step": 106,
+        "offset_xy_m": 0.010282642093378992,
+        "height_gap_m": 0.04688670769333839
+      },
+      "prefix_replay_state_error": 0.0,
+      "live_observation": {
+        "state_max_abs": 0.0,
+        "rgb_max_abs": 0.0
+      },
+      "wall_seconds": 1.719137654057704
+    },
+    {
+      "arm": "HOLD_MATCHED",
+      "no_trigger": false,
+      "policy_noise_repeat_id": 0,
+      "y": 1,
+      "steps": 81,
+      "reason": "success",
+      "intervention": "hold_matched_xy",
+      "intervention_step": 79,
+      "control": {
+        "mode": "HOLD_MATCHED",
+        "start_tcp": [
+          -0.024018853902816772,
+          -0.16876007616519928,
+          0.0619501918554306
+        ],
+        "final_tcp": [
+          -0.023890838027000427,
+          -0.1692502200603485,
+          0.062269531190395355
+        ],
+        "steps_planned": 1,
+        "steps_used": 1,
+        "end_reason": "matched_return",
+        "xy_drift_max_m": 0.0005065857305659983,
+        "tcp_xy_displacement_m": 0.0005065857305659983,
+        "tcp_dz_m": 0.0003193393349647522,
+        "gripper_command": -1.0
+      },
+      "control_steps": 1,
+      "control_inference_calls": 0,
+      "ended_during_control": false,
+      "policy_resumed": true,
+      "queue_len_at_return": 0,
+      "history_len_at_return": 2,
+      "oracle_reads": 0,
+      "first_inference_step": 80,
+      "inference_calls": [
+        {
+          "t": 80,
+          "policy_noise_repeat_id": 0,
+          "seed": 1312018558,
+          "chunk_sha256_16": "e59f525aa472e7b3"
+        }
+      ],
+      "policy_calls_after_trigger": 1,
+      "steps_after_trigger": 2,
+      "same_as_reference": null,
+      "gt_effect_of_control": {
+        "offset_xy_before_m": 0.010001668005275443,
+        "offset_xy_after_m": 0.010497869333471018,
+        "cubeA_xy_displacement_m": 0.0004925809180496737,
+        "cubeA_dz_m": 0.0002548806369304657,
+        "cubeB_xy_displacement_m": 0.00011685421465444727,
+        "tcp_xy_displacement_m": 0.0005065857305659983,
+        "tcp_dz_m": 0.0003193393349647522,
+        "grasped_before": true,
+        "grasped_after": true
+      },
+      "gt_release_after_trigger": {
+        "found": true,
+        "release_step": 81,
+        "offset_xy_m": 0.010497869333471018,
+        "height_gap_m": 0.0004414776712656013
+      },
+      "prefix_replay_state_error": 0.0,
+      "live_observation": {
+        "state_max_abs": 0.0,
+        "rgb_max_abs": 0.0
+      },
+      "wall_seconds": 1.4430193280568346
+    },
+    {
+      "arm": "CENTER_ORACLE",
+      "no_trigger": false,
+      "policy_noise_repeat_id": 0,
+      "y": 1,
+      "steps": 81,
+      "reason": "success",
+      "intervention": "center_oracle_xy",
+      "intervention_step": 79,
+      "control": {
+        "mode": "CENTER_ORACLE",
+        "start_tcp": [
+          -0.024018853902816772,
+          -0.16876007616519928,
+          0.0619501918554306
+        ],
+        "final_tcp": [
+          -0.023598946630954742,
+          -0.16847333312034607,
+          0.06227131932973862
+        ],
+        "offset_before_m": [
+          0.003067275509238243,
+          0.009519726037979126
+        ],
+        "offset_before_norm_m": 0.010001668005275443,
+        "offset_after_m": [
+          0.0028316639363765717,
+          0.009270861744880676
+        ],
+        "offset_after_norm_m": 0.00969366794053044,
+        "steps_used": 1,
+        "end_reason": "within_tolerance",
+        "commanded_path_m": 0.004999999999999996,
+        "tcp_xy_displacement_m": 0.0005084719173507058,
+        "tcp_dz_m": 0.0003211274743080139,
+        "gripper_command": -1.0,
+        "steps": [
+          {
+            "commanded_xy_m": [
+              0.0015333819856949808,
+              0.004759069203735755
+            ],
+            "target_distance_from_start_m": 0.004999999999999996,
+            "offset_before_step_m": 0.010001668005275443,
+            "tcp_after": [
+              -0.023598946630954742,
+              -0.16847333312034607,
+              0.06227131932973862
+            ]
+          }
+        ],
+        "bounds": {
+          "residual_tol_m": 0.01,
+          "step_cmd_m": 0.005,
+          "target_cap_m": 0.03,
+          "max_steps": 12
+        },
+        "reached": true
+      },
+      "control_steps": 1,
+      "control_inference_calls": 0,
+      "ended_during_control": false,
+      "policy_resumed": true,
+      "queue_len_at_return": 0,
+      "history_len_at_return": 2,
+      "oracle_reads": 4,
+      "first_inference_step": 80,
+      "inference_calls": [
+        {
+          "t": 80,
+          "policy_noise_repeat_id": 0,
+          "seed": 1312018558,
+          "chunk_sha256_16": "03435e3c0fb460ba"
+        }
+      ],
+      "policy_calls_after_trigger": 1,
+      "steps_after_trigger": 2,
+      "same_as_reference": {
+        "pass": true,
+        "steps": [
+          1,
+          1
+        ],
+        "action_max_abs": 0.0,
+        "state_max_abs": 0.0,
+        "live_observation_state_max_abs": 0.0,
+        "live_observation_rgb_max_abs": 0.0,
+        "offset_before_equal": true
+      },
+      "gt_effect_of_control": {
+        "offset_xy_before_m": 0.010001668005275443,
+        "offset_xy_after_m": 0.00969366794053044,
+        "cubeA_xy_displacement_m": 0.0004945964119486502,
+        "cubeA_dz_m": 0.0002575330436229706,
+        "cubeB_xy_displacement_m": 0.00016700052636314566,
+        "tcp_xy_displacement_m": 0.0005084719173507058,
+        "tcp_dz_m": 0.0003211274743080139,
+        "grasped_before": true,
+        "grasped_after": true
+      },
+      "gt_release_after_trigger": {
+        "found": true,
+        "release_step": 81,
+        "offset_xy_m": 0.00969366794053044,
+        "height_gap_m": 0.0004441189020872108
+      },
+      "prefix_replay_state_error": 0.0,
+      "live_observation": {
+        "state_max_abs": 0.0,
+        "rgb_max_abs": 0.0
+      },
+      "wall_seconds": 1.446714682970196
+    }
+  ],
+  "handoff": {
+    "pass": true,
+    "expected_first_policy_step": 80,
+    "t_center": 1,
+    "arms_resumed": 2,
+    "matched": true,
+    "HOLD_MATCHED": {
+      "policy_resumed": true,
+      "control_steps": 1,
+      "control_inference_calls": 0,
+      "queue_len_at_return": 0,
+      "history_len_at_return": 2,
+      "first_policy_step": 80,
+      "first_policy_seed": 1312018558
+    },
+    "CENTER_ORACLE": {
+      "policy_resumed": true,
+      "control_steps": 1,
+      "control_inference_calls": 0,
+      "queue_len_at_return": 0,
+      "history_len_at_return": 2,
+      "first_policy_step": 80,
+      "first_policy_seed": 1312018558
+    }
+  },
+  "checks": {
+    "c0_reproduces_trunk": {
+      "action_max_abs": 0.0,
+      "final_state_max_abs": 0.0,
+      "outcome_equal": true,
+      "match": true
+    }
+  },
+  "counts": {
+    "continuations": 4,
+    "reference_control_runs": 1,
+    "restores": 5,
+    "env_steps": 512
+  },
+  "oracle_reads": 8,
+  "wall_seconds": 14.071561350021511,
+  "completed": true,
+  "trace": "traces/trace_50752.json.gz",
+  "trace_sha256": "ce174c5889a0195b070e38cf7243f274ffe6828d24aba96cba835bae7c48925e"
+}

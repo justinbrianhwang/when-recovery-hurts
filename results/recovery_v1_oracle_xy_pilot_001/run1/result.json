@@ -1,0 +1,373 @@
+{
+  "role": "recovery_v1_oracle_xy_pilot_dev",
+  "unit": "scene",
+  "scenes": 100,
+  "denominators": {
+    "all": 100,
+    "no_trigger": 5,
+    "triggered": 95,
+    "false_triggers_by_ground_truth": 0,
+    "false_trigger_scenes": [],
+    "actually_moved_T_gt_0": 47,
+    "already_aligned_T_eq_0": 48,
+    "c0_success": 82,
+    "c0_failure": 18
+  },
+  "success": {
+    "C0": {
+      "k": 82,
+      "n": 100,
+      "wilson95": [
+        0.7333264161369926,
+        0.8829977450105364
+      ]
+    },
+    "R5": {
+      "k": 73,
+      "n": 100,
+      "wilson95": [
+        0.6356788323205499,
+        0.8073041585042365
+      ]
+    },
+    "HOLD_MATCHED": {
+      "k": 82,
+      "n": 100,
+      "wilson95": [
+        0.7333264161369926,
+        0.8829977450105364
+      ]
+    },
+    "CENTER_ORACLE": {
+      "k": 92,
+      "n": 100,
+      "wilson95": [
+        0.8500189229905127,
+        0.9589065385156194
+      ]
+    }
+  },
+  "primary_CENTER_ORACLE_vs_C0": {
+    "n": 100,
+    "both_succeed": 82,
+    "rescue": 10,
+    "harm": 0,
+    "both_fail": 8,
+    "net": 10,
+    "reference_success": 82,
+    "arm_success": 92,
+    "harm_given_reference_success": 0.0,
+    "reference_success_wilson95": [
+      0.7333264161369926,
+      0.8829977450105364
+    ],
+    "arm_success_wilson95": [
+      0.8500189229905127,
+      0.9589065385156194
+    ],
+    "harm_given_reference_success_wilson95": [
+      0.0,
+      0.04475062369010033
+    ],
+    "rescue_scenes": [
+      50702,
+      50703,
+      50706,
+      50753,
+      50761,
+      50770,
+      50775,
+      50780,
+      50786,
+      50798
+    ],
+    "harm_scenes": []
+  },
+  "secondary": {
+    "CENTER_ORACLE_vs_HOLD_MATCHED": {
+      "n": 100,
+      "both_succeed": 82,
+      "rescue": 10,
+      "harm": 0,
+      "both_fail": 8,
+      "net": 10,
+      "reference_success": 82,
+      "arm_success": 92,
+      "harm_given_reference_success": 0.0,
+      "reference_success_wilson95": [
+        0.7333264161369926,
+        0.8829977450105364
+      ],
+      "arm_success_wilson95": [
+        0.8500189229905127,
+        0.9589065385156194
+      ],
+      "harm_given_reference_success_wilson95": [
+        0.0,
+        0.04475062369010033
+      ],
+      "rescue_scenes": [
+        50702,
+        50703,
+        50706,
+        50732,
+        50753,
+        50761,
+        50770,
+        50775,
+        50780,
+        50798
+      ],
+      "harm_scenes": []
+    },
+    "HOLD_MATCHED_vs_C0": {
+      "n": 100,
+      "both_succeed": 81,
+      "rescue": 1,
+      "harm": 1,
+      "both_fail": 17,
+      "net": 0,
+      "reference_success": 82,
+      "arm_success": 82,
+      "harm_given_reference_success": 0.012195121951219513,
+      "reference_success_wilson95": [
+        0.7333264161369926,
+        0.8829977450105364
+      ],
+      "arm_success_wilson95": [
+        0.7333264161369926,
+        0.8829977450105364
+      ],
+      "harm_given_reference_success_wilson95": [
+        0.002155992081812344,
+        0.0658933968841392
+      ],
+      "rescue_scenes": [
+        50786
+      ],
+      "harm_scenes": [
+        50732
+      ]
+    },
+    "R5_vs_C0": {
+      "n": 100,
+      "both_succeed": 68,
+      "rescue": 5,
+      "harm": 14,
+      "both_fail": 13,
+      "net": -9,
+      "reference_success": 82,
+      "arm_success": 73,
+      "harm_given_reference_success": 0.17073170731707318,
+      "reference_success_wilson95": [
+        0.7333264161369926,
+        0.8829977450105364
+      ],
+      "arm_success_wilson95": [
+        0.6356788323205499,
+        0.8073041585042365
+      ],
+      "harm_given_reference_success_wilson95": [
+        0.10451594667058835,
+        0.26641739088142896
+      ],
+      "rescue_scenes": [
+        50702,
+        50703,
+        50706,
+        50770,
+        50780
+      ],
+      "harm_scenes": [
+        50709,
+        50726,
+        50728,
+        50732,
+        50735,
+        50742,
+        50746,
+        50747,
+        50764,
+        50768,
+        50778,
+        50782,
+        50784,
+        50797
+      ],
+      "note": "R5 differs in duration and motion; not a duration-matched contrast"
+    }
+  },
+  "control": {
+    "t_center_steps": {
+      "n": 95,
+      "min": 0.0,
+      "median": 0.0,
+      "max": 12.0
+    },
+    "center_end_reasons": {
+      "episode_ended": 1,
+      "step_budget": 6,
+      "within_tolerance": 88
+    },
+    "offset_before_m": {
+      "n": 95,
+      "min": 0.0012817304316275744,
+      "median": 0.00995028169733577,
+      "max": 0.053421934582045146
+    },
+    "offset_after_center_m_moved": {
+      "n": 47,
+      "min": 0.008143748197535746,
+      "median": 0.009336518626030335,
+      "max": 0.05178949962147509
+    },
+    "center_residual_within_tolerance_moved": 40,
+    "center_tcp_xy_displacement_m": {
+      "n": 47,
+      "min": 0.0005084719173507058,
+      "median": 0.006440086147309338,
+      "max": 0.023031084281899983
+    },
+    "center_tcp_dz_m": {
+      "n": 47,
+      "min": -0.0019249841570854187,
+      "median": -0.0003705918788909912,
+      "max": 0.0003568679094314575
+    },
+    "R5_grasp_kept_through_control_moved": 47,
+    "HOLD_MATCHED_grasp_kept_through_control_moved": 47,
+    "CENTER_ORACLE_grasp_kept_through_control_moved": 47,
+    "center_cubeA_xy_displacement_m": {
+      "n": 47,
+      "min": 0.0004945964119486502,
+      "median": 0.006453586869731773,
+      "max": 0.02302507819301626
+    },
+    "hold_tcp_xy_drift_m": {
+      "n": 47,
+      "min": 4.549374007789944e-05,
+      "median": 0.0003391341511051176,
+      "max": 0.0014829897669825997
+    },
+    "r5_steps": {
+      "n": 95,
+      "min": 1.0,
+      "median": 26.0,
+      "max": 28.0
+    },
+    "extra_steps_vs_c0": {
+      "R5": {
+        "n": 95,
+        "min": -66.0,
+        "median": 28.0,
+        "max": 114.0
+      },
+      "HOLD_MATCHED": {
+        "n": 95,
+        "min": -96.0,
+        "median": 1.0,
+        "max": 91.0
+      },
+      "CENTER_ORACLE": {
+        "n": 95,
+        "min": -111.0,
+        "median": 1.0,
+        "max": 10.0
+      }
+    }
+  },
+  "release_after_trigger": {
+    "C0": {
+      "found": 95,
+      "offset_xy_m": {
+        "n": 95,
+        "min": 0.0012817304316275744,
+        "median": 0.00995028169733577,
+        "max": 0.05342193499974215
+      }
+    },
+    "R5": {
+      "found": 93,
+      "offset_xy_m": {
+        "n": 93,
+        "min": 0.0012722685429876787,
+        "median": 0.012221238713730672,
+        "max": 0.045470572101786705
+      }
+    },
+    "HOLD_MATCHED": {
+      "found": 94,
+      "offset_xy_m": {
+        "n": 94,
+        "min": 0.0012817304316275744,
+        "median": 0.009609827073184887,
+        "max": 0.04801011647344443
+      }
+    },
+    "CENTER_ORACLE": {
+      "found": 94,
+      "offset_xy_m": {
+        "n": 94,
+        "min": 0.0012817304316275744,
+        "median": 0.007245553892164235,
+        "max": 0.04710083345951648
+      }
+    }
+  },
+  "followup_gate": {
+    "criteria": {
+      "rescue_at_least_4": true,
+      "net_at_least_3": true,
+      "harm_at_most_3": true,
+      "center_exceeds_hold": true,
+      "technical_audits_pass": true
+    },
+    "label": "ORACLE_GATE_PASS",
+    "thresholds": {
+      "rescue_min": 4,
+      "net_min": 3,
+      "harm_max": 3
+    },
+    "scope": "engineering gate for whether a non-oracle estimator is worth developing; not a significance test and not a guarantee"
+  },
+  "scope": [
+    "CENTER_ORACLE reads simulator ground truth and is not deployable; a gain is feasibility evidence for this controller, trigger and bound only, not evidence about perception.",
+    "One task, one policy, one noise repeat, 100 development scenes. No significance claim; the intervals describe sampling of scenes only.",
+    "If CENTER_ORACLE exceeds C0 but not HOLD_MATCHED, the gain is not attributed to the horizontal correction.",
+    "R5 against C0 is not duration-matched.",
+    "Pairing is within these 100 scenes; the count is not compared with 79/100 of earlier sets."
+  ],
+  "set": "recovery_v1_pilot_reserved",
+  "seeds": [
+    50700,
+    50799
+  ],
+  "policy": "artifacts/policies/stack_v1_s1_d500_clean_resnet18_i080000",
+  "weights_sha256": "a37be25603d6c7b7d5cfa1872e6c1134c436f78de02b745c481c88d5d0f69629",
+  "plan_sha256": "b7078afbe705a5ffd8a7128951f9c9e7618bb7c2fed5c044a5474c2fc895730b",
+  "rules_sha256": "f652ead0a47750bd55ff990391ff4bb02d4af44331d351d4adea7112a973e765",
+  "scene_records_sha256": "182840d2738462db28199eda286dc1c4f0e61dc733335b9add77411f460331be",
+  "env_steps": 66992,
+  "oracle_reads_outside_center": 0,
+  "wall_seconds": 2265.9532521519577,
+  "runtime": {
+    "python": "3.10.12 (main, Aug 31 2026, 10:18:17) [GCC 11.4.0]",
+    "platform": "Linux-6.8.0-138-generic-x86_64-with-glibc2.35",
+    "packages": {
+      "torch": "2.6.0+cu124",
+      "torchvision": "0.21.0+cu124",
+      "mani_skill": "3.0.1",
+      "sapien": "3.0.3",
+      "gymnasium": "0.29.1",
+      "diffusers": "0.30.3",
+      "numpy": "1.26.4",
+      "scipy": "1.13.1",
+      "PyYAML": "6.0.2"
+    },
+    "nvidia_smi": {
+      "returncode": 0,
+      "stdout": "name, driver_version, memory.total [MiB]\nNVIDIA GeForce RTX 4090, 615.71.09, 24564 MiB\n",
+      "stderr": ""
+    }
+  }
+}

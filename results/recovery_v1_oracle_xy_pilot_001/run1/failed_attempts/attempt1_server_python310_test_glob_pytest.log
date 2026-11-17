@@ -1,0 +1,31 @@
+........................................................................ [ 24%]
+..............................................F......................... [ 48%]
+........................................................................ [ 72%]
+....................................................................s... [ 96%]
+..ss.....                                                                [100%]
+=================================== FAILURES ===================================
+_____ test_every_server_command_refuses_without_an_explicit_authorization ______
+
+X = <module 'oxy_driver' from '/workspace/robot_harm_intervention_starter_v0_3/scripts/31_recovery_v1_oracle_xy.py'>
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-0/test_every_server_command_refu0')
+
+    def test_every_server_command_refuses_without_an_explicit_authorization(X, tmp_path):
+        plan = tmp_path / 'plan.json'; plan.write_text('{"code": {}}'); run = tmp_path / 'run'; run.mkdir()
+        ns = lambda: argparse.Namespace(plan=str(plan), run=str(run), upstream='x', device='cpu', usd_per_hour=.4, spent_usd=0.)
+        for cmd in (X.cmd_scenes, X.cmd_audit, X.cmd_budget, X.cmd_run):
+            with pytest.raises(SystemExit, match='no authorization'): cmd(ns())
+        auth = {'approved_by': 'user', 'paid_compute_authorized': True, 'cap_usd': 2.5, 'plan_sha256': '0' * 64}
+        for bad in (auth, {**auth, 'plan_sha256': X.sha256(plan), 'cap_usd': None}, {**auth, 'plan_sha256': X.sha256(plan), 'approved_by': 'agent'}, {**auth, 'plan_sha256': X.sha256(plan), 'paid_compute_authorized': 'yes'}):
+            (run / 'authorization.json').write_text(json.dumps(bad))
+            for cmd in (X.cmd_scenes, X.cmd_audit, X.cmd_budget, X.cmd_run):
+                with pytest.raises(SystemExit, match='Refused'): cmd(ns())
+>       assert not list(run.glob('*/')) and not Path(X.LEDGER).exists()
+E       AssertionError: assert (not [PosixPath('/tmp/pytest-of-root/pytest-0/test_every_server_command_refu0/run/authorization.json')])
+E        +  where [PosixPath('/tmp/pytest-of-root/pytest-0/test_every_server_command_refu0/run/authorization.json')] = list(<generator object Path.glob at 0x7e9e9dbe3060>)
+E        +    where <generator object Path.glob at 0x7e9e9dbe3060> = glob('*/')
+E        +      where glob = PosixPath('/tmp/pytest-of-root/pytest-0/test_every_server_command_refu0/run').glob
+
+tests/test_recovery_v1_oracle.py:481: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_recovery_v1_oracle.py::test_every_server_command_refuses_without_an_explicit_authorization
+1 failed, 293 passed, 5 skipped in 82.22s (0:01:22)

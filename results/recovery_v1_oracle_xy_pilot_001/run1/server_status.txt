@@ -1,0 +1,57 @@
+install start=2026-11-17T01:03:47Z
+install_sys exit=0 end=2026-11-17T01:04:24Z
+bootstrap exit=0 end=2026-11-17T01:07:33Z
+PHASE_EXIT install 0
+oxy_doctor cmd=python -m hci doctor --out runs/recovery_v1_oracle_xy_pilot_001/doctor
+oxy_doctor start=2026-11-17T01:07:33Z
+oxy_doctor exit=0 end=2026-11-17T01:07:40Z
+oxy_versions cmd=python -c import torch,torchvision;print(torch.__version__,torchvision.__version__,torch.cuda.get_device_name(0))
+oxy_versions start=2026-11-17T01:07:40Z
+oxy_versions exit=0 end=2026-11-17T01:07:44Z
+oxy_pytest cmd=python -m pytest -q
+oxy_pytest start=2026-11-17T01:07:44Z
+oxy_pytest exit=1 end=2026-11-17T01:09:08Z
+PHASE_EXIT env 1
+PHASE_SKIPPED scenes (an earlier phase did not pass)
+PHASE_SKIPPED audit (an earlier phase did not pass)
+PHASE_SKIPPED budget (an earlier phase did not pass)
+PHASE_SKIPPED pilot (an earlier phase did not pass)
+PHASE_EXIT pack 0
+CHAIN_END 2026-11-17T01:09:08Z
+ATTEMPT_2 start=2026-11-17T01:14:18Z (tests/test_recovery_v1_oracle.py replaced: sha256 32e635509c724ed1dcf47a26ca0fb82aadcd35359c5cdf84a2729a00e4f8e832)
+oxy_doctor cmd=python -m hci doctor --out runs/recovery_v1_oracle_xy_pilot_001/doctor
+oxy_doctor start=2026-11-17T01:14:18Z
+oxy_doctor exit=0 end=2026-11-17T01:14:24Z
+oxy_versions cmd=python -c import torch,torchvision;print(torch.__version__,torchvision.__version__,torch.cuda.get_device_name(0))
+oxy_versions start=2026-11-17T01:14:24Z
+oxy_versions exit=0 end=2026-11-17T01:14:28Z
+oxy_pytest cmd=python -m pytest -q
+oxy_pytest start=2026-11-17T01:14:28Z
+oxy_pytest exit=0 end=2026-11-17T01:15:51Z
+oxy_dry cmd=python scripts/31_recovery_v1_oracle_xy.py dry-run --plan runs/recovery_v1_oracle_xy_pilot_001/plan.json --run runs/recovery_v1_oracle_xy_pilot_001 --out runs/recovery_v1_oracle_xy_pilot_001/dry_run_server.json
+oxy_dry start=2026-11-17T01:15:51Z
+oxy_dry exit=0 end=2026-11-17T01:15:53Z
+ENV_DONE
+PHASE_EXIT env 0
+oxy_scenes cmd=python scripts/31_recovery_v1_oracle_xy.py scenes --plan runs/recovery_v1_oracle_xy_pilot_001/plan.json --run runs/recovery_v1_oracle_xy_pilot_001
+oxy_scenes start=2026-11-17T01:15:53Z
+oxy_scenes exit=0 end=2026-11-17T01:18:04Z
+SCENES_DONE
+PHASE_EXIT scenes 0
+oxy_audit cmd=python scripts/31_recovery_v1_oracle_xy.py audit --plan runs/recovery_v1_oracle_xy_pilot_001/plan.json --run runs/recovery_v1_oracle_xy_pilot_001
+oxy_audit start=2026-11-17T01:18:04Z
+oxy_audit exit=0 end=2026-11-17T01:21:10Z
+AUDIT_DONE
+PHASE_EXIT audit 0
+budget SPENT_USD=0.2212 USD_PER_HOUR=0.4378
+oxy_budget cmd=python scripts/31_recovery_v1_oracle_xy.py budget --plan runs/recovery_v1_oracle_xy_pilot_001/plan.json --run runs/recovery_v1_oracle_xy_pilot_001 --usd-per-hour 0.4378 --spent-usd 0.2212
+oxy_budget start=2026-11-17T01:21:10Z
+oxy_budget exit=0 end=2026-11-17T01:21:12Z
+BUDGET_OK
+PHASE_EXIT budget 0
+pilot SPENT_USD=0.2214 USD_PER_HOUR=0.4378
+oxy_pilot cmd=python scripts/31_recovery_v1_oracle_xy.py run --plan runs/recovery_v1_oracle_xy_pilot_001/plan.json --run runs/recovery_v1_oracle_xy_pilot_001 --usd-per-hour 0.4378 --spent-usd 0.2214
+oxy_pilot start=2026-11-17T01:21:13Z
+oxy_pilot exit=0 end=2026-11-17T01:59:02Z
+PILOT_DONE
+PHASE_EXIT pilot 0

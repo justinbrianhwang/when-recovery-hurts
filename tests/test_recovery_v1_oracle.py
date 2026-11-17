@@ -478,7 +478,7 @@ def test_every_server_command_refuses_without_an_explicit_authorization(X, tmp_p
         (run / 'authorization.json').write_text(json.dumps(bad))
         for cmd in (X.cmd_scenes, X.cmd_audit, X.cmd_budget, X.cmd_run):
             with pytest.raises(SystemExit, match='Refused'): cmd(ns())
-    assert not list(run.glob('*/')) and not Path(X.LEDGER).exists()
+    assert not [p for p in run.iterdir() if p.is_dir()] and not Path(X.LEDGER).exists()      # iterdir, not glob('*/'): before Python 3.13 that pattern also returns files (server run, attempt 1)
 
 
 def test_a_plan_that_failed_its_preparation_is_refused_even_with_an_authorization(X, tmp_path):
