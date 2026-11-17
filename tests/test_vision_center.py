@@ -220,12 +220,13 @@ def X32():
 def test_every_server_command_refuses_without_an_explicit_authorization(X32, tmp_path):
     plan = tmp_path / 'plan.json'; plan.write_text('{"code": {}}'); run = tmp_path / 'run'; run.mkdir()
     ns = lambda: argparse.Namespace(plan=str(plan), run=str(run), upstream='x', device='cpu', usd_per_hour=.4, spent_usd=0., stage='shadow')
+    had_ledger = Path(X32.LEDGER).exists()                       # since the pilot pass was executed (2026-11-17, run2) the machine that ran it holds the ledger; a refused command must not create or touch one
     for cmd in (X32.cmd_scenes, X32.cmd_audit, X32.cmd_budget, X32.cmd_shadow, X32.cmd_run):
         with pytest.raises(SystemExit, match='no authorization'): cmd(ns())
     (run / 'authorization.json').write_text(json.dumps({'approved_by': 'agent', 'paid_compute_authorized': True, 'cap_usd': 2.5, 'plan_sha256': X32.sha256(plan)}))
     for cmd in (X32.cmd_scenes, X32.cmd_audit, X32.cmd_budget, X32.cmd_shadow, X32.cmd_run):
         with pytest.raises(SystemExit, match='Refused'): cmd(ns())
-    assert not [p for p in run.iterdir() if p.is_dir()] and not Path(X32.LEDGER).exists()
+    assert not [p for p in run.iterdir() if p.is_dir()] and Path(X32.LEDGER).exists() == had_ledger
 
 
 def test_driver_constants_and_file_list(X32):

@@ -1,0 +1,14 @@
+{
+ "approved_by": "user",
+ "paid_compute_authorized": true,
+ "cap_usd": 4.00,
+ "plan_sha256": "72b750057e31da493983f123a3cafd19cceed979d443f3daacfe76595da47e75",
+ "run": "run2 (one retry; the earlier BUDGET_BLOCKED attempt is kept as run1_budget_blocked and its approval file as authorization_run1_budget_blocked.json)",
+ "cap_meaning": "US$4.00 is the cap on the ADDITIONAL spend of this retry. The US$0.47 of the blocked attempt is kept separately; cumulative spend of both attempts must not exceed US$4.47. The budget gate of this run counts only this run's spend against 4.00.",
+ "approval_text": "2026-11-17, user message: 'Vision-CENTER Phase B 재시도 1회를 승인합니다.' 추가 지출 상한 US$4.00; Work ID vision_center_001; Plan SHA256 72b750057e31da493983f123a3cafd19cceed979d443f3daacfe76595da47e75; base policy Vision-V1 seed 1, 80k EMA; B1 50600-50799; B2 50800-50899; conditions and criteria of the frozen plan unchanged.",
+ "allowed_changes": ["CPU thread limit: OMP_NUM_THREADS=1, OPENBLAS_NUM_THREADS=1, MKL_NUM_THREADS=1, NUMEXPR_NUM_THREADS=1, BLIS_NUM_THREADS=1 set before every Python process", "a different host"],
+ "required_before_B1": "with the thread limit, the perception outputs on stored frames must equal the existing outputs (decisions and estimates); a difference is a technical failure and stops the run before B1",
+ "forbidden": ["any change of algorithm or plan", "fewer evaluation scenes to save cost", "a relaxed budget gate", "B2 after a failed B1", "re-evaluation or changed conditions after B2", "policy retraining, calibration, final Test", "more than US$4.00 additional spend"],
+ "retry_limit": "this one retry only",
+ "written_by": "the agent, recording the user's explicit approval (exact cap and plan hash stated by the user)"
+}

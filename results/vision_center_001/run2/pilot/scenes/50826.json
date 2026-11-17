@@ -1,0 +1,403 @@
+{
+  "scene": 50826,
+  "role": "vision_center_dev",
+  "arms": [
+    "C0",
+    "VISION_CENTER",
+    "CENTER_ORACLE"
+  ],
+  "initial_state": {
+    "t": 0,
+    "tcp": [
+      0.0022117868065834045,
+      0.018207192420959473,
+      0.1776035577058792
+    ],
+    "cubeA": [
+      0.04441387206315994,
+      -0.003033660352230072,
+      0.019999999552965164
+    ],
+    "cubeB": [
+      -0.021448634564876556,
+      -0.22337162494659424,
+      0.019999999552965164
+    ],
+    "tcp_to_cubeA": 0.16453289985656738,
+    "cubeA_to_cubeB_xy": 0.2299710512161255,
+    "is_cubeA_grasped": false,
+    "is_cubeA_on_cubeB": false,
+    "is_cubeA_static": true,
+    "success": false,
+    "action": null,
+    "tcp_q": [
+      0.00232404051348567,
+      0.6906028985977173,
+      0.7231891751289368,
+      0.007723149843513966
+    ],
+    "finger_qpos": [
+      0.03999999910593033,
+      0.03999999910593033
+    ],
+    "cubeA_q": [
+      0.04165833815932274,
+      0.0,
+      0.0,
+      0.9991319179534912
+    ],
+    "cubeB_q": [
+      0.2857983708381653,
+      -0.0,
+      -0.0,
+      -0.9582897424697876
+    ],
+    "cubeA_v": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "cubeA_w": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "cubeB_v": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "cubeB_w": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "f_A_B": 0.0,
+    "f_A_left": 0.0,
+    "f_A_right": 0.0,
+    "f_A_table": 0.0,
+    "f_B_left": 0.0,
+    "f_B_right": 0.0
+  },
+  "trunk": {
+    "policy_noise_repeat_id": 0,
+    "success": 1,
+    "steps": 87,
+    "reason": "success",
+    "policy_calls": 11,
+    "inference_calls": [
+      {
+        "t": 0,
+        "policy_noise_repeat_id": 0,
+        "seed": 289555911,
+        "chunk_sha256_16": "6dcd8b105832c9cb"
+      },
+      {
+        "t": 8,
+        "policy_noise_repeat_id": 0,
+        "seed": 1362266690,
+        "chunk_sha256_16": "2645e1d570448e7b"
+      },
+      {
+        "t": 16,
+        "policy_noise_repeat_id": 0,
+        "seed": 177657743,
+        "chunk_sha256_16": "535ee14d053092aa"
+      },
+      {
+        "t": 24,
+        "policy_noise_repeat_id": 0,
+        "seed": 999090939,
+        "chunk_sha256_16": "490b97520021f696"
+      },
+      {
+        "t": 32,
+        "policy_noise_repeat_id": 0,
+        "seed": 1655551688,
+        "chunk_sha256_16": "b06f5234240ddd78"
+      },
+      {
+        "t": 40,
+        "policy_noise_repeat_id": 0,
+        "seed": 1649469840,
+        "chunk_sha256_16": "6ff0ed161373fd88"
+      },
+      {
+        "t": 48,
+        "policy_noise_repeat_id": 0,
+        "seed": 933118938,
+        "chunk_sha256_16": "1d45c1cffbe11d30"
+      },
+      {
+        "t": 56,
+        "policy_noise_repeat_id": 0,
+        "seed": 513845003,
+        "chunk_sha256_16": "b37602c748ba0d70"
+      },
+      {
+        "t": 64,
+        "policy_noise_repeat_id": 0,
+        "seed": 1659061516,
+        "chunk_sha256_16": "ff148d3c0bccbff7"
+      },
+      {
+        "t": 72,
+        "policy_noise_repeat_id": 0,
+        "seed": 244012838,
+        "chunk_sha256_16": "76501060a2ab15bf"
+      },
+      {
+        "t": 80,
+        "policy_noise_repeat_id": 0,
+        "seed": 1401564462,
+        "chunk_sha256_16": "251065077d6bcf8d"
+      }
+    ]
+  },
+  "triggered": true,
+  "trigger": {
+    "step": 85,
+    "pending_gripper_command": 1.0,
+    "close_run": 48,
+    "finger_width_m": 0.037753377109766006,
+    "fires": true,
+    "queue_len": 3,
+    "remaining_budget": 115,
+    "held_gripper_command": -1.0,
+    "gt_for_diagnosis_only": {
+      "t": 85,
+      "grasped": true,
+      "offset_xy_m": 0.003348270645600084,
+      "height_gap_m": 0.006157274395227431,
+      "cubeA": [
+        -0.021668637171387672,
+        -0.2267131358385086,
+        0.06615719199180603
+      ],
+      "cubeB": [
+        -0.021447716280817986,
+        -0.22337216138839722,
+        0.019999917596578598
+      ],
+      "tcp": [
+        -0.021929273381829262,
+        -0.2269495129585266,
+        0.06417706608772278
+      ],
+      "cubeA_lift_m": 0.046157192438840866,
+      "false_trigger": false
+    }
+  },
+  "cells": [
+    {
+      "arm": "C0",
+      "no_trigger": false,
+      "y": 1,
+      "steps": 87,
+      "reason": "success",
+      "acted": false,
+      "intervention": null,
+      "intervention_step": null,
+      "control": null,
+      "control_steps": 0,
+      "ended_during_control": false,
+      "oracle_reads": 0,
+      "first_inference_step": null,
+      "reproduces_trunk": {
+        "action_max_abs": 0.0,
+        "final_state_max_abs": 0.0,
+        "outcome_equal": true,
+        "match": true
+      },
+      "gt_effect_of_control": null,
+      "gt_release_after_trigger": {
+        "found": true,
+        "release_step": 86,
+        "offset_xy_m": 0.003348270645600084,
+        "height_gap_m": 0.006157274395227431
+      },
+      "gt_reading_error": null,
+      "wall_seconds": 0.37726991006638855
+    },
+    {
+      "arm": "VISION_CENTER",
+      "no_trigger": false,
+      "y": 1,
+      "steps": 87,
+      "reason": "success",
+      "acted": false,
+      "intervention": null,
+      "intervention_step": null,
+      "control": {
+        "mode": "VISION_CENTER",
+        "decision": "ALIGNED",
+        "acted": false,
+        "trigger_step": 85,
+        "readings": [
+          {
+            "t": 85,
+            "target_fit": {
+              "xy": [
+                -0.021298264698159805,
+                -0.22366857716164032
+              ],
+              "yaw": 0.5759586531581286,
+              "score": 0.9652173913043478,
+              "margin": 0.32945580190037427,
+              "pixels": 115,
+              "valid": true
+            },
+            "hold_fit": {
+              "h": [
+                0.0005,
+                0.0005,
+                -0.002
+              ],
+              "yaw": 0.034906585039886626,
+              "iou": 0.9736334405144694,
+              "outline": 0.9852173913043478,
+              "margin": 1.0,
+              "pixels": 1526,
+              "valid": true
+            },
+            "target_fresh": true,
+            "target_xy": [
+              -0.021298264698159805,
+              -0.22366857716164032
+            ],
+            "held_xyz": [
+              -0.021444273024283245,
+              -0.22645295214260397,
+              0.06618161140862315
+            ],
+            "offset_xy": [
+              0.0001460083261234403,
+              0.0027843749809636498
+            ],
+            "offset_norm_m": 0.002788200578493896
+          }
+        ],
+        "steps_used": 0,
+        "end_reason": null,
+        "constants": {
+          "act_min_m": 0.015,
+          "residual_tol_m": 0.01,
+          "carry_z_min_m": 0.058,
+          "steps_left_min": 20,
+          "target_jump_max_m": 0.005
+        }
+      },
+      "control_steps": 0,
+      "ended_during_control": false,
+      "oracle_reads": 0,
+      "first_inference_step": null,
+      "reproduces_trunk": {
+        "action_max_abs": 0.0,
+        "final_state_max_abs": 0.0,
+        "outcome_equal": true,
+        "match": true
+      },
+      "gt_effect_of_control": null,
+      "gt_release_after_trigger": {
+        "found": true,
+        "release_step": 86,
+        "offset_xy_m": 0.003348270645600084,
+        "height_gap_m": 0.006157274395227431
+      },
+      "gt_reading_error": {
+        "true_offset_m": 0.003348270645600084,
+        "estimated_offset_m": 0.002788200578493896,
+        "offset_error_m": 0.0005616180742884423,
+        "target_error_m": 0.00033196097087811614,
+        "unnecessary_act": false,
+        "missed_large_offset": false
+      },
+      "wall_seconds": 0.6462182969553396
+    },
+    {
+      "arm": "CENTER_ORACLE",
+      "no_trigger": false,
+      "y": 1,
+      "steps": 90,
+      "reason": "success",
+      "acted": true,
+      "intervention": "center_oracle_xy",
+      "intervention_step": 85,
+      "control": {
+        "mode": "CENTER_ORACLE",
+        "start_tcp": [
+          -0.021929273381829262,
+          -0.2269495129585266,
+          0.06417706608772278
+        ],
+        "final_tcp": [
+          -0.021929273381829262,
+          -0.2269495129585266,
+          0.06417706608772278
+        ],
+        "offset_before_m": [
+          0.0002209208905696869,
+          0.003340974450111389
+        ],
+        "offset_before_norm_m": 0.003348270645600084,
+        "offset_after_m": [
+          0.0002209208905696869,
+          0.003340974450111389
+        ],
+        "offset_after_norm_m": 0.003348270645600084,
+        "steps_used": 0,
+        "end_reason": "within_tolerance",
+        "commanded_path_m": 0.0,
+        "tcp_xy_displacement_m": 0.0,
+        "tcp_dz_m": 0.0,
+        "gripper_command": -1.0,
+        "steps": [],
+        "bounds": {
+          "residual_tol_m": 0.01,
+          "step_cmd_m": 0.005,
+          "target_cap_m": 0.03,
+          "max_steps": 12
+        },
+        "reached": true
+      },
+      "control_steps": 0,
+      "ended_during_control": false,
+      "oracle_reads": 3,
+      "first_inference_step": 85,
+      "reproduces_trunk": null,
+      "gt_effect_of_control": {
+        "offset_xy_before_m": 0.003348270645600084,
+        "offset_xy_after_m": 0.003348270645600084,
+        "cubeA_xy_displacement_m": 0.0,
+        "cubeA_dz_m": 0.0,
+        "cubeB_xy_displacement_m": 0.0,
+        "tcp_xy_displacement_m": 0.0,
+        "tcp_dz_m": 0.0,
+        "grasped_before": true,
+        "grasped_after": true
+      },
+      "gt_release_after_trigger": {
+        "found": true,
+        "release_step": 89,
+        "offset_xy_m": 0.003061898498935676,
+        "height_gap_m": 0.006627312898635863
+      },
+      "gt_reading_error": null,
+      "wall_seconds": 0.5814204220660031
+    }
+  ],
+  "counts": {
+    "continuations": 3,
+    "restores": 3,
+    "env_steps": 351,
+    "readings": 1,
+    "reading_seconds": 0.26802107610274106
+  },
+  "oracle_reads": 3,
+  "wall_seconds": 4.223529648035765,
+  "completed": true,
+  "trace": "traces/trace_50826.json.gz",
+  "trace_sha256": "ef13c6c4d2c8353e16040d9e4f164c190fe1e08f5fd0d441206915ad9f436198",
+  "frames": "frames/hand_50826.npz",
+  "frames_sha256": "5d7373059926a3135c41fca76c1ed2d29a47230aa39ba19f27dde2486a705c0b"
+}
