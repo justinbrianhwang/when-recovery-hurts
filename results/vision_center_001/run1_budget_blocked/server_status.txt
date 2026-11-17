@@ -1,0 +1,35 @@
+install start=2026-11-17T15:13:02Z
+install_sys exit=0 end=2026-11-17T15:13:46Z
+bootstrap exit=0 end=2026-11-17T15:38:44Z
+PHASE_EXIT install 0
+vc_doctor cmd=python -m hci doctor --out runs/vision_center_001/doctor
+vc_doctor start=2026-11-17T15:38:44Z
+vc_doctor exit=0 end=2026-11-17T15:38:52Z
+vc_versions cmd=python -c import torch,torchvision;print(torch.__version__,torchvision.__version__,torch.cuda.get_device_name(0))
+vc_versions start=2026-11-17T15:38:52Z
+vc_versions exit=0 end=2026-11-17T15:38:56Z
+vc_pytest cmd=python -m pytest -q
+vc_pytest start=2026-11-17T15:38:56Z
+vc_pytest exit=0 end=2026-11-17T15:42:03Z
+vc_dry cmd=python scripts/32_vision_center.py dry-run --plan runs/vision_center_001/plan.json --run runs/vision_center_001 --out runs/vision_center_001/dry_run_server.json
+vc_dry start=2026-11-17T15:42:03Z
+vc_dry exit=0 end=2026-11-17T15:42:06Z
+ENV_DONE
+PHASE_EXIT env 0
+vc_scenes cmd=python scripts/32_vision_center.py scenes --plan runs/vision_center_001/plan.json --run runs/vision_center_001
+vc_scenes start=2026-11-17T15:42:06Z
+vc_scenes exit=0 end=2026-11-17T15:45:14Z
+SCENES_DONE
+PHASE_EXIT scenes 0
+vc_audit cmd=python scripts/32_vision_center.py audit --plan runs/vision_center_001/plan.json --run runs/vision_center_001
+vc_audit start=2026-11-17T15:45:14Z
+vc_audit exit=0 end=2026-11-17T15:47:10Z
+AUDIT_DONE
+PHASE_EXIT audit 0
+shadow SPENT_USD=0.4481 USD_PER_HOUR=0.4645
+vc_budget_shadow cmd=python scripts/32_vision_center.py budget --stage shadow --plan runs/vision_center_001/plan.json --run runs/vision_center_001 --usd-per-hour 0.4645 --spent-usd 0.4481
+vc_budget_shadow start=2026-11-17T15:47:10Z
+vc_budget_shadow exit=2 end=2026-11-17T15:47:12Z
+BUDGET_BLOCKED: shadow pass not started
+PHASE_EXIT shadow 1
+PHASE_SKIPPED pilot (an earlier phase did not pass)

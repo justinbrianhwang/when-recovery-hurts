@@ -1,0 +1,52 @@
+{
+ "shadow": {
+  "projected_remaining_hours": 10.156505403425584,
+  "projected_total_usd": 5.165796759891184,
+  "cap_usd": 3.0,
+  "fits_cap": false,
+  "inputs": {
+   "seconds_per_env_step": 0.0363415148618009,
+   "seconds_per_reading": 9.342212991711373,
+   "usd_per_hour": 0.4645,
+   "spent_usd": 0.4481,
+   "scenes": 200,
+   "arms": 2,
+   "steps_per_scene_bound": 600,
+   "readings_per_scene_bound": 13,
+   "fixed_seconds": 600,
+   "reserve_usd": 0.0,
+   "margin": 1.25
+  },
+  "rule": "if the projection exceeds the cap the stage does not start; scenes, arms and bounds are not reduced"
+ },
+ "pilot_after_it": {
+  "projected_remaining_hours": 5.434790999364186,
+  "projected_total_usd": 3.1725604192046646,
+  "cap_usd": 3.0,
+  "fits_cap": false,
+  "inputs": {
+   "seconds_per_env_step": 0.0363415148618009,
+   "seconds_per_reading": 9.342212991711373,
+   "usd_per_hour": 0.4645,
+   "spent_usd": 0.4481,
+   "scenes": 100,
+   "arms": 3,
+   "steps_per_scene_bound": 800,
+   "readings_per_scene_bound": 13,
+   "fixed_seconds": 600,
+   "reserve_usd": 0.2,
+   "margin": 1.25
+  },
+  "rule": "if the projection exceeds the cap the stage does not start; scenes, arms and bounds are not reduced"
+ },
+ "projected_total_usd": 7.890257179095848,
+ "cap_usd": 3.0,
+ "fits_cap": false,
+ "inputs": {
+  "usd_per_hour": 0.4645,
+  "spent_usd": 0.4481
+ },
+ "stage": "shadow",
+ "status": "BUDGET_BLOCKED",
+ "plan_sha256": "72b750057e31da493983f123a3cafd19cceed979d443f3daacfe76595da47e75"
+}

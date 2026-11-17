@@ -1,0 +1,18 @@
+{
+ "approved_by": "user",
+ "paid_compute_authorized": true,
+ "cap_usd": 3.00,
+ "plan_sha256": "72b750057e31da493983f123a3cafd19cceed979d443f3daacfe76595da47e75",
+ "approval_text": "2026-11-17, user message: 'Vision-CENTER Phase B 실험 실행을 승인합니다.' Work ID vision_center_001; Plan SHA256 72b750057e31da493983f123a3cafd19cceed979d443f3daacfe76595da47e75; 총예산 상한 US$3.00; base policy Vision-V1 seed 1, 80k EMA; B1: used scenes 50600-50799 (C0, VISION_CENTER); B2: new scenes 50800-50899 (C0, VISION_CENTER, CENTER_ORACLE), only if every B1 criterion passes.",
+ "constraints_by_user": [
+  "No retraining of the diffusion policy.",
+  "No change of the RGB estimator or of the abstain rules.",
+  "No new neural network and no temporal tracker.",
+  "No claim of improvement from re-using earlier evaluation seeds.",
+  "No calibration and no final Test.",
+  "No spend above US$3.00 and no top-up.",
+  "One execution only; if B1 or B2 misses a fixed criterion, thresholds are not changed and the cause is reported; no re-run on the same scenes with modified thresholds or conditions."
+ ],
+ "scope": "vision_center_001 only: hash checks, server environment and simulator checks, placement check, technical audit on used scenes, budget gates, stage B1 on the 200 used scenes, stage B2 on the 100 new scenes only after SHADOW_PASS, verification, hash-checked backup, deletion of the instance created for this work, execution report on Drive.",
+ "written_by": "the agent, recording the user's explicit approval (exact cap and plan hash stated by the user)"
+}
