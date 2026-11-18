@@ -1,0 +1,330 @@
+{
+  "role": "vision_center_v2_dev",
+  "unit": "scene",
+  "scenes": 200,
+  "denominators": {
+    "all": 200,
+    "no_trigger": 3,
+    "triggered": 197,
+    "c0_success": 165,
+    "c0_failure": 35
+  },
+  "success": {
+    "C0": {
+      "k": 165,
+      "n": 200,
+      "wilson95": [
+        0.7663556885175099,
+        0.8713948493372666
+      ]
+    },
+    "VISION_CENTER_V1": {
+      "k": 173,
+      "n": 200,
+      "wilson95": [
+        0.8107086162924745,
+        0.9055342954521209
+      ]
+    },
+    "VISION_CENTER_V2": {
+      "k": 184,
+      "n": 200,
+      "wilson95": [
+        0.874010511732856,
+        0.9501594141102401
+      ]
+    },
+    "CENTER_ORACLE": {
+      "k": 190,
+      "n": 200,
+      "wilson95": [
+        0.9104218518612239,
+        0.972617354399236
+      ]
+    }
+  },
+  "primary_V2_vs_C0": {
+    "n": 200,
+    "both_succeed": 165,
+    "rescue": 19,
+    "harm": 0,
+    "both_fail": 16,
+    "net": 19,
+    "reference_success": 165,
+    "arm_success": 184,
+    "harm_given_reference_success": 0.0,
+    "reference_success_wilson95": [
+      0.7663556885175099,
+      0.8713948493372666
+    ],
+    "arm_success_wilson95": [
+      0.874010511732856,
+      0.9501594141102401
+    ],
+    "harm_given_reference_success_wilson95": [
+      0.0,
+      0.022751869401778084
+    ],
+    "rescue_scenes": [
+      50922,
+      50936,
+      50947,
+      50959,
+      50969,
+      50971,
+      50983,
+      50986,
+      50989,
+      50992,
+      50993,
+      50995,
+      50997,
+      51012,
+      51029,
+      51034,
+      51036,
+      51039,
+      51086
+    ],
+    "harm_scenes": []
+  },
+  "baseline_V1_vs_C0": {
+    "n": 200,
+    "both_succeed": 165,
+    "rescue": 8,
+    "harm": 0,
+    "both_fail": 27,
+    "net": 8,
+    "reference_success": 165,
+    "arm_success": 173,
+    "harm_given_reference_success": 0.0,
+    "reference_success_wilson95": [
+      0.7663556885175099,
+      0.8713948493372666
+    ],
+    "arm_success_wilson95": [
+      0.8107086162924745,
+      0.9055342954521209
+    ],
+    "harm_given_reference_success_wilson95": [
+      0.0,
+      0.022751869401778084
+    ],
+    "rescue_scenes": [
+      50922,
+      50983,
+      50989,
+      50992,
+      50995,
+      51012,
+      51029,
+      51039
+    ],
+    "harm_scenes": []
+  },
+  "V2_vs_V1": {
+    "n": 200,
+    "both_succeed": 173,
+    "rescue": 11,
+    "harm": 0,
+    "both_fail": 16,
+    "net": 11,
+    "reference_success": 173,
+    "arm_success": 184,
+    "harm_given_reference_success": 0.0,
+    "reference_success_wilson95": [
+      0.8107086162924745,
+      0.9055342954521209
+    ],
+    "arm_success_wilson95": [
+      0.874010511732856,
+      0.9501594141102401
+    ],
+    "harm_given_reference_success_wilson95": [
+      0.0,
+      0.02172261440451652
+    ],
+    "rescue_scenes": [
+      50936,
+      50947,
+      50959,
+      50969,
+      50971,
+      50986,
+      50993,
+      50997,
+      51034,
+      51036,
+      51086
+    ],
+    "harm_scenes": []
+  },
+  "reference_CENTER_ORACLE_vs_C0": {
+    "n": 200,
+    "both_succeed": 165,
+    "rescue": 25,
+    "harm": 0,
+    "both_fail": 10,
+    "net": 25,
+    "reference_success": 165,
+    "arm_success": 190,
+    "harm_given_reference_success": 0.0,
+    "reference_success_wilson95": [
+      0.7663556885175099,
+      0.8713948493372666
+    ],
+    "arm_success_wilson95": [
+      0.9104218518612239,
+      0.972617354399236
+    ],
+    "harm_given_reference_success_wilson95": [
+      0.0,
+      0.022751869401778084
+    ],
+    "rescue_scenes": [
+      50922,
+      50926,
+      50936,
+      50947,
+      50959,
+      50969,
+      50971,
+      50983,
+      50986,
+      50989,
+      50992,
+      50993,
+      50995,
+      50997,
+      50998,
+      51003,
+      51012,
+      51029,
+      51034,
+      51036,
+      51039,
+      51047,
+      51049,
+      51067,
+      51086
+    ],
+    "harm_scenes": []
+  },
+  "oracle_rescue_recovery": {
+    "v2": 19,
+    "v1": 8,
+    "oracle": 25,
+    "v2_share": 0.76
+  },
+  "v2": {
+    "triggered": 197,
+    "decisions": {
+      "ACT": 34,
+      "NO_HOLD_ESTIMATE": 7,
+      "NO_TARGET_ESTIMATE": 2,
+      "MEMORY_CONTRADICTED": 0,
+      "LOW_CARRY": 12,
+      "SIDE_CONTACT_RISK": 1,
+      "TOO_FEW_STEPS": 0,
+      "ALIGNED": 130,
+      "ALIGNED_WITHIN_UNCERTAINTY": 11
+    },
+    "acts": 34,
+    "acts_using_memory": 12,
+    "acts_by_source": {
+      "target_frame/hold_frame": 22,
+      "target_memory_hand/hold_frame": 5,
+      "target_memory_base/hold_frame": 6,
+      "target_frame/hold_memory": 1,
+      "target_memory_hand/hold_memory": 0,
+      "target_memory_base/hold_memory": 0
+    },
+    "abstain_rate_of_triggered": 0.8274111675126904,
+    "memory_errors": 1,
+    "memory_error_scenes": [
+      50959
+    ],
+    "unnecessary_acts": 0,
+    "missed_large_offsets": 13,
+    "offset_error_at_act_m": {
+      "n": 34,
+      "median": 0.0010107000252116854,
+      "max": 0.005081761119956923
+    },
+    "target_pushed_more_than_1mm": 0,
+    "end_reasons": {
+      "step_budget": 6,
+      "within_tolerance": 28
+    }
+  },
+  "v1": {
+    "decisions": {
+      "ACT": 23,
+      "NO_TARGET_ESTIMATE": 86,
+      "NO_HOLD_ESTIMATE": 10,
+      "LOW_CARRY": 3,
+      "TOO_FEW_STEPS": 0,
+      "ALIGNED": 75
+    },
+    "abstain_rate_of_triggered": 0.883248730964467
+  },
+  "followup_gate": {
+    "criteria": {
+      "rescue_at_least": true,
+      "net_at_least": true,
+      "harm_at_most": true,
+      "memory_errors_at_most": true,
+      "oracle_recovery_at_least": true,
+      "rescues_above_v1_by_at_least": true
+    },
+    "label": "V2_GATE_PASS",
+    "thresholds": {
+      "rescue_min": 6,
+      "net_min": 5,
+      "harm_max": 2,
+      "memory_errors_max": 1,
+      "oracle_recovery_min": 0.5,
+      "v2_rescue_minus_v1_rescue_min": 2
+    },
+    "scope": "engineering gate, not a significance test"
+  },
+  "scope": [
+    "One task, one policy, one noise repeat, 200 development scenes, simulator images with flat colours and exact camera parameters. No significance claim.",
+    "Both vision arms use RGB and robot state only; ground truth appears only in after-the-fact columns.",
+    "CENTER_ORACLE is the non-deployable reference, unchanged."
+  ],
+  "set": "vision_center_v2_pilot",
+  "seeds": [
+    50900,
+    51099
+  ],
+  "policy": "artifacts/policies/stack_v1_s1_d500_clean_resnet18_i080000",
+  "weights_sha256": "a37be25603d6c7b7d5cfa1872e6c1134c436f78de02b745c481c88d5d0f69629",
+  "plan_sha256": "1b4ea3bb65bd4cfdffc13a610fee010d568a5837e632701d4b0d265e6ba66e86",
+  "rules_sha256": {
+    "src/hci/vision_center.py": "cc4a743976eb33da0824c1954a0ac19d075fc87b1369e45139812c09dce2797d",
+    "src/hci/vision_center_v2.py": "ab548ccc3825f9e25a7f979d4348563c34c1926c078e0acbd51f0101fd174fbc"
+  },
+  "oracle_reads_outside_center": 0,
+  "wall_seconds": 2551.1766903769458,
+  "runtime": {
+    "python": "3.10.12 (main, Aug 31 2026, 10:18:17) [GCC 11.4.0]",
+    "platform": "Linux-6.8.0-149-generic-x86_64-with-glibc2.35",
+    "packages": {
+      "torch": "2.6.0+cu124",
+      "torchvision": "0.21.0+cu124",
+      "mani_skill": "3.0.1",
+      "sapien": "3.0.3",
+      "gymnasium": "0.29.1",
+      "diffusers": "0.30.3",
+      "numpy": "1.26.4",
+      "scipy": "1.13.1",
+      "PyYAML": "6.0.2"
+    },
+    "nvidia_smi": {
+      "returncode": 0,
+      "stdout": "name, driver_version, memory.total [MiB]\nNVIDIA GeForce RTX 4090, 595.99.02, 24564 MiB\n",
+      "stderr": ""
+    }
+  }
+}

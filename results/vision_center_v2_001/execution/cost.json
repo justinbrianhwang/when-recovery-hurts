@@ -1,0 +1,23 @@
+{
+ "work_id": "vision_center_v2_001",
+ "cap_usd": 5.00,
+ "plan_sha256": "1b4ea3bb65bd4cfdffc13a610fee010d568a5837e632701d4b0d265e6ba66e86",
+ "credit_before_usd": 9.771421703220355,
+ "credit_after_usd": 8.798728733630327,
+ "spent_usd": 0.9727,
+ "method": "Vast credit before minus after. Read about 25 and 40 minutes after the last deletion; both readings are equal (8.7987).",
+ "instances": [
+  {"id": 61266026, "host": "Japan, machine 53361, RTX 4090, Intel Core i5-14500, driver 535.288.01, US$0.3311/h", "created_utc": "2026-11-18T14:35:50Z", "deleted_utc": "2026-11-18T14:43:10Z",
+   "outcome": "unusable: CUDA initialisation failed (error 804, the host driver 535 does not support the CUDA 12.4 image); the environment check stopped the chain before any scene. Logs in host1_unusable/. No simulator step, no scene."},
+  {"id": 61267080, "host": "France, machine 146456, RTX 4090, AMD Ryzen 7 7800X3D (16 logical CPUs), driver 595.99.02, US$0.4604/h", "created_utc": "2026-11-18T14:43:38Z", "deleted_utc": "2026-11-18T16:42:50Z",
+   "checks_at_first_login": {"nvidia_graphics_libraries": "present", "load_average_1min": 0.39},
+   "outcome": "complete: install 4 min, environment checks and tests, placement check, audit, stage B1, stage B2, pack; deleted after the hash-checked backup"}
+ ],
+ "budget_gate": {"shadow_projection_usd_including_pilot": 2.390, "after_five_shadow_scenes_usd": 1.723, "pilot_projection_usd": 1.699, "after_five_pilot_scenes_usd": 1.112, "formula": "unchanged",
+                 "spent_input": "hourly price of the second host x time since the FIRST instance was created + US$0.05 (so the unusable first host is counted, at the higher price): 0.1671 before B1, 0.6206 before B2",
+                 "cross_check": "Vast credit read during B1: 0.0998 spent when the gate input was 0.1671; 0.6329 spent at about one quarter of B2 when the gate input at its start was 0.6206"},
+ "measured": {"seconds_per_env_step_audit": 0.01301, "seconds_per_reading_audit": 0.2157, "seconds_per_memory_step_audit": 0.0292, "memory_step_assumed_in_the_plan": 0.13, "shadow_wall_seconds": 3540.9, "pilot_wall_seconds": 2551.2},
+ "thread_limit": "OMP_NUM_THREADS, OPENBLAS_NUM_THREADS, MKL_NUM_THREADS, NUMEXPR_NUM_THREADS, BLIS_NUM_THREADS = 1 (logged in server_status.txt)",
+ "backup": {"archive": "vision_center_v2_out.tgz, 3,678,535,928 bytes, sha256 b4611a2fe0dd18f68454fb068e9afd61d191cb1d168846475f6fbffd5dddb6b4 (equal on the server and locally)", "files": "1,538 files, every per-file sha256 equal after local extraction (archive_file_sha256.txt)"},
+ "instances_left": 0
+}

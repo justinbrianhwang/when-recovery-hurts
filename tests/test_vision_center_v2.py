@@ -252,7 +252,8 @@ def test_every_server_command_refuses_without_an_explicit_authorization(X33, tmp
 
 
 def test_driver_constants_and_file_list(X33):
-    assert X33.shadow_seeds() == list(range(50600, 50900)) and not set(X33.shadow_seeds()) & set(range(50900, 51100)) and not Path(X33.LEDGER).exists()
+    assert X33.shadow_seeds() == list(range(50600, 50900)) and not set(X33.shadow_seeds()) & set(range(50900, 51100))
+    if Path(X33.LEDGER).exists(): assert json.loads(Path(X33.LEDGER).read_text(encoding='utf-8'))['plan_sha256'] == '1b4ea3bb65bd4cfdffc13a610fee010d568a5837e632701d4b0d265e6ba66e86'      # the one executed pass; before it, no ledger existed
     assert all(Path(f).exists() for f in X33.CODE) and {'src/hci/vision_center.py', 'src/hci/vision_center_v2.py'} <= set(X33.CODE) and X33.MANIFEST in X33.SERVER_READS
     src = Path('scripts/33_vision_center_v2.py').read_text(encoding='utf-8'); assert 'authorization.json' in src and "write_json(run / 'authorization" not in src
     assert X33.ANALYSIS['stage_B1_shadow']['pass_criteria'] == V2.SHADOW_PASS and X33.ANALYSIS['stage_B2_pilot']['gate']['thresholds'] == V2.GATE and X33.SEMANTICS['VISION_CENTER_V2']['decision'] == V2.DECISION

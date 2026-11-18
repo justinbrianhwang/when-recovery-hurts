@@ -1,0 +1,206 @@
+{
+  "scenes": 300,
+  "triggered": 287,
+  "decisions": {
+    "ACT": 54,
+    "NO_HOLD_ESTIMATE": 15,
+    "NO_TARGET_ESTIMATE": 1,
+    "MEMORY_CONTRADICTED": 0,
+    "LOW_CARRY": 12,
+    "SIDE_CONTACT_RISK": 4,
+    "TOO_FEW_STEPS": 1,
+    "ALIGNED": 188,
+    "ALIGNED_WITHIN_UNCERTAINTY": 12
+  },
+  "acts": 54,
+  "acts_using_memory": 15,
+  "acts_by_source": {
+    "target_frame/hold_frame": 39,
+    "target_memory_hand/hold_frame": 9,
+    "target_memory_base/hold_frame": 6,
+    "target_frame/hold_memory": 0,
+    "target_memory_hand/hold_memory": 0,
+    "target_memory_base/hold_memory": 0
+  },
+  "abstain_rate_of_triggered": 0.8118466898954704,
+  "memory_errors": 2,
+  "memory_error_scenes": [
+    50623,
+    50702
+  ],
+  "unnecessary_acts": 0,
+  "missed_large_offsets": 13,
+  "offset_error_at_act_m": {
+    "n": 54,
+    "median": 0.001085060351628973,
+    "max": 0.00541344606886957
+  },
+  "target_pushed_more_than_1mm": 0,
+  "end_reasons": {
+    "step_budget": 10,
+    "within_tolerance": 44
+  },
+  "paired_V2_vs_C0": {
+    "n": 300,
+    "both_succeed": 253,
+    "rescue": 22,
+    "harm": 0,
+    "both_fail": 25,
+    "net": 22,
+    "reference_success": 253,
+    "arm_success": 275,
+    "harm_given_reference_success": 0.0,
+    "reference_success_wilson95": [
+      0.7978919765479306,
+      0.8800931832112144
+    ],
+    "arm_success_wilson95": [
+      0.8798783980359391,
+      0.9429191259436057
+    ],
+    "harm_given_reference_success_wilson95": [
+      0.0,
+      0.014956537150709458
+    ],
+    "rescue_scenes": [
+      50632,
+      50633,
+      50640,
+      50661,
+      50664,
+      50671,
+      50683,
+      50685,
+      50702,
+      50703,
+      50706,
+      50761,
+      50770,
+      50775,
+      50786,
+      50798,
+      50813,
+      50817,
+      50819,
+      50846,
+      50872,
+      50886
+    ],
+    "harm_scenes": []
+  },
+  "paired_V1_vs_C0": {
+    "n": 300,
+    "both_succeed": 253,
+    "rescue": 12,
+    "harm": 0,
+    "both_fail": 35,
+    "net": 12,
+    "reference_success": 253,
+    "arm_success": 265,
+    "harm_given_reference_success": 0.0,
+    "reference_success_wilson95": [
+      0.7978919765479306,
+      0.8800931832112144
+    ],
+    "arm_success_wilson95": [
+      0.8420668566758442,
+      0.9149068653853369
+    ],
+    "harm_given_reference_success_wilson95": [
+      0.0,
+      0.014956537150709458
+    ],
+    "rescue_scenes": [
+      50632,
+      50640,
+      50664,
+      50671,
+      50683,
+      50685,
+      50706,
+      50761,
+      50786,
+      50798,
+      50846,
+      50886
+    ],
+    "harm_scenes": []
+  },
+  "paired_V2_vs_V1": {
+    "n": 300,
+    "both_succeed": 265,
+    "rescue": 10,
+    "harm": 0,
+    "both_fail": 25,
+    "net": 10,
+    "reference_success": 265,
+    "arm_success": 275,
+    "harm_given_reference_success": 0.0,
+    "reference_success_wilson95": [
+      0.8420668566758442,
+      0.9149068653853369
+    ],
+    "arm_success_wilson95": [
+      0.8798783980359391,
+      0.9429191259436057
+    ],
+    "harm_given_reference_success_wilson95": [
+      0.0,
+      0.014288937567684516
+    ],
+    "rescue_scenes": [
+      50633,
+      50661,
+      50702,
+      50703,
+      50770,
+      50775,
+      50813,
+      50817,
+      50819,
+      50872
+    ],
+    "harm_scenes": []
+  },
+  "criteria": {
+    "unnecessary_acts_at_most": true,
+    "harm_at_most": true,
+    "memory_errors_at_most": true,
+    "target_pushed_at_most": true,
+    "net_above_v1_by_at_least": true,
+    "memory_acts_at_least": true
+  },
+  "pass": true,
+  "thresholds": {
+    "v2_unnecessary_acts_max": 2,
+    "v2_harm_max": 2,
+    "v2_memory_errors_max": 2,
+    "v2_target_pushed_max": 1,
+    "v2_net_minus_v1_net_min": 3,
+    "v2_memory_acts_min": 5
+  },
+  "label": "V2_SHADOW_PASS",
+  "scope": "used development scenes on which v2 was designed; decides only whether the new scenes are run. A failure stops the work: no constant is tuned and re-tried under this plan",
+  "plan_sha256": "1b4ea3bb65bd4cfdffc13a610fee010d568a5837e632701d4b0d265e6ba66e86",
+  "wall_seconds": 3540.9406842089957,
+  "runtime": {
+    "python": "3.10.12 (main, Aug 31 2026, 10:18:17) [GCC 11.4.0]",
+    "platform": "Linux-6.8.0-149-generic-x86_64-with-glibc2.35",
+    "packages": {
+      "torch": "2.6.0+cu124",
+      "torchvision": "0.21.0+cu124",
+      "mani_skill": "3.0.1",
+      "sapien": "3.0.3",
+      "gymnasium": "0.29.1",
+      "diffusers": "0.30.3",
+      "numpy": "1.26.4",
+      "scipy": "1.13.1",
+      "PyYAML": "6.0.2"
+    },
+    "nvidia_smi": {
+      "returncode": 0,
+      "stdout": "name, driver_version, memory.total [MiB]\nNVIDIA GeForce RTX 4090, 595.99.02, 24564 MiB\n",
+      "stderr": ""
+    }
+  }
+}

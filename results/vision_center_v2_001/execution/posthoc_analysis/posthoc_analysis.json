@@ -1,0 +1,1420 @@
+{
+ "status": "post hoc, descriptive; ground truth is a label only; B1 scenes are used development data",
+ "B1_shadow_used_scenes": {
+  "scenes": 300,
+  "triggered": 287,
+  "success": {
+   "C0": 253,
+   "V1": 265,
+   "V2": 275
+  },
+  "paired": {
+   "V2_vs_C0": {
+    "both_succeed": 253,
+    "rescue": 22,
+    "harm": 0,
+    "both_fail": 25,
+    "net": 22,
+    "rescue_scenes": [
+     50632,
+     50633,
+     50640,
+     50661,
+     50664,
+     50671,
+     50683,
+     50685,
+     50702,
+     50703,
+     50706,
+     50761,
+     50770,
+     50775,
+     50786,
+     50798,
+     50813,
+     50817,
+     50819,
+     50846,
+     50872,
+     50886
+    ],
+    "harm_scenes": []
+   },
+   "V1_vs_C0": {
+    "both_succeed": 253,
+    "rescue": 12,
+    "harm": 0,
+    "both_fail": 35,
+    "net": 12,
+    "rescue_scenes": [
+     50632,
+     50640,
+     50664,
+     50671,
+     50683,
+     50685,
+     50706,
+     50761,
+     50786,
+     50798,
+     50846,
+     50886
+    ],
+    "harm_scenes": []
+   },
+   "V2_vs_V1": {
+    "both_succeed": 265,
+    "rescue": 10,
+    "harm": 0,
+    "both_fail": 25,
+    "net": 10,
+    "rescue_scenes": [
+     50633,
+     50661,
+     50702,
+     50703,
+     50770,
+     50775,
+     50813,
+     50817,
+     50819,
+     50872
+    ],
+    "harm_scenes": []
+   }
+  },
+  "v2_rescues_not_in_v1": [
+   50633,
+   50661,
+   50702,
+   50703,
+   50770,
+   50775,
+   50813,
+   50817,
+   50819,
+   50872
+  ],
+  "v1_rescues_not_in_v2": [],
+  "v2_acts_by_target_source": {
+   "current_frame": {
+    "acts": 39,
+    "success": 39,
+    "c0_failure": 12,
+    "rescue": 12,
+    "harm": 0,
+    "offset_error": {
+     "n": 39,
+     "median_mm": 1.01,
+     "p90_mm": 1.83,
+     "max_mm": 5.41
+    },
+    "target_error": {
+     "n": 39,
+     "median_mm": 0.27,
+     "p90_mm": 0.42,
+     "max_mm": 1.4
+    },
+    "offset_error_outside_bound": 1,
+    "offset_error_over_5mm": 1,
+    "memory_age_steps": {
+     "n": 0
+    },
+    "exposed": 0,
+    "scenes": [
+     50619,
+     50631,
+     50632,
+     50640,
+     50642,
+     50644,
+     50647,
+     50649,
+     50664,
+     50670,
+     50671,
+     50683,
+     50684,
+     50685,
+     50686,
+     50706,
+     50709,
+     50711,
+     50729,
+     50732,
+     50733,
+     50734,
+     50758,
+     50761,
+     50773,
+     50786,
+     50798,
+     50815,
+     50820,
+     50837,
+     50844,
+     50846,
+     50852,
+     50861,
+     50877,
+     50883,
+     50886,
+     50888,
+     50898
+    ]
+   },
+   "hand_memory_past_only": {
+    "acts": 8,
+    "success": 8,
+    "c0_failure": 5,
+    "rescue": 5,
+    "harm": 0,
+    "offset_error": {
+     "n": 8,
+     "median_mm": 1.27,
+     "p90_mm": 3.17,
+     "max_mm": 5.23
+    },
+    "target_error": {
+     "n": 8,
+     "median_mm": 0.26,
+     "p90_mm": 2.4,
+     "max_mm": 5.89
+    },
+    "offset_error_outside_bound": 0,
+    "offset_error_over_5mm": 1,
+    "memory_age_steps": {
+     "n": 8,
+     "median_mm": 8.5,
+     "p90_mm": 10.3,
+     "max_mm": 11.0
+    },
+    "exposed": 8,
+    "scenes": [
+     50652,
+     50668,
+     50702,
+     50703,
+     50778,
+     50813,
+     50817,
+     50872
+    ]
+   },
+   "hand_memory_last_seen_at_trigger": {
+    "acts": 1,
+    "success": 1,
+    "c0_failure": 1,
+    "rescue": 1,
+    "harm": 0,
+    "offset_error": {
+     "n": 1,
+     "median_mm": 0.63,
+     "p90_mm": 0.63,
+     "max_mm": 0.63
+    },
+    "target_error": {
+     "n": 1,
+     "median_mm": 0.4,
+     "p90_mm": 0.4,
+     "max_mm": 0.4
+    },
+    "offset_error_outside_bound": 0,
+    "offset_error_over_5mm": 0,
+    "memory_age_steps": {
+     "n": 1,
+     "median_mm": 0.0,
+     "p90_mm": 0.0,
+     "max_mm": 0.0
+    },
+    "exposed": 0,
+    "scenes": [
+     50661
+    ]
+   },
+   "base_memory_past_only": {
+    "acts": 6,
+    "success": 6,
+    "c0_failure": 4,
+    "rescue": 4,
+    "harm": 0,
+    "offset_error": {
+     "n": 6,
+     "median_mm": 2.13,
+     "p90_mm": 4.87,
+     "max_mm": 5.02
+    },
+    "target_error": {
+     "n": 6,
+     "median_mm": 1.8,
+     "p90_mm": 4.51,
+     "max_mm": 5.2
+    },
+    "offset_error_outside_bound": 0,
+    "offset_error_over_5mm": 1,
+    "memory_age_steps": {
+     "n": 6,
+     "median_mm": 39.5,
+     "p90_mm": 78.5,
+     "max_mm": 81.0
+    },
+    "exposed": 6,
+    "scenes": [
+     50615,
+     50623,
+     50633,
+     50770,
+     50775,
+     50819
+    ]
+   },
+   "base_memory_last_seen_at_trigger": {
+    "acts": 0,
+    "success": 0,
+    "c0_failure": 0,
+    "rescue": 0,
+    "harm": 0,
+    "offset_error": {
+     "n": 0
+    },
+    "target_error": {
+     "n": 0
+    },
+    "offset_error_outside_bound": 0,
+    "offset_error_over_5mm": 0,
+    "memory_age_steps": {
+     "n": 0
+    },
+    "exposed": 0,
+    "scenes": []
+   },
+   "note_memory_age_steps": "the memory_age_steps block is in steps, not mm (the helper divides and multiplies by 1000)"
+  },
+  "v2_acts_hold_from_memory": 0,
+  "remembered_target_all_estimates": {
+   "n": 111,
+   "target_error": {
+    "n": 111,
+    "median_mm": 0.39,
+    "p90_mm": 1.65,
+    "max_mm": 5.89
+   },
+   "target_error_outside_own_bound": [],
+   "offset_error_outside_bound": [],
+   "offset_error_over_5mm": [
+    50623,
+    50702,
+    50870
+   ],
+   "hand": {
+    "n": 93,
+    "median_mm": 0.34,
+    "p90_mm": 1.01,
+    "max_mm": 5.89
+   },
+   "base": {
+    "n": 18,
+    "median_mm": 1.43,
+    "p90_mm": 4.23,
+    "max_mm": 5.2
+   }
+  },
+  "current_frame_all_estimates": {
+   "n": 160,
+   "offset_error": {
+    "n": 160,
+    "median_mm": 0.87,
+    "p90_mm": 1.97,
+    "max_mm": 5.41
+   },
+   "offset_error_outside_bound": [
+    50744,
+    50846
+   ]
+  },
+  "v2_decisions": {
+   "ACT": {
+    "n": 54,
+    "c0_failure": 22,
+    "c0_failure_scenes": [
+     50632,
+     50633,
+     50640,
+     50661,
+     50664,
+     50671,
+     50683,
+     50685,
+     50702,
+     50703,
+     50706,
+     50761,
+     50770,
+     50775,
+     50786,
+     50798,
+     50813,
+     50817,
+     50819,
+     50846,
+     50872,
+     50886
+    ],
+    "true_offset_at_least_20mm": 24,
+    "v1_acted": 39
+   },
+   "ALIGNED": {
+    "n": 188,
+    "c0_failure": 0,
+    "c0_failure_scenes": [],
+    "true_offset_at_least_20mm": 0,
+    "v1_acted": 0
+   },
+   "ALIGNED_WITHIN_UNCERTAINTY": {
+    "n": 12,
+    "c0_failure": 2,
+    "c0_failure_scenes": [
+     50613,
+     50780
+    ],
+    "true_offset_at_least_20mm": 1,
+    "v1_acted": 0
+   },
+   "LOW_CARRY": {
+    "n": 12,
+    "c0_failure": 4,
+    "c0_failure_scenes": [
+     50611,
+     50771,
+     50781,
+     50889
+    ],
+    "true_offset_at_least_20mm": 4,
+    "v1_acted": 0
+   },
+   "NO_HOLD_ESTIMATE": {
+    "n": 15,
+    "c0_failure": 2,
+    "c0_failure_scenes": [
+     50629,
+     50792
+    ],
+    "true_offset_at_least_20mm": 3,
+    "v1_acted": 0
+   },
+   "NO_TARGET_ESTIMATE": {
+    "n": 1,
+    "c0_failure": 0,
+    "c0_failure_scenes": [],
+    "true_offset_at_least_20mm": 1,
+    "v1_acted": 0
+   },
+   "SIDE_CONTACT_RISK": {
+    "n": 4,
+    "c0_failure": 4,
+    "c0_failure_scenes": [
+     50648,
+     50753,
+     50853,
+     50892
+    ],
+    "true_offset_at_least_20mm": 4,
+    "v1_acted": 1
+   },
+   "TOO_FEW_STEPS": {
+    "n": 1,
+    "c0_failure": 0,
+    "c0_failure_scenes": [],
+    "true_offset_at_least_20mm": 0,
+    "v1_acted": 0
+   }
+  },
+  "v1_decisions": {
+   "ACT": 40,
+   "ALIGNED": 113,
+   "LOW_CARRY": 5,
+   "NO_HOLD_ESTIMATE": 16,
+   "NO_TARGET_ESTIMATE": 112,
+   "TOO_FEW_STEPS": 1
+  },
+  "c0_failures": {
+   "all": 47,
+   "not_triggered": 13,
+   "triggered": 34,
+   "v2_acted": 22,
+   "v2_acted_and_still_failed": []
+  },
+  "held_cube_fit_not_accepted": {
+   "n": 15,
+   "c0_failure": 2,
+   "true_offset_at_least_20mm": 3,
+   "v1_fit_valid_at_trigger": 0
+  },
+  "target_moved": {
+   "C0": {
+    "acts": 0,
+    "pushed_over_1mm_during_control": [],
+    "max_during_control_mm": 0,
+    "moved_over_1mm_between_trigger_and_release": []
+   },
+   "V1": {
+    "acts": 40,
+    "pushed_over_1mm_during_control": [
+     50892
+    ],
+    "max_during_control_mm": 5.46,
+    "moved_over_1mm_between_trigger_and_release": [
+     50892
+    ]
+   },
+   "V2": {
+    "acts": 54,
+    "pushed_over_1mm_during_control": [],
+    "max_during_control_mm": 0.06,
+    "moved_over_1mm_between_trigger_and_release": []
+   }
+  },
+  "v2_end_reasons": {
+   "step_budget": 10,
+   "within_tolerance": 44
+  },
+  "v2_acts_outcome_by_end_reason": {
+   "step_budget": {
+    "n": 10,
+    "success": 10
+   },
+   "within_tolerance": {
+    "n": 44,
+    "success": 44
+   }
+  },
+  "same_host_reproduction": {
+   "C0": {
+    "checked": 287,
+    "match": 287
+   },
+   "V1": {
+    "checked": 247,
+    "match": 247
+   },
+   "V2": {
+    "checked": 233,
+    "match": 233
+   }
+  },
+  "host_difference_against_run2": {
+   "compared": 300,
+   "c0_outcome_differs": [
+    50613,
+    50623,
+    50632,
+    50640,
+    50647,
+    50666,
+    50668,
+    50686,
+    50722,
+    50732,
+    50738,
+    50798,
+    50819,
+    50853,
+    50861,
+    50886
+   ],
+   "trigger_differs": [
+    50600,
+    50601,
+    50608,
+    50609,
+    50611,
+    50612,
+    50613,
+    50614,
+    50615,
+    50616,
+    50618,
+    50619,
+    50622,
+    50624,
+    50625,
+    50626,
+    50632,
+    50636,
+    50639,
+    50642,
+    50650,
+    50654,
+    50656,
+    50658,
+    50659,
+    50660,
+    50661,
+    50663,
+    50664,
+    50666,
+    50667,
+    50669,
+    50670,
+    50671,
+    50672,
+    50674,
+    50675,
+    50676,
+    50677,
+    50678,
+    50679,
+    50682,
+    50684,
+    50685,
+    50686,
+    50687,
+    50690,
+    50691,
+    50692,
+    50695,
+    50701,
+    50703,
+    50704,
+    50705,
+    50707,
+    50708,
+    50709,
+    50710,
+    50714,
+    50716,
+    50718,
+    50721,
+    50723,
+    50724,
+    50725,
+    50726,
+    50727,
+    50730,
+    50732,
+    50735,
+    50737,
+    50738,
+    50740,
+    50741,
+    50743,
+    50744,
+    50747,
+    50750,
+    50751,
+    50752,
+    50754,
+    50764,
+    50767,
+    50769,
+    50770,
+    50771,
+    50772,
+    50773,
+    50774,
+    50776,
+    50777,
+    50779,
+    50782,
+    50788,
+    50791,
+    50792,
+    50793,
+    50795,
+    50796,
+    50798,
+    50800,
+    50802,
+    50803,
+    50804,
+    50805,
+    50814,
+    50815,
+    50816,
+    50818,
+    50819,
+    50821,
+    50823,
+    50824,
+    50826,
+    50827,
+    50831,
+    50833,
+    50834,
+    50836,
+    50838,
+    50839,
+    50843,
+    50845,
+    50847,
+    50849,
+    50850,
+    50851,
+    50852,
+    50853,
+    50854,
+    50856,
+    50857,
+    50858,
+    50859,
+    50860,
+    50861,
+    50865,
+    50867,
+    50869,
+    50876,
+    50877,
+    50878,
+    50879,
+    50880,
+    50881,
+    50883,
+    50884,
+    50885,
+    50886,
+    50887,
+    50891,
+    50893,
+    50895,
+    50898,
+    50899
+   ],
+   "v1_decision_differs": [
+    50611,
+    50612,
+    50616,
+    50625,
+    50626,
+    50628,
+    50629,
+    50634,
+    50642,
+    50649,
+    50650,
+    50654,
+    50658,
+    50663,
+    50665,
+    50676,
+    50679,
+    50680,
+    50685,
+    50689,
+    50692,
+    50703,
+    50705,
+    50707,
+    50711,
+    50715,
+    50724,
+    50733,
+    50741,
+    50744,
+    50750,
+    50756,
+    50760,
+    50767,
+    50771,
+    50773,
+    50774,
+    50777,
+    50778,
+    50791,
+    50794,
+    50797,
+    50800,
+    50802,
+    50808,
+    50810,
+    50816,
+    50817,
+    50830,
+    50832,
+    50846,
+    50847,
+    50856,
+    50868,
+    50877,
+    50881,
+    50883,
+    50899
+   ],
+   "v1_outcome_differs": [
+    50611,
+    50613,
+    50618,
+    50623,
+    50629,
+    50666,
+    50668,
+    50685,
+    50722,
+    50738,
+    50771,
+    50819,
+    50846,
+    50853
+   ],
+   "old_host": "Vision-CENTER run2: South Korea, machine 151205, RTX 4090, Intel Core i7-13700K, driver 595.91.07"
+  }
+ },
+ "B2_pilot_new_scenes": {
+  "scenes": 200,
+  "triggered": 197,
+  "success": {
+   "C0": 165,
+   "V1": 173,
+   "V2": 184,
+   "OR": 190
+  },
+  "paired": {
+   "V2_vs_C0": {
+    "both_succeed": 165,
+    "rescue": 19,
+    "harm": 0,
+    "both_fail": 16,
+    "net": 19,
+    "rescue_scenes": [
+     50922,
+     50936,
+     50947,
+     50959,
+     50969,
+     50971,
+     50983,
+     50986,
+     50989,
+     50992,
+     50993,
+     50995,
+     50997,
+     51012,
+     51029,
+     51034,
+     51036,
+     51039,
+     51086
+    ],
+    "harm_scenes": []
+   },
+   "V1_vs_C0": {
+    "both_succeed": 165,
+    "rescue": 8,
+    "harm": 0,
+    "both_fail": 27,
+    "net": 8,
+    "rescue_scenes": [
+     50922,
+     50983,
+     50989,
+     50992,
+     50995,
+     51012,
+     51029,
+     51039
+    ],
+    "harm_scenes": []
+   },
+   "V2_vs_V1": {
+    "both_succeed": 173,
+    "rescue": 11,
+    "harm": 0,
+    "both_fail": 16,
+    "net": 11,
+    "rescue_scenes": [
+     50936,
+     50947,
+     50959,
+     50969,
+     50971,
+     50986,
+     50993,
+     50997,
+     51034,
+     51036,
+     51086
+    ],
+    "harm_scenes": []
+   },
+   "OR_vs_C0": {
+    "both_succeed": 165,
+    "rescue": 25,
+    "harm": 0,
+    "both_fail": 10,
+    "net": 25,
+    "rescue_scenes": [
+     50922,
+     50926,
+     50936,
+     50947,
+     50959,
+     50969,
+     50971,
+     50983,
+     50986,
+     50989,
+     50992,
+     50993,
+     50995,
+     50997,
+     50998,
+     51003,
+     51012,
+     51029,
+     51034,
+     51036,
+     51039,
+     51047,
+     51049,
+     51067,
+     51086
+    ],
+    "harm_scenes": []
+   },
+   "V2_vs_OR": {
+    "both_succeed": 184,
+    "rescue": 0,
+    "harm": 6,
+    "both_fail": 10,
+    "net": -6,
+    "rescue_scenes": [],
+    "harm_scenes": [
+     50926,
+     50998,
+     51003,
+     51047,
+     51049,
+     51067
+    ]
+   }
+  },
+  "v2_rescues_not_in_v1": [
+   50936,
+   50947,
+   50959,
+   50969,
+   50971,
+   50986,
+   50993,
+   50997,
+   51034,
+   51036,
+   51086
+  ],
+  "v1_rescues_not_in_v2": [],
+  "v2_acts_by_target_source": {
+   "current_frame": {
+    "acts": 23,
+    "success": 23,
+    "c0_failure": 9,
+    "rescue": 9,
+    "harm": 0,
+    "offset_error": {
+     "n": 23,
+     "median_mm": 0.98,
+     "p90_mm": 1.75,
+     "max_mm": 2.51
+    },
+    "target_error": {
+     "n": 23,
+     "median_mm": 0.22,
+     "p90_mm": 0.4,
+     "max_mm": 0.48
+    },
+    "offset_error_outside_bound": 0,
+    "offset_error_over_5mm": 0,
+    "memory_age_steps": {
+     "n": 0
+    },
+    "exposed": 0,
+    "scenes": [
+     50914,
+     50915,
+     50920,
+     50922,
+     50927,
+     50982,
+     50983,
+     50989,
+     50992,
+     50993,
+     50995,
+     51012,
+     51029,
+     51038,
+     51039,
+     51057,
+     51070,
+     51074,
+     51080,
+     51082,
+     51094,
+     51095,
+     51097
+    ],
+    "oracle_rescue_among_them": 9
+   },
+   "hand_memory_past_only": {
+    "acts": 5,
+    "success": 5,
+    "c0_failure": 4,
+    "rescue": 4,
+    "harm": 0,
+    "offset_error": {
+     "n": 5,
+     "median_mm": 0.94,
+     "p90_mm": 1.42,
+     "max_mm": 1.46
+    },
+    "target_error": {
+     "n": 5,
+     "median_mm": 0.17,
+     "p90_mm": 1.27,
+     "max_mm": 1.71
+    },
+    "offset_error_outside_bound": 0,
+    "offset_error_over_5mm": 0,
+    "memory_age_steps": {
+     "n": 5,
+     "median_mm": 8.0,
+     "p90_mm": 9.6,
+     "max_mm": 10.0
+    },
+    "exposed": 5,
+    "scenes": [
+     50947,
+     50969,
+     51036,
+     51086,
+     51099
+    ],
+    "oracle_rescue_among_them": 4
+   },
+   "hand_memory_last_seen_at_trigger": {
+    "acts": 0,
+    "success": 0,
+    "c0_failure": 0,
+    "rescue": 0,
+    "harm": 0,
+    "offset_error": {
+     "n": 0
+    },
+    "target_error": {
+     "n": 0
+    },
+    "offset_error_outside_bound": 0,
+    "offset_error_over_5mm": 0,
+    "memory_age_steps": {
+     "n": 0
+    },
+    "exposed": 0,
+    "scenes": [],
+    "oracle_rescue_among_them": 0
+   },
+   "base_memory_past_only": {
+    "acts": 6,
+    "success": 6,
+    "c0_failure": 6,
+    "rescue": 6,
+    "harm": 0,
+    "offset_error": {
+     "n": 6,
+     "median_mm": 1.73,
+     "p90_mm": 3.55,
+     "max_mm": 5.08
+    },
+    "target_error": {
+     "n": 6,
+     "median_mm": 0.81,
+     "p90_mm": 3.41,
+     "max_mm": 4.69
+    },
+    "offset_error_outside_bound": 0,
+    "offset_error_over_5mm": 1,
+    "memory_age_steps": {
+     "n": 6,
+     "median_mm": 24.5,
+     "p90_mm": 50.5,
+     "max_mm": 67.0
+    },
+    "exposed": 6,
+    "scenes": [
+     50936,
+     50959,
+     50971,
+     50986,
+     50997,
+     51034
+    ],
+    "oracle_rescue_among_them": 6
+   },
+   "base_memory_last_seen_at_trigger": {
+    "acts": 0,
+    "success": 0,
+    "c0_failure": 0,
+    "rescue": 0,
+    "harm": 0,
+    "offset_error": {
+     "n": 0
+    },
+    "target_error": {
+     "n": 0
+    },
+    "offset_error_outside_bound": 0,
+    "offset_error_over_5mm": 0,
+    "memory_age_steps": {
+     "n": 0
+    },
+    "exposed": 0,
+    "scenes": [],
+    "oracle_rescue_among_them": 0
+   },
+   "note_memory_age_steps": "the memory_age_steps block is in steps, not mm (the helper divides and multiplies by 1000)"
+  },
+  "v2_acts_hold_from_memory": 1,
+  "remembered_target_all_estimates": {
+   "n": 85,
+   "target_error": {
+    "n": 85,
+    "median_mm": 0.4,
+    "p90_mm": 2.51,
+    "max_mm": 37.69
+   },
+   "target_error_outside_own_bound": [
+    51009
+   ],
+   "offset_error_outside_bound": [
+    51009
+   ],
+   "offset_error_over_5mm": [
+    50959,
+    50964,
+    51009
+   ],
+   "hand": {
+    "n": 66,
+    "median_mm": 0.3,
+    "p90_mm": 0.93,
+    "max_mm": 2.97
+   },
+   "base": {
+    "n": 19,
+    "median_mm": 2.13,
+    "p90_mm": 3.9,
+    "max_mm": 37.69
+   }
+  },
+  "current_frame_all_estimates": {
+   "n": 103,
+   "offset_error": {
+    "n": 103,
+    "median_mm": 0.97,
+    "p90_mm": 2.02,
+    "max_mm": 3.41
+   },
+   "offset_error_outside_bound": []
+  },
+  "v2_decisions": {
+   "ACT": {
+    "n": 34,
+    "c0_failure": 19,
+    "c0_failure_scenes": [
+     50922,
+     50936,
+     50947,
+     50959,
+     50969,
+     50971,
+     50983,
+     50986,
+     50989,
+     50992,
+     50993,
+     50995,
+     50997,
+     51012,
+     51029,
+     51034,
+     51036,
+     51039,
+     51086
+    ],
+    "true_offset_at_least_20mm": 23,
+    "v1_acted": 22,
+    "oracle_rescue": 19,
+    "oracle_rescue_scenes": [
+     50922,
+     50936,
+     50947,
+     50959,
+     50969,
+     50971,
+     50983,
+     50986,
+     50989,
+     50992,
+     50993,
+     50995,
+     50997,
+     51012,
+     51029,
+     51034,
+     51036,
+     51039,
+     51086
+    ]
+   },
+   "ALIGNED": {
+    "n": 130,
+    "c0_failure": 0,
+    "c0_failure_scenes": [],
+    "true_offset_at_least_20mm": 0,
+    "v1_acted": 0,
+    "oracle_rescue": 0,
+    "oracle_rescue_scenes": []
+   },
+   "ALIGNED_WITHIN_UNCERTAINTY": {
+    "n": 11,
+    "c0_failure": 2,
+    "c0_failure_scenes": [
+     51049,
+     51067
+    ],
+    "true_offset_at_least_20mm": 2,
+    "v1_acted": 0,
+    "oracle_rescue": 2,
+    "oracle_rescue_scenes": [
+     51049,
+     51067
+    ]
+   },
+   "LOW_CARRY": {
+    "n": 12,
+    "c0_failure": 8,
+    "c0_failure_scenes": [
+     50909,
+     50926,
+     51003,
+     51009,
+     51025,
+     51055,
+     51071,
+     51087
+    ],
+    "true_offset_at_least_20mm": 8,
+    "v1_acted": 0,
+    "oracle_rescue": 2,
+    "oracle_rescue_scenes": [
+     50926,
+     51003
+    ]
+   },
+   "NO_HOLD_ESTIMATE": {
+    "n": 7,
+    "c0_failure": 1,
+    "c0_failure_scenes": [
+     50998
+    ],
+    "true_offset_at_least_20mm": 1,
+    "v1_acted": 0,
+    "oracle_rescue": 1,
+    "oracle_rescue_scenes": [
+     50998
+    ]
+   },
+   "NO_TARGET_ESTIMATE": {
+    "n": 2,
+    "c0_failure": 1,
+    "c0_failure_scenes": [
+     51047
+    ],
+    "true_offset_at_least_20mm": 1,
+    "v1_acted": 0,
+    "oracle_rescue": 1,
+    "oracle_rescue_scenes": [
+     51047
+    ]
+   },
+   "SIDE_CONTACT_RISK": {
+    "n": 1,
+    "c0_failure": 1,
+    "c0_failure_scenes": [
+     51004
+    ],
+    "true_offset_at_least_20mm": 1,
+    "v1_acted": 1,
+    "oracle_rescue": 0,
+    "oracle_rescue_scenes": []
+   }
+  },
+  "v1_decisions": {
+   "ACT": 23,
+   "ALIGNED": 75,
+   "LOW_CARRY": 3,
+   "NO_HOLD_ESTIMATE": 10,
+   "NO_TARGET_ESTIMATE": 86
+  },
+  "c0_failures": {
+   "all": 35,
+   "not_triggered": 3,
+   "triggered": 32,
+   "v2_acted": 19,
+   "v2_acted_and_still_failed": []
+  },
+  "oracle_rescues": {
+   "n": 25,
+   "also_v2": 19,
+   "also_v1": 8,
+   "missed_by_v2": [
+    {
+     "scene": 50926,
+     "v2_decision": "LOW_CARRY",
+     "v1_decision": "LOW_CARRY",
+     "target_source": "current_frame",
+     "true_offset_mm": 38.0,
+     "true_gap_mm": 0.5,
+     "memory_reason": null,
+     "v2_end_reason": null,
+     "release_offset_V2_mm": 38.0
+    },
+    {
+     "scene": 50998,
+     "v2_decision": "NO_HOLD_ESTIMATE",
+     "v1_decision": "NO_HOLD_ESTIMATE",
+     "target_source": null,
+     "true_offset_mm": 20.3,
+     "true_gap_mm": 4.7,
+     "memory_reason": null,
+     "v2_end_reason": null,
+     "release_offset_V2_mm": 20.3
+    },
+    {
+     "scene": 51003,
+     "v2_decision": "LOW_CARRY",
+     "v1_decision": "NO_TARGET_ESTIMATE",
+     "target_source": "hand_memory_past_only",
+     "true_offset_mm": 27.4,
+     "true_gap_mm": 0.1,
+     "memory_reason": null,
+     "v2_end_reason": null,
+     "release_offset_V2_mm": 27.4
+    },
+    {
+     "scene": 51047,
+     "v2_decision": "NO_TARGET_ESTIMATE",
+     "v1_decision": "NO_TARGET_ESTIMATE",
+     "target_source": null,
+     "true_offset_mm": 33.7,
+     "true_gap_mm": 4.1,
+     "memory_reason": "never_seen",
+     "v2_end_reason": null,
+     "release_offset_V2_mm": 33.7
+    },
+    {
+     "scene": 51049,
+     "v2_decision": "ALIGNED_WITHIN_UNCERTAINTY",
+     "v1_decision": "NO_TARGET_ESTIMATE",
+     "target_source": "base_memory_past_only",
+     "true_offset_mm": 21.9,
+     "true_gap_mm": 0.7,
+     "memory_reason": null,
+     "v2_end_reason": null,
+     "release_offset_V2_mm": 21.9
+    },
+    {
+     "scene": 51067,
+     "v2_decision": "ALIGNED_WITHIN_UNCERTAINTY",
+     "v1_decision": "NO_TARGET_ESTIMATE",
+     "target_source": "base_memory_past_only",
+     "true_offset_mm": 21.7,
+     "true_gap_mm": 4.3,
+     "memory_reason": null,
+     "v2_end_reason": null,
+     "release_offset_V2_mm": 21.7
+    }
+   ],
+   "v2_rescues_the_oracle_did_not": [],
+   "oracle_harm_scenes": []
+  },
+  "held_cube_fit_not_accepted": {
+   "n": 7,
+   "c0_failure": 1,
+   "true_offset_at_least_20mm": 1,
+   "oracle_rescue": 1,
+   "v1_fit_valid_at_trigger": 0
+  },
+  "target_moved": {
+   "C0": {
+    "acts": 0,
+    "pushed_over_1mm_during_control": [],
+    "max_during_control_mm": 0,
+    "moved_over_1mm_between_trigger_and_release": []
+   },
+   "V1": {
+    "acts": 23,
+    "pushed_over_1mm_during_control": [
+     51004
+    ],
+    "max_during_control_mm": 5.69,
+    "moved_over_1mm_between_trigger_and_release": [
+     51004
+    ]
+   },
+   "V2": {
+    "acts": 34,
+    "pushed_over_1mm_during_control": [],
+    "max_during_control_mm": 0.06,
+    "moved_over_1mm_between_trigger_and_release": []
+   },
+   "OR": {
+    "acts": 197,
+    "pushed_over_1mm_during_control": [
+     50909,
+     51004,
+     51009,
+     51025,
+     51055,
+     51087
+    ],
+    "max_during_control_mm": 21.62,
+    "moved_over_1mm_between_trigger_and_release": [
+     50909,
+     51004,
+     51009,
+     51025,
+     51055,
+     51087
+    ]
+   }
+  },
+  "v2_end_reasons": {
+   "step_budget": 6,
+   "within_tolerance": 28
+  },
+  "v2_acts_outcome_by_end_reason": {
+   "step_budget": {
+    "n": 6,
+    "success": 6
+   },
+   "within_tolerance": {
+    "n": 28,
+    "success": 28
+   }
+  },
+  "same_host_reproduction": {
+   "C0": {
+    "checked": 197,
+    "match": 197
+   },
+   "V1": {
+    "checked": 174,
+    "match": 174
+   },
+   "V2": {
+    "checked": 163,
+    "match": 163
+   }
+  }
+ }
+}

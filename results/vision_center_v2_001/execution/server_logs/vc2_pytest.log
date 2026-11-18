@@ -1,0 +1,12 @@
+........................................................................ [ 20%]
+........................................................................ [ 41%]
+........................................................................ [ 61%]
+........................................................................ [ 82%]
+................................................s.....ss.....            [100%]
+=============================== warnings summary ===============================
+tests/test_vision_center.py::test_scene_where_vision_acts
+  /workspace/robot_harm_intervention_starter_v0_3/tests/test_vision_center.py:124: UserWarning: Creating a tensor from a list of numpy.ndarrays is extremely slow. Please consider converting the list to a single numpy.ndarray with numpy.array() before converting to a tensor. (Triggered internally at /pytorch/torch/csrc/utils/tensor_new.cpp:254.)
+    o = super().obs(); o['extra']['tcp_pose'] = torch.cat([self.p, torch.tensor([DOWN], dtype=torch.float32)], -1); p = o['extra']['tcp_pose'][0].numpy().astype(float)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+346 passed, 5 skipped, 1 warning in 69.08s (0:01:09)

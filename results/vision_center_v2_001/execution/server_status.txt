@@ -1,0 +1,48 @@
+V2 threads OMP=1 OPENBLAS=1 MKL=1 NUMEXPR=1 BLIS=1 cpus=16 load=0.33 1.45 1.43 cpu= AMD Ryzen 7 7800X3D 8-Core Processor
+install start=2026-11-18T14:45:28Z
+install_sys exit=0 end=2026-11-18T14:46:19Z
+bootstrap exit=0 end=2026-11-18T14:48:09Z
+PHASE_EXIT install 0
+vc2_doctor cmd=python -m hci doctor --out runs/vision_center_v2_001/doctor
+vc2_doctor start=2026-11-18T14:48:09Z
+vc2_doctor exit=0 end=2026-11-18T14:48:12Z
+vc2_versions cmd=python -c import torch,torchvision;print(torch.__version__,torchvision.__version__,torch.cuda.get_device_name(0))
+vc2_versions start=2026-11-18T14:48:12Z
+vc2_versions exit=0 end=2026-11-18T14:48:13Z
+vc2_pytest cmd=python -m pytest -q
+vc2_pytest start=2026-11-18T14:48:13Z
+vc2_pytest exit=0 end=2026-11-18T14:49:23Z
+vc2_dry cmd=python scripts/33_vision_center_v2.py dry-run --plan runs/vision_center_v2_001/plan.json --run runs/vision_center_v2_001 --out runs/vision_center_v2_001/dry_run_server.json
+vc2_dry start=2026-11-18T14:49:23Z
+vc2_dry exit=0 end=2026-11-18T14:49:24Z
+ENV_DONE
+PHASE_EXIT env 0
+vc2_scenes cmd=python scripts/33_vision_center_v2.py scenes --plan runs/vision_center_v2_001/plan.json --run runs/vision_center_v2_001
+vc2_scenes start=2026-11-18T14:49:24Z
+vc2_scenes exit=0 end=2026-11-18T14:50:28Z
+SCENES_DONE
+PHASE_EXIT scenes 0
+vc2_audit cmd=python scripts/33_vision_center_v2.py audit --plan runs/vision_center_v2_001/plan.json --run runs/vision_center_v2_001
+vc2_audit start=2026-11-18T14:50:28Z
+vc2_audit exit=0 end=2026-11-18T14:51:05Z
+AUDIT_DONE
+PHASE_EXIT audit 0
+shadow SPENT_USD=0.1671 USD_PER_HOUR=0.4605 load=1.01 1.12 1.27
+vc2_budget_shadow cmd=python scripts/33_vision_center_v2.py budget --stage shadow --plan runs/vision_center_v2_001/plan.json --run runs/vision_center_v2_001 --usd-per-hour 0.4605 --spent-usd 0.1671
+vc2_budget_shadow start=2026-11-18T14:51:05Z
+vc2_budget_shadow exit=0 end=2026-11-18T14:51:05Z
+vc2_shadow cmd=python scripts/33_vision_center_v2.py shadow --plan runs/vision_center_v2_001/plan.json --run runs/vision_center_v2_001 --usd-per-hour 0.4605 --spent-usd 0.1671
+vc2_shadow start=2026-11-18T14:51:05Z
+vc2_shadow exit=0 end=2026-11-18T15:50:11Z
+V2_SHADOW_PASS
+PHASE_EXIT shadow 0
+pilot SPENT_USD=0.6206 USD_PER_HOUR=0.4605 load=1.08 1.05 1.00
+vc2_budget_pilot cmd=python scripts/33_vision_center_v2.py budget --stage pilot --plan runs/vision_center_v2_001/plan.json --run runs/vision_center_v2_001 --usd-per-hour 0.4605 --spent-usd 0.6206
+vc2_budget_pilot start=2026-11-18T15:50:11Z
+vc2_budget_pilot exit=0 end=2026-11-18T15:50:11Z
+vc2_pilot cmd=python scripts/33_vision_center_v2.py run --plan runs/vision_center_v2_001/plan.json --run runs/vision_center_v2_001 --usd-per-hour 0.4605 --spent-usd 0.6206
+vc2_pilot start=2026-11-18T15:50:11Z
+vc2_pilot exit=0 end=2026-11-18T16:32:47Z
+PILOT_DONE
+PHASE_EXIT pilot 0
+CHAIN_END_BEFORE_PACK 2026-11-18T16:32:47Z

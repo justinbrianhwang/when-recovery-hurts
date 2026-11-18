@@ -1,0 +1,13 @@
+{
+ "approved_by": "user",
+ "paid_compute_authorized": true,
+ "cap_usd": 5.00,
+ "plan_sha256": "1b4ea3bb65bd4cfdffc13a610fee010d568a5837e632701d4b0d265e6ba66e86",
+ "work_id": "vision_center_v2_001",
+ "cap_meaning": "US$5.00 is the cap on the total spend of this work (Phase B: stage B1 and stage B2, each once).",
+ "approval_text": "2026-11-18, user message 'Vision-CENTER v2 - Phase B 실행 승인': Work ID vision_center_v2_001; Plan SHA256 1b4ea3bb65bd4cfdffc13a610fee010d568a5837e632701d4b0d265e6ba66e86; total cap US$5.00; base policy Vision-V1 seed 1, 80k EMA; B1 used scenes 50600-50899; B2 new scenes 50900-51099. Decisions: base camera allowed (part of the policy observation); v1 unchanged as baseline; current memory, uncertainty, abstain and collision rules frozen; B1 and B2 criteria of the plan kept; simulator ground truth only for offline evaluation and CENTER_ORACLE.",
+ "pre_execution_review": "Independent read-only review (Codex) before any server was created returned NO-GO with three findings (budget gate trusts supplied spend and price; the trigger frame enters the memory; the memory is not updated during control). They were reported to the user without starting. User reply 2026-11-18: '오케이 우선 싹 다 해보자'. Read by the agent as: run the unchanged code and plan (same hash, same cap) and record the three findings as known limitations. No code or plan change.",
+ "forbidden": ["policy retraining", "any change to Vision-CENTER v1 or oracle results", "any change of estimator, memory rules or abstain criteria after an outcome", "re-evaluation of selected scenes", "fewer scenes to save cost", "calibration, final Test", "more than US$5.00", "B2 after a failed B1", "any further experiment after this one"],
+ "run_limit": "B1 once, B2 once",
+ "written_by": "the agent, recording the user's explicit approval (exact cap and plan hash stated by the user)"
+}

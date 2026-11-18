@@ -521,7 +521,7 @@ def test_shell_driver_matches_the_script_and_needs_the_gates():
 def test_audit_seeds_are_used_development_scenes_not_pilot_scenes(X):
     v = read_json('configs/vision_v1_splits.json')['splits']['vision_v1_select']; assert set(X.AUDIT_SEEDS) <= set(v) and not set(X.AUDIT_SEEDS) & set(range(50700, 50800))
     assert 'recovery_v1/recovery_v1_diag' in X.used_ledger() and O.pilot_seeds(read_json(X.MANIFEST), X.used_ledger()) == list(range(50700, 50800))
-    scan = X.recorded_use_scan(); assert not {f for f in scan['files_naming_a_pilot_seed'] if not f.startswith(('results/vision_center_001/run2/', 'results/vision_center_v2_001/preparation/'))}      # later work on these scenes as used development data: the Vision-CENTER shadow pass (run2, stage B1) and the offline v2 observability audit of its records
+    scan = X.recorded_use_scan(); assert not {f for f in scan['files_naming_a_pilot_seed'] if not f.startswith(('results/vision_center_001/run2/', 'results/vision_center_v2_001/preparation/', 'results/vision_center_v2_001/execution/'))}      # later work on these scenes as used development data: the Vision-CENTER shadow pass (run2, stage B1), the offline v2 observability audit of its records, and the v2 shadow pass (stage B1)
     if scan['pilot_ledger_exists']: assert read_json(X.LEDGER)['plan_sha256'] == 'b7078afbe705a5ffd8a7128951f9c9e7618bb7c2fed5c044a5474c2fc895730b'      # the one executed pass; before it, no ledger existed
            # the server holds only part of results/, so no file count is asserted
 
