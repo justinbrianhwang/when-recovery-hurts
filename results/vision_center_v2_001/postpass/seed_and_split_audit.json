@@ -1,0 +1,184 @@
+{
+ "work_id": "vision_center_v2_001",
+ "phase": "C0 post-pass",
+ "candidate_scenes": {
+  "range": [
+   51100,
+   51299
+  ],
+  "n": 200,
+  "overlap_with_declared_or_used_sets": {},
+  "sets_checked": {
+   "splits/audit": 5,
+   "splits/train": 120,
+   "splits/dev": 100,
+   "splits/calibration": 400,
+   "splits/test": 400,
+   "policy_eval/policy_monitor": 20,
+   "policy_eval/policy_select": 50,
+   "policy_eval/policy_qualify_A": 100,
+   "policy_eval/policy_qualify_B": 100,
+   "vision_v1/vision_v1_select": 100,
+   "vision_v1/vision_v1_qualify": 100,
+   "demonstration_scenes": 550,
+   "results/stage2a/scenes.json": 24,
+   "results/stage2b/scenes.json": 24,
+   "results/stage2d/scenes.json": 12,
+   "results/handoff_h1_001/scenes.json": 12,
+   "recovery_v1/recovery_v1_diag": 100,
+   "recovery_v1/recovery_v1_pilot_reserved": 100,
+   "vision_center/vision_center_pilot": 100,
+   "vision_center_v2/vision_center_v2_pilot": 200
+  },
+  "used_or_declared_seeds_between_51000_and_51400": [
+   51000,
+   51099,
+   100
+  ],
+  "named_in_a_stored_record": {},
+  "seed_level_pass": true,
+  "placement_check": "NOT DONE (needs the simulator): first server step of the next phase, against every placement on record; an identical placement fails the step"
+ },
+ "record_scan": {
+  "files_scanned": 2553,
+  "roots": [
+   "results",
+   "runs",
+   "artifacts/ledger",
+   "artifacts/manifests",
+   "logs",
+   "validation"
+  ],
+  "pattern": "\"(?:seed|scene|episode|episode_seed|scene_seed)\":\\s*(\\d+)\\b"
+ },
+ "calibration_and_test": {
+  "calibration_range": [
+   30000,
+   30399
+  ],
+  "test_range": [
+   90000,
+   90399
+  ],
+  "seeds_named_in_a_stored_record": {
+   "calibration": {},
+   "test": {}
+  },
+  "declared_sets_overlapping": {
+   "splits/calibration": {
+    "n": 400,
+    "calibration_overlap": 400,
+    "test_overlap": 0
+   },
+   "splits/test": {
+    "n": 400,
+    "calibration_overlap": 0,
+    "test_overlap": 400
+   }
+  },
+  "frozen_directories": [],
+  "TEST_STARTED_markers": [],
+  "selection_files_from_a_calibration_evaluation": []
+ },
+ "vision_v1_policies": {
+  "train_seed_1": {
+   "path": "artifacts/policies/stack_v1_s1_d500_clean_resnet18_i080000",
+   "weights.pt": "a37be25603d6c7b7d5cfa1872e6c1134c436f78de02b745c481c88d5d0f69629",
+   "policy_meta.json": "4ccfba34ee42b3bab344f7d320c57c6a97011f5adf8b93c04a36b886303b138e",
+   "meta_weights_sha256_equal": true,
+   "train_seed": 1,
+   "iteration": 80000,
+   "weights": "EMA",
+   "architecture_id": "dp_resnet18_imagenet1k_v1_shared_twocam_fc256_v1",
+   "observation_schema": "rgb_qpos_qvel_tcp_v1",
+   "source_checkpoint_sha256": "5cd8e95d589154981569cad2a3a5f4c8cd670da4444ac7ecb8bf6971484652ed",
+   "upstream_commit": "a4a4f9272ad64b1564035874b605ceb687b63ed8",
+   "num_demos": 500,
+   "demo_path": "/workspace/robot_harm_intervention_starter_v0_3/runs/stage1d_clean_002/data/train_d500_clean_v1.h5",
+   "select_result_keys": [
+    "architecture_id",
+    "episodes_sha256",
+    "furthest_stage",
+    "mean_steps_successful",
+    "n",
+    "plan_sha256",
+    "policy",
+    "runtime",
+    "scope",
+    "seconds_per_policy_call",
+    "seeds",
+    "set",
+    "success_once",
+    "train_seed",
+    "wall_seconds",
+    "wall_seconds_per_episode",
+    "weights_sha256",
+    "wilson95_descriptive"
+   ],
+   "select_result": {
+    "set": "vision_v1_select",
+    "policy": "artifacts/policies/stack_v1_s1_d500_clean_resnet18_i080000",
+    "weights_sha256": "a37be25603d6c7b7d5cfa1872e6c1134c436f78de02b745c481c88d5d0f69629",
+    "n": 100,
+    "success_once": 85
+   }
+  },
+  "train_seed_2": {
+   "path": "artifacts/policies/stack_v1_s2_d500_clean_resnet18_i080000",
+   "weights.pt": "52eff6a94a075bb3947e68756f8185bc1bfcb1893b691ee3529bbbc0c521b97b",
+   "policy_meta.json": "c3606292f65c91e7280ba08be983c7f7a65c76d9450abd5604934656973302c7",
+   "meta_weights_sha256_equal": true,
+   "train_seed": 2,
+   "iteration": 80000,
+   "weights": "EMA",
+   "architecture_id": "dp_resnet18_imagenet1k_v1_shared_twocam_fc256_v1",
+   "observation_schema": "rgb_qpos_qvel_tcp_v1",
+   "source_checkpoint_sha256": "d47ccf88adfcc1778974ab087303a0c23f3ecdc9e0e7a8e2833744b034a50f63",
+   "upstream_commit": "a4a4f9272ad64b1564035874b605ceb687b63ed8",
+   "num_demos": 500,
+   "demo_path": "/workspace/robot_harm_intervention_starter_v0_3/runs/stage1d_clean_002/data/train_d500_clean_v1.h5",
+   "select_result_keys": [
+    "architecture_id",
+    "episodes_sha256",
+    "furthest_stage",
+    "mean_steps_successful",
+    "n",
+    "plan_sha256",
+    "policy",
+    "runtime",
+    "scope",
+    "seconds_per_policy_call",
+    "seeds",
+    "set",
+    "success_once",
+    "train_seed",
+    "wall_seconds",
+    "wall_seconds_per_episode",
+    "weights_sha256",
+    "wilson95_descriptive"
+   ],
+   "select_result": {
+    "set": "vision_v1_select",
+    "policy": "artifacts/policies/stack_v1_s2_d500_clean_resnet18_i080000",
+    "weights_sha256": "52eff6a94a075bb3947e68756f8185bc1bfcb1893b691ee3529bbbc0c521b97b",
+    "n": 100,
+    "success_once": 83
+   }
+  }
+ },
+ "vision_v1_selection": {
+  "selected_train_seed": 1,
+  "success_once": {
+   "1": 85,
+   "2": 83
+  },
+  "gate": 50,
+  "status": "SELECTED",
+  "rule": "more success_once on vision_v1_select; tie -> seed 1; both below the gate -> stop before qualification",
+  "selected_policy": "artifacts/policies/stack_v1_s1_d500_clean_resnet18_i080000",
+  "selected_weights_sha256": "a37be25603d6c7b7d5cfa1872e6c1134c436f78de02b745c481c88d5d0f69629",
+  "plan_sha256": "5fdee368fa529c0096464332e1af5dc2ac0eca39ff102ad7bc0fa8605ed3678e",
+  "decided_before": "any rollout on vision_v1_qualify",
+  "qualification_ledger_exists": false
+ }
+}

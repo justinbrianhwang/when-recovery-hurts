@@ -1,0 +1,357 @@
+{
+ "document": "V2_FREEZE_MANIFEST_DRAFT",
+ "status": "DRAFT. Not a freeze. `hci freeze` was not called, no frozen directory exists, no calibration or Test input is selected. It records what a later freeze of this candidate would have to match.",
+ "created_utc": "2026-11-18T20:59:00.091868+00:00",
+ "work_id": "vision_center_v2_001",
+ "candidate": "VISION_CENTER_V2 as executed in Phase B (intervention id vision_center_v2_xy), with VISION_CENTER_V1 as the unchanged baseline and CENTER_ORACLE as the non-deployable reference",
+ "identity": {
+  "approved_plan": "results/vision_center_v2_001/preparation/plan.json",
+  "approved_plan_sha256_expected": "1b4ea3bb65bd4cfdffc13a610fee010d568a5837e632701d4b0d265e6ba66e86",
+  "approved_plan_sha256_now": "1b4ea3bb65bd4cfdffc13a610fee010d568a5837e632701d4b0d265e6ba66e86",
+  "execution_commit": "fd23aa2827abeabd4cb0870c63f2c481960b8f44",
+  "head_at_draft": "fd23aa2827abeabd4cb0870c63f2c481960b8f44",
+  "files_changed_since_execution_commit": [],
+  "code_files_changed_since_plan": [],
+  "upstream_commit": "a4a4f9272ad64b1564035874b605ceb687b63ed8",
+  "upstream_lock": {
+   "upstream.lock.json": "aaf4714ea43c42f001362af590f91bdc50e94562c0c5411b8ec985db43643334"
+  }
+ },
+ "base_policy": {
+  "path": "artifacts/policies/stack_v1_s1_d500_clean_resnet18_i080000",
+  "weights.pt": "a37be25603d6c7b7d5cfa1872e6c1134c436f78de02b745c481c88d5d0f69629",
+  "policy_meta.json": "4ccfba34ee42b3bab344f7d320c57c6a97011f5adf8b93c04a36b886303b138e",
+  "train_seed": 1,
+  "iteration": 80000,
+  "weights": "EMA",
+  "source_checkpoint_sha256": "5cd8e95d589154981569cad2a3a5f4c8cd670da4444ac7ecb8bf6971484652ed",
+  "pretrained_encoder": {
+   "artifacts/pretrained/resnet18-f37072fd.pth": "f37072fd47e89c5e827621c5baffa7500819f7896bbacec160b1a16c560e07ec"
+  },
+  "rule": "frozen; not retrained; v2 is not adapted to any other policy"
+ },
+ "not_part_of_the_candidate": {
+  "second_policy_for_generalisation_only": {
+   "path": "artifacts/policies/stack_v1_s2_d500_clean_resnet18_i080000",
+   "artifacts/policies/stack_v1_s2_d500_clean_resnet18_i080000/policy_meta.json": "c3606292f65c91e7280ba08be983c7f7a65c76d9450abd5604934656973302c7",
+   "artifacts/policies/stack_v1_s2_d500_clean_resnet18_i080000/weights.pt": "52eff6a94a075bb3947e68756f8185bc1bfcb1893b691ee3529bbbc0c521b97b"
+  }
+ },
+ "environment": {
+  "config": {
+   "configs/stackcube.yaml": "b145ca59607f4edf45f20bd45624f1bd4c8ff028a035ee4ab12b7de40bb08d8b"
+  },
+  "config_digest": "c8cc0a581f7d4e9de4042490bd6939e9b80da1dd333df081cb9107c29427dfbd",
+  "env": {
+   "id": "StackCube-v1",
+   "robot_uid": "panda_wristcam",
+   "sim_backend": "physx_cpu",
+   "num_envs": 1,
+   "obs_mode": "rgb",
+   "control_mode": "pd_ee_delta_pos",
+   "horizon": 200
+  },
+  "policy_io": {
+   "obs_horizon": 2,
+   "act_horizon": 8,
+   "pred_horizon": 16,
+   "diffusion_step_embed_dim": 64,
+   "unet_dims": [
+    64,
+    128,
+    256
+   ],
+   "n_groups": 8
+  },
+  "audit_tolerances": {
+   "replay_steps": 20,
+   "state_atol": 1e-06,
+   "action_atol": 1e-06,
+   "observation_atol": 1.0
+  },
+  "requirements": {
+   "requirements/constraints-linux-py311.txt": "64a84c370475e65227949f48e0565d346826955484b27f11d94cc2f033a53f25",
+   "requirements/core.txt": "780ba7b9379af02b1779cc5e1c34fe231faf811bc111741499cd9d5f96be7c94",
+   "requirements/runtime.txt": "f2eca4bf3f6a7520340d2796eefd301f5cfd7458cfab8194e8f5ba7cd224afb0"
+  },
+  "build": {
+   "Dockerfile": "79a5e14de7ddd8270e1e6860e221d7b445724d371686fbc200f9818ff2cab11f",
+   "pyproject.toml": "ef0715d7b2d46aadde0730bc8adf2aedc1f2d5cc37a62e493cfbe096d150636e"
+  },
+  "execution_runtime": {
+   "python": "3.10.12 (main, Aug 31 2026, 10:18:17) [GCC 11.4.0]",
+   "platform": "Linux-6.8.0-149-generic-x86_64-with-glibc2.35",
+   "packages": {
+    "torch": "2.6.0+cu124",
+    "torchvision": "0.21.0+cu124",
+    "mani_skill": "3.0.1",
+    "sapien": "3.0.3",
+    "gymnasium": "0.29.1",
+    "diffusers": "0.30.3",
+    "numpy": "1.26.4",
+    "scipy": "1.13.1",
+    "PyYAML": "6.0.2"
+   },
+   "nvidia_smi": {
+    "returncode": 0,
+    "stdout": "name, driver_version, memory.total [MiB]\nNVIDIA GeForce RTX 4090, 595.99.02, 24564 MiB\n",
+    "stderr": ""
+   }
+  },
+  "execution_host": "Vast machine 146456 (France), RTX 4090, AMD Ryzen 7 7800X3D, driver 595.99.02; thread limit 1",
+  "server_logs": {
+   "results/vision_center_v2_001/execution/doctor/doctor.json": "3bff0bc00bf980978c96cea179757ee692be7e4076838ca9628b4c467cf0c07e",
+   "results/vision_center_v2_001/execution/dry_run_server.json": "997684e0487c9fc95391e49d9fb3818b61f07d3f4bc4906c6e337153adc43351",
+   "results/vision_center_v2_001/execution/server_logs/vc2_pytest.log": "62c6d891a914a2b733eea0e0671be88a0c3af69ddafd6f0ec31e289b46aab4f0",
+   "results/vision_center_v2_001/execution/server_logs/vc2_versions.log": "9545ffd3712ab2f1850ed3ca52d42ceb96965c73a49690ffd39fb093d4539fcf"
+  },
+  "gap": "no `pip freeze` of the execution server is in the backup, only the package versions in vc2_versions.log and the runtime block of result.json. A real freeze needs the full pip freeze of the host it will run on.",
+  "host_dependence": "uninterrupted outcomes differ between hosts in 16 of 300 scenes (same totals). Calibration and Test must each run in one session on one host, every arm from the same snapshot."
+ },
+ "code": {
+  "plan_code_files": {
+   "configs/recovery_v1_splits.json": "1809cc28432c24c69dfb7f5dd72e23875bf3bc12e3628e4eb3dc7d16486aba12",
+   "configs/stackcube.yaml": "b145ca59607f4edf45f20bd45624f1bd4c8ff028a035ee4ab12b7de40bb08d8b",
+   "configs/vision_center_splits.json": "9f80c8cf1c63a3ba888f4ce4d183250c39ed2f47315bb012b0b6f48dfbb9e874",
+   "configs/vision_center_v2_splits.json": "b538e892a5a251b8bba785d2eb643b5b6499ad6e9e759cd26312b0622f97676b",
+   "scripts/30_recovery_v1_diag.py": "3f104a1a95e23ee83ff0bf285b469fbbaaca738812b3225990158b470e64468b",
+   "scripts/31_recovery_v1_oracle_xy.py": "c87c3576358ad6de7acbd55a1061550330c6d681d3568665096398b01c16ad15",
+   "scripts/32_vision_center.py": "06f0ef885cfaef9052fab9dae08cd1e8a16d484b695f2c8c13b26958df662ccf",
+   "scripts/33_vision_center_v2.py": "9a4cd5ff72d363eb57e182110b58272bbf08b09e4c58d2d9a12ccbb5f87481d6",
+   "scripts/stage1b/common.sh": "af2f105e0fe8c8177daea33c5cddefd5266436f366a45e59be821378191db80a",
+   "scripts/vision_center_v2/run.sh": "34e7b28f3a6a077df1d76c82ee4c29967b8e0bc0de70777837b8e2b52b25e16e",
+   "src/hci/diagnostics.py": "49c79927d8cf5f8a208189647c75de1c67c3d4ee873fb87074db506e6534769d",
+   "src/hci/experiment.py": "b7425dcfcff7ff188992bde22e1e2308292aea58eb8a11c557a1ced8ff595d29",
+   "src/hci/io.py": "60f2701b2e52ba80fc7e05142a06ae56c306c4298cd749ca5e418b54cb454a44",
+   "src/hci/observations.py": "f9736618c952a42c6836b77c07d77ab96ad032ef60a77ef6d8018820e6acd657",
+   "src/hci/pilot.py": "4e730c36abdbcaa84d71c8643078b7aece7b01de958c81f4f67a75c62cebfac6",
+   "src/hci/pilot2b.py": "625ba28e118e04095a0a0adcfd5b6a1f41416c85eab7c988c7e92a8ab2ba5e34",
+   "src/hci/pilot2d.py": "efefdc292630bb565bb319b2fc6cb7a9834603b28b7677b36601403ade52ee0d",
+   "src/hci/policies.py": "d9083dfe1eff702bae087b96840d2703dbb609fb7947c01eb49864bbd0eb9157",
+   "src/hci/recovery_v1.py": "84512bbf4e89661b9e4b2923d37b896461f4a7d0fd5ea93fd27b1341d2d40464",
+   "src/hci/recovery_v1_oracle.py": "f652ead0a47750bd55ff990391ff4bb02d4af44331d351d4adea7112a973e765",
+   "src/hci/schema.py": "52ef9c07a41ef6e007b5d57429fa062bb66d56b9047e4db0d731117e08589db6",
+   "src/hci/simulation.py": "c42626728cac7eb9ebeffd5372683fc4ba01e41ef9d050f01e51134b0208fe9d",
+   "src/hci/statistics.py": "2e43b5f3134359412913abeee3eca3f30e27681ece10f1ae195ae0490ce1f5ad",
+   "src/hci/trees.py": "5f0fc7c28a89b32175abea983ac5202ffe535a0fe105e1ff6e855299177d8a60",
+   "src/hci/vision_center.py": "cc4a743976eb33da0824c1954a0ac19d075fc87b1369e45139812c09dce2797d",
+   "src/hci/vision_center_v2.py": "ab548ccc3825f9e25a7f979d4348563c34c1926c078e0acbd51f0101fd174fbc",
+   "src/hci/vision_v1.py": "deab7d2697dea81a995519cc568622f9c0d90df256d9281f2e3517811f06c9f7"
+  },
+  "all_equal_to_plan": true,
+  "src_hci": {
+   "src/hci/__init__.py": "1ebe7ba8a8271d201398e7b7a820b9d7a1848f9583e9880f0b00029e428e0aba",
+   "src/hci/__main__.py": "cf7390a2508a0fcad4777a4a629fc5212ab655cb45845975995f835676a834e3",
+   "src/hci/cli.py": "57fdd4031489c8a55e2466125681962f6790232f068da2c842fef0d381385a3c",
+   "src/hci/decisions.py": "47bbf304fa878bdbc9cce4fa5b9d7f85a2a942ddeaad008aaf1058a95846e12c",
+   "src/hci/diagnostics.py": "49c79927d8cf5f8a208189647c75de1c67c3d4ee873fb87074db506e6534769d",
+   "src/hci/experiment.py": "b7425dcfcff7ff188992bde22e1e2308292aea58eb8a11c557a1ced8ff595d29",
+   "src/hci/freeze.py": "b35f48e13797efb8ea53e03c63ab032e21a0b6d3fd18913f38efec7d70797883",
+   "src/hci/handoff_h1.py": "f65ed3d7c2b943ef9962a36c96048e560633ebd142933e6f75009ceb3a3cc6f9",
+   "src/hci/integrity.py": "c443eaed113fe9c5a82e05a47edd45735a863dad534d2195c74daa77fc064768",
+   "src/hci/io.py": "60f2701b2e52ba80fc7e05142a06ae56c306c4298cd749ca5e418b54cb454a44",
+   "src/hci/models.py": "aea2e7c3aa50c89e83732454436f009b0e0d100beb75ea2590889cb9531d4402",
+   "src/hci/observations.py": "f9736618c952a42c6836b77c07d77ab96ad032ef60a77ef6d8018820e6acd657",
+   "src/hci/pilot.py": "4e730c36abdbcaa84d71c8643078b7aece7b01de958c81f4f67a75c62cebfac6",
+   "src/hci/pilot2b.py": "625ba28e118e04095a0a0adcfd5b6a1f41416c85eab7c988c7e92a8ab2ba5e34",
+   "src/hci/pilot2d.py": "efefdc292630bb565bb319b2fc6cb7a9834603b28b7677b36601403ade52ee0d",
+   "src/hci/policies.py": "d9083dfe1eff702bae087b96840d2703dbb609fb7947c01eb49864bbd0eb9157",
+   "src/hci/recovery_v1.py": "84512bbf4e89661b9e4b2923d37b896461f4a7d0fd5ea93fd27b1341d2d40464",
+   "src/hci/recovery_v1_oracle.py": "f652ead0a47750bd55ff990391ff4bb02d4af44331d351d4adea7112a973e765",
+   "src/hci/reporting.py": "407f5022448d622629fcb89f052c4558acb732b7bda04203980586ffb293af20",
+   "src/hci/schema.py": "52ef9c07a41ef6e007b5d57429fa062bb66d56b9047e4db0d731117e08589db6",
+   "src/hci/simulation.py": "c42626728cac7eb9ebeffd5372683fc4ba01e41ef9d050f01e51134b0208fe9d",
+   "src/hci/smoke.py": "163be9bbb585f59d7fbccfbf3f6646a61a5ade9c5de17b7d194ab50365877ccf",
+   "src/hci/statistics.py": "2e43b5f3134359412913abeee3eca3f30e27681ece10f1ae195ae0490ce1f5ad",
+   "src/hci/training.py": "3ba4d7b8510f227b2ad4ad812d2925b7f28cfe64df843e9fa44f2fd309fa2e03",
+   "src/hci/trees.py": "5f0fc7c28a89b32175abea983ac5202ffe535a0fe105e1ff6e855299177d8a60",
+   "src/hci/vision_center.py": "cc4a743976eb33da0824c1954a0ac19d075fc87b1369e45139812c09dce2797d",
+   "src/hci/vision_center_v2.py": "ab548ccc3825f9e25a7f979d4348563c34c1926c078e0acbd51f0101fd174fbc",
+   "src/hci/vision_v1.py": "deab7d2697dea81a995519cc568622f9c0d90df256d9281f2e3517811f06c9f7"
+  },
+  "tests": {
+   "tests/test_recovery_v1_oracle.py": "657aec3118d829dfdc46fde60ac881eb683f69bfa85b3dc45b00a87dc130d60f",
+   "tests/test_vision_center.py": "f9b2703c602032054655115cc4d7732aa61d5e16860ce6a96e984fe96a212094",
+   "tests/test_vision_center_v2.py": "631a7cafb5cff4253a37d950fde131351d0a02b775c9f581017ca59d9577195c"
+  },
+  "tests_changed_since_execution_commit": [
+   "tests/test_recovery_v1_oracle.py"
+  ],
+  "tests_note": "Phase C0 changed one assertion in tests/test_recovery_v1_oracle.py: the seed-use scan also accepts the post-pass folder (offline audit of used records). No code under src/ or scripts/ changed.",
+  "rules_sha256_recorded_in_result": {
+   "src/hci/vision_center.py": "cc4a743976eb33da0824c1954a0ac19d075fc87b1369e45139812c09dce2797d",
+   "src/hci/vision_center_v2.py": "ab548ccc3825f9e25a7f979d4348563c34c1926c078e0acbd51f0101fd174fbc"
+  }
+ },
+ "rules": {
+  "v2_memory": {
+   "confirm_min": 3,
+   "contact_radius_m": 0.1,
+   "contact_tcp_z_m": 0.09,
+   "finger_tol_m": 0.001,
+   "hold_every": 4,
+   "hold_width_max_m": 0.075,
+   "u_hand_m": 0.002,
+   "u_base_m": 0.005,
+   "u_hold_m": 0.002,
+   "u_push_m": 0.005,
+   "base_view": {
+    "ratio_min": 0.9,
+    "ratio_max": 1.25,
+    "pixels_min": 9
+   }
+  },
+  "v2_decision": {
+   "act_min_m": 0.015,
+   "residual_tol_m": 0.01,
+   "memory_stop_tol_m": 0.005,
+   "carry_z_min_m": 0.058,
+   "steps_left_min": 20,
+   "side_offset_m": 0.04,
+   "side_gap_min_m": 0.003,
+   "memory_gap_min_m": 0.0,
+   "target_jump_max_m": 0.003,
+   "hold_shift_max_m": 0.003,
+   "check": {
+    "outside_pixels_max": 8,
+    "inside_pixels_min": 30,
+    "inside_green_min": 0.7,
+    "slack_m": 0.004
+   }
+  },
+  "v2_abstain_reasons": [
+   "NO_HOLD_ESTIMATE",
+   "NO_TARGET_ESTIMATE",
+   "MEMORY_CONTRADICTED",
+   "LOW_CARRY",
+   "SIDE_CONTACT_RISK",
+   "TOO_FEW_STEPS",
+   "ALIGNED",
+   "ALIGNED_WITHIN_UNCERTAINTY"
+  ],
+  "v2_memory_error_reporting_m": 0.005,
+  "v2_intervention": "vision_center_v2_xy",
+  "v2_noise_repeat": 0,
+  "v1_constants": {
+   "ACT_MIN_M": 0.015,
+   "RESIDUAL_TOL_M": 0.01,
+   "CARRY_Z_MIN_M": 0.058,
+   "STEPS_LEFT_MIN": 20,
+   "TARGET_TOP_Z_M": 0.04,
+   "CUBE_HALF_M": 0.02,
+   "IMG": 128,
+   "PIXEL_CENTRE": 0.5
+  },
+  "v1_abstain_reasons": [
+   "NO_TARGET_ESTIMATE",
+   "NO_HOLD_ESTIMATE",
+   "LOW_CARRY",
+   "TOO_FEW_STEPS",
+   "ALIGNED"
+  ],
+  "move_bounds": {
+   "step_cmd_m": 0.005,
+   "target_cap_m": 0.03,
+   "max_steps": 12,
+   "min_cmd_m": 1e-06
+  },
+  "trigger": {
+   "rule": "the oracle pilot trigger, unchanged (hci.recovery_v1_oracle.trigger_rule)",
+   "open_cmd_above": 0.0,
+   "close_run_min": 3,
+   "width_min_m": 0.02,
+   "width_max_m": 0.06
+  },
+  "gate_B2": {
+   "rescue_min": 6,
+   "net_min": 5,
+   "harm_max": 2,
+   "memory_errors_max": 1,
+   "oracle_recovery_min": 0.5,
+   "v2_rescue_minus_v1_rescue_min": 2
+  },
+  "shadow_pass_B1": {
+   "v2_unnecessary_acts_max": 2,
+   "v2_harm_max": 2,
+   "v2_memory_errors_max": 2,
+   "v2_target_pushed_max": 1,
+   "v2_net_minus_v1_net_min": 3,
+   "v2_memory_acts_min": 5
+  },
+  "arms": [
+   "C0",
+   "VISION_CENTER_V1",
+   "VISION_CENTER_V2",
+   "CENTER_ORACLE"
+  ],
+  "rules_digest_sha256": "deb5d0b58b8ff411a13ef2402af6cda2addcef63a6b0f1426c470d6a120b4fc2",
+  "frozen_since": "the plan hash above; no constant was changed after an outcome"
+ },
+ "seed_registries": {
+  "configs/policy_eval_splits.json": "579d59ade70f9fe9a6262abaf2598c091da6cb2d6d1a1e9964183965ce6128f0",
+  "configs/recovery_v1_splits.json": "1809cc28432c24c69dfb7f5dd72e23875bf3bc12e3628e4eb3dc7d16486aba12",
+  "configs/splits.json": "828b8f131d85e7ba6a3e720cfdaff022165f6848dd29e0b714bba609797e3224",
+  "configs/vision_center_splits.json": "9f80c8cf1c63a3ba888f4ce4d183250c39ed2f47315bb012b0b6f48dfbb9e874",
+  "configs/vision_center_v2_splits.json": "b538e892a5a251b8bba785d2eb643b5b6499ad6e9e759cd26312b0622f97676b",
+  "configs/vision_v1_splits.json": "a9a303ae46a2154cf50fe52392e315955a5bbc5aff180b0d2af2e33aa3d4f124"
+ },
+ "evidence_development_only": {
+  "ledger": {
+   "artifacts/ledger/vision_center_v2_pilot.json": "049a9f37975a382b64a371103874ab5cc24144e73f8aedd550bc0e337060e344"
+  },
+  "stage_B2": {
+   "results/vision_center_v2_001/execution/pilot/result.json": "fdabd41c5cc61215d476518e074ddcc984ad92502c844678316d01362916a865",
+   "results/vision_center_v2_001/execution/result_local_recomputed.json": "f59c1ee21f04c27840f3d43fe5288e7639ba17ae691b07ad29983a644cd34930",
+   "scene_records_digest_sha256": "d750148d026429975f135d2b6af1d0816a8202c8fa1e95f2ffbddcf5568756f8",
+   "label": "V2_GATE_PASS",
+   "success": {
+    "C0": 165,
+    "VISION_CENTER_V1": 173,
+    "VISION_CENTER_V2": 184,
+    "CENTER_ORACLE": 190
+   }
+  },
+  "stage_B1": {
+   "results/vision_center_v2_001/execution/shadow/shadow_result.json": "c0554324d7593e003d75987ca1e6c22e442e517d05284597d657db866b0e00d0",
+   "scene_records_digest_sha256": "655a086dbd7d6072b90fd729de6e7cafcb9458923e851a1e087cdecee2187b4a",
+   "label": "V2_SHADOW_PASS"
+  },
+  "archive_file_list": {
+   "results/vision_center_v2_001/execution/archive_file_sha256.txt": "4b461de5679d16db694175b7f733eb21760fdb03d9f8ef032a1d737f16108ce1"
+  },
+  "server_backup_archive_sha256": "b4611a2fe0dd18f68454fb068e9afd61d191cb1d168846475f6fbffd5dddb6b4",
+  "cost": {
+   "results/vision_center_v2_001/execution/cost.json": "6876bed4bed83ce6ae156c2109989136873628a195de05a49fc68d514e76eff3"
+  },
+  "scope": "development data. Not calibration, not Test, no statistical guarantee."
+ },
+ "analysis_scripts": {
+  "results/vision_center_v2_001/execution/posthoc_analysis/figure_results.py": "16a6ef5fdc028a61fc3c125ff268d8cb8da42f0585f4d03dfb80816babb4a778",
+  "results/vision_center_v2_001/execution/posthoc_analysis/posthoc_analysis.py": "950ff19e7facec86f25e722aaa60f9044efd055d6b9c842947ab0669d7850b99",
+  "results/vision_center_v2_001/postpass/memory_risk.py": "daf66824411fc73180e7cf309b11923911a54f305e125c6ce342a963ab2052e8",
+  "results/vision_center_v2_001/postpass/next_phase_plan_draft.py": "8a772bf81eff7dbe0c03df7dcf7b75e77007b63d2851c12c0df4a69422d2b3a2",
+  "results/vision_center_v2_001/postpass/postpass_stats.py": "d7485c4835ce575de523fa4ac601f3c6a668eb9385dd8b7f88ec59e1b9b62a51",
+  "results/vision_center_v2_001/postpass/seed_and_split_audit.py": "cf524f4277d3e4f58ff6aa8b74481abce6909418c1888c5fb6e3dbc940839095"
+ },
+ "analysis_outputs": {
+  "results/vision_center_v2_001/execution/posthoc_analysis/posthoc_analysis.json": "c33354cb58fe6befe9570d984995954b6b9f6c37754fd03fd8ac3100bdb56099",
+  "results/vision_center_v2_001/postpass/component_attribution_from_logs.json": "5964ed87565f1319e4f6489cce9c1e58b8b3f9fa3e44b8029d07d069a45a2aee",
+  "results/vision_center_v2_001/postpass/memory_risk.json": "617f2ed081c0969ede763168de0ccec2d7b33845c120a06233e88b103b39f81d",
+  "results/vision_center_v2_001/postpass/postpass_stats.json": "85627a0ce855ed1da75e4efdb93d110a8f75c464389e1f01a5ca79b947049437",
+  "results/vision_center_v2_001/postpass/seed_and_split_audit.json": "e7c363731471692c213a89a2605ed6c56369542640d3dffe6a8b7fc11d57522d"
+ },
+ "open_before_a_real_freeze": [
+  "protocol amendment for the new research cycle (the v0.3 freeze code expects selector heads, a candidate registry and a calibration evaluation; v2 has none)",
+  "decision on the memory safety issues (keep v2 as the candidate, or a separate v2s candidate with its own development evidence)",
+  "candidate list and multiplicity family, epsilon, delta",
+  "calibration and Test seed sets and their single-use ledgers",
+  "pre-registered analysis script and its hash",
+  "full pip freeze of the execution host",
+  "policy seeds covered by the claim"
+ ],
+ "how_to_check": "recompute every sha256 listed here; `git diff --name-only fd23aa2 -- <code files>` must be empty; hci.vision_center_v2.MEMORY / DECISION / GATE must equal `rules`",
+ "consistency_checks": {
+  "problems": [],
+  "pass": true
+ }
+}

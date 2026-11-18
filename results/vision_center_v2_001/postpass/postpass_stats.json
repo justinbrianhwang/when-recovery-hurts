@@ -1,0 +1,1273 @@
+{
+ "work_id": "vision_center_v2_001",
+ "phase": "C0 post-pass",
+ "status": "EXPLORATORY. Stage B2 is development data: the scenes were new, the gate was fixed in advance, but these tests, intervals and their family were chosen after the result. Stage B1 is design data. Neither is calibration or Test.",
+ "unit": "initial scene (one seed = one scene = one paired observation across arms)",
+ "checks": {
+  "b2_success_counts_equal_expected": true,
+  "b2_counts": {
+   "C0": 165,
+   "VISION_CENTER_V1": 173,
+   "VISION_CENTER_V2": 184,
+   "CENTER_ORACLE": 190
+  },
+  "equal_to_stored_result_json": true,
+  "record_files": {
+   "pilot": 200,
+   "shadow": 300
+  },
+  "records_digest_sha256": {
+   "pilot": "d750148d026429975f135d2b6af1d0816a8202c8fa1e95f2ffbddcf5568756f8",
+   "shadow": "655a086dbd7d6072b90fd729de6e7cafcb9458923e851a1e087cdecee2187b4a"
+  }
+ },
+ "stage_B2_new_scenes_50900_51099": {
+  "scenes": 200,
+  "triggered": 197,
+  "success": {
+   "C0": {
+    "k": 165,
+    "n": 200,
+    "wilson95": [
+     0.7663556885175099,
+     0.8713948493372666
+    ],
+    "clopper_pearson95": [
+     0.7651160293697908,
+     0.8749755892262882
+    ]
+   },
+   "VISION_CENTER_V1": {
+    "k": 173,
+    "n": 200,
+    "wilson95": [
+     0.8107086162924745,
+     0.9055342954521209
+    ],
+    "clopper_pearson95": [
+     0.8096908273166017,
+     0.9091128982451023
+    ]
+   },
+   "VISION_CENTER_V2": {
+    "k": 184,
+    "n": 200,
+    "wilson95": [
+     0.874010511732856,
+     0.9501594141102401
+    ],
+    "clopper_pearson95": [
+     0.8733351439779183,
+     0.9535823916001774
+    ]
+   },
+   "CENTER_ORACLE": {
+    "k": 190,
+    "n": 200,
+    "wilson95": [
+     0.9104218518612239,
+     0.972617354399236
+    ],
+    "clopper_pearson95": [
+     0.9099724622986486,
+     0.9757658345278915
+    ]
+   }
+  },
+  "paired": {
+   "VISION_CENTER_V1_vs_C0": {
+    "reference": "C0",
+    "arm": "VISION_CENTER_V1",
+    "n": 200,
+    "table": {
+     "both_succeed": 165,
+     "rescue": 8,
+     "harm": 0,
+     "both_fail": 27
+    },
+    "reference_success": 165,
+    "arm_success": 173,
+    "difference_pp": 4.0,
+    "difference_ci95_pp": {
+     "tango_score": [
+      2.0400860568071244,
+      7.6932068200930255
+     ],
+     "newcombe_method10": [
+      1.0404387942806879,
+      7.310195830343419
+     ],
+     "bootstrap_percentile": [
+      1.5,
+      7.000000000000001
+     ]
+    },
+    "exact_paired_test": {
+     "discordant": 8,
+     "p_two_sided": 0.0078125,
+     "p_one_sided_arm_better": 0.00390625
+    },
+    "rescue": {
+     "count": 8,
+     "given_reference_failure": 0.22857142857142856,
+     "denominator": 35,
+     "clopper_pearson95": [
+      0.10421043194781518,
+      0.40136325610731466
+     ],
+     "per_scene": 0.04,
+     "per_scene_clopper_pearson95": [
+      0.0174248089944806,
+      0.07729196822601608
+     ]
+    },
+    "harm": {
+     "count": 0,
+     "given_reference_success": 0.0,
+     "denominator": 165,
+     "upper95_one_sided": 0.01799212682800506,
+     "upper97_5_one_sided": 0.022108782981671043,
+     "rule_of_three": 0.01818181818181818,
+     "per_scene_upper95_one_sided": 0.014867039231272056,
+     "binomial_p_against_epsilon_0_05": 0.00021105462453393
+    },
+    "net": {
+     "count": 8,
+     "per_scene_pp": 4.0,
+     "ci95_pp_tango": [
+      2.0400860568071244,
+      7.6932068200930255
+     ],
+     "conservative_bonferroni_lower_pp": -0.6383572853966762,
+     "conservative_note": "rescue lower limit minus harm upper limit, each Clopper-Pearson at 97.5 % two-sided"
+    },
+    "rescue_scenes": [
+     50922,
+     50983,
+     50989,
+     50992,
+     50995,
+     51012,
+     51029,
+     51039
+    ],
+    "harm_scenes": []
+   },
+   "VISION_CENTER_V2_vs_C0": {
+    "reference": "C0",
+    "arm": "VISION_CENTER_V2",
+    "n": 200,
+    "table": {
+     "both_succeed": 165,
+     "rescue": 19,
+     "harm": 0,
+     "both_fail": 16
+    },
+    "reference_success": 165,
+    "arm_success": 184,
+    "difference_pp": 9.5,
+    "difference_ci95_pp": {
+     "tango_score": [
+      6.166310271738657,
+      14.36016116482007
+     ],
+     "newcombe_method10": [
+      5.451817770317464,
+      14.15799684655275
+     ],
+     "bootstrap_percentile": [
+      5.5,
+      13.5
+     ]
+    },
+    "exact_paired_test": {
+     "discordant": 19,
+     "p_two_sided": 3.814697265625e-06,
+     "p_one_sided_arm_better": 1.9073486328125e-06
+    },
+    "rescue": {
+     "count": 19,
+     "given_reference_failure": 0.5428571428571428,
+     "denominator": 35,
+     "clopper_pearson95": [
+      0.3664580171214522,
+      0.711728556209243
+     ],
+     "per_scene": 0.095,
+     "per_scene_clopper_pearson95": [
+      0.05816960972512025,
+      0.14437663997685252
+     ]
+    },
+    "harm": {
+     "count": 0,
+     "given_reference_success": 0.0,
+     "denominator": 165,
+     "upper95_one_sided": 0.01799212682800506,
+     "upper97_5_one_sided": 0.022108782981671043,
+     "rule_of_three": 0.01818181818181818,
+     "per_scene_upper95_one_sided": 0.014867039231272056,
+     "binomial_p_against_epsilon_0_05": 0.00021105462453393
+    },
+    "net": {
+     "count": 19,
+     "per_scene_pp": 9.5,
+     "ci95_pp_tango": [
+      6.166310271738657,
+      14.36016116482007
+     ],
+     "conservative_bonferroni_lower_pp": 3.2309241948736007,
+     "conservative_note": "rescue lower limit minus harm upper limit, each Clopper-Pearson at 97.5 % two-sided"
+    },
+    "rescue_scenes": [
+     50922,
+     50936,
+     50947,
+     50959,
+     50969,
+     50971,
+     50983,
+     50986,
+     50989,
+     50992,
+     50993,
+     50995,
+     50997,
+     51012,
+     51029,
+     51034,
+     51036,
+     51039,
+     51086
+    ],
+    "harm_scenes": []
+   },
+   "CENTER_ORACLE_vs_C0": {
+    "reference": "C0",
+    "arm": "CENTER_ORACLE",
+    "n": 200,
+    "table": {
+     "both_succeed": 165,
+     "rescue": 25,
+     "harm": 0,
+     "both_fail": 10
+    },
+    "reference_success": 165,
+    "arm_success": 190,
+    "difference_pp": 12.5,
+    "difference_ci95_pp": {
+     "tango_score": [
+      8.611974475712646,
+      17.80142500258236
+     ],
+     "newcombe_method10": [
+      8.027335483640712,
+      17.705190150598852
+     ],
+     "bootstrap_percentile": [
+      8.0,
+      17.0
+     ]
+    },
+    "exact_paired_test": {
+     "discordant": 25,
+     "p_two_sided": 5.960464477539063e-08,
+     "p_one_sided_arm_better": 2.9802322387695312e-08
+    },
+    "rescue": {
+     "count": 25,
+     "given_reference_failure": 0.7142857142857143,
+     "denominator": 35,
+     "clopper_pearson95": [
+      0.5369553554455799,
+      0.8536452547209408
+     ],
+     "per_scene": 0.125,
+     "per_scene_clopper_pearson95": [
+      0.08255234182881688,
+      0.17897375007879948
+     ]
+    },
+    "harm": {
+     "count": 0,
+     "given_reference_success": 0.0,
+     "denominator": 165,
+     "upper95_one_sided": 0.01799212682800506,
+     "upper97_5_one_sided": 0.022108782981671043,
+     "rule_of_three": 0.01818181818181818,
+     "per_scene_upper95_one_sided": 0.014867039231272056,
+     "binomial_p_against_epsilon_0_05": 0.00021105462453393
+    },
+    "net": {
+     "count": 25,
+     "per_scene_pp": 12.5,
+     "ci95_pp_tango": [
+      8.611974475712646,
+      17.80142500258236
+     ],
+     "conservative_bonferroni_lower_pp": 5.585639612889117,
+     "conservative_note": "rescue lower limit minus harm upper limit, each Clopper-Pearson at 97.5 % two-sided"
+    },
+    "rescue_scenes": [
+     50922,
+     50926,
+     50936,
+     50947,
+     50959,
+     50969,
+     50971,
+     50983,
+     50986,
+     50989,
+     50992,
+     50993,
+     50995,
+     50997,
+     50998,
+     51003,
+     51012,
+     51029,
+     51034,
+     51036,
+     51039,
+     51047,
+     51049,
+     51067,
+     51086
+    ],
+    "harm_scenes": []
+   },
+   "VISION_CENTER_V2_vs_VISION_CENTER_V1": {
+    "reference": "VISION_CENTER_V1",
+    "arm": "VISION_CENTER_V2",
+    "n": 200,
+    "table": {
+     "both_succeed": 173,
+     "rescue": 11,
+     "harm": 0,
+     "both_fail": 16
+    },
+    "reference_success": 173,
+    "arm_success": 184,
+    "difference_pp": 5.5,
+    "difference_ci95_pp": {
+     "tango_score": [
+      3.0985341703691835,
+      9.578699877231918
+     ],
+     "newcombe_method10": [
+      2.2202678440385197,
+      9.374317153845062
+     ],
+     "bootstrap_percentile": [
+      2.5,
+      9.0
+     ]
+    },
+    "exact_paired_test": {
+     "discordant": 11,
+     "p_two_sided": 0.0009765625,
+     "p_one_sided_arm_better": 0.00048828125
+    },
+    "rescue": {
+     "count": 11,
+     "given_reference_failure": 0.4074074074074074,
+     "denominator": 27,
+     "clopper_pearson95": [
+      0.22389729135058145,
+      0.6120160697403181
+     ],
+     "per_scene": 0.055,
+     "per_scene_clopper_pearson95": [
+      0.02777225455200654,
+      0.09627764443391285
+     ]
+    },
+    "harm": {
+     "count": 0,
+     "given_reference_success": 0.0,
+     "denominator": 173,
+     "upper95_one_sided": 0.017167304833652395,
+     "upper97_5_one_sided": 0.02109727465068494,
+     "rule_of_three": 0.017341040462427744,
+     "per_scene_upper95_one_sided": 0.014867039231272056,
+     "binomial_p_against_epsilon_0_05": 0.00014001795003385094
+    },
+    "net": {
+     "count": 11,
+     "per_scene_pp": 5.5,
+     "ci95_pp_tango": [
+      3.0985341703691835,
+      9.578699877231918
+     ],
+     "conservative_bonferroni_lower_pp": 0.33068030006443216,
+     "conservative_note": "rescue lower limit minus harm upper limit, each Clopper-Pearson at 97.5 % two-sided"
+    },
+    "rescue_scenes": [
+     50936,
+     50947,
+     50959,
+     50969,
+     50971,
+     50986,
+     50993,
+     50997,
+     51034,
+     51036,
+     51086
+    ],
+    "harm_scenes": []
+   },
+   "CENTER_ORACLE_vs_VISION_CENTER_V2": {
+    "reference": "VISION_CENTER_V2",
+    "arm": "CENTER_ORACLE",
+    "n": 200,
+    "table": {
+     "both_succeed": 184,
+     "rescue": 6,
+     "harm": 0,
+     "both_fail": 10
+    },
+    "reference_success": 184,
+    "arm_success": 190,
+    "difference_pp": 3.0,
+    "difference_ci95_pp": {
+     "tango_score": [
+      1.0589313831377425,
+      6.389429245451924
+     ],
+     "newcombe_method10": [
+      0.3173396616247721,
+      6.310703372885292
+     ],
+     "bootstrap_percentile": [
+      1.0,
+      5.5
+     ]
+    },
+    "exact_paired_test": {
+     "discordant": 6,
+     "p_two_sided": 0.03125,
+     "p_one_sided_arm_better": 0.015625
+    },
+    "rescue": {
+     "count": 6,
+     "given_reference_failure": 0.375,
+     "denominator": 16,
+     "clopper_pearson95": [
+      0.1519836750811221,
+      0.6456539056979218
+     ],
+     "per_scene": 0.03,
+     "per_scene_clopper_pearson95": [
+      0.011087455672254777,
+      0.064150626705027
+     ]
+    },
+    "harm": {
+     "count": 0,
+     "given_reference_success": 0.0,
+     "denominator": 184,
+     "upper95_one_sided": 0.01614933205056557,
+     "upper97_5_one_sided": 0.01984862788420177,
+     "rule_of_three": 0.016304347826086956,
+     "per_scene_upper95_one_sided": 0.014867039231272056,
+     "binomial_p_against_epsilon_0_05": 7.964222289961524e-05
+    },
+    "net": {
+     "count": 6,
+     "per_scene_pp": 3.0,
+     "ci95_pp_tango": [
+      1.0589313831377425,
+      6.389429245451924
+     ],
+     "conservative_bonferroni_lower_pp": -1.2216438787283508,
+     "conservative_note": "rescue lower limit minus harm upper limit, each Clopper-Pearson at 97.5 % two-sided"
+    },
+    "rescue_scenes": [
+     50926,
+     50998,
+     51003,
+     51047,
+     51049,
+     51067
+    ],
+    "harm_scenes": []
+   }
+  },
+  "wilson_overlap": {
+   "VISION_CENTER_V1_vs_C0": {
+    "reference": [
+     0.7663556885175099,
+     0.8713948493372666
+    ],
+    "arm": [
+     0.8107086162924745,
+     0.9055342954521209
+    ],
+    "overlap": true,
+    "gap_pp": -6.068623304479215
+   },
+   "VISION_CENTER_V2_vs_C0": {
+    "reference": [
+     0.7663556885175099,
+     0.8713948493372666
+    ],
+    "arm": [
+     0.874010511732856,
+     0.9501594141102401
+    ],
+    "overlap": false,
+    "gap_pp": 0.2615662395589413
+   },
+   "CENTER_ORACLE_vs_C0": {
+    "reference": [
+     0.7663556885175099,
+     0.8713948493372666
+    ],
+    "arm": [
+     0.9104218518612239,
+     0.972617354399236
+    ],
+    "overlap": false,
+    "gap_pp": 3.90270025239573
+   },
+   "VISION_CENTER_V2_vs_VISION_CENTER_V1": {
+    "reference": [
+     0.8107086162924745,
+     0.9055342954521209
+    ],
+    "arm": [
+     0.874010511732856,
+     0.9501594141102401
+    ],
+    "overlap": true,
+    "gap_pp": -3.1523783719264897
+   },
+   "CENTER_ORACLE_vs_VISION_CENTER_V2": {
+    "reference": [
+     0.874010511732856,
+     0.9501594141102401
+    ],
+    "arm": [
+     0.9104218518612239,
+     0.972617354399236
+    ],
+    "overlap": true,
+    "gap_pp": -3.9737562249016145
+   }
+  },
+  "acted_on_success": {
+   "VISION_CENTER_V1": {
+    "acts": 23,
+    "acts_on_reference_success": 14,
+    "harm_among_them": 0,
+    "upper95_one_sided": 0.19263617565013527,
+    "acts_on_reference_failure": 9,
+    "rescues": 8
+   },
+   "VISION_CENTER_V2": {
+    "acts": 34,
+    "acts_on_reference_success": 15,
+    "harm_among_them": 0,
+    "upper95_one_sided": 0.18103627252208462,
+    "acts_on_reference_failure": 19,
+    "rescues": 19
+   },
+   "CENTER_ORACLE": {
+    "acts": 197,
+    "acts_on_reference_success": 165,
+    "harm_among_them": 0,
+    "upper95_one_sided": 0.01799212682800506,
+    "acts_on_reference_failure": 32,
+    "rescues": 25
+   }
+  }
+ },
+ "stage_B1_used_scenes_50600_50899_design_data": {
+  "scenes": 300,
+  "triggered": 287,
+  "success": {
+   "C0": {
+    "k": 253,
+    "n": 300,
+    "wilson95": [
+     0.7978919765479306,
+     0.8800931832112144
+    ],
+    "clopper_pearson95": [
+     0.7971688875873384,
+     0.8825596521730839
+    ]
+   },
+   "VISION_CENTER_V1": {
+    "k": 265,
+    "n": 300,
+    "wilson95": [
+     0.8420668566758442,
+     0.9149068653853369
+    ],
+    "clopper_pearson95": [
+     0.8414936728167545,
+     0.91737743306946
+    ]
+   },
+   "VISION_CENTER_V2": {
+    "k": 275,
+    "n": 300,
+    "wilson95": [
+     0.8798783980359391,
+     0.9429191259436057
+    ],
+    "clopper_pearson95": [
+     0.8794412631240651,
+     0.945345724121591
+    ]
+   }
+  },
+  "paired": {
+   "VISION_CENTER_V1_vs_C0": {
+    "reference": "C0",
+    "arm": "VISION_CENTER_V1",
+    "n": 300,
+    "table": {
+     "both_succeed": 253,
+     "rescue": 12,
+     "harm": 0,
+     "both_fail": 35
+    },
+    "reference_success": 253,
+    "arm_success": 265,
+    "difference_pp": 4.0,
+    "difference_ci95_pp": {
+     "tango_score": [
+      2.3027321487941657,
+      6.8604212038640044
+     ],
+     "newcombe_method10": [
+      1.6774863215088025,
+      6.61396889422186
+     ],
+     "bootstrap_percentile": [
+      2.0,
+      6.333333333333334
+     ]
+    },
+    "exact_paired_test": {
+     "discordant": 12,
+     "p_two_sided": 0.00048828125,
+     "p_one_sided_arm_better": 0.000244140625
+    },
+    "rescue": {
+     "count": 12,
+     "given_reference_failure": 0.2553191489361702,
+     "denominator": 47,
+     "clopper_pearson95": [
+      0.13944912001756973,
+      0.4034951899715679
+     ],
+     "per_scene": 0.04,
+     "per_scene_clopper_pearson95": [
+      0.02083657630641371,
+      0.0688289881894961
+     ]
+    },
+    "harm": {
+     "count": 0,
+     "given_reference_success": 0.0,
+     "denominator": 253,
+     "upper95_one_sided": 0.011771012166087877,
+     "upper97_5_one_sided": 0.014474769706924151,
+     "rule_of_three": 0.011857707509881422,
+     "per_scene_upper95_one_sided": 0.009936081944457708,
+     "binomial_p_against_epsilon_0_05": 2.312448865431183e-06
+    },
+    "net": {
+     "count": 12,
+     "per_scene_pp": 4.0,
+     "ci95_pp_tango": [
+      2.3027321487941657,
+      6.8604212038640044
+     ],
+     "conservative_bonferroni_lower_pp": 0.43395621569472087,
+     "conservative_note": "rescue lower limit minus harm upper limit, each Clopper-Pearson at 97.5 % two-sided"
+    },
+    "rescue_scenes": [
+     50632,
+     50640,
+     50664,
+     50671,
+     50683,
+     50685,
+     50706,
+     50761,
+     50786,
+     50798,
+     50846,
+     50886
+    ],
+    "harm_scenes": []
+   },
+   "VISION_CENTER_V2_vs_C0": {
+    "reference": "C0",
+    "arm": "VISION_CENTER_V2",
+    "n": 300,
+    "table": {
+     "both_succeed": 253,
+     "rescue": 22,
+     "harm": 0,
+     "both_fail": 25
+    },
+    "reference_success": 253,
+    "arm_success": 275,
+    "difference_pp": 7.333333333333333,
+    "difference_ci95_pp": {
+     "tango_score": [
+      4.89239938392286,
+      10.853134160571747
+     ],
+     "newcombe_method10": [
+      4.405017505382858,
+      10.686916923988772
+     ],
+     "bootstrap_percentile": [
+      4.333333333333334,
+      10.333333333333334
+     ]
+    },
+    "exact_paired_test": {
+     "discordant": 22,
+     "p_two_sided": 4.76837158203125e-07,
+     "p_one_sided_arm_better": 2.384185791015625e-07
+    },
+    "rescue": {
+     "count": 22,
+     "given_reference_failure": 0.46808510638297873,
+     "denominator": 47,
+     "clopper_pearson95": [
+      0.32111526851573946,
+      0.6192221102081308
+     ],
+     "per_scene": 0.07333333333333333,
+     "per_scene_clopper_pearson95": [
+      0.046525664384785045,
+      0.10892446451689587
+     ]
+    },
+    "harm": {
+     "count": 0,
+     "given_reference_success": 0.0,
+     "denominator": 253,
+     "upper95_one_sided": 0.011771012166087877,
+     "upper97_5_one_sided": 0.014474769706924151,
+     "rule_of_three": 0.011857707509881422,
+     "per_scene_upper95_one_sided": 0.009936081944457708,
+     "binomial_p_against_epsilon_0_05": 2.312448865431183e-06
+    },
+    "net": {
+     "count": 22,
+     "per_scene_pp": 7.333333333333333,
+     "ci95_pp_tango": [
+      4.89239938392286,
+      10.853134160571747
+     ],
+     "conservative_bonferroni_lower_pp": 2.892621579182634,
+     "conservative_note": "rescue lower limit minus harm upper limit, each Clopper-Pearson at 97.5 % two-sided"
+    },
+    "rescue_scenes": [
+     50632,
+     50633,
+     50640,
+     50661,
+     50664,
+     50671,
+     50683,
+     50685,
+     50702,
+     50703,
+     50706,
+     50761,
+     50770,
+     50775,
+     50786,
+     50798,
+     50813,
+     50817,
+     50819,
+     50846,
+     50872,
+     50886
+    ],
+    "harm_scenes": []
+   },
+   "VISION_CENTER_V2_vs_VISION_CENTER_V1": {
+    "reference": "VISION_CENTER_V1",
+    "arm": "VISION_CENTER_V2",
+    "n": 300,
+    "table": {
+     "both_succeed": 265,
+     "rescue": 10,
+     "harm": 0,
+     "both_fail": 25
+    },
+    "reference_success": 265,
+    "arm_success": 275,
+    "difference_pp": 3.3333333333333335,
+    "difference_ci95_pp": {
+     "tango_score": [
+      1.820494733885904,
+      6.026182580405483
+     ],
+     "newcombe_method10": [
+      1.1732948669250804,
+      5.85370366993557
+     ],
+     "bootstrap_percentile": [
+      1.3333333333333335,
+      5.333333333333334
+     ]
+    },
+    "exact_paired_test": {
+     "discordant": 10,
+     "p_two_sided": 0.001953125,
+     "p_one_sided_arm_better": 0.0009765625
+    },
+    "rescue": {
+     "count": 10,
+     "given_reference_failure": 0.2857142857142857,
+     "denominator": 35,
+     "clopper_pearson95": [
+      0.14635474527905926,
+      0.46304464455442
+     ],
+     "per_scene": 0.03333333333333333,
+     "per_scene_clopper_pearson95": [
+      0.016098167562619323,
+      0.0604453222012656
+     ]
+    },
+    "harm": {
+     "count": 0,
+     "given_reference_success": 0.0,
+     "denominator": 265,
+     "upper95_one_sided": 0.011240992632960054,
+     "upper97_5_one_sided": 0.013823860460125674,
+     "rule_of_three": 0.011320754716981131,
+     "per_scene_upper95_one_sided": 0.009936081944457708,
+     "binomial_p_against_epsilon_0_05": 1.2495550716397585e-06
+    },
+    "net": {
+     "count": 10,
+     "per_scene_pp": 3.3333333333333335,
+     "ci95_pp_tango": [
+      1.820494733885904,
+      6.026182580405483
+     ],
+     "conservative_bonferroni_lower_pp": -0.012629543777704227,
+     "conservative_note": "rescue lower limit minus harm upper limit, each Clopper-Pearson at 97.5 % two-sided"
+    },
+    "rescue_scenes": [
+     50633,
+     50661,
+     50702,
+     50703,
+     50770,
+     50775,
+     50813,
+     50817,
+     50819,
+     50872
+    ],
+    "harm_scenes": []
+   }
+  },
+  "wilson_overlap": {
+   "VISION_CENTER_V1_vs_C0": {
+    "reference": [
+     0.7978919765479306,
+     0.8800931832112144
+    ],
+    "arm": [
+     0.8420668566758442,
+     0.9149068653853369
+    ],
+    "overlap": true,
+    "gap_pp": -3.802632653537019
+   },
+   "VISION_CENTER_V2_vs_C0": {
+    "reference": [
+     0.7978919765479306,
+     0.8800931832112144
+    ],
+    "arm": [
+     0.8798783980359391,
+     0.9429191259436057
+    ],
+    "overlap": true,
+    "gap_pp": -0.02147851752752894
+   },
+   "VISION_CENTER_V2_vs_VISION_CENTER_V1": {
+    "reference": [
+     0.8420668566758442,
+     0.9149068653853369
+    ],
+    "arm": [
+     0.8798783980359391,
+     0.9429191259436057
+    ],
+    "overlap": true,
+    "gap_pp": -3.5028467349397796
+   }
+  },
+  "acted_on_success": {
+   "VISION_CENTER_V1": {
+    "acts": 40,
+    "acts_on_reference_success": 27,
+    "harm_among_them": 0,
+    "upper95_one_sided": 0.10501923017634426,
+    "acts_on_reference_failure": 13,
+    "rescues": 12
+   },
+   "VISION_CENTER_V2": {
+    "acts": 54,
+    "acts_on_reference_success": 32,
+    "harm_among_them": 0,
+    "upper95_one_sided": 0.08936819898626475,
+    "acts_on_reference_failure": 22,
+    "rescues": 22
+   }
+  }
+ },
+ "multiplicity_exploratory": {
+  "family": [
+   "VISION_CENTER_V2_vs_C0",
+   "VISION_CENTER_V2_vs_VISION_CENTER_V1",
+   "VISION_CENTER_V1_vs_C0"
+  ],
+  "p_two_sided": [
+   3.814697265625e-06,
+   0.0009765625,
+   0.0078125
+  ],
+  "holm_reject_at_0_05": [
+   true,
+   true,
+   true
+  ],
+  "note": "descriptive; the family was not declared before the run"
+ },
+ "planning_for_a_confirmatory_run": {
+  "zero_harm_n_plus_needed_epsilon_0_05_delta_0_05": {
+   "1": 59,
+   "2": 72,
+   "3": 80,
+   "4": 86,
+   "6": 94
+  },
+  "harm_certificate": [
+   {
+    "calibration_scenes": 200,
+    "assumed_base_success": 0.8,
+    "n_plus": 160,
+    "candidates_holm_worst_case": 1,
+    "alpha_per_test": 0.05,
+    "max_harm_count_that_passes": 3,
+    "pass_probability_if_true_harm": {
+     "0.0": 1.0,
+     "0.01": 0.9221584908704484,
+     "0.02": 0.6020748707948823,
+     "0.03": 0.2900726734468885
+    }
+   },
+   {
+    "calibration_scenes": 200,
+    "assumed_base_success": 0.8,
+    "n_plus": 160,
+    "candidates_holm_worst_case": 2,
+    "alpha_per_test": 0.025,
+    "max_harm_count_that_passes": 2,
+    "pass_probability_if_true_harm": {
+     "0.0": 1.0,
+     "0.01": 0.7838819536047504,
+     "0.02": 0.3773729347918262,
+     "0.03": 0.13852509979265776
+    }
+   },
+   {
+    "calibration_scenes": 200,
+    "assumed_base_success": 0.8,
+    "n_plus": 160,
+    "candidates_holm_worst_case": 4,
+    "alpha_per_test": 0.0125,
+    "max_harm_count_that_passes": 2,
+    "pass_probability_if_true_harm": {
+     "0.0": 1.0,
+     "0.01": 0.7838819536047504,
+     "0.02": 0.3773729347918262,
+     "0.03": 0.13852509979265776
+    }
+   },
+   {
+    "calibration_scenes": 200,
+    "assumed_base_success": 0.825,
+    "n_plus": 165,
+    "candidates_holm_worst_case": 1,
+    "alpha_per_test": 0.05,
+    "max_harm_count_that_passes": 3,
+    "pass_probability_if_true_harm": {
+     "0.0": 1.0,
+     "0.01": 0.9151236010322427,
+     "0.02": 0.5796723729773425,
+     "0.03": 0.26786613632651723
+    }
+   },
+   {
+    "calibration_scenes": 200,
+    "assumed_base_success": 0.825,
+    "n_plus": 165,
+    "candidates_holm_worst_case": 2,
+    "alpha_per_test": 0.025,
+    "max_harm_count_that_passes": 2,
+    "pass_probability_if_true_harm": {
+     "0.0": 1.0,
+     "0.01": 0.7708238203284961,
+     "0.02": 0.35678862844341674,
+     "0.03": 0.125059344897276
+    }
+   },
+   {
+    "calibration_scenes": 200,
+    "assumed_base_success": 0.825,
+    "n_plus": 165,
+    "candidates_holm_worst_case": 4,
+    "alpha_per_test": 0.0125,
+    "max_harm_count_that_passes": 2,
+    "pass_probability_if_true_harm": {
+     "0.0": 1.0,
+     "0.01": 0.7708238203284961,
+     "0.02": 0.35678862844341674,
+     "0.03": 0.125059344897276
+    }
+   },
+   {
+    "calibration_scenes": 200,
+    "assumed_base_success": 0.85,
+    "n_plus": 170,
+    "candidates_holm_worst_case": 1,
+    "alpha_per_test": 0.05,
+    "max_harm_count_that_passes": 3,
+    "pass_probability_if_true_harm": {
+     "0.0": 1.0,
+     "0.01": 0.9077906322046422,
+     "0.02": 0.557476187945566,
+     "0.03": 0.24696374248854314
+    }
+   },
+   {
+    "calibration_scenes": 200,
+    "assumed_base_success": 0.85,
+    "n_plus": 170,
+    "candidates_holm_worst_case": 2,
+    "alpha_per_test": 0.025,
+    "max_harm_count_that_passes": 2,
+    "pass_probability_if_true_harm": {
+     "0.0": 1.0,
+     "0.01": 0.7576247903634615,
+     "0.02": 0.3370118822568178,
+     "0.03": 0.11276852332041241
+    }
+   },
+   {
+    "calibration_scenes": 200,
+    "assumed_base_success": 0.85,
+    "n_plus": 170,
+    "candidates_holm_worst_case": 4,
+    "alpha_per_test": 0.0125,
+    "max_harm_count_that_passes": 2,
+    "pass_probability_if_true_harm": {
+     "0.0": 1.0,
+     "0.01": 0.7576247903634615,
+     "0.02": 0.3370118822568178,
+     "0.03": 0.11276852332041241
+    }
+   },
+   {
+    "calibration_scenes": 400,
+    "assumed_base_success": 0.8,
+    "n_plus": 320,
+    "candidates_holm_worst_case": 1,
+    "alpha_per_test": 0.05,
+    "max_harm_count_that_passes": 9,
+    "pass_probability_if_true_harm": {
+     "0.0": 1.0,
+     "0.01": 0.9983508341124865,
+     "0.02": 0.8879702864011776,
+     "0.03": 0.5076818002249763
+    }
+   },
+   {
+    "calibration_scenes": 400,
+    "assumed_base_success": 0.8,
+    "n_plus": 320,
+    "candidates_holm_worst_case": 2,
+    "alpha_per_test": 0.025,
+    "max_harm_count_that_passes": 8,
+    "pass_probability_if_true_harm": {
+     "0.0": 1.0,
+     "0.01": 0.9945503777820653,
+     "0.02": 0.805200901437269,
+     "0.03": 0.37664572519706013
+    }
+   },
+   {
+    "calibration_scenes": 400,
+    "assumed_base_success": 0.8,
+    "n_plus": 320,
+    "candidates_holm_worst_case": 4,
+    "alpha_per_test": 0.0125,
+    "max_harm_count_that_passes": 7,
+    "pass_probability_if_true_harm": {
+     "0.0": 1.0,
+     "0.01": 0.9836971515307665,
+     "0.02": 0.6882095592286668,
+     "0.03": 0.25442938598833476
+    }
+   },
+   {
+    "calibration_scenes": 400,
+    "assumed_base_success": 0.825,
+    "n_plus": 330,
+    "candidates_holm_worst_case": 1,
+    "alpha_per_test": 0.05,
+    "max_harm_count_that_passes": 9,
+    "pass_probability_if_true_harm": {
+     "0.0": 1.0,
+     "0.01": 0.997937889653072,
+     "0.02": 0.8708052973929372,
+     "0.03": 0.4687674077820654
+    }
+   },
+   {
+    "calibration_scenes": 400,
+    "assumed_base_success": 0.825,
+    "n_plus": 330,
+    "candidates_holm_worst_case": 2,
+    "alpha_per_test": 0.025,
+    "max_harm_count_that_passes": 8,
+    "pass_probability_if_true_harm": {
+     "0.0": 1.0,
+     "0.01": 0.9933883209005885,
+     "0.02": 0.7812867503012139,
+     "0.03": 0.3408614545881901
+    }
+   },
+   {
+    "calibration_scenes": 400,
+    "assumed_base_success": 0.825,
+    "n_plus": 330,
+    "candidates_holm_worst_case": 4,
+    "alpha_per_test": 0.0125,
+    "max_harm_count_that_passes": 7,
+    "pass_probability_if_true_harm": {
+     "0.0": 1.0,
+     "0.01": 0.9807992968059837,
+     "0.02": 0.6586852618929839,
+     "0.03": 0.22526942856515808
+    }
+   },
+   {
+    "calibration_scenes": 400,
+    "assumed_base_success": 0.85,
+    "n_plus": 340,
+    "candidates_holm_worst_case": 1,
+    "alpha_per_test": 0.05,
+    "max_harm_count_that_passes": 10,
+    "pass_probability_if_true_harm": {
+     "0.0": 1.0,
+     "0.01": 0.9992510947930334,
+     "0.02": 0.9171627649930859,
+     "0.03": 0.5576605072521921
+    }
+   },
+   {
+    "calibration_scenes": 400,
+    "assumed_base_success": 0.85,
+    "n_plus": 340,
+    "candidates_holm_worst_case": 2,
+    "alpha_per_test": 0.025,
+    "max_harm_count_that_passes": 9,
+    "pass_probability_if_true_harm": {
+     "0.0": 1.0,
+     "0.01": 0.9974455126002891,
+     "0.02": 0.8523130635652814,
+     "0.03": 0.4309280368138111
+    }
+   },
+   {
+    "calibration_scenes": 400,
+    "assumed_base_success": 0.85,
+    "n_plus": 340,
+    "candidates_holm_worst_case": 4,
+    "alpha_per_test": 0.0125,
+    "max_harm_count_that_passes": 8,
+    "pass_probability_if_true_harm": {
+     "0.0": 1.0,
+     "0.01": 0.992045130815344,
+     "0.02": 0.7563119949863565,
+     "0.03": 0.3071309609575928
+    }
+   }
+  ],
+  "paired_superiority_power_monte_carlo": [
+   {
+    "scenes": 200,
+    "true_rescue_per_scene": 0.095,
+    "true_harm_per_scene": 0.0,
+    "power_one_sided_0_025": 0.99991
+   },
+   {
+    "scenes": 200,
+    "true_rescue_per_scene": 0.05,
+    "true_harm_per_scene": 0.005,
+    "power_one_sided_0_025": 0.75484
+   },
+   {
+    "scenes": 200,
+    "true_rescue_per_scene": 0.05,
+    "true_harm_per_scene": 0.01,
+    "power_one_sided_0_025": 0.563095
+   },
+   {
+    "scenes": 200,
+    "true_rescue_per_scene": 0.03,
+    "true_harm_per_scene": 0.01,
+    "power_one_sided_0_025": 0.171265
+   },
+   {
+    "scenes": 400,
+    "true_rescue_per_scene": 0.095,
+    "true_harm_per_scene": 0.0,
+    "power_one_sided_0_025": 1.0
+   },
+   {
+    "scenes": 400,
+    "true_rescue_per_scene": 0.05,
+    "true_harm_per_scene": 0.005,
+    "power_one_sided_0_025": 0.98414
+   },
+   {
+    "scenes": 400,
+    "true_rescue_per_scene": 0.05,
+    "true_harm_per_scene": 0.01,
+    "power_one_sided_0_025": 0.904655
+   },
+   {
+    "scenes": 400,
+    "true_rescue_per_scene": 0.03,
+    "true_harm_per_scene": 0.01,
+    "power_one_sided_0_025": 0.43568
+   }
+  ],
+  "note": "m = number of non-Continue candidates (times policies, if a joint statement over policies is wanted) in the Holm family; worst case uses alpha/m for every test"
+ }
+}
