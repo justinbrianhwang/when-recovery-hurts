@@ -1,0 +1,21 @@
+{
+ "status": "ESTIMATE; nothing was run. The budget gate on the server uses measured times, not these numbers",
+ "basis": {
+  "host": "Vision-CENTER run2: RTX 4090, Intel Core i7-13700K (24 logical CPUs), US$0.4644/h, thread limit 1",
+  "seconds_per_env_step_measured_run2": 0.0113,
+  "seconds_per_vision_reading_measured_run2": 0.30,
+  "seconds_per_memory_step_ASSUMED": 0.13,
+  "memory_step_assumption": "not measured on a server. One step = base-camera estimate (cheap) + hand-camera target fit (only when at least 40 lit-green pixels are in view) + held-cube fit on every 4th step while the gripper is closed. The audit step measures it before any gate",
+  "run2_reference": "200 used scenes with 2 arms took 1,122 s; 100 new scenes with 3 arms took 559 s; install and checks about 12 minutes; total US$0.36"
+ },
+ "expected_minutes": {"install_checks_placement_audit": [15, 25], "shadow_300_used_scenes_3_arms": [75, 110], "pilot_200_new_scenes_4_arms": [55, 80], "pack_download": [10, 15]},
+ "expected_total_usd": [1.3, 1.9],
+ "worst_case_gate_projection_usd": 4.2,
+ "worst_case_assumes": "every scene at its step bound (shadow 800, pilot 1,000 environment steps), the memory updated on all 200 trunk steps at 0.13 s, both vision arms at 13 readings of 0.30 s, margin 1.25, US$0.25 spent before the first gate, reserve US$0.20, US$0.4644/h",
+ "proposed_cap_usd": 5.00,
+ "proposed_cap_is": "a proposal, not an approval",
+ "storage": {"per_scene_records_and_traces_mb": 60, "frames_gb": [3.0, 4.0], "frames_note": "both cameras of every step up to the trigger for 500 scenes, about 63 kB per compressed frame (measured on the 21 stored diagnostic videos); git-ignored, kept on Drive", "transfer": "the download adds the host's per-GB price; choose an offer with a low transfer price"},
+ "recollection_only_alternative": {"what": "uninterrupted runs of the 300 used scenes with both cameras stored, no vision arm, no new scene", "expected_minutes": [25, 35], "expected_usd": [0.25, 0.40], "not_needed_if": "stage B1 of this plan is run, because it stores the same frames",
+                                   "caveat": "rollouts are not bit-identical across hosts; a re-run scene need not be the recorded episode"},
+ "gate_rule": "each `budget` step projects the remaining stages from the measured seconds per environment step, per vision reading and per memory step with every scene at its bound, margin 1.25, reserve US$0.20, and refuses above the approved cap; scenes, arms and bounds are never reduced"
+}

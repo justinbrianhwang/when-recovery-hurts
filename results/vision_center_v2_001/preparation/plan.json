@@ -1,0 +1,1243 @@
+{
+  "work_id": "vision_center_v2_001",
+  "stage": "Temporal Vision-CENTER v2 (Phase A: preparation)",
+  "created_utc": "2026-11-18T06:19:18.476674+00:00",
+  "pass": true,
+  "problems": [],
+  "status": {
+    "vision_center_v2": "PHASE_A_PREPARATION_ONLY",
+    "paid_compute": "NOT_AUTHORIZED",
+    "shadow_pass_on_used_scenes": "NOT_RUN",
+    "pilot_on_new_scenes": "NOT_RUN",
+    "criteria": "PROPOSED; fixed by approving this plan by hash before any rollout",
+    "vision_center_v1": "EXECUTED_ONCE (run2: NO_VISION_GATE_PASS); records and code unchanged",
+    "base_policy": "FROZEN: Vision-V1 train seed 1, 80k EMA, unchanged",
+    "new_training": "NOT_PLANNED (no network; colour segmentation, projection, and a memory of earlier estimates)",
+    "calibration": "NOT_RUN",
+    "final_test": "NOT_RUN"
+  },
+  "authorization": {
+    "paid_compute_authorized": false,
+    "proposed_cap_usd": 5.0,
+    "proposed_cap_is": "a proposal, explicitly not an approval; earlier approvals are not inherited",
+    "needed": "a separate explicit user instruction that states an exact USD cap AND names the SHA256 of this plan file (which also fixes the criteria it carries)",
+    "required_file": "authorization.json in the run folder, written only after such an instruction: {\"approved_by\": \"user\", \"paid_compute_authorized\": true, \"cap_usd\": <number>, \"plan_sha256\": \"<sha256 of this plan>\"}"
+  },
+  "question": "Can the positions of the target cube and of the held cube that a single frame does not give be recovered reliably from earlier RGB observations and the robot state history alone, and does that recover more of the oracle gain than single-frame Vision-CENTER without harming scenes the policy already solves?",
+  "privileged_information": {
+    "vision_center_v2": "none",
+    "vision_center_v1": "none",
+    "offline_labels": "cube positions are labels in the offline analyses and in after-the-fact error columns of the records",
+    "center_oracle": "unchanged reference arm; the only control code that reads cube positions",
+    "project_rule": "AGENTS.md: \"모니터/정책에 객체 정답 pose, task success, 미래 라벨을 입력하지 않습니다.\""
+  },
+  "repository": {
+    "head": "0fd12958a3282100e2f28af07efc2f79af1729eb",
+    "working_tree_changes_at_plan_time": [
+      "M tests/test_recovery_v1_oracle.py",
+      "?? configs/vision_center_v2_splits.json",
+      "?? results/vision_center_v2_001/",
+      "?? scripts/33_vision_center_v2.py",
+      "?? scripts/vision_center_v2/",
+      "?? src/hci/vision_center_v2.py",
+      "?? tests/test_vision_center_v2.py"
+    ]
+  },
+  "base_policy": {
+    "path": "artifacts/policies/stack_v1_s1_d500_clean_resnet18_i080000",
+    "weights.pt": "a37be25603d6c7b7d5cfa1872e6c1134c436f78de02b745c481c88d5d0f69629",
+    "policy_meta.json": "4ccfba34ee42b3bab344f7d320c57c6a97011f5adf8b93c04a36b886303b138e",
+    "train_seed": 1,
+    "iteration": 80000,
+    "weights": "EMA",
+    "source_checkpoint_sha256": "5cd8e95d589154981569cad2a3a5f4c8cd670da4444ac7ecb8bf6971484652ed",
+    "checks": {
+      "weights_sha256_now": "a37be25603d6c7b7d5cfa1872e6c1134c436f78de02b745c481c88d5d0f69629",
+      "policy_meta_sha256_now": "4ccfba34ee42b3bab344f7d320c57c6a97011f5adf8b93c04a36b886303b138e",
+      "meta_weights_sha256": "a37be25603d6c7b7d5cfa1872e6c1134c436f78de02b745c481c88d5d0f69629",
+      "selection_weights_sha256": "a37be25603d6c7b7d5cfa1872e6c1134c436f78de02b745c481c88d5d0f69629",
+      "qualified_weights_sha256": "a37be25603d6c7b7d5cfa1872e6c1134c436f78de02b745c481c88d5d0f69629",
+      "backup_list_weights_sha256": "a37be25603d6c7b7d5cfa1872e6c1134c436f78de02b745c481c88d5d0f69629",
+      "backup_list_meta_sha256": "4ccfba34ee42b3bab344f7d320c57c6a97011f5adf8b93c04a36b886303b138e",
+      "backup_list_source_checkpoint_sha256": "5cd8e95d589154981569cad2a3a5f4c8cd670da4444ac7ecb8bf6971484652ed",
+      "qualification": "79/100 (TARGET_MET)",
+      "archive_present": true,
+      "archive_sha256_now": "3a8d7cbf0d08aa61c18b51b2199cd2d97ba331f3f900bd0bb3ef595f8642c8cb",
+      "extracted_source_checkpoint_sha256": "5cd8e95d589154981569cad2a3a5f4c8cd670da4444ac7ecb8bf6971484652ed",
+      "extracted_weights_sha256": "a37be25603d6c7b7d5cfa1872e6c1134c436f78de02b745c481c88d5d0f69629",
+      "vision_plan_sha256_now": "5fdee368fa529c0096464332e1af5dc2ac0eca39ff102ad7bc0fa8605ed3678e",
+      "inference_code_identical_to_the_vision_v1_plan": {
+        "src/hci/vision_v1.py": true,
+        "src/hci/policies.py": true,
+        "src/hci/simulation.py": true,
+        "src/hci/experiment.py": true,
+        "src/hci/observations.py": true,
+        "src/hci/io.py": true,
+        "src/hci/schema.py": true,
+        "src/hci/trees.py": true,
+        "src/hci/diagnostics.py": true,
+        "src/hci/pilot.py": true,
+        "src/hci/statistics.py": true
+      }
+    },
+    "rule": "frozen; not retrained, not fine-tuned, no other checkpoint"
+  },
+  "config": {
+    "path": "configs/stackcube.yaml",
+    "file_sha256": "b145ca59607f4edf45f20bd45624f1bd4c8ff028a035ee4ab12b7de40bb08d8b",
+    "config_sha256": "c8cc0a581f7d4e9de4042490bd6939e9b80da1dd333df081cb9107c29427dfbd",
+    "env": {
+      "id": "StackCube-v1",
+      "robot_uid": "panda_wristcam",
+      "sim_backend": "physx_cpu",
+      "num_envs": 1,
+      "obs_mode": "rgb",
+      "control_mode": "pd_ee_delta_pos",
+      "horizon": 200
+    },
+    "policy": {
+      "obs_horizon": 2,
+      "act_horizon": 8,
+      "pred_horizon": 16,
+      "diffusion_step_embed_dim": 64,
+      "unet_dims": [
+        64,
+        128,
+        256
+      ],
+      "n_groups": 8
+    },
+    "audit": {
+      "replay_steps": 20,
+      "state_atol": 1e-06,
+      "action_atol": 1e-06,
+      "observation_atol": 1.0
+    }
+  },
+  "seed_registry": {
+    "path": "configs/vision_center_v2_splits.json",
+    "sha256": "b538e892a5a251b8bba785d2eb643b5b6499ad6e9e759cd26312b0622f97676b",
+    "set": "vision_center_v2_pilot",
+    "range": [
+      50900,
+      51099
+    ],
+    "n": 200,
+    "first_last": [
+      50900,
+      51099
+    ],
+    "seed_level_check": "no overlap with splits.json (audit, train, dev, calibration, test), policy_eval_splits.json, vision_v1_splits.json, recovery_v1_splits.json (both sets), vision_center_splits.json, the 550 demonstration scene seeds, or the scenes of Stage 2A / 2B / 2D / H1; checked by this command (a clash fails the plan)",
+    "placement_check": "server step `scenes`: the initial cube placements of the 200 seeds against every placement on record and against each other; an identical placement fails the step. Not possible locally (needs the simulator)",
+    "shadow_scenes": {
+      "sets": [
+        [
+          "recovery_v1/recovery_v1_diag",
+          [
+            50600,
+            50699
+          ]
+        ],
+        [
+          "recovery_v1/recovery_v1_pilot_reserved",
+          [
+            50700,
+            50799
+          ]
+        ],
+        [
+          "vision_center/vision_center_pilot",
+          [
+            50800,
+            50899
+          ]
+        ]
+      ],
+      "n": 300,
+      "status": "used; development data; no new scene is consumed by stage B1"
+    },
+    "untouched_sets": [
+      "calibration",
+      "test"
+    ],
+    "no_replacement": "no scene is replaced or dropped for any reason"
+  },
+  "arms": [
+    "C0",
+    "VISION_CENTER_V1",
+    "VISION_CENTER_V2",
+    "CENTER_ORACLE"
+  ],
+  "semantics": {
+    "inputs": "base_camera and hand_camera RGB (128 x 128), extra/tcp_pose and agent/qpos of the policy observation, the executed gripper commands, the step counter; fixed camera constants. No cube pose, grasp flag, task flag, outcome or future information. No added camera, no viewpoint motion, no trained model",
+    "trigger": {
+      "rule": "the oracle pilot trigger, unchanged (hci.recovery_v1_oracle.trigger_rule)",
+      "open_cmd_above": 0.0,
+      "close_run_min": 3,
+      "width_min_m": 0.02,
+      "width_max_m": 0.06
+    },
+    "VISION_CENTER_V1": "hci.vision_center.vision_center, unchanged: the single-frame baseline (hand camera at the trigger only)",
+    "VISION_CENTER_V2": {
+      "memory": {
+        "target": "at every step before the trigger: the hand-camera fit of v1 when accepted, otherwise the base-camera estimate (largest connected lit-green region, area of an unoccluded 4 cm face). Consistent observations confirm one track; an inconsistent observation restarts it; the track is usable after confirm_min observations",
+        "invalidation": "a restart on any conflicting observation; steps without an observation while the gripper is near the remembered target (contact_radius_m, contact_tcp_z_m) add u_push_m to the bound; at the trigger the remembered position is checked against the current hand image (lit-green pixels far outside it, or visible table inside it, refuse it)",
+        "hold": "the last accepted held-cube fit of v1 (run every hold_every-th step while the gripper is closed on something); dropped when the finger opening changes by more than finger_tol_m or an open command was executed",
+        "never": "a remembered position is never used without confirmation, never after a conflict, never against the current image",
+        "confirm_min": 3,
+        "contact_radius_m": 0.1,
+        "contact_tcp_z_m": 0.09,
+        "finger_tol_m": 0.001,
+        "hold_every": 4,
+        "hold_width_max_m": 0.075,
+        "u_hand_m": 0.002,
+        "u_base_m": 0.005,
+        "u_hold_m": 0.002,
+        "u_push_m": 0.005,
+        "base_view": {
+          "ratio_min": 0.9,
+          "ratio_max": 1.25,
+          "pixels_min": 9
+        }
+      },
+      "estimate": "current frame where v1 accepts it; memory otherwise; no estimate -> abstain. Bound u = target bound + hold bound",
+      "abstain": {
+        "meaning": "nothing is touched: the episode is the uninterrupted one (checked against the trunk in every scene)",
+        "reasons": [
+          "NO_HOLD_ESTIMATE",
+          "NO_TARGET_ESTIMATE",
+          "MEMORY_CONTRADICTED",
+          "LOW_CARRY",
+          "SIDE_CONTACT_RISK",
+          "TOO_FEW_STEPS",
+          "ALIGNED",
+          "ALIGNED_WITHIN_UNCERTAINTY"
+        ],
+        "order": "as in hci.vision_center_v2.decide; the first that applies"
+      },
+      "safety": {
+        "LOW_CARRY": "estimated held-cube centre below 0.058 m (v1 rule); with a remembered target also when its bottom is below the target top face",
+        "SIDE_CONTACT_RISK": "estimated offset (plus u when the target is remembered) >= 0.04 m (the held cube is beside the target) and its bottom less than 0.003 m above the target top face: scene 50892",
+        "during_control": "stop when a new accepted target estimate is more than 0.003 m (plus the bound of a remembered target) from the one in use, when the held-cube fit moves more than 0.003 m in the gripper, when the estimate is lost, when the held cube is estimated too low"
+      },
+      "acts_when": "estimated offset >= 0.015 m and estimated offset - u >= 0.01 m and no abstain reason",
+      "command": "as CENTER_ORACLE and v1: horizontal only, at most 0.005 m per step, commanded target within 0.030 m of the TCP at the trigger, at most 12 steps, vertical command 0, held gripper command",
+      "stops_when": "estimated offset <= 0.01 m on a target seen in the current frame, <= 0.005 m on a remembered target; or 12 steps; or the target cap; or the episode ends; or a safety stop",
+      "after": "queue cleared, the unchanged policy re-infers",
+      "decision": {
+        "act_min_m": 0.015,
+        "residual_tol_m": 0.01,
+        "memory_stop_tol_m": 0.005,
+        "carry_z_min_m": 0.058,
+        "steps_left_min": 20,
+        "side_offset_m": 0.04,
+        "side_gap_min_m": 0.003,
+        "memory_gap_min_m": 0.0,
+        "target_jump_max_m": 0.003,
+        "hold_shift_max_m": 0.003,
+        "check": {
+          "outside_pixels_max": 8,
+          "inside_pixels_min": 30,
+          "inside_green_min": 0.7,
+          "slack_m": 0.004
+        }
+      }
+    },
+    "CENTER_ORACLE": "hci.recovery_v1_oracle.center_oracle, unchanged (reads simulator cube positions; diagnostic reference, not deployable)",
+    "C0": "the pending action and the rest of the queue are executed; must equal the uninterrupted run, otherwise the run stops",
+    "noise": "repeat 0 only; every inference is keyed by seed_for(scene, physical step, 0, 'dp')",
+    "restore": "reset(seed) + prefix action replay; the restored runtime is compared with the snapshot before every branch",
+    "chosen_on": "every v2 constant was chosen on used data: the 300 used scenes 50600-50899 (traces, trigger frames), the 21 failed diagnostic episodes with video, and the 500 training demonstrations. The four scenes 50813, 50872, 50817, 50846 are part of that development data and are not evidence for v2"
+  },
+  "analysis": {
+    "unit": "scene",
+    "stage_B1_shadow": {
+      "scenes": "300 used scenes (50600-50899), re-run on the server; development data",
+      "arms": [
+        "C0",
+        "VISION_CENTER_V1",
+        "VISION_CENTER_V2"
+      ],
+      "pass_criteria": {
+        "v2_unnecessary_acts_max": 2,
+        "v2_harm_max": 2,
+        "v2_memory_errors_max": 2,
+        "v2_target_pushed_max": 1,
+        "v2_net_minus_v1_net_min": 3,
+        "v2_memory_acts_min": 5
+      },
+      "also_produces": "both cameras' frames of every step up to the trigger for all 300 scenes (the re-collection the observability audit could not do offline)",
+      "reports": [
+        "memory: which source, age, exposure, error against logged ground truth",
+        "decisions by reason for v1 and v2",
+        "acts on a remembered position and their errors",
+        "unnecessary acts",
+        "target pushed during control",
+        "paired outcomes of v2 and v1 against C0 and against each other"
+      ],
+      "on_failure": "V2_SHADOW_BLOCKED: the new scenes are not touched; no constant is tuned and re-tried under this plan",
+      "caveat": "rollouts are not bit-identical across hosts (run2: 9 of 200 uninterrupted outcomes differed from earlier runs), so a re-run scene need not be the episode recorded before"
+    },
+    "stage_B2_pilot": {
+      "scenes": "200 new scenes (50900-51099)",
+      "arms": [
+        "C0",
+        "VISION_CENTER_V1",
+        "VISION_CENTER_V2",
+        "CENTER_ORACLE"
+      ],
+      "primary": "paired success_once_absorbing, VISION_CENTER_V2 against C0, all 200 scenes: rescue / harm / net, Wilson intervals",
+      "secondary": [
+        "VISION_CENTER_V1 against C0 on the same scenes",
+        "v2 against v1",
+        "CENTER_ORACLE against C0; share of oracle rescues also rescued by v2 and by v1",
+        "abstain rate of v1 and v2 among triggered scenes",
+        "memory errors: acts on a remembered position whose offset error exceeded 0.005 m or its own bound",
+        "unnecessary acts; target pushed more than 1 mm"
+      ],
+      "gate": {
+        "thresholds": {
+          "rescue_min": 6,
+          "net_min": 5,
+          "harm_max": 2,
+          "memory_errors_max": 1,
+          "oracle_recovery_min": 0.5,
+          "v2_rescue_minus_v1_rescue_min": 2
+        },
+        "all_of": [
+          "v2 rescues >= rescue_min",
+          "net >= net_min",
+          "harm <= harm_max",
+          "memory errors <= memory_errors_max",
+          "share of oracle rescues recovered >= oracle_recovery_min",
+          "v2 rescues - v1 rescues >= v2_rescue_minus_v1_rescue_min"
+        ],
+        "otherwise": "NO_V2_GATE_PASS: no extension, no tuning, no subset search"
+      }
+    },
+    "criteria_status": "PROPOSED by the agent in Phase A. They are fixed, before any result exists, by the user approving this plan by its SHA256; a different choice means a new plan and a new hash",
+    "not_claimed": [
+      "statistical significance",
+      "transfer to real images (flat simulator colours, exact camera parameters, no noise)",
+      "anything beyond StackCube and this policy",
+      "the used scenes 50600-50899 as independent evidence"
+    ]
+  },
+  "audit": {
+    "seeds": [
+      50400,
+      50401,
+      50402
+    ],
+    "does": [
+      "all four arms with every technical check of the pilot",
+      "seconds per environment step, per vision reading and per memory step for the budget gates"
+    ],
+    "outcomes": "decide nothing"
+  },
+  "run": {
+    "order": [
+      "scenes",
+      "audit",
+      "budget --stage shadow",
+      "shadow",
+      "budget --stage pilot",
+      "run"
+    ],
+    "ledger": "artifacts/ledger/vision_center_v2_pilot.json, created exclusively before any rollout on a new scene; no resume, no second pass",
+    "on_error": "the pass stops and stays INCOMPLETE; no scene is dropped or replaced; a partial run has no summary",
+    "stored": "one record per scene, per-step ground-truth traces (logging), both cameras' frames of every step up to the trigger, and the frames of both vision arms at the trigger and during control",
+    "thread_limit": "OMP_NUM_THREADS, OPENBLAS_NUM_THREADS, MKL_NUM_THREADS, NUMEXPR_NUM_THREADS, BLIS_NUM_THREADS = 1 before every Python process (run.sh exports them)"
+  },
+  "offline_analyses": {
+    "memory_replay": {
+      "path": "results/vision_center_v2_001/preparation/memory_replay.json",
+      "sha256": "44d5036f66a3e224f547f99e070f7ade254e37e575e66054d598229106559981",
+      "summary": {
+        "video_failed_diagnostic_episodes": {
+          "episodes": 21,
+          "triggered": 15,
+          "v1_decisions": {
+            "ACT": 7,
+            "NO_HOLD_ESTIMATE": 2,
+            "NO_TARGET_ESTIMATE": 6
+          },
+          "v2_decisions": {
+            "ACT": 11,
+            "ALIGNED_WITHIN_UNCERTAINTY": 1,
+            "NO_HOLD_ESTIMATE": 2,
+            "SIDE_CONTACT_RISK": 1
+          },
+          "v2_estimate_sources": {
+            "target_frame/hold_frame": 7,
+            "target_memory_base/hold_frame": 4,
+            "target_memory_hand/hold_frame": 2
+          },
+          "v2_offset_error_mm": {
+            "n": 13,
+            "median": 1.0,
+            "p90": 2.04,
+            "max": 2.79
+          },
+          "v2_offset_error_mm_remembered_target": {
+            "n": 6,
+            "median": 1.22,
+            "p90": 2.47,
+            "max": 2.79
+          },
+          "v2_estimates_outside_their_bound": 0,
+          "v2_unnecessary_acts": 0,
+          "v2_acts": 11,
+          "v1_acts": 7,
+          "v1_no_target_then_v2": {
+            "ACT": 4,
+            "ALIGNED_WITHIN_UNCERTAINTY": 1,
+            "SIDE_CONTACT_RISK": 1
+          },
+          "v1_no_hold_then_v2": {
+            "NO_HOLD_ESTIMATE": 2
+          },
+          "memory_conflicts": 1
+        },
+        "demonstration_releases": {
+          "episodes": 167,
+          "triggered": 167,
+          "v1_decisions": {
+            "ACT": 1,
+            "ALIGNED": 90,
+            "LOW_CARRY": 1,
+            "NO_HOLD_ESTIMATE": 4,
+            "NO_TARGET_ESTIMATE": 71
+          },
+          "v2_decisions": {
+            "ACT": 1,
+            "ALIGNED": 157,
+            "ALIGNED_WITHIN_UNCERTAINTY": 1,
+            "LOW_CARRY": 6,
+            "NO_HOLD_ESTIMATE": 2
+          },
+          "v2_estimate_sources": {
+            "target_frame/hold_frame": 92,
+            "target_memory_base/hold_frame": 11,
+            "target_memory_hand/hold_frame": 60,
+            "target_memory_hand/hold_memory": 2
+          },
+          "v2_offset_error_mm": {
+            "n": 165,
+            "median": 0.99,
+            "p90": 2.02,
+            "max": 3.34
+          },
+          "v2_offset_error_mm_remembered_target": {
+            "n": 73,
+            "median": 0.95,
+            "p90": 2.22,
+            "max": 3.34
+          },
+          "v2_estimates_outside_their_bound": 0,
+          "v2_unnecessary_acts": 0,
+          "v2_acts": 1,
+          "v1_acts": 1,
+          "v1_no_target_then_v2": {
+            "ALIGNED": 65,
+            "ALIGNED_WITHIN_UNCERTAINTY": 1,
+            "LOW_CARRY": 5
+          },
+          "v1_no_hold_then_v2": {
+            "ALIGNED": 2,
+            "NO_HOLD_ESTIMATE": 2
+          },
+          "memory_conflicts": 1
+        },
+        "note": "development data: every constant of v2 was chosen with these frames in view. The video episodes are all uninterrupted FAILURES; no outcome of a v2 move exists (no simulator was run)"
+      }
+    },
+    "reconstruction_audit": {
+      "path": "results/vision_center_v2_001/preparation/reconstruction_audit.json",
+      "sha256": "d2c7375b1da733fe5d262b2bc694037bb01012eefe193e9e85bf8434e418f539",
+      "summary": {
+        "check_against_real_trigger_frames": {
+          "frames": 289,
+          "target_fit_agrees": 288,
+          "both_accepted": 175,
+          "xy_difference_mm_median": 0.0,
+          "xy_difference_mm_max": 1.47
+        },
+        "scenes_where_v1_had_no_target_at_the_trigger": {
+          "n": 110,
+          "hand_camera_saw_the_target_earlier": {
+            "while_holding": 64,
+            "before_grasp_only": 28,
+            "never": 18
+          },
+          "steps_between_last_view_and_trigger_median": 6.5,
+          "target_moved_after_last_view_over_2mm": 1,
+          "target_moved_after_last_view_mm_max": 4.0
+        },
+        "of_which_uninterrupted_failures": {
+          "n": 14,
+          "hand_camera_saw_the_target_earlier": {
+            "while_holding": 2,
+            "before_grasp_only": 4,
+            "never": 8
+          },
+          "by_scene": {
+            "50623": "never",
+            "50633": "never",
+            "50648": "never",
+            "50661": "before_grasp_only",
+            "50666": "never",
+            "50668": "before_grasp_only",
+            "50702": "before_grasp_only",
+            "50722": "while_holding",
+            "50753": "never",
+            "50770": "never",
+            "50775": "never",
+            "50780": "never",
+            "50813": "while_holding",
+            "50872": "before_grasp_only"
+          }
+        },
+        "named_scenes": {
+          "50813": {
+            "v1_decision": "NO_TARGET_ESTIMATE",
+            "trigger_step": 103,
+            "first_grasp_step": 41,
+            "class": "while_holding",
+            "valid_steps_of_those_checked": [
+              16,
+              52
+            ],
+            "first_valid_step": 0,
+            "last_valid_step": 90,
+            "last_view_error_against_trigger_mm": 0.57,
+            "target_moved_after_last_view_mm": 0.0
+          },
+          "50817": {
+            "v1_decision": "NO_HOLD_ESTIMATE",
+            "trigger_step": 111,
+            "first_grasp_step": 58,
+            "class": "before_grasp_only",
+            "valid_steps_of_those_checked": [
+              8,
+              56
+            ],
+            "first_valid_step": 0,
+            "last_valid_step": 16,
+            "last_view_error_against_trigger_mm": 0.9,
+            "target_moved_after_last_view_mm": 0.02
+          },
+          "50846": {
+            "v1_decision": "NO_HOLD_ESTIMATE",
+            "trigger_step": 95,
+            "first_grasp_step": 49,
+            "class": "while_holding",
+            "valid_steps_of_those_checked": [
+              40,
+              48
+            ],
+            "first_valid_step": 16,
+            "last_valid_step": 94,
+            "last_view_error_against_trigger_mm": 0.23,
+            "target_moved_after_last_view_mm": 0.0
+          },
+          "50872": {
+            "v1_decision": "NO_TARGET_ESTIMATE",
+            "trigger_step": 102,
+            "first_grasp_step": 39,
+            "class": "before_grasp_only",
+            "valid_steps_of_those_checked": [
+              7,
+              52
+            ],
+            "first_valid_step": 0,
+            "last_valid_step": 12,
+            "last_view_error_against_trigger_mm": 0.24,
+            "target_moved_after_last_view_mm": 0.0
+          },
+          "50892": {
+            "v1_decision": "ACT",
+            "trigger_step": 111,
+            "first_grasp_step": 42,
+            "class": "while_holding",
+            "valid_steps_of_those_checked": [
+              17,
+              56
+            ],
+            "first_valid_step": 0,
+            "last_valid_step": 110,
+            "last_view_error_against_trigger_mm": 0.18,
+            "target_moved_after_last_view_mm": 0.32
+          }
+        },
+        "limits": "reconstructed hand images (ground-truth states), every second step; the base camera and the held-cube fit are not reconstructed"
+      }
+    },
+    "ground_truth_audit": {
+      "path": "results/vision_center_v2_001/preparation/ground_truth_audit.json",
+      "sha256": "32de17223ce040754fc912b2f7c6adbad9679c8377d988c833cc5153f0e50140",
+      "summary": {
+        "scenes": 300,
+        "triggered": 289,
+        "c0_failures_with_trigger": 36,
+        "target": {
+          "moved_over_1mm_before_trigger": 18,
+          "moved_over_5mm": 5,
+          "of_which_in_the_last_10_steps_only": 13,
+          "cube_contact_before_trigger": 80,
+          "moved_scenes": [
+            [
+              50618,
+              3.5,
+              70,
+              0
+            ],
+            [
+              50621,
+              1.5,
+              1,
+              1
+            ],
+            [
+              50636,
+              7.4,
+              52,
+              1
+            ],
+            [
+              50644,
+              3.8,
+              4,
+              1
+            ],
+            [
+              50655,
+              1.4,
+              3,
+              1
+            ],
+            [
+              50664,
+              3.7,
+              6,
+              0
+            ],
+            [
+              50702,
+              4.0,
+              5,
+              0
+            ],
+            [
+              50727,
+              57.7,
+              52,
+              0
+            ],
+            [
+              50738,
+              2.9,
+              56,
+              1
+            ],
+            [
+              50774,
+              6.7,
+              4,
+              1
+            ],
+            [
+              50781,
+              3.3,
+              1,
+              0
+            ],
+            [
+              50798,
+              1.8,
+              5,
+              1
+            ],
+            [
+              50800,
+              1.1,
+              4,
+              1
+            ],
+            [
+              50828,
+              3.0,
+              3,
+              1
+            ],
+            [
+              50861,
+              1.5,
+              12,
+              0
+            ],
+            [
+              50865,
+              3.5,
+              9,
+              1
+            ],
+            [
+              50889,
+              26.8,
+              8,
+              0
+            ],
+            [
+              50892,
+              5.9,
+              8,
+              0
+            ]
+          ],
+          "hidden_target_c0_failures": 14,
+          "hidden_target_c0_failures_where_target_moved_over_1mm": [
+            50702
+          ]
+        },
+        "contact_rule": {
+          "radius_m": 0.1,
+          "tcp_z_m": 0.09,
+          "steps_flagged_per_scene_median": 14.0,
+          "scenes_where_target_moved_outside_flagged_steps": []
+        },
+        "hold": {
+          "xy_change_from_grasp_to_trigger_mm": {
+            "p50": 0.0,
+            "p90": 0.06,
+            "p99": 0.5,
+            "p100": 1.59
+          },
+          "v1_accepted": 265,
+          "accepted_error_xy_mm": {
+            "p50": 0.82,
+            "p90": 1.59,
+            "p99": 2.39,
+            "p100": 2.77
+          },
+          "accepted_error_z_mm": {
+            "p50": 0.54,
+            "p90": 1.82,
+            "p99": 4.32,
+            "p100": 6.37
+          },
+          "v1_rejected": 24,
+          "rejected_error_xy_mm": {
+            "p50": 1.61,
+            "p90": 3.79,
+            "p99": 7.3,
+            "p100": 8.29
+          },
+          "rejected_error_z_mm": {
+            "p50": 2.35,
+            "p90": 7.54,
+            "p99": 12.6,
+            "p100": 12.72
+          },
+          "rejected_whose_near_tie_candidates_agree_within_2mm": 1,
+          "rejected_c0_failures": [
+            50685,
+            50703,
+            50727,
+            50817,
+            50846
+          ]
+        },
+        "pushed_target_by_carry_height": {
+          "v1_moves": [
+            {
+              "gap_from_mm": -99,
+              "gap_to_mm": -1,
+              "moves": 0,
+              "target_pushed_over_1mm": 0
+            },
+            {
+              "gap_from_mm": -1,
+              "gap_to_mm": 0,
+              "moves": 4,
+              "target_pushed_over_1mm": 1
+            },
+            {
+              "gap_from_mm": 0,
+              "gap_to_mm": 2,
+              "moves": 25,
+              "target_pushed_over_1mm": 0
+            },
+            {
+              "gap_from_mm": 2,
+              "gap_to_mm": 4,
+              "moves": 6,
+              "target_pushed_over_1mm": 0
+            },
+            {
+              "gap_from_mm": 4,
+              "gap_to_mm": 99,
+              "moves": 8,
+              "target_pushed_over_1mm": 0
+            }
+          ],
+          "oracle_moves": [
+            {
+              "gap_from_mm": -99,
+              "gap_to_mm": -1,
+              "moves": 1,
+              "target_pushed_over_1mm": 1
+            },
+            {
+              "gap_from_mm": -1,
+              "gap_to_mm": 0,
+              "moves": 4,
+              "target_pushed_over_1mm": 1
+            },
+            {
+              "gap_from_mm": 0,
+              "gap_to_mm": 2,
+              "moves": 43,
+              "target_pushed_over_1mm": 0
+            },
+            {
+              "gap_from_mm": 2,
+              "gap_to_mm": 4,
+              "moves": 17,
+              "target_pushed_over_1mm": 0
+            },
+            {
+              "gap_from_mm": 4,
+              "gap_to_mm": 99,
+              "moves": 33,
+              "target_pushed_over_1mm": 0
+            }
+          ],
+          "pushed_scenes": [
+            [
+              50889,
+              43.0,
+              -26.0,
+              0,
+              21.3
+            ],
+            [
+              50892,
+              40.9,
+              -0.2,
+              5.5,
+              22.5
+            ]
+          ],
+          "rescued_with_true_offset_over_30mm_and_gap_under_3mm": [
+            [
+              50618,
+              36.6,
+              0.6
+            ],
+            [
+              50629,
+              32.7,
+              2.2
+            ],
+            [
+              50664,
+              31.7,
+              -0.1
+            ],
+            [
+              50706,
+              34.0,
+              -0.1
+            ],
+            [
+              50761,
+              36.1,
+              0.4
+            ]
+          ]
+        },
+        "v2_rules_on_v1_acts": {
+          "v1_acts": 43,
+          "no_longer_acts": [
+            [
+              50892,
+              "SIDE_CONTACT_RISK",
+              41.1,
+              0,
+              0
+            ]
+          ],
+          "rescues_lost": 0,
+          "note": "frame-only part of v2 (uncertainty margin, side-contact rule) applied to the estimates v1 recorded; these are the scenes the rules were designed on"
+        },
+        "named_scenes": {
+          "50813": {
+            "trigger_step": 103,
+            "v1_decision": "NO_TARGET_ESTIMATE",
+            "y0": 0,
+            "y_oracle": 1,
+            "true_offset_m": 0.03190887219776188,
+            "true_gap_m": 0.007576101496815681,
+            "target_moved_before_trigger_m": 2.056846094786049e-06,
+            "first_lifted_grasp_step": 53,
+            "hold_xy_change_from_grasp_to_trigger_m": 3.956625051934539e-06,
+            "finger_width_range_last_10_steps_m": 2.682209014892578e-07,
+            "v1_hold_valid": true,
+            "hold_top_error_xy_m": 0.0010504507643193746,
+            "hold_top_error_z_m": 0.000726899122613615,
+            "hold_near_tie_xy_spread_m": 0.0010000000000000009,
+            "contact_force_A_B_before_trigger": false
+          },
+          "50817": {
+            "trigger_step": 111,
+            "v1_decision": "NO_HOLD_ESTIMATE",
+            "y0": 0,
+            "y_oracle": 1,
+            "true_offset_m": 0.022157436433104312,
+            "true_gap_m": 3.245383501052773e-05,
+            "target_moved_before_trigger_m": 2.145461923352729e-05,
+            "first_lifted_grasp_step": 71,
+            "hold_xy_change_from_grasp_to_trigger_m": 1.564289895536689e-05,
+            "finger_width_range_last_10_steps_m": 2.8796494007110596e-06,
+            "v1_hold_valid": false,
+            "hold_top_error_xy_m": 0.0010660314753214387,
+            "hold_top_error_z_m": 0.0023976863796076366,
+            "hold_near_tie_xy_spread_m": 0.0032015621187164245,
+            "contact_force_A_B_before_trigger": true
+          },
+          "50846": {
+            "trigger_step": 95,
+            "v1_decision": "NO_HOLD_ESTIMATE",
+            "y0": 0,
+            "y_oracle": 1,
+            "true_offset_m": 0.02582960736187866,
+            "true_gap_m": 0.0030416855961084358,
+            "target_moved_before_trigger_m": 1.1211576644168305e-06,
+            "first_lifted_grasp_step": 61,
+            "hold_xy_change_from_grasp_to_trigger_m": 1.3881065806966935e-06,
+            "finger_width_range_last_10_steps_m": 6.9607049226760864e-06,
+            "v1_hold_valid": false,
+            "hold_top_error_xy_m": 0.008285478028583754,
+            "hold_top_error_z_m": 0.012715979450677064,
+            "hold_near_tie_xy_spread_m": 0.004301162633521313,
+            "contact_force_A_B_before_trigger": false
+          },
+          "50872": {
+            "trigger_step": 102,
+            "v1_decision": "NO_TARGET_ESTIMATE",
+            "y0": 0,
+            "y_oracle": 1,
+            "true_offset_m": 0.03266121381078981,
+            "true_gap_m": 0.003330863118171691,
+            "target_moved_before_trigger_m": 1.308531748761166e-06,
+            "first_lifted_grasp_step": 51,
+            "hold_xy_change_from_grasp_to_trigger_m": 4.466431672273743e-06,
+            "finger_width_range_last_10_steps_m": 4.665926098823547e-06,
+            "v1_hold_valid": true,
+            "hold_top_error_xy_m": 0.0024753896663452196,
+            "hold_top_error_z_m": 0.00048073201646288747,
+            "hold_near_tie_xy_spread_m": 0.0,
+            "contact_force_A_B_before_trigger": false
+          },
+          "50892": {
+            "trigger_step": 111,
+            "v1_decision": "ACT",
+            "y0": 0,
+            "y_oracle": 0,
+            "true_offset_m": 0.04086001741822792,
+            "true_gap_m": -0.0001555392146110543,
+            "target_moved_before_trigger_m": 0.005862672015212743,
+            "first_lifted_grasp_step": 56,
+            "hold_xy_change_from_grasp_to_trigger_m": 3.3502922455486644e-06,
+            "finger_width_range_last_10_steps_m": 2.25752592086792e-06,
+            "v1_hold_valid": true,
+            "hold_top_error_xy_m": 0.0002655676643193457,
+            "hold_top_error_z_m": 0.00025464494012296477,
+            "hold_near_tie_xy_spread_m": 0.0,
+            "contact_force_A_B_before_trigger": true
+          }
+        }
+      }
+    },
+    "base_camera_audit": {
+      "path": "results/vision_center_v2_001/preparation/base_camera_audit.json",
+      "sha256": "27cb697c22484d17b4b3dd67f045397de92c0a7b65e119abcc209eb8086ac372",
+      "summary": {
+        "demonstrations": 500,
+        "frames": 54320,
+        "v1_full_view_centroid_accepted": {
+          "n": 38595,
+          "median_mm": 1.49,
+          "p90_mm": 3.83,
+          "p99_mm": 34.57,
+          "max_mm": 65.1,
+          "over_5mm": 3288,
+          "over_10mm": 3060
+        },
+        "v2_largest_region_accepted": {
+          "n": 34882,
+          "median_mm": 1.39,
+          "p90_mm": 2.69,
+          "p99_mm": 4.02,
+          "max_mm": 6.32,
+          "over_5mm": 9,
+          "over_10mm": 0
+        },
+        "v2_by_area_ratio_before_the_acceptance_test": [
+          {
+            "ratio_from": 0.0,
+            "ratio_to": 0.6,
+            "n": 2345,
+            "median_mm": 11.77,
+            "p90_mm": 16.28,
+            "p99_mm": 20.01,
+            "max_mm": 23.62,
+            "over_5mm": 2340,
+            "over_10mm": 1659
+          },
+          {
+            "ratio_from": 0.6,
+            "ratio_to": 0.8,
+            "n": 1679,
+            "median_mm": 5.32,
+            "p90_mm": 8.03,
+            "p99_mm": 9.55,
+            "max_mm": 12.87,
+            "over_5mm": 941,
+            "over_10mm": 9
+          },
+          {
+            "ratio_from": 0.8,
+            "ratio_to": 0.9,
+            "n": 3983,
+            "median_mm": 2.24,
+            "p90_mm": 3.41,
+            "p99_mm": 5.97,
+            "max_mm": 8.48,
+            "over_5mm": 116,
+            "over_10mm": 0
+          },
+          {
+            "ratio_from": 0.9,
+            "ratio_to": 1.0,
+            "n": 16682,
+            "median_mm": 1.4,
+            "p90_mm": 2.69,
+            "p99_mm": 4.08,
+            "max_mm": 6.32,
+            "over_5mm": 8,
+            "over_10mm": 0
+          },
+          {
+            "ratio_from": 1.0,
+            "ratio_to": 1.1,
+            "n": 15552,
+            "median_mm": 1.37,
+            "p90_mm": 2.57,
+            "p99_mm": 4.02,
+            "max_mm": 5.06,
+            "over_5mm": 1,
+            "over_10mm": 0
+          },
+          {
+            "ratio_from": 1.1,
+            "ratio_to": 1.25,
+            "n": 2657,
+            "median_mm": 1.44,
+            "p90_mm": 2.93,
+            "p99_mm": 3.8,
+            "max_mm": 3.8,
+            "over_5mm": 0,
+            "over_10mm": 0
+          }
+        ],
+        "demonstrations_with_an_accepted_v2_estimate": 443,
+        "base_view": {
+          "ratio_min": 0.9,
+          "ratio_max": 1.25,
+          "pixels_min": 9
+        },
+        "u_base_m": 0.005,
+        "note": "the arm, the gripper and the carried cube occlude the target in part of the frames; an occluded view fails the area test. Motion-planner demonstrations, not policy rollouts"
+      }
+    }
+  },
+  "volume": {
+    "placement_resets": "the 200 new seeds plus every reference set that has no stored placement key",
+    "audit_scenes": 3,
+    "shadow_scenes": 300,
+    "pilot_scenes": 200,
+    "steps_per_scene_bound": {
+      "shadow": 800,
+      "pilot": 1000
+    },
+    "memory_steps_per_scene_bound": 200,
+    "readings_per_scene_bound": 26
+  },
+  "cost_estimate": {
+    "status": "ESTIMATE; nothing was run. The budget gate on the server uses measured times, not these numbers",
+    "basis": {
+      "host": "Vision-CENTER run2: RTX 4090, Intel Core i7-13700K (24 logical CPUs), US$0.4644/h, thread limit 1",
+      "seconds_per_env_step_measured_run2": 0.0113,
+      "seconds_per_vision_reading_measured_run2": 0.3,
+      "seconds_per_memory_step_ASSUMED": 0.13,
+      "memory_step_assumption": "not measured on a server. One step = base-camera estimate (cheap) + hand-camera target fit (only when at least 40 lit-green pixels are in view) + held-cube fit on every 4th step while the gripper is closed. The audit step measures it before any gate",
+      "run2_reference": "200 used scenes with 2 arms took 1,122 s; 100 new scenes with 3 arms took 559 s; install and checks about 12 minutes; total US$0.36"
+    },
+    "expected_minutes": {
+      "install_checks_placement_audit": [
+        15,
+        25
+      ],
+      "shadow_300_used_scenes_3_arms": [
+        75,
+        110
+      ],
+      "pilot_200_new_scenes_4_arms": [
+        55,
+        80
+      ],
+      "pack_download": [
+        10,
+        15
+      ]
+    },
+    "expected_total_usd": [
+      1.3,
+      1.9
+    ],
+    "worst_case_gate_projection_usd": 4.2,
+    "worst_case_assumes": "every scene at its step bound (shadow 800, pilot 1,000 environment steps), the memory updated on all 200 trunk steps at 0.13 s, both vision arms at 13 readings of 0.30 s, margin 1.25, US$0.25 spent before the first gate, reserve US$0.20, US$0.4644/h",
+    "proposed_cap_usd": 5.0,
+    "proposed_cap_is": "a proposal, not an approval",
+    "storage": {
+      "per_scene_records_and_traces_mb": 60,
+      "frames_gb": [
+        3.0,
+        4.0
+      ],
+      "frames_note": "both cameras of every step up to the trigger for 500 scenes, about 63 kB per compressed frame (measured on the 21 stored diagnostic videos); git-ignored, kept on Drive",
+      "transfer": "the download adds the host's per-GB price; choose an offer with a low transfer price"
+    },
+    "recollection_only_alternative": {
+      "what": "uninterrupted runs of the 300 used scenes with both cameras stored, no vision arm, no new scene",
+      "expected_minutes": [
+        25,
+        35
+      ],
+      "expected_usd": [
+        0.25,
+        0.4
+      ],
+      "not_needed_if": "stage B1 of this plan is run, because it stores the same frames",
+      "caveat": "rollouts are not bit-identical across hosts; a re-run scene need not be the recorded episode"
+    },
+    "gate_rule": "each `budget` step projects the remaining stages from the measured seconds per environment step, per vision reading and per memory step with every scene at its bound, margin 1.25, reserve US$0.20, and refuses above the approved cap; scenes, arms and bounds are never reduced"
+  },
+  "host": {
+    "gpu": "RTX 4090 class, 24 GB",
+    "create_options": "--env '-e NVIDIA_DRIVER_CAPABILITIES=all -e WANDB_MODE=disabled -e MS_SKIP_ASSET_DOWNLOAD_PROMPT=1'",
+    "first_check": "NVIDIA graphics libraries present (Vulkan) before installing",
+    "transfer_price": "offers filtered by per-GB transfer price"
+  },
+  "command_order": [
+    "local: tests, `plan`, `dry-run`",
+    "user: explicit approval naming a USD cap and this plan hash -> authorization.json",
+    "server: install",
+    "server: run.sh env",
+    "server: run.sh scenes",
+    "server: run.sh audit",
+    "server: run.sh shadow (budget gate first; V2_SHADOW_BLOCKED stops here)",
+    "server: run.sh pilot (budget gate first)",
+    "server: run.sh pack",
+    "local: download, hash checks, `summarize` from the raw records",
+    "local: delete only the instances created for this run",
+    "Drive: report and results to Robot Harm/results/vision_center_v2_001/"
+  ],
+  "outputs": {
+    "local": "results/vision_center_v2_001/",
+    "drive": "Robot Harm/results/vision_center_v2_001/",
+    "report_md": "not modified unless asked"
+  },
+  "files_read_on_the_server": [
+    "artifacts/policies/stack_v1_s1_d500_clean_resnet18_i080000/policy_meta.json",
+    "artifacts/policies/stack_v1_s1_d500_clean_resnet18_i080000/weights.pt",
+    "configs/policy_eval_splits.json",
+    "configs/recovery_v1_splits.json",
+    "configs/splits.json",
+    "configs/stackcube.yaml",
+    "configs/vision_center_splits.json",
+    "configs/vision_center_v2_splits.json",
+    "configs/vision_v1_splits.json",
+    "results/handoff_h1_001/scenes.json",
+    "results/stage2a/scenes.json",
+    "results/stage2b/scenes.json",
+    "results/stage2d/scenes.json",
+    "runs/stage1d_clean_002/data/train_d500_clean_manifest.json",
+    "runs/vision_v1_001/reference_scene_keys.json",
+    "scripts/30_recovery_v1_diag.py",
+    "scripts/31_recovery_v1_oracle_xy.py",
+    "scripts/32_vision_center.py",
+    "scripts/33_vision_center_v2.py",
+    "scripts/stage1b/common.sh",
+    "scripts/vision_center_v2/run.sh",
+    "src/hci/diagnostics.py",
+    "src/hci/experiment.py",
+    "src/hci/io.py",
+    "src/hci/observations.py",
+    "src/hci/pilot.py",
+    "src/hci/pilot2b.py",
+    "src/hci/pilot2d.py",
+    "src/hci/policies.py",
+    "src/hci/recovery_v1.py",
+    "src/hci/recovery_v1_oracle.py",
+    "src/hci/schema.py",
+    "src/hci/simulation.py",
+    "src/hci/statistics.py",
+    "src/hci/trees.py",
+    "src/hci/vision_center.py",
+    "src/hci/vision_center_v2.py",
+    "src/hci/vision_v1.py"
+  ],
+  "code": {
+    "src/hci/vision_v1.py": "deab7d2697dea81a995519cc568622f9c0d90df256d9281f2e3517811f06c9f7",
+    "src/hci/policies.py": "d9083dfe1eff702bae087b96840d2703dbb609fb7947c01eb49864bbd0eb9157",
+    "src/hci/simulation.py": "c42626728cac7eb9ebeffd5372683fc4ba01e41ef9d050f01e51134b0208fe9d",
+    "src/hci/experiment.py": "b7425dcfcff7ff188992bde22e1e2308292aea58eb8a11c557a1ced8ff595d29",
+    "src/hci/observations.py": "f9736618c952a42c6836b77c07d77ab96ad032ef60a77ef6d8018820e6acd657",
+    "src/hci/io.py": "60f2701b2e52ba80fc7e05142a06ae56c306c4298cd749ca5e418b54cb454a44",
+    "src/hci/schema.py": "52ef9c07a41ef6e007b5d57429fa062bb66d56b9047e4db0d731117e08589db6",
+    "src/hci/trees.py": "5f0fc7c28a89b32175abea983ac5202ffe535a0fe105e1ff6e855299177d8a60",
+    "src/hci/diagnostics.py": "49c79927d8cf5f8a208189647c75de1c67c3d4ee873fb87074db506e6534769d",
+    "src/hci/pilot.py": "4e730c36abdbcaa84d71c8643078b7aece7b01de958c81f4f67a75c62cebfac6",
+    "src/hci/statistics.py": "2e43b5f3134359412913abeee3eca3f30e27681ece10f1ae195ae0490ce1f5ad",
+    "src/hci/recovery_v1.py": "84512bbf4e89661b9e4b2923d37b896461f4a7d0fd5ea93fd27b1341d2d40464",
+    "src/hci/recovery_v1_oracle.py": "f652ead0a47750bd55ff990391ff4bb02d4af44331d351d4adea7112a973e765",
+    "src/hci/vision_center.py": "cc4a743976eb33da0824c1954a0ac19d075fc87b1369e45139812c09dce2797d",
+    "src/hci/vision_center_v2.py": "ab548ccc3825f9e25a7f979d4348563c34c1926c078e0acbd51f0101fd174fbc",
+    "src/hci/pilot2b.py": "625ba28e118e04095a0a0adcfd5b6a1f41416c85eab7c988c7e92a8ab2ba5e34",
+    "src/hci/pilot2d.py": "efefdc292630bb565bb319b2fc6cb7a9834603b28b7677b36601403ade52ee0d",
+    "scripts/30_recovery_v1_diag.py": "3f104a1a95e23ee83ff0bf285b469fbbaaca738812b3225990158b470e64468b",
+    "scripts/31_recovery_v1_oracle_xy.py": "c87c3576358ad6de7acbd55a1061550330c6d681d3568665096398b01c16ad15",
+    "scripts/32_vision_center.py": "06f0ef885cfaef9052fab9dae08cd1e8a16d484b695f2c8c13b26958df662ccf",
+    "scripts/33_vision_center_v2.py": "9a4cd5ff72d363eb57e182110b58272bbf08b09e4c58d2d9a12ccbb5f87481d6",
+    "scripts/vision_center_v2/run.sh": "34e7b28f3a6a077df1d76c82ee4c29967b8e0bc0de70777837b8e2b52b25e16e",
+    "scripts/stage1b/common.sh": "af2f105e0fe8c8177daea33c5cddefd5266436f366a45e59be821378191db80a",
+    "configs/stackcube.yaml": "b145ca59607f4edf45f20bd45624f1bd4c8ff028a035ee4ab12b7de40bb08d8b",
+    "configs/vision_center_v2_splits.json": "b538e892a5a251b8bba785d2eb643b5b6499ad6e9e759cd26312b0622f97676b",
+    "configs/recovery_v1_splits.json": "1809cc28432c24c69dfb7f5dd72e23875bf3bc12e3628e4eb3dc7d16486aba12",
+    "configs/vision_center_splits.json": "9f80c8cf1c63a3ba888f4ce4d183250c39ed2f47315bb012b0b6f48dfbb9e874"
+  },
+  "upstream_commit": "a4a4f9272ad64b1564035874b605ceb687b63ed8",
+  "not_in_this_work": [
+    "policy training or fine-tuning",
+    "any neural perception model",
+    "an added camera or a viewpoint motion",
+    "any change of constants or criteria after an outcome",
+    "a second pass",
+    "calibration",
+    "final Test",
+    "any change to the Vision-CENTER v1 code, records or result"
+  ]
+}
