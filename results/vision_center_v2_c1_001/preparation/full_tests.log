@@ -1,0 +1,52 @@
+........................................................................ [ 19%]
+.................................................F.....s................ [ 38%]
+........................................................................ [ 57%]
+........................................................................ [ 76%]
+............s........................................................... [ 95%]
+..................                                                       [100%]
+================================== FAILURES ===================================
+________ test_audit_seeds_are_used_development_scenes_not_pilot_scenes ________
+
+X = <module 'oxy_driver' from 'C:\\Users\\황선준\\Desktop\\Coding\\Robot\\robot harm intervention starter\\scripts/31_recovery_v1_oracle_xy.py'>
+
+    def test_audit_seeds_are_used_development_scenes_not_pilot_scenes(X):
+        v = read_json('configs/vision_v1_splits.json')['splits']['vision_v1_select']; assert set(X.AUDIT_SEEDS) <= set(v) and not set(X.AUDIT_SEEDS) & set(range(50700, 50800))
+        assert 'recovery_v1/recovery_v1_diag' in X.used_ledger() and O.pilot_seeds(read_json(X.MANIFEST), X.used_ledger()) == list(range(50700, 50800))
+>       scan = X.recorded_use_scan(); assert not {f for f in scan['files_naming_a_pilot_seed'] if not f.startswith(('results/vision_center_001/run2/', 'results/vision_center_v2_001/preparation/', 'results/vision_center_v2_001/execution/', 'results/vision_center_v2_001/postpass/'))}      # later work on these scenes as used development data: the Vision-CENTER shadow pass (run2, stage B1), the offline v2 observability audit of its records, the v2 shadow pass (stage B1), and the offline post-pass audit of the stage-B1 records (no rollout)
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: assert not {'results/vision_center_v2_c1_001/preparation/offline_replay.json', 'results/vision_center_v2_c1_001/preparation/offline_replay_summary.json'}
+
+tests\test_recovery_v1_oracle.py:524: AssertionError
+============================== warnings summary ===============================
+tests/test_vision_center.py::test_scene_where_vision_acts
+  C:\Users\황선준\Desktop\Coding\Robot\robot harm intervention starter\tests\test_vision_center.py:124: UserWarning: Creating a tensor from a list of numpy.ndarrays is extremely slow. Please consider converting the list to a single numpy.ndarray with numpy.array() before converting to a tensor. (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\torch\csrc\utils\tensor_new.cpp:255.)
+    o = super().obs(); o['extra']['tcp_pose'] = torch.cat([self.p, torch.tensor([DOWN], dtype=torch.float32)], -1); p = o['extra']['tcp_pose'][0].numpy().astype(float)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+============================ slowest 15 durations =============================
+308.56s call     tests/test_vision_center_c1.py::test_the_trunk_does_not_depend_on_which_arms_or_memories_exist
+174.50s call     tests/test_vision_center_c1.py::test_scene_with_every_arm_and_the_v2_arm_equals_the_v2_harness
+156.46s call     tests/test_vision_center_c1.py::test_abstaining_arms_leave_the_policy_untouched
+155.01s call     tests/test_vision_center_c1.py::test_center_move_with_defaults_is_the_original_v2_controller[bias1]
+140.51s call     tests/test_vision_center_c1.py::test_center_move_with_defaults_is_the_original_v2_controller[bias2]
+117.28s call     tests/test_vision_center_c1.py::test_validate_scene_rejects_inconsistent_records
+89.97s call     tests/test_vision_center_v2.py::test_scene_where_both_see_the_target
+81.71s call     tests/test_vision_center_v2.py::test_abstaining_v2_is_the_uninterrupted_run_and_touches_nothing
+76.46s call     tests/test_vision_center_c1.py::test_center_move_with_defaults_is_the_original_v2_controller[bias0]
+39.55s call     tests/test_vision_center_v2.py::test_validate_scene_rejects_inconsistent_records
+38.99s call     tests/test_recovery_v1_oracle.py::test_summary_from_raw_records_and_refusal_of_a_partial_run
+35.60s call     tests/test_vision_center_v2.py::test_scene_where_only_the_memory_lets_v2_act
+24.13s call     tests/test_vision_center.py::test_validate_scene_rejects_inconsistent_records
+22.78s call     tests/test_vision_center.py::test_vision_reads_no_cube_pose
+22.73s call     tests/test_vision_center.py::test_scene_where_vision_acts
+=========================== short test summary info ===========================
+FAILED tests/test_recovery_v1_oracle.py::test_audit_seeds_are_used_development_scenes_not_pilot_scenes
+SKIPPED [1] tests\test_demo_validation.py:15: could not import 'h5py': No module named 'h5py'
+SKIPPED [1] tests\test_failure_trace.py:2: could not import 'imageio': No module named 'imageio'
+SKIPPED [1] tests\test_stage1d_clean.py:103: could not import 'h5py': No module named 'h5py'
+SKIPPED [1] tests\test_stage1d_data.py:9: could not import 'h5py': No module named 'h5py'
+SKIPPED [1] tests\test_vision_v1.py:14: could not import 'torchvision': No module named 'torchvision'
+SKIPPED [1] tests\test_rng_restore.py:60: could not import 'mani_skill.envs.utils.randomization.batched_rng': No module named 'mani_skill'
+SKIPPED [1] tests\test_training_patches.py:12: could not import 'gymnasium': No module named 'gymnasium'
+1 failed, 375 passed, 7 skipped, 1 warning in 1769.66s (0:29:29)
+exit=1

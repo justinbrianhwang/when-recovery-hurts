@@ -1,0 +1,448 @@
+{
+ "work_id": "vision_center_v2_c1_001",
+ "what": "simulation check of the primary tests; no experimental data",
+ "scenes": 200,
+ "replications": 40000,
+ "alpha_familywise": 0.05,
+ "largest_familywise_error": 0.03155,
+ "bound_holds": true,
+ "exact_test_examples": {
+  "11_against_0": 0.00048828125,
+  "19_against_0": 1.9073486328125e-06,
+  "5_against_0": 0.03125,
+  "6_against_0": 0.015625,
+  "8_against_1": 0.01953125
+ },
+ "smallest_one_sided_win_that_rejects": {
+  "at_0.025_no_loss": 6,
+  "at_0.05_no_loss": 5,
+  "at_0.025_one_loss": 8,
+  "at_0.025_two_losses": 10
+ },
+ "scenarios": [
+  {
+   "scenario": "global null: no arm better anywhere",
+   "rates_only_arm_only_reference": {
+    "H_gen_seed2_v2_vs_C0": [
+     0.02,
+     0.02
+    ],
+    "H_mem_seed1_v2_vs_single_frame": [
+     0.02,
+     0.02
+    ],
+    "H_mem_seed2_v2_vs_single_frame": [
+     0.02,
+     0.02
+    ]
+   },
+   "scene_dependence_rho": 0.0,
+   "true_nulls": [
+    "H_gen",
+    "H_mem"
+   ],
+   "reject_H_gen": 0.008725,
+   "reject_H_mem_intersection_union": 5e-05,
+   "reject_H_mem_pooled_draft": 0.012775,
+   "familywise_error": 0.008775,
+   "familywise_error_mc_se": 0.00046631532719287704,
+   "pooled_draft_rejects_although_H_mem_is_false": 0.012775
+  },
+  {
+   "scenario": "global null, least favourable for the exact test (only-arm = only-reference = 5 %)",
+   "rates_only_arm_only_reference": {
+    "H_gen_seed2_v2_vs_C0": [
+     0.05,
+     0.05
+    ],
+    "H_mem_seed1_v2_vs_single_frame": [
+     0.05,
+     0.05
+    ],
+    "H_mem_seed2_v2_vs_single_frame": [
+     0.05,
+     0.05
+    ]
+   },
+   "scene_dependence_rho": 0.0,
+   "true_nulls": [
+    "H_gen",
+    "H_mem"
+   ],
+   "reject_H_gen": 0.012825,
+   "reject_H_mem_intersection_union": 0.0003,
+   "reject_H_mem_pooled_draft": 0.01685,
+   "familywise_error": 0.013125,
+   "familywise_error_mc_se": 0.0005690504014364633,
+   "pooled_draft_rejects_although_H_mem_is_false": 0.01685
+  },
+  {
+   "scenario": "memory helps with train seed 1 only (H_mem false), v2 helps with seed 2 (H_gen true)",
+   "rates_only_arm_only_reference": {
+    "H_gen_seed2_v2_vs_C0": [
+     0.095,
+     0.0
+    ],
+    "H_mem_seed1_v2_vs_single_frame": [
+     0.055,
+     0.0
+    ],
+    "H_mem_seed2_v2_vs_single_frame": [
+     0.02,
+     0.02
+    ]
+   },
+   "scene_dependence_rho": 0.0,
+   "true_nulls": [
+    "H_mem"
+   ],
+   "reject_H_gen": 1.0,
+   "reject_H_mem_intersection_union": 0.0194,
+   "reject_H_mem_pooled_draft": 0.786075,
+   "familywise_error": 0.0194,
+   "familywise_error_mc_se": 0.0006896310607854029,
+   "pooled_draft_rejects_although_H_mem_is_false": 0.786075
+  },
+  {
+   "scenario": "memory helps strongly with train seed 1 only, least favourable second policy (5 % / 5 %)",
+   "rates_only_arm_only_reference": {
+    "H_gen_seed2_v2_vs_C0": [
+     0.095,
+     0.0
+    ],
+    "H_mem_seed1_v2_vs_single_frame": [
+     0.1,
+     0.0
+    ],
+    "H_mem_seed2_v2_vs_single_frame": [
+     0.05,
+     0.05
+    ]
+   },
+   "scene_dependence_rho": 0.0,
+   "true_nulls": [
+    "H_mem"
+   ],
+   "reject_H_gen": 0.999875,
+   "reject_H_mem_intersection_union": 0.03065,
+   "reject_H_mem_pooled_draft": 0.9359,
+   "familywise_error": 0.03065,
+   "familywise_error_mc_se": 0.0008618378255217162,
+   "pooled_draft_rejects_although_H_mem_is_false": 0.9359
+  },
+  {
+   "scenario": "memory helps with both, v2 not better than C0 with seed 2 (H_gen false)",
+   "rates_only_arm_only_reference": {
+    "H_gen_seed2_v2_vs_C0": [
+     0.03,
+     0.03
+    ],
+    "H_mem_seed1_v2_vs_single_frame": [
+     0.055,
+     0.0
+    ],
+    "H_mem_seed2_v2_vs_single_frame": [
+     0.055,
+     0.0
+    ]
+   },
+   "scene_dependence_rho": 0.0,
+   "true_nulls": [
+    "H_gen"
+   ],
+   "reject_H_gen": 0.024075,
+   "reject_H_mem_intersection_union": 0.9343,
+   "reject_H_mem_pooled_draft": 0.999975,
+   "familywise_error": 0.024075,
+   "familywise_error_mc_se": 0.0007664103726953335,
+   "pooled_draft_rejects_although_H_mem_is_false": null
+  },
+  {
+   "scenario": "alternative at the stage-B2 rates (9.5 % against C0, 5.5 % against single frame, no loss)",
+   "rates_only_arm_only_reference": {
+    "H_gen_seed2_v2_vs_C0": [
+     0.095,
+     0.0
+    ],
+    "H_mem_seed1_v2_vs_single_frame": [
+     0.055,
+     0.0
+    ],
+    "H_mem_seed2_v2_vs_single_frame": [
+     0.055,
+     0.0
+    ]
+   },
+   "scene_dependence_rho": 0.0,
+   "true_nulls": [],
+   "reject_H_gen": 0.99995,
+   "reject_H_mem_intersection_union": 0.974525,
+   "reject_H_mem_pooled_draft": 1.0,
+   "familywise_error": null,
+   "familywise_error_mc_se": null,
+   "pooled_draft_rejects_although_H_mem_is_false": null
+  },
+  {
+   "scenario": "alternative at half the stage-B2 effect, with losses of 0.5 %",
+   "rates_only_arm_only_reference": {
+    "H_gen_seed2_v2_vs_C0": [
+     0.0475,
+     0.005
+    ],
+    "H_mem_seed1_v2_vs_single_frame": [
+     0.0275,
+     0.005
+    ],
+    "H_mem_seed2_v2_vs_single_frame": [
+     0.0275,
+     0.005
+    ]
+   },
+   "scene_dependence_rho": 0.0,
+   "true_nulls": [],
+   "reject_H_gen": 0.71725,
+   "reject_H_mem_intersection_union": 0.119325,
+   "reject_H_mem_pooled_draft": 0.727425,
+   "familywise_error": null,
+   "familywise_error_mc_se": null,
+   "pooled_draft_rejects_although_H_mem_is_false": null
+  },
+  {
+   "scenario": "alternative: stage-B2 rates with seed 1, half effect with seed 2",
+   "rates_only_arm_only_reference": {
+    "H_gen_seed2_v2_vs_C0": [
+     0.0475,
+     0.005
+    ],
+    "H_mem_seed1_v2_vs_single_frame": [
+     0.055,
+     0.0
+    ],
+    "H_mem_seed2_v2_vs_single_frame": [
+     0.0275,
+     0.005
+    ]
+   },
+   "scene_dependence_rho": 0.0,
+   "true_nulls": [],
+   "reject_H_gen": 0.73325,
+   "reject_H_mem_intersection_union": 0.331725,
+   "reject_H_mem_pooled_draft": 0.988775,
+   "familywise_error": null,
+   "familywise_error_mc_se": null,
+   "pooled_draft_rejects_although_H_mem_is_false": null
+  },
+  {
+   "scenario": "global null: no arm better anywhere",
+   "rates_only_arm_only_reference": {
+    "H_gen_seed2_v2_vs_C0": [
+     0.02,
+     0.02
+    ],
+    "H_mem_seed1_v2_vs_single_frame": [
+     0.02,
+     0.02
+    ],
+    "H_mem_seed2_v2_vs_single_frame": [
+     0.02,
+     0.02
+    ]
+   },
+   "scene_dependence_rho": 0.8,
+   "true_nulls": [
+    "H_gen",
+    "H_mem"
+   ],
+   "reject_H_gen": 0.00855,
+   "reject_H_mem_intersection_union": 7.5e-05,
+   "reject_H_mem_pooled_draft": 0.013925,
+   "familywise_error": 0.008625,
+   "familywise_error_mc_se": 0.00046234752554220513,
+   "pooled_draft_rejects_although_H_mem_is_false": 0.013925
+  },
+  {
+   "scenario": "global null, least favourable for the exact test (only-arm = only-reference = 5 %)",
+   "rates_only_arm_only_reference": {
+    "H_gen_seed2_v2_vs_C0": [
+     0.05,
+     0.05
+    ],
+    "H_mem_seed1_v2_vs_single_frame": [
+     0.05,
+     0.05
+    ],
+    "H_mem_seed2_v2_vs_single_frame": [
+     0.05,
+     0.05
+    ]
+   },
+   "scene_dependence_rho": 0.8,
+   "true_nulls": [
+    "H_gen",
+    "H_mem"
+   ],
+   "reject_H_gen": 0.01405,
+   "reject_H_mem_intersection_union": 0.00015,
+   "reject_H_mem_pooled_draft": 0.01745,
+   "familywise_error": 0.0142,
+   "familywise_error_mc_se": 0.0005915733259706695,
+   "pooled_draft_rejects_although_H_mem_is_false": 0.01745
+  },
+  {
+   "scenario": "memory helps with train seed 1 only (H_mem false), v2 helps with seed 2 (H_gen true)",
+   "rates_only_arm_only_reference": {
+    "H_gen_seed2_v2_vs_C0": [
+     0.095,
+     0.0
+    ],
+    "H_mem_seed1_v2_vs_single_frame": [
+     0.055,
+     0.0
+    ],
+    "H_mem_seed2_v2_vs_single_frame": [
+     0.02,
+     0.02
+    ]
+   },
+   "scene_dependence_rho": 0.8,
+   "true_nulls": [
+    "H_mem"
+   ],
+   "reject_H_gen": 0.999875,
+   "reject_H_mem_intersection_union": 0.0184,
+   "reject_H_mem_pooled_draft": 0.782375,
+   "familywise_error": 0.0184,
+   "familywise_error_mc_se": 0.000671964284765195,
+   "pooled_draft_rejects_although_H_mem_is_false": 0.782375
+  },
+  {
+   "scenario": "memory helps strongly with train seed 1 only, least favourable second policy (5 % / 5 %)",
+   "rates_only_arm_only_reference": {
+    "H_gen_seed2_v2_vs_C0": [
+     0.095,
+     0.0
+    ],
+    "H_mem_seed1_v2_vs_single_frame": [
+     0.1,
+     0.0
+    ],
+    "H_mem_seed2_v2_vs_single_frame": [
+     0.05,
+     0.05
+    ]
+   },
+   "scene_dependence_rho": 0.8,
+   "true_nulls": [
+    "H_mem"
+   ],
+   "reject_H_gen": 0.999875,
+   "reject_H_mem_intersection_union": 0.03155,
+   "reject_H_mem_pooled_draft": 0.9365,
+   "familywise_error": 0.03155,
+   "familywise_error_mc_se": 0.0008739936713157596,
+   "pooled_draft_rejects_although_H_mem_is_false": 0.9365
+  },
+  {
+   "scenario": "memory helps with both, v2 not better than C0 with seed 2 (H_gen false)",
+   "rates_only_arm_only_reference": {
+    "H_gen_seed2_v2_vs_C0": [
+     0.03,
+     0.03
+    ],
+    "H_mem_seed1_v2_vs_single_frame": [
+     0.055,
+     0.0
+    ],
+    "H_mem_seed2_v2_vs_single_frame": [
+     0.055,
+     0.0
+    ]
+   },
+   "scene_dependence_rho": 0.8,
+   "true_nulls": [
+    "H_gen"
+   ],
+   "reject_H_gen": 0.02485,
+   "reject_H_mem_intersection_union": 0.9335,
+   "reject_H_mem_pooled_draft": 0.999975,
+   "familywise_error": 0.02485,
+   "familywise_error_mc_se": 0.0007783392175009557,
+   "pooled_draft_rejects_although_H_mem_is_false": null
+  },
+  {
+   "scenario": "alternative at the stage-B2 rates (9.5 % against C0, 5.5 % against single frame, no loss)",
+   "rates_only_arm_only_reference": {
+    "H_gen_seed2_v2_vs_C0": [
+     0.095,
+     0.0
+    ],
+    "H_mem_seed1_v2_vs_single_frame": [
+     0.055,
+     0.0
+    ],
+    "H_mem_seed2_v2_vs_single_frame": [
+     0.055,
+     0.0
+    ]
+   },
+   "scene_dependence_rho": 0.8,
+   "true_nulls": [],
+   "reject_H_gen": 1.0,
+   "reject_H_mem_intersection_union": 0.9754,
+   "reject_H_mem_pooled_draft": 1.0,
+   "familywise_error": null,
+   "familywise_error_mc_se": null,
+   "pooled_draft_rejects_although_H_mem_is_false": null
+  },
+  {
+   "scenario": "alternative at half the stage-B2 effect, with losses of 0.5 %",
+   "rates_only_arm_only_reference": {
+    "H_gen_seed2_v2_vs_C0": [
+     0.0475,
+     0.005
+    ],
+    "H_mem_seed1_v2_vs_single_frame": [
+     0.0275,
+     0.005
+    ],
+    "H_mem_seed2_v2_vs_single_frame": [
+     0.0275,
+     0.005
+    ]
+   },
+   "scene_dependence_rho": 0.8,
+   "true_nulls": [],
+   "reject_H_gen": 0.723075,
+   "reject_H_mem_intersection_union": 0.12025,
+   "reject_H_mem_pooled_draft": 0.726875,
+   "familywise_error": null,
+   "familywise_error_mc_se": null,
+   "pooled_draft_rejects_although_H_mem_is_false": null
+  },
+  {
+   "scenario": "alternative: stage-B2 rates with seed 1, half effect with seed 2",
+   "rates_only_arm_only_reference": {
+    "H_gen_seed2_v2_vs_C0": [
+     0.0475,
+     0.005
+    ],
+    "H_mem_seed1_v2_vs_single_frame": [
+     0.055,
+     0.0
+    ],
+    "H_mem_seed2_v2_vs_single_frame": [
+     0.0275,
+     0.005
+    ]
+   },
+   "scene_dependence_rho": 0.8,
+   "true_nulls": [],
+   "reject_H_gen": 0.73475,
+   "reject_H_mem_intersection_union": 0.33205,
+   "reject_H_mem_pooled_draft": 0.98805,
+   "familywise_error": null,
+   "familywise_error_mc_se": null,
+   "pooled_draft_rejects_although_H_mem_is_false": null
+  }
+ ]
+}

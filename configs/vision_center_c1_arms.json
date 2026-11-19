@@ -1,0 +1,102 @@
+{
+ "version": 2,
+ "work_id": "vision_center_v2_c1_001",
+ "status": "FINAL for the C1 plan: nine arms. VISION_CENTER_V2S listed and excluded by the pre-set technical criterion (offline replay of 500 used scenes).",
+ "arms": [
+  {
+   "id": "C0",
+   "role": "reference",
+   "definition": "The uninterrupted policy. Must reproduce the trunk.",
+   "implementation": "unchanged",
+   "included": true
+  },
+  {
+   "id": "VISION_CENTER_V1",
+   "role": "baseline",
+   "definition": "hci.vision_center.vision_center, unchanged: v1 rules, hand camera at the trigger step.",
+   "implementation": "unchanged",
+   "included": true
+  },
+  {
+   "id": "V2_SINGLE_FRAME",
+   "role": "ablation",
+   "definition": "v2 decision rules, v2 estimators (hand camera and base camera) and the v2 control loop, on a memory that receives only the trigger step's observation (hci.vision_center_c1.single_frame_memory). No observation from before the trigger enters it: no remembered hand-camera target, no remembered base-camera target, no remembered held-cube fit.",
+   "implementation": "original v2 controller on an ablated memory",
+   "included": true,
+   "differences_from_v2": [
+    "memory built from the trigger step only (v2: every step since the reset)",
+    "confirm_min 1 instead of 3: a single base-camera estimate at the trigger is accepted, because one frame cannot give three confirmations. This relaxes v2's confirmation rule in favour of this arm; H_mem is conservative for it",
+    "a target estimated by the base camera at the trigger is labelled memory_base, so v2's rules for a remembered target (uncertainty margin U_BASE 5 mm, gap rule) apply to it",
+    "everything else equal: v2.decide, v2.estimate, v2.stop_tol, move bounds"
+   ],
+   "offline": "acts 62 of 484; same act/abstain as VISION_CENTER_V1 in 481 of 484; v2 acts where it abstains in 26 scenes, never the reverse"
+  },
+  {
+   "id": "VISION_CENTER_V2",
+   "role": "primary candidate",
+   "definition": "hci.vision_center_v2.vision_center_v2 on hci.vision_center_v2.Memory, unchanged.",
+   "implementation": "unchanged",
+   "included": true
+  },
+  {
+   "id": "CENTER_ORACLE",
+   "role": "reference, not deployable",
+   "definition": "hci.recovery_v1_oracle.center_oracle, unchanged; reads simulator cube positions.",
+   "implementation": "unchanged",
+   "included": true
+  },
+  {
+   "id": "V2_NO_HAND_MEMORY",
+   "role": "ablation, leave one out",
+   "definition": "Full v2; hand-camera target fits never enter the memory.",
+   "implementation": "original v2 controller on an ablated memory",
+   "included": true
+  },
+  {
+   "id": "V2_NO_BASE_MEMORY",
+   "role": "ablation, leave one out",
+   "definition": "Full v2; base-camera estimates never enter the memory.",
+   "implementation": "original v2 controller on an ablated memory",
+   "included": true
+  },
+  {
+   "id": "V2_NO_HOLD_MEMORY",
+   "role": "ablation, leave one out",
+   "definition": "Full v2; no remembered held-cube fit.",
+   "implementation": "original v2 controller on an ablated memory",
+   "included": true
+  },
+  {
+   "id": "V2_RULES_OFF",
+   "role": "diagnostic",
+   "definition": "v2 memory and v2 estimates unchanged; at the trigger the decision is hci.vision_center_c1.decide_rules_off, which keeps only the v1 rules (estimate missing, LOW_CARRY on the held-cube height, TOO_FEW_STEPS, ALIGNED below ACT_MIN) and removes three v2-only rules as ONE bundle.",
+   "implementation": "copy of the v2 control loop with another decision function",
+   "included": true,
+   "differences_from_v2": [
+    "removed: ALIGNED_WITHIN_UNCERTAINTY (offset minus uncertainty below the residual tolerance)",
+    "removed: SIDE_CONTACT_RISK (large offset plus uncertainty with a small vertical gap)",
+    "removed: LOW_CARRY for a remembered target when the gap to its top face is below MEMORY_GAP_MIN",
+    "kept: v2.stop_tol (memory stop tolerance for a remembered target), the control loop and the move bounds; the decision is made once at the trigger as in v2",
+    "diagnostic only: it measures the bundle and identifies the effect of no single rule"
+   ],
+   "offline": "acts 118 of 484 (v2 88); 30 more acts than v2: v2 recorded both succeed in 19, both fail in 11"
+  },
+  {
+   "id": "VISION_CENTER_V2S",
+   "role": "safety candidate",
+   "definition": "hci.vision_center_v2s: contact invalidation of the remembered target, history kept apart from the trigger step, memory updated during control, wider base-camera bound, height margin. A separate candidate; v2 is not edited.",
+   "implementation": "copy of the v2 control loop with memory update",
+   "included": false,
+   "excluded_because": "pre-set technical criterion 'no act on a memory wrong by label' not met: scene 50623 (B1), base-camera target estimate 5.2 mm off (bound 12 mm, target not moved), v2s acts as v2 does. The contact rule addresses a stale memory, not an estimator error. Not tuned after the fact.",
+   "offline_findings": [
+    "detects scene 51009: the remembered target 37.7 mm off is refused by contact invalidation",
+    "of 4 memories wrong by label refuses 2 (51009, 50702), keeps 2 (50623 acts, 50870 abstains)",
+    "of 192 right memories refuses 57",
+    "acts 81 against v2's 88: abstains in 7 scenes where v2 acted (6 recorded v2 rescues, 1 both succeed); acts in none where v2 abstained",
+    "replayed along v2's control frames, stops early in 5 of 81 moves (memory invalidated during control)"
+   ]
+  }
+ ],
+ "offline_replay_summary": "results/vision_center_v2_c1_001/preparation/offline_replay_summary_r2.json",
+ "offline_replay_note": "Second replay with the code after the independent review; its 484 rows are identical to the first replay (offline_replay_summary.json, kept), only the code hash of vision_center_c1.py differs."
+}
