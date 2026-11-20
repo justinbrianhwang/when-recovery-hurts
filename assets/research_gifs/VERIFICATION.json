@@ -1,0 +1,186 @@
+{
+ "what": "independent check of the README GIFs against the raw Phase B records",
+ "cases": {
+  "recovery_success": {
+   "source_sha256": true,
+   "panel_A": {
+    "frames_shown": 53,
+    "closest_raw_frame_is_the_step_s_own": 53,
+    "placeholders": 49,
+    "placeholders_not_grey": 0,
+    "max_mean_abs_pixel_difference_to_its_raw_frame": 2.85,
+    "problems": []
+   },
+   "numbers": {
+    "true offset at trigger [POST-HOC]": {
+     "shown": "25.6 mm",
+     "raw": "25.6 mm",
+     "ok": true
+    },
+    "v2 target pushed during move [POST-HOC]": {
+     "shown": "0.0 mm (PASS)",
+     "raw_end_of_move_mm": 0.02,
+     "raw_max_during_move_mm": 0.02,
+     "ok": true
+    },
+    "v2 offset after move [POST-HOC]": {
+     "shown": "4.6 mm",
+     "raw": "4.6 mm",
+     "ok": true
+    },
+    "v2 estimate error at trigger [POST-HOC]": {
+     "shown": "1.0 mm (own bound 4 mm)",
+     "raw": "1.0 mm (own bound 4 mm)",
+     "ok": true
+    }
+   },
+   "events": {
+    "C0": {
+     "control_steps_equals_logged_steps": true,
+     "success_step": null,
+     "outcome_y_matches_trace": true,
+     "episode_length": 200,
+     "length_matches_record": true,
+     "first_open_command": 113,
+     "events_in_gif_match": true
+    },
+    "VISION_CENTER_V2": {
+     "control_steps_equals_logged_steps": true,
+     "success_step": 127,
+     "outcome_y_matches_trace": true,
+     "episode_length": 127,
+     "length_matches_record": true,
+     "first_open_command": 127,
+     "events_in_gif_match": true
+    }
+   },
+   "pass": true
+  },
+  "unsafe_intervention": {
+   "source_sha256": true,
+   "panel_A": {
+    "frames_shown": 47,
+    "closest_raw_frame_is_the_step_s_own": 47,
+    "placeholders": 45,
+    "placeholders_not_grey": 0,
+    "max_mean_abs_pixel_difference_to_its_raw_frame": 2.45,
+    "problems": []
+   },
+   "numbers": {
+    "true offset at trigger [POST-HOC]": {
+     "shown": "51.1 mm",
+     "raw": "51.1 mm",
+     "ok": true
+    },
+    "v1 target pushed during move [POST-HOC]": {
+     "shown": "5.7 mm (FAIL)",
+     "raw_end_of_move_mm": 5.69,
+     "raw_max_during_move_mm": 5.69,
+     "ok": true
+    },
+    "v1 offset after move [POST-HOC]": {
+     "shown": "47.7 mm",
+     "raw": "47.7 mm",
+     "ok": true
+    },
+    "v2 estimate error at trigger [POST-HOC]": {
+     "shown": "1.5 mm (own bound 4 mm)",
+     "raw": "1.5 mm (own bound 4 mm)",
+     "ok": true
+    }
+   },
+   "events": {
+    "VISION_CENTER_V1": {
+     "control_steps_equals_logged_steps": true,
+     "success_step": null,
+     "outcome_y_matches_trace": true,
+     "episode_length": 200,
+     "length_matches_record": true,
+     "first_open_command": 135,
+     "events_in_gif_match": true
+    },
+    "VISION_CENTER_V2": {
+     "control_steps_equals_logged_steps": true,
+     "success_step": null,
+     "outcome_y_matches_trace": true,
+     "episode_length": 200,
+     "length_matches_record": true,
+     "first_open_command": 126,
+     "events_in_gif_match": true
+    }
+   },
+   "pass": true
+  },
+  "memory_failure": {
+   "source_sha256": true,
+   "panel_A": {
+    "frames_shown": 44,
+    "closest_raw_frame_is_the_step_s_own": 44,
+    "placeholders": 60,
+    "placeholders_not_grey": 0,
+    "max_mean_abs_pixel_difference_to_its_raw_frame": 2.7,
+    "problems": []
+   },
+   "numbers": {
+    "true offset at trigger [POST-HOC]": {
+     "shown": "47.8 mm",
+     "raw": "47.8 mm",
+     "ok": true
+    },
+    "oracle target pushed during move [POST-HOC]": {
+     "shown": "20.7 mm (FAIL)",
+     "raw_end_of_move_mm": 20.72,
+     "raw_max_during_move_mm": 20.72,
+     "ok": true
+    },
+    "oracle offset after move [POST-HOC]": {
+     "shown": "47.1 mm",
+     "raw": "47.1 mm",
+     "ok": true
+    },
+    "v2 estimate error at trigger [POST-HOC]": {
+     "shown": "36.9 mm (own bound 12 mm)",
+     "raw": "36.9 mm (own bound 12 mm)",
+     "ok": true
+    },
+    "memory": {
+     "t_last": 120,
+     "remembered_vs_true_target_at_trigger_mm": 37.69,
+     "target_moved_since_last_view_mm": 38.79,
+     "ok": true
+    }
+   },
+   "events": {
+    "VISION_CENTER_V2": {
+     "control_steps_equals_logged_steps": true,
+     "success_step": null,
+     "outcome_y_matches_trace": true,
+     "episode_length": 200,
+     "length_matches_record": true,
+     "first_open_command": 134,
+     "events_in_gif_match": true
+    },
+    "CENTER_ORACLE": {
+     "control_steps_equals_logged_steps": true,
+     "success_step": null,
+     "outcome_y_matches_trace": true,
+     "episode_length": 200,
+     "length_matches_record": true,
+     "first_open_command": 148,
+     "events_in_gif_match": true
+    }
+   },
+   "pass": true
+  }
+ },
+ "all_pass": true,
+ "verifier_sha256": "0ee04c3b1d0597efcd1151b2d6dcffac4f08dd7baecebd18cb8a8379eee76af4",
+ "gif_sha256": {
+  "hires/memory_failure_1280x720.gif": "878f3564625d2cc911c416dc58222e333121424343d27d15f65ca407b6d8d6cb",
+  "hires/recovery_success_1280x720.gif": "c52112ff74041137aaae7c6e0ed7b60b88cf66546face73a1af95186059c828e",
+  "hires/unsafe_intervention_1280x720.gif": "17fddc0b9b21be3d459ed2adf0dec2db2dd9b50cde7bf928cb2ebf848de24371",
+  "memory_failure.gif": "42d2d85a2d9e0212cfdc4b028349871d35b3a4bd9f93eb74445bc7fa84b199bd",
+  "recovery_success.gif": "9dc023df2fdb3dbd200805860cc36afa38bc5a7d8449c74802831011fb360ed8",
+  "unsafe_intervention.gif": "c26efeb3dcc0fad3cbe450a562534b312c9b73badad21f343f34301ed73067d9"
+ }
+}

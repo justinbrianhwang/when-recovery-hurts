@@ -37,10 +37,10 @@ S2_RECORD = {'backup_list': 'results/vision_v1_001/run2/archive_file_sha256.txt'
 V2_PLAN = 'results/vision_center_v2_001/preparation/plan.json'; V2_PLAN_SHA = '1b4ea3bb65bd4cfdffc13a610fee010d568a5837e632701d4b0d265e6ba66e86'
 V2_RESULT = 'results/vision_center_v2_001/execution/pilot/result.json'
 UNCHANGED = ('src/hci/vision_center.py', 'src/hci/vision_center_v2.py', 'src/hci/recovery_v1_oracle.py', 'src/hci/recovery_v1.py', 'src/hci/simulation.py', 'src/hci/policies.py', 'src/hci/vision_v1.py')     # must equal the hashes of the approved v2 plan
-OFFLINE = 'results/vision_center_v2_c1_001/preparation/offline_replay_summary_r2.json'     # second replay, with the code after the independent review (the first replay, offline_replay_summary.json, is kept)
+OFFLINE = 'results/vision_center_v2_c1_001/preparation/offline_replay_summary_r4.json'     # fourth replay: final code (recording change, Unix line endings); replays 1-3 are kept; all four have identical rows
 AUDIT_SEEDS = Z.AUDIT_SEEDS
 USED = {**Z.USED, 'vision_center_v2': Z.MANIFEST}
-CODE = sorted({*Z.CODE, 'src/hci/vision_center_c1.py', 'src/hci/vision_center_v2s.py', 'scripts/34_vision_center_c1.py', 'scripts/vision_center_c1/run.sh', MANIFEST, REGISTRY, Z.MANIFEST})
+CODE = sorted({*Z.CODE, 'src/hci/vision_center_c1.py', 'src/hci/vision_center_v2s.py', 'src/hci/trajectory_audit.py', 'tests/test_trajectory_audit.py', 'scripts/34_vision_center_c1.py', 'scripts/vision_center_c1/run.sh', MANIFEST, REGISTRY, Z.MANIFEST})
 SERVER_READS = sorted({*CODE, *Z.SERVER_READS, *(p['path'] + '/' + f for p in POLICIES.values() for f in ('weights.pt', 'policy_meta.json'))})
 LEDGER = 'artifacts/ledger/vision_center_c1.json'
 DRIVE = 'Robot Harm/results/vision_center_v2_c1_001/'
@@ -88,7 +88,7 @@ def cost_estimate(arms):
                       'seconds_per_scene_4_arms_phase_b': per4, 'seconds_per_extra_arm_assumed': 2.5},
             'expected_minutes': {'install_checks_placement_audit': [25, 40], 'two_passes': [round(exp * 60 * 0.9), round(exp * 60 * 1.3)], 'pack_download': [10, 20]}, 'expected_total_usd': [round(0.35 + exp * 0.9 * price, 2), round(0.60 + exp * 1.3 * price, 2)],
             'worst_case_gate_projection_usd': worst['projected_total_usd'], 'worst_case_hours': worst['projected_remaining_hours'], 'worst_case_inputs': worst['inputs'],
-            'proposed_cap_usd': 6.0, 'proposed_cap_is': 'a proposal, not an approval', 'storage_gb': [4.0, 6.0], 'storage_note': 'frames of both cameras up to the trigger for 400 scene runs and the control frames of the vision arms; the download adds the per-GB transfer price',
+            'proposed_cap_usd': 6.0, 'proposed_cap_is': 'a proposal, not an approval', 'storage_gb': [3.5, 6.0], 'storage_note': 'both cameras: every step up to the trigger, the control frames of the vision arms, and after the trigger the frames of C0 and of every arm that moved under hci.vision_center_c1.FRAME_POLICY (estimated from the Phase B records: about 2.7 GB before the trigger and 0.6 GB after it at 67 kB per compressed frame); the download adds the per-GB transfer price',
             'gate_rule': 'the budget step projects the whole run from the times measured in the audit with every scene at its bound, margin 1.25, reserve US$0.30, and refuses above the approved cap; spend so far is computed from the session clock; '
                          'before every scene the run stops INCOMPLETE if one more scene at its bound could pass the cap. Scenes, arms and bounds are never reduced'}
 
@@ -115,6 +115,8 @@ def cmd_plan(a):
     changed = [f for f in UNCHANGED if sha256(f) != vp['code'][f]]
     if changed: problems.append(f'files that must stay as in the approved v2 plan have changed: {changed}')
     if Path(LEDGER).exists(): problems.append('a ledger for the C1 scenes already exists')
+    crlf = [f for f in SERVER_READS if Path(f).suffix in ('.py', '.sh', '.yaml') and b'\r' in Path(f).read_bytes()]
+    if crlf: problems.append(f'Windows line endings in files executed on the Linux server: {crlf}')
     if [c['policy'][k] for k in ('obs_horizon', 'act_horizon', 'pred_horizon')] != [2, 8, 16] or c['env']['horizon'] != 200 or c['env']['control_mode'] != 'pd_ee_delta_pos' or c['env']['robot_uid'] != 'panda_wristcam': problems.append('config is not the fixed setting')
     off = read_json(OFFLINE) if Path(OFFLINE).exists() else None
     if off is None: problems.append('offline replay summary missing')
@@ -150,7 +152,7 @@ def cmd_plan(a):
             'audit': {'seeds': list(AUDIT_SEEDS), 'policies': list(C1.POLICIES), 'does': ['every arm with every technical check of the run, with both policies', 'seconds per environment step, per vision reading and per memory step for the budget gate'], 'outcomes': 'decide nothing'},
             'run': {'order': ['clock', 'scenes', 'audit', 'budget', 'run (train_seed_1, then train_seed_2)'], 'ledger': LEDGER + ', created exclusively before any rollout on a new scene; one ledger for both passes; no resume, no second pass',
                     'on_error': 'the run stops and stays INCOMPLETE; no scene is dropped or replaced; a partial run has no summary',
-                    'stored': 'one record per scene and policy, per-step ground-truth traces (logging), both cameras\' frames of every step up to the trigger, the frames of every vision arm at the trigger and during control',
+                    'stored': 'one record per scene and policy, per-step ground-truth traces (logging), both cameras\' frames of every step up to the trigger, the frames of every vision arm at the trigger and during control, and after the trigger the frames given by FRAME_POLICY; per arm a branch id, the snapshot digest, the first open command after the move and the success step', 'frame_policy': C1.FRAME_POLICY,
                     'thread_limit': 'OMP_NUM_THREADS, OPENBLAS_NUM_THREADS, MKL_NUM_THREADS, NUMEXPR_NUM_THREADS, BLIS_NUM_THREADS = 1 before every Python process (run.sh exports them)'},
             'volume': {'policies': 2, 'scenes': n, 'scene_runs': 2 * n, 'arms': len(arms), 'vision_arms': len([x for x in arms if x in C1.VISION_ARMS]), 'audit_scene_runs': 2 * len(AUDIT_SEEDS), 'steps_per_scene_bound': 200 + len(arms) * 200,
                        'env_steps_bound_total': 2 * n * (200 + len(arms) * 200), 'readings_per_scene_bound': len([x for x in arms if x in C1.VISION_ARMS]) * 13},

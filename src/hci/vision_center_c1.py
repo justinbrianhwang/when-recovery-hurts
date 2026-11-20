@@ -272,6 +272,37 @@ def intervention_of(arm):
     return V2.INTERVENTION
 
 
+# ---------------------------------------------------------------- frames after the trigger (fixed storage policy, decided before any C1 outcome)
+POST_WINDOW = 20; POST_STRIDE = 4
+FRAME_POLICY = ('both cameras, every step from the trigger to the first open command after the move + 20 steps, then every 4th step and the last step; '
+                'for C0 and for every arm that moved. An abstaining arm stores none: its trajectory equals C0 (checked), so its frames are those of C0')
+
+
+def _plain(v):
+    """The snapshot tree as plain JSON values (tensors to lists), for its digest."""
+    from .trees import as_numpy
+    if isinstance(v, dict): return {str(k): _plain(x) for k, x in v.items()}
+    if isinstance(v, (list, tuple)): return [_plain(x) for x in v]
+    if hasattr(v, 'detach') or isinstance(v, np.ndarray): return np.asarray(as_numpy(v)).tolist()
+    if isinstance(v, np.generic): return v.item()
+    return v
+
+
+def _frame(r):
+    hand, base = V2.observe(r)[:2]; return np.concatenate([base, hand], 1)
+
+
+def post_frame_steps(t, end, k, release):
+    """Steps (t < step <= end) whose frames are kept, for a move of k steps from trigger t and the first open command `release`."""
+    edge = (release if release is not None else t + k) + POST_WINDOW
+    return [q for q in range(t + 1, end + 1) if q <= edge or (q - t) % POST_STRIDE == 0 or q == end]
+
+
+def first_open_after(rows, t, k):
+    """First step after the move whose executed gripper command is an open command (> 0), from the logged actions."""
+    return next((int(x['t']) for x in rows if x['t'] > t + k and x.get('action') is not None and float(x['action'][-1]) > 0), None)
+
+
 # ---------------------------------------------------------------- one scene
 def collect_scene(r, seed, c, probe=None, arms=ARMS, role=ROLE, policy_id=None):
     """Trunk (never restored) with every memory updated on every step up to the trigger from ONE set of image fits; if the
@@ -312,11 +343,13 @@ def collect_scene(r, seed, c, probe=None, arms=ARMS, role=ROLE, policy_id=None):
             return O.jsonable({**head, 'triggered': False, 'trigger': None, 'cells': cells, 'memory': msum,
                                'counts': {'continuations': 0, 'restores': 0, 'env_steps': env_steps, 'readings': 0, 'memory_steps': mem_steps, 'memory_seconds': mem_seconds}, 'oracle_reads': 0, 'wall_seconds': time.perf_counter() - started, 'completed': True}), traces, frames
         s = snap['s']; t = snap['reading']['step']; before = snap['gt']; cells = []; readings = 0; reading_seconds = 0.
+        from .io import digest
+        snap_digest = digest(_plain(snap['tree'])); h.frame = _frame
         for arm in arms:
             tick = time.perf_counter(); r.restore(s); env_steps += len(s['actions']); cmp = O.compare_tree(snap['tree'], O.runtime_tree(r), tol); live = O.obs_diff(r.replay_raw, s['raw'])
             if not cmp['pass'] or not O.live_obs_ok(live, tol): raise RuntimeError(f'scene {seed} trigger {t}: the restored runtime differs from the snapshot ({cmp["failed"]}, live observation {live})')
             if O.trigger_reading(r) != snap['reading'] or len(r.policy.queue) != snap['queue_len']: raise RuntimeError(f'scene {seed} trigger {t}: the trigger reading is not reproduced after the restore')
-            h.rows = rows = []; h.calls = calls = []; reads0 = gate.reads; info = None; r.repeat = REPEAT; vision = arm in VISION_ARMS
+            h.rows = rows = []; h.calls = calls = []; h.frames = post = []; reads0 = gate.reads; info = None; r.repeat = REPEAT; vision = arm in VISION_ARMS
             if vision:
                 frames[arm] = fr = []; t0 = time.perf_counter(); view = ArmView(r); info = run_vision_arm(view, arm, snap['mems'], fr); info['runtime_reads'] = sorted(view.reads); reading_seconds += time.perf_counter() - t0; readings += len(info['readings'])
                 if not info['acted']:                                           # abstaining must leave the whole runtime as captured
@@ -333,16 +366,33 @@ def collect_scene(r, seed, c, probe=None, arms=ARMS, role=ROLE, policy_id=None):
             if not acted:
                 same = O._same_run(trunk_ref, r, tol)
                 if not same['match']: raise RuntimeError(f'scene {seed} trigger {t}: {arm} without intervention does not reproduce the uninterrupted trunk ({O.jsonable(same)})')
+            if len(post) != r.t - t: raise RuntimeError(f'scene {seed} trigger {t} {arm}: {len(post)} frames for {r.t - t} steps after the trigger')
+            rel = first_open_after(rows, t, k if acted else 0) if probe else None; succ = next((int(x['t']) for x in rows if x.get('success')), None) if probe else None
+            if arm == 'C0' or acted:
+                keep = post_frame_steps(t, r.t, k if acted else 0, rel); frames[f'after_{arm}'] = [post[q - t - 1] for q in keep]
+                fa = {'key': f'after_{arm}', 'steps': keep, 'policy': FRAME_POLICY}
+            else:
+                diff = None
+                if probe:                                                       # every logged position at every step, against C0
+                    ref = traces['C0']
+                    if len(ref) != len(rows): raise RuntimeError(f'scene {seed} trigger {t} {arm}: abstained but its trace has {len(rows)} steps, C0 {len(ref)}')
+                    diff = max([0.] + [float(np.max(np.abs(np.subtract(x[q], y[q])))) for x, y in zip(rows, ref) for q in ('tcp', 'cubeA', 'cubeB')])
+                    if diff > tol['state_atol']: raise RuntimeError(f'scene {seed} trigger {t} {arm}: abstained but differs from C0 by {diff} m')
+                fa = {'same_as': 'C0', 'why': 'abstained; trajectory equals the uninterrupted trunk (checked above)', 'max_logged_position_difference_to_C0_m': diff}
+            del post[:]; h.frames = None
             cells.append({'arm': arm, 'no_trigger': False, 'y': int(res['success']), 'steps': res['steps'], 'reason': res['reason'], 'acted': acted, 'intervention': res['intervention'], 'intervention_step': res['intervention_step'],
                           'control': info, 'control_steps': k if acted else 0, 'ended_during_control': bool(early), 'oracle_reads': reads, 'first_inference_step': calls[0]['t'] if calls else None,
                           'reproduces_trunk': same, 'gt_effect_of_control': O.control_effect(before, after) if (probe and acted) else None,
                           'gt_release_after_trigger': O.release_reading([trunk_rows[t - 1] if t else initial] + rows) if probe else None,
-                          'gt_reading_error': (V1._gt_error(info, before) if arm == 'VISION_CENTER_V1' else V2._gt_error(info, before)) if vision else None, 'wall_seconds': time.perf_counter() - tick})
+                          'gt_reading_error': (V1._gt_error(info, before) if arm == 'VISION_CENTER_V1' else V2._gt_error(info, before)) if vision else None, 'wall_seconds': time.perf_counter() - tick,
+                          'branch_id': f'{seed}:{policy_id}:t{t}:{arm}', 'snapshot_digest': snap_digest, 'first_open_command_after_move': rel, 'success_step': succ, 'frames_after_trigger': fa})
             traces[arm] = rows
     g = snap['gt']
     trig = {**snap['reading'], 'queue_len': snap['queue_len'], 'remaining_budget': r.horizon - t, 'held_gripper_command': snap['last_grip'],
             'gt_for_diagnosis_only': None if g is None else {**g, 'false_trigger': not (g['grasped'] and (g['cubeA_lift_m'] or 0.) >= 0.01)}}
-    rec = {**head, 'triggered': True, 'trigger': trig, 'cells': cells, 'memory': msum,
+    rec = {**head, 'triggered': True, 'trigger': trig, 'cells': cells, 'memory': msum, 'snapshot_digest': snap_digest,
+           'frame_index': {'trunk': 'frame k = observation of step k, k = 0..trigger; trace row t = state after action t = observation of step t',
+                           'vision arm key <ARM>': 'frame j = observation of step trigger + j during the move (as in Phase B)', 'after_<ARM>': 'frames at the listed steps (cells[].frames_after_trigger.steps)'},
            'counts': {'continuations': len(arms), 'restores': len(arms), 'env_steps': env_steps, 'readings': readings, 'reading_seconds': reading_seconds, 'memory_steps': mem_steps, 'memory_seconds': mem_seconds}, 'oracle_reads': gate.reads,
            'wall_seconds': time.perf_counter() - started, 'completed': True}
     rec = O.jsonable(rec); validate_scene(rec, c); return rec, traces, frames

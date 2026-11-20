@@ -475,3 +475,9 @@ def test_records_are_bound_to_the_plan(X34, tmp_path):
     assert len(X34.load_records(out, [7], CFG, C1.ARMS, 'train_seed_1', 'p' * 64)) == 1
     with pytest.raises(SystemExit, match='not a completed'): X34.load_records(out, [7], CFG, C1.ARMS, 'train_seed_1', 'q' * 64)
     src = Path('scripts/34_vision_center_c1.py').read_text(encoding='utf-8'); assert "rec['plan_sha256'] = plan_hash; Z.save_scene" in src and "load_records(run / f'pass_{pid}', seeds, c, arms, pid, h)" in src
+
+
+def test_files_executed_on_the_linux_server_have_unix_line_endings(X34):
+    """A CRLF run.sh fails in bash at its first line. Found in the local self-check before any paid step."""
+    crlf = [f for f in X34.SERVER_READS if Path(f).suffix in ('.py', '.sh', '.yaml') and b'\r' in Path(f).read_bytes()]
+    assert not crlf and r"b'\r' in Path(f).read_bytes()" in Path('scripts/34_vision_center_c1.py').read_text(encoding='utf-8')

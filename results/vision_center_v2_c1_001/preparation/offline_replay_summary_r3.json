@@ -1,0 +1,2390 @@
+{
+ "work_id": "vision_center_v2_c1_001",
+ "what": "offline decision replay on the 500 used scenes 50600-51099 (development data). Decisions only: no rollout, no outcome, no rescue or harm of any replayed arm.",
+ "source": {
+  "path": "results/vision_center_v2_c1_001/preparation/offline_replay_r3.json",
+  "sha256": "2db13ba76c96c95b7674a99a595b89a32fa6bbb63f7e91d2fd611f63898e23fe"
+ },
+ "code_sha256": {
+  "src/hci/vision_center.py": "cc4a743976eb33da0824c1954a0ac19d075fc87b1369e45139812c09dce2797d",
+  "src/hci/vision_center_v2.py": "ab548ccc3825f9e25a7f979d4348563c34c1926c078e0acbd51f0101fd174fbc",
+  "src/hci/vision_center_c1.py": "98c48b9281d507ec8dfc204b6753973f1b960b912aa96d9400f3d88478791a81",
+  "src/hci/vision_center_v2s.py": "ab4188f74fb17eb1b9bbf71f21cfe2b8708c7f53efe464e6ac8ad65252d22ed6",
+  "results/vision_center_v2_c1_001/preparation/offline_replay.py": "936812e60b96c563672d3b1f06be0e56b8950b3468db2e3ce35df9245b1b78f8"
+ },
+ "scenes": 500,
+ "triggered": 484,
+ "by_stage": {
+  "B1": 287,
+  "B2": 197
+ },
+ "reproduction_of_the_executed_run": {
+  "v1_decision_equal": 484,
+  "v2_decision_equal": 484,
+  "v2_sources_equal": 484,
+  "v2_offset_equal": 484,
+  "v2_bound_equal": 484,
+  "v2_gap_equal": 484,
+  "mirror_equals_original_memory": 484,
+  "memory_log_equals_record": 484,
+  "held_grip_equals_record": 484,
+  "width_equals_record": 484,
+  "of": 484,
+  "v2_control_logs_reproduced": "81/81"
+ },
+ "v2_reproduced_exactly": true,
+ "decisions": {
+  "VISION_CENTER_V1": {
+   "B1": {
+    "ACT": 40,
+    "ALIGNED": 113,
+    "LOW_CARRY": 5,
+    "NO_HOLD_ESTIMATE": 16,
+    "NO_TARGET_ESTIMATE": 112,
+    "TOO_FEW_STEPS": 1
+   },
+   "B2": {
+    "ACT": 23,
+    "ALIGNED": 75,
+    "LOW_CARRY": 3,
+    "NO_HOLD_ESTIMATE": 10,
+    "NO_TARGET_ESTIMATE": 86,
+    "TOO_FEW_STEPS": 0
+   }
+  },
+  "V2_SINGLE_FRAME": {
+   "B1": {
+    "ACT": 40,
+    "ALIGNED": 113,
+    "LOW_CARRY": 5,
+    "NO_HOLD_ESTIMATE": 16,
+    "NO_TARGET_ESTIMATE": 111,
+    "SIDE_CONTACT_RISK": 1,
+    "TOO_FEW_STEPS": 1
+   },
+   "B2": {
+    "ACT": 22,
+    "ALIGNED": 75,
+    "LOW_CARRY": 3,
+    "NO_HOLD_ESTIMATE": 10,
+    "NO_TARGET_ESTIMATE": 86,
+    "SIDE_CONTACT_RISK": 1,
+    "TOO_FEW_STEPS": 0
+   }
+  },
+  "VISION_CENTER_V2": {
+   "B1": {
+    "ACT": 54,
+    "ALIGNED": 188,
+    "ALIGNED_WITHIN_UNCERTAINTY": 12,
+    "LOW_CARRY": 12,
+    "NO_HOLD_ESTIMATE": 15,
+    "NO_TARGET_ESTIMATE": 1,
+    "SIDE_CONTACT_RISK": 4,
+    "TOO_FEW_STEPS": 1
+   },
+   "B2": {
+    "ACT": 34,
+    "ALIGNED": 130,
+    "ALIGNED_WITHIN_UNCERTAINTY": 11,
+    "LOW_CARRY": 12,
+    "NO_HOLD_ESTIMATE": 7,
+    "NO_TARGET_ESTIMATE": 2,
+    "SIDE_CONTACT_RISK": 1,
+    "TOO_FEW_STEPS": 0
+   }
+  },
+  "V2_NO_HAND_MEMORY": {
+   "B1": {
+    "ACT": 53,
+    "ALIGNED": 179,
+    "ALIGNED_WITHIN_UNCERTAINTY": 16,
+    "LOW_CARRY": 11,
+    "NO_HOLD_ESTIMATE": 15,
+    "NO_TARGET_ESTIMATE": 8,
+    "SIDE_CONTACT_RISK": 4,
+    "TOO_FEW_STEPS": 1
+   },
+   "B2": {
+    "ACT": 34,
+    "ALIGNED": 124,
+    "ALIGNED_WITHIN_UNCERTAINTY": 13,
+    "LOW_CARRY": 12,
+    "NO_HOLD_ESTIMATE": 7,
+    "NO_TARGET_ESTIMATE": 6,
+    "SIDE_CONTACT_RISK": 1,
+    "TOO_FEW_STEPS": 0
+   }
+  },
+  "V2_NO_BASE_MEMORY": {
+   "B1": {
+    "ACT": 48,
+    "ALIGNED": 185,
+    "ALIGNED_WITHIN_UNCERTAINTY": 6,
+    "LOW_CARRY": 12,
+    "NO_HOLD_ESTIMATE": 15,
+    "NO_TARGET_ESTIMATE": 19,
+    "SIDE_CONTACT_RISK": 1,
+    "TOO_FEW_STEPS": 1
+   },
+   "B2": {
+    "ACT": 28,
+    "ALIGNED": 126,
+    "ALIGNED_WITHIN_UNCERTAINTY": 5,
+    "LOW_CARRY": 9,
+    "NO_HOLD_ESTIMATE": 7,
+    "NO_TARGET_ESTIMATE": 21,
+    "SIDE_CONTACT_RISK": 1,
+    "TOO_FEW_STEPS": 0
+   }
+  },
+  "V2_NO_HOLD_MEMORY": {
+   "B1": {
+    "ACT": 54,
+    "ALIGNED": 187,
+    "ALIGNED_WITHIN_UNCERTAINTY": 12,
+    "LOW_CARRY": 12,
+    "NO_HOLD_ESTIMATE": 16,
+    "NO_TARGET_ESTIMATE": 1,
+    "SIDE_CONTACT_RISK": 4,
+    "TOO_FEW_STEPS": 1
+   },
+   "B2": {
+    "ACT": 33,
+    "ALIGNED": 129,
+    "ALIGNED_WITHIN_UNCERTAINTY": 11,
+    "LOW_CARRY": 11,
+    "NO_HOLD_ESTIMATE": 10,
+    "NO_TARGET_ESTIMATE": 2,
+    "SIDE_CONTACT_RISK": 1,
+    "TOO_FEW_STEPS": 0
+   }
+  },
+  "V2_RULES_OFF": {
+   "B1": {
+    "ACT": 70,
+    "ALIGNED": 195,
+    "LOW_CARRY": 5,
+    "NO_HOLD_ESTIMATE": 15,
+    "NO_TARGET_ESTIMATE": 1,
+    "TOO_FEW_STEPS": 1
+   },
+   "B2": {
+    "ACT": 48,
+    "ALIGNED": 134,
+    "LOW_CARRY": 6,
+    "NO_HOLD_ESTIMATE": 7,
+    "NO_TARGET_ESTIMATE": 2,
+    "TOO_FEW_STEPS": 0
+   }
+  },
+  "VISION_CENTER_V2S": {
+   "B1": {
+    "ACT": 51,
+    "ALIGNED": 114,
+    "ALIGNED_ON_MEMORY": 55,
+    "ALIGNED_WITHIN_UNCERTAINTY": 12,
+    "LOW_CARRY": 5,
+    "NO_HOLD_ESTIMATE": 15,
+    "NO_TARGET_ESTIMATE": 33,
+    "SIDE_CONTACT_RISK": 1,
+    "TOO_FEW_STEPS": 1
+   },
+   "B2": {
+    "ACT": 30,
+    "ALIGNED": 75,
+    "ALIGNED_ON_MEMORY": 41,
+    "ALIGNED_WITHIN_UNCERTAINTY": 8,
+    "LOW_CARRY": 6,
+    "NO_HOLD_ESTIMATE": 7,
+    "NO_TARGET_ESTIMATE": 29,
+    "SIDE_CONTACT_RISK": 1,
+    "TOO_FEW_STEPS": 0
+   }
+  }
+ },
+ "acts": {
+  "VISION_CENTER_V1": {
+   "B1": 40,
+   "B2": 23
+  },
+  "V2_SINGLE_FRAME": {
+   "B1": 40,
+   "B2": 22
+  },
+  "VISION_CENTER_V2": {
+   "B1": 54,
+   "B2": 34
+  },
+  "V2_NO_HAND_MEMORY": {
+   "B1": 53,
+   "B2": 34
+  },
+  "V2_NO_BASE_MEMORY": {
+   "B1": 48,
+   "B2": 28
+  },
+  "V2_NO_HOLD_MEMORY": {
+   "B1": 54,
+   "B2": 33
+  },
+  "V2_RULES_OFF": {
+   "B1": 70,
+   "B2": 48
+  },
+  "VISION_CENTER_V2S": {
+   "B1": 51,
+   "B2": 30
+  }
+ },
+ "acts_by_target_source": {
+  "VISION_CENTER_V1": {
+   "target_frame/hold_frame": 63
+  },
+  "V2_SINGLE_FRAME": {
+   "target_frame/hold_frame": 61,
+   "target_memory_base/hold_frame": 1
+  },
+  "VISION_CENTER_V2": {
+   "target_frame/hold_frame": 61,
+   "target_frame/hold_memory": 1,
+   "target_memory_base/hold_frame": 12,
+   "target_memory_hand/hold_frame": 14
+  },
+  "V2_NO_HAND_MEMORY": {
+   "target_frame/hold_frame": 61,
+   "target_frame/hold_memory": 1,
+   "target_memory_base/hold_frame": 25
+  },
+  "V2_NO_BASE_MEMORY": {
+   "target_frame/hold_frame": 61,
+   "target_frame/hold_memory": 1,
+   "target_memory_hand/hold_frame": 14
+  },
+  "V2_NO_HOLD_MEMORY": {
+   "target_frame/hold_frame": 61,
+   "target_memory_base/hold_frame": 12,
+   "target_memory_hand/hold_frame": 14
+  },
+  "V2_RULES_OFF": {
+   "target_frame/hold_frame": 63,
+   "target_frame/hold_memory": 1,
+   "target_memory_base/hold_frame": 28,
+   "target_memory_hand/hold_frame": 26
+  },
+  "VISION_CENTER_V2S": {
+   "target_frame/hold_frame": 61,
+   "target_frame/hold_memory": 1,
+   "target_memory_base/hold_frame": 7,
+   "target_memory_hand/hold_frame": 12
+  }
+ },
+ "pairs": {
+  "VISION_CENTER_V1|V2_SINGLE_FRAME": {
+   "V2_SINGLE_FRAME_acts_VISION_CENTER_V1_abstains": {
+    "n": 1,
+    "by_v2_recorded_outcome": {
+     "v2_rescue": 1,
+     "both_succeed": 0,
+     "both_fail": 0,
+     "v2_harm": 0
+    },
+    "scenes": [
+     {
+      "scene": 50661,
+      "stage": "B1",
+      "v2_recorded": "v2_rescue",
+      "target_src": "memory_base",
+      "hold_src": "frame",
+      "offset_est_mm": 44.37,
+      "offset_error_mm": 5.02,
+      "true_offset_mm": 40.74,
+      "other_arm_decision": "NO_TARGET_ESTIMATE"
+     }
+    ]
+   },
+   "VISION_CENTER_V1_acts_V2_SINGLE_FRAME_abstains": {
+    "n": 2,
+    "by_v2_recorded_outcome": {
+     "v2_rescue": 0,
+     "both_succeed": 0,
+     "both_fail": 2,
+     "v2_harm": 0
+    },
+    "scenes": [
+     {
+      "scene": 50892,
+      "stage": "B1",
+      "v2_recorded": "both_fail",
+      "target_src": "frame",
+      "hold_src": "frame",
+      "offset_est_mm": 41.29,
+      "offset_error_mm": null,
+      "true_offset_mm": 40.97,
+      "other_arm_decision": "SIDE_CONTACT_RISK"
+     },
+     {
+      "scene": 51004,
+      "stage": "B2",
+      "v2_recorded": "both_fail",
+      "target_src": "frame",
+      "hold_src": "frame",
+      "offset_est_mm": 51.05,
+      "offset_error_mm": null,
+      "true_offset_mm": 51.11,
+      "other_arm_decision": "SIDE_CONTACT_RISK"
+     }
+    ]
+   },
+   "same_act_or_abstain": 481,
+   "same_decision_source_and_estimate": 463,
+   "both_act_with_another_source_or_estimate": 0
+  },
+  "V2_SINGLE_FRAME|VISION_CENTER_V2": {
+   "VISION_CENTER_V2_acts_V2_SINGLE_FRAME_abstains": {
+    "n": 26,
+    "by_v2_recorded_outcome": {
+     "v2_rescue": 20,
+     "both_succeed": 6,
+     "both_fail": 0,
+     "v2_harm": 0
+    },
+    "scenes": [
+     {
+      "scene": 50615,
+      "stage": "B1",
+      "v2_recorded": "both_succeed",
+      "target_src": "memory_base",
+      "hold_src": "frame",
+      "offset_est_mm": 24.94,
+      "offset_error_mm": 4.71,
+      "true_offset_mm": 22.49,
+      "other_arm_decision": "NO_TARGET_ESTIMATE"
+     },
+     {
+      "scene": 50623,
+      "stage": "B1",
+      "v2_recorded": "both_succeed",
+      "target_src": "memory_base",
+      "hold_src": "frame",
+      "offset_est_mm": 43.11,
+      "offset_error_mm": 5.02,
+      "true_offset_mm": 39.89,
+      "other_arm_decision": "NO_TARGET_ESTIMATE"
+     },
+     {
+      "scene": 50633,
+      "stage": "B1",
+      "v2_recorded": "v2_rescue",
+      "target_src": "memory_base",
+      "hold_src": "frame",
+      "offset_est_mm": 22.38,
+      "offset_error_mm": 0.87,
+      "true_offset_mm": 22.85,
+      "other_arm_decision": "NO_TARGET_ESTIMATE"
+     },
+     {
+      "scene": 50652,
+      "stage": "B1",
+      "v2_recorded": "both_succeed",
+      "target_src": "memory_hand",
+      "hold_src": "frame",
+      "offset_est_mm": 19.81,
+      "offset_error_mm": 0.91,
+      "true_offset_mm": 19.11,
+      "other_arm_decision": "NO_TARGET_ESTIMATE"
+     },
+     {
+      "scene": 50668,
+      "stage": "B1",
+      "v2_recorded": "both_succeed",
+      "target_src": "memory_hand",
+      "hold_src": "frame",
+      "offset_est_mm": 20.27,
+      "offset_error_mm": 0.72,
+      "true_offset_mm": 19.55,
+      "other_arm_decision": "NO_TARGET_ESTIMATE"
+     },
+     {
+      "scene": 50702,
+      "stage": "B1",
+      "v2_recorded": "v2_rescue",
+      "target_src": "memory_hand",
+      "hold_src": "frame",
+      "offset_est_mm": 25.48,
+      "offset_error_mm": 5.23,
+      "true_offset_mm": 28.75,
+      "other_arm_decision": "NO_TARGET_ESTIMATE"
+     },
+     {
+      "scene": 50703,
+      "stage": "B1",
+      "v2_recorded": "v2_rescue",
+      "target_src": "memory_hand",
+      "hold_src": "frame",
+      "offset_est_mm": 36.36,
+      "offset_error_mm": 1.7,
+      "true_offset_mm": 34.71,
+      "other_arm_decision": "NO_TARGET_ESTIMATE"
+     },
+     {
+      "scene": 50770,
+      "stage": "B1",
+      "v2_recorded": "v2_rescue",
+      "target_src": "memory_base",
+      "hold_src": "frame",
+      "offset_est_mm": 37.81,
+      "offset_error_mm": 2.28,
+      "true_offset_mm": 35.73,
+      "other_arm_decision": "NO_TARGET_ESTIMATE"
+     },
+     {
+      "scene": 50775,
+      "stage": "B1",
+      "v2_recorded": "v2_rescue",
+      "target_src": "memory_base",
+      "hold_src": "frame",
+      "offset_est_mm": 36.62,
+      "offset_error_mm": 1.17,
+      "true_offset_mm": 36.88,
+      "other_arm_decision": "NO_TARGET_ESTIMATE"
+     },
+     {
+      "scene": 50778,
+      "stage": "B1",
+      "v2_recorded": "both_succeed",
+      "target_src": "memory_hand",
+      "hold_src": "frame",
+      "offset_est_mm": 20.86,
+      "offset_error_mm": 1.34,
+      "true_offset_mm": 19.64,
+      "other_arm_decision": "NO_TARGET_ESTIMATE"
+     },
+     {
+      "scene": 50813,
+      "stage": "B1",
+      "v2_recorded": "v2_rescue",
+      "target_src": "memory_hand",
+      "hold_src": "frame",
+      "offset_est_mm": 29.53,
+      "offset_error_mm": 1.2,
+      "true_offset_mm": 30.52,
+      "other_arm_decision": "NO_TARGET_ESTIMATE"
+     },
+     {
+      "scene": 50817,
+      "stage": "B1",
+      "v2_recorded": "v2_rescue",
+      "target_src": "memory_hand",
+      "hold_src": "frame",
+      "offset_est_mm": 23.71,
+      "offset_error_mm": 2.28,
+      "true_offset_mm": 23.09,
+      "other_arm_decision": "NO_TARGET_ESTIMATE"
+     },
+     {
+      "scene": 50819,
+      "stage": "B1",
+      "v2_recorded": "v2_rescue",
+      "target_src": "memory_base",
+      "hold_src": "frame",
+      "offset_est_mm": 27.78,
+      "offset_error_mm": 1.99,
+      "true_offset_mm": 26.76,
+      "other_arm_decision": "NO_TARGET_ESTIMATE"
+     },
+     {
+      "scene": 50872,
+      "stage": "B1",
+      "v2_recorded": "v2_rescue",
+      "target_src": "memory_hand",
+      "hold_src": "frame",
+      "offset_est_mm": 31.44,
+      "offset_error_mm": 1.09,
+      "true_offset_mm": 32.1,
+      "other_arm_decision": "NO_TARGET_ESTIMATE"
+     },
+     {
+      "scene": 50936,
+      "stage": "B2",
+      "v2_recorded": "v2_rescue",
+      "target_src": "memory_base",
+      "hold_src": "frame",
+      "offset_est_mm": 22.74,
+      "offset_error_mm": 2.02,
+      "true_offset_mm": 23.75,
+      "other_arm_decision": "NO_TARGET_ESTIMATE"
+     },
+     {
+      "scene": 50947,
+      "stage": "B2",
+      "v2_recorded": "v2_rescue",
+      "target_src": "memory_hand",
+      "hold_src": "frame",
+      "offset_est_mm": 23.98,
+      "offset_error_mm": 0.65,
+      "true_offset_mm": 24.56,
+      "other_arm_decision": "NO_TARGET_ESTIMATE"
+     },
+     {
+      "scene": 50959,
+      "stage": "B2",
+      "v2_recorded": "v2_rescue",
+      "target_src": "memory_base",
+      "hold_src": "frame",
+      "offset_est_mm": 31.59,
+      "offset_error_mm": 5.08,
+      "true_offset_mm": 32.56,
+      "other_arm_decision": "NO_TARGET_ESTIMATE"
+     },
+     {
+      "scene": 50969,
+      "stage": "B2",
+      "v2_recorded": "v2_rescue",
+      "target_src": "memory_hand",
+      "hold_src": "frame",
+      "offset_est_mm": 19.85,
+      "offset_error_mm": 1.36,
+      "true_offset_mm": 20.45,
+      "other_arm_decision": "NO_TARGET_ESTIMATE"
+     },
+     {
+      "scene": 50971,
+      "stage": "B2",
+      "v2_recorded": "v2_rescue",
+      "target_src": "memory_base",
+      "hold_src": "frame",
+      "offset_est_mm": 25.3,
+      "offset_error_mm": 0.48,
+      "true_offset_mm": 24.84,
+      "other_arm_decision": "NO_TARGET_ESTIMATE"
+     },
+     {
+      "scene": 50986,
+      "stage": "B2",
+      "v2_recorded": "v2_rescue",
+      "target_src": "memory_base",
+      "hold_src": "frame",
+      "offset_est_mm": 42.22,
+      "offset_error_mm": 2.0,
+      "true_offset_mm": 42.98,
+      "other_arm_decision": "NO_TARGET_ESTIMATE"
+     },
+     {
+      "scene": 50993,
+      "stage": "B2",
+      "v2_recorded": "v2_rescue",
+      "target_src": "frame",
+      "hold_src": "memory",
+      "offset_est_mm": 21.17,
+      "offset_error_mm": 0.65,
+      "true_offset_mm": 20.63,
+      "other_arm_decision": "NO_HOLD_ESTIMATE"
+     },
+     {
+      "scene": 50997,
+      "stage": "B2",
+      "v2_recorded": "v2_rescue",
+      "target_src": "memory_base",
+      "hold_src": "frame",
+      "offset_est_mm": 27.02,
+      "offset_error_mm": 0.61,
+      "true_offset_mm": 26.55,
+      "other_arm_decision": "NO_TARGET_ESTIMATE"
+     },
+     {
+      "scene": 51034,
+      "stage": "B2",
+      "v2_recorded": "v2_rescue",
+      "target_src": "memory_base",
+      "hold_src": "frame",
+      "offset_est_mm": 22.54,
+      "offset_error_mm": 1.46,
+      "true_offset_mm": 21.15,
+      "other_arm_decision": "NO_TARGET_ESTIMATE"
+     },
+     {
+      "scene": 51036,
+      "stage": "B2",
+      "v2_recorded": "v2_rescue",
+      "target_src": "memory_hand",
+      "hold_src": "frame",
+      "offset_est_mm": 25.86,
+      "offset_error_mm": 0.94,
+      "true_offset_mm": 25.05,
+      "other_arm_decision": "NO_TARGET_ESTIMATE"
+     },
+     {
+      "scene": 51086,
+      "stage": "B2",
+      "v2_recorded": "v2_rescue",
+      "target_src": "memory_hand",
+      "hold_src": "frame",
+      "offset_est_mm": 24.57,
+      "offset_error_mm": 1.46,
+      "true_offset_mm": 25.77,
+      "other_arm_decision": "NO_TARGET_ESTIMATE"
+     },
+     {
+      "scene": 51099,
+      "stage": "B2",
+      "v2_recorded": "both_succeed",
+      "target_src": "memory_hand",
+      "hold_src": "frame",
+      "offset_est_mm": 22.27,
+      "offset_error_mm": 0.42,
+      "true_offset_mm": 21.92,
+      "other_arm_decision": "NO_TARGET_ESTIMATE"
+     }
+    ]
+   },
+   "V2_SINGLE_FRAME_acts_VISION_CENTER_V2_abstains": {
+    "n": 0,
+    "by_v2_recorded_outcome": {
+     "v2_rescue": 0,
+     "both_succeed": 0,
+     "both_fail": 0,
+     "v2_harm": 0
+    },
+    "scenes": []
+   },
+   "same_act_or_abstain": 458,
+   "same_decision_source_and_estimate": 285,
+   "both_act_with_another_source_or_estimate": 1
+  },
+  "VISION_CENTER_V1|VISION_CENTER_V2": {
+   "VISION_CENTER_V2_acts_VISION_CENTER_V1_abstains": {
+    "n": 27,
+    "by_v2_recorded_outcome": {
+     "v2_rescue": 21,
+     "both_succeed": 6,
+     "both_fail": 0,
+     "v2_harm": 0
+    },
+    "scenes": [
+     {
+      "scene": 50615,
+      "stage": "B1",
+      "v2_recorded": "both_succeed",
+      "target_src": "memory_base",
+      "hold_src": "frame",
+      "offset_est_mm": 24.94,
+      "offset_error_mm": 4.71,
+      "true_offset_mm": 22.49,
+      "other_arm_decision": "NO_TARGET_ESTIMATE"
+     },
+     {
+      "scene": 50623,
+      "stage": "B1",
+      "v2_recorded": "both_succeed",
+      "target_src": "memory_base",
+      "hold_src": "frame",
+      "offset_est_mm": 43.11,
+      "offset_error_mm": 5.02,
+      "true_offset_mm": 39.89,
+      "other_arm_decision": "NO_TARGET_ESTIMATE"
+     },
+     {
+      "scene": 50633,
+      "stage": "B1",
+      "v2_recorded": "v2_rescue",
+      "target_src": "memory_base",
+      "hold_src": "frame",
+      "offset_est_mm": 22.38,
+      "offset_error_mm": 0.87,
+      "true_offset_mm": 22.85,
+      "other_arm_decision": "NO_TARGET_ESTIMATE"
+     },
+     {
+      "scene": 50652,
+      "stage": "B1",
+      "v2_recorded": "both_succeed",
+      "target_src": "memory_hand",
+      "hold_src": "frame",
+      "offset_est_mm": 19.81,
+      "offset_error_mm": 0.91,
+      "true_offset_mm": 19.11,
+      "other_arm_decision": "NO_TARGET_ESTIMATE"
+     },
+     {
+      "scene": 50661,
+      "stage": "B1",
+      "v2_recorded": "v2_rescue",
+      "target_src": "memory_hand",
+      "hold_src": "frame",
+      "offset_est_mm": 41.16,
+      "offset_error_mm": 0.63,
+      "true_offset_mm": 40.74,
+      "other_arm_decision": "NO_TARGET_ESTIMATE"
+     },
+     {
+      "scene": 50668,
+      "stage": "B1",
+      "v2_recorded": "both_succeed",
+      "target_src": "memory_hand",
+      "hold_src": "frame",
+      "offset_est_mm": 20.27,
+      "offset_error_mm": 0.72,
+      "true_offset_mm": 19.55,
+      "other_arm_decision": "NO_TARGET_ESTIMATE"
+     },
+     {
+      "scene": 50702,
+      "stage": "B1",
+      "v2_recorded": "v2_rescue",
+      "target_src": "memory_hand",
+      "hold_src": "frame",
+      "offset_est_mm": 25.48,
+      "offset_error_mm": 5.23,
+      "true_offset_mm": 28.75,
+      "other_arm_decision": "NO_TARGET_ESTIMATE"
+     },
+     {
+      "scene": 50703,
+      "stage": "B1",
+      "v2_recorded": "v2_rescue",
+      "target_src": "memory_hand",
+      "hold_src": "frame",
+      "offset_est_mm": 36.36,
+      "offset_error_mm": 1.7,
+      "true_offset_mm": 34.71,
+      "other_arm_decision": "NO_TARGET_ESTIMATE"
+     },
+     {
+      "scene": 50770,
+      "stage": "B1",
+      "v2_recorded": "v2_rescue",
+      "target_src": "memory_base",
+      "hold_src": "frame",
+      "offset_est_mm": 37.81,
+      "offset_error_mm": 2.28,
+      "true_offset_mm": 35.73,
+      "other_arm_decision": "NO_TARGET_ESTIMATE"
+     },
+     {
+      "scene": 50775,
+      "stage": "B1",
+      "v2_recorded": "v2_rescue",
+      "target_src": "memory_base",
+      "hold_src": "frame",
+      "offset_est_mm": 36.62,
+      "offset_error_mm": 1.17,
+      "true_offset_mm": 36.88,
+      "other_arm_decision": "NO_TARGET_ESTIMATE"
+     },
+     {
+      "scene": 50778,
+      "stage": "B1",
+      "v2_recorded": "both_succeed",
+      "target_src": "memory_hand",
+      "hold_src": "frame",
+      "offset_est_mm": 20.86,
+      "offset_error_mm": 1.34,
+      "true_offset_mm": 19.64,
+      "other_arm_decision": "NO_TARGET_ESTIMATE"
+     },
+     {
+      "scene": 50813,
+      "stage": "B1",
+      "v2_recorded": "v2_rescue",
+      "target_src": "memory_hand",
+      "hold_src": "frame",
+      "offset_est_mm": 29.53,
+      "offset_error_mm": 1.2,
+      "true_offset_mm": 30.52,
+      "other_arm_decision": "NO_TARGET_ESTIMATE"
+     },
+     {
+      "scene": 50817,
+      "stage": "B1",
+      "v2_recorded": "v2_rescue",
+      "target_src": "memory_hand",
+      "hold_src": "frame",
+      "offset_est_mm": 23.71,
+      "offset_error_mm": 2.28,
+      "true_offset_mm": 23.09,
+      "other_arm_decision": "NO_TARGET_ESTIMATE"
+     },
+     {
+      "scene": 50819,
+      "stage": "B1",
+      "v2_recorded": "v2_rescue",
+      "target_src": "memory_base",
+      "hold_src": "frame",
+      "offset_est_mm": 27.78,
+      "offset_error_mm": 1.99,
+      "true_offset_mm": 26.76,
+      "other_arm_decision": "NO_TARGET_ESTIMATE"
+     },
+     {
+      "scene": 50872,
+      "stage": "B1",
+      "v2_recorded": "v2_rescue",
+      "target_src": "memory_hand",
+      "hold_src": "frame",
+      "offset_est_mm": 31.44,
+      "offset_error_mm": 1.09,
+      "true_offset_mm": 32.1,
+      "other_arm_decision": "NO_TARGET_ESTIMATE"
+     },
+     {
+      "scene": 50936,
+      "stage": "B2",
+      "v2_recorded": "v2_rescue",
+      "target_src": "memory_base",
+      "hold_src": "frame",
+      "offset_est_mm": 22.74,
+      "offset_error_mm": 2.02,
+      "true_offset_mm": 23.75,
+      "other_arm_decision": "NO_TARGET_ESTIMATE"
+     },
+     {
+      "scene": 50947,
+      "stage": "B2",
+      "v2_recorded": "v2_rescue",
+      "target_src": "memory_hand",
+      "hold_src": "frame",
+      "offset_est_mm": 23.98,
+      "offset_error_mm": 0.65,
+      "true_offset_mm": 24.56,
+      "other_arm_decision": "NO_TARGET_ESTIMATE"
+     },
+     {
+      "scene": 50959,
+      "stage": "B2",
+      "v2_recorded": "v2_rescue",
+      "target_src": "memory_base",
+      "hold_src": "frame",
+      "offset_est_mm": 31.59,
+      "offset_error_mm": 5.08,
+      "true_offset_mm": 32.56,
+      "other_arm_decision": "NO_TARGET_ESTIMATE"
+     },
+     {
+      "scene": 50969,
+      "stage": "B2",
+      "v2_recorded": "v2_rescue",
+      "target_src": "memory_hand",
+      "hold_src": "frame",
+      "offset_est_mm": 19.85,
+      "offset_error_mm": 1.36,
+      "true_offset_mm": 20.45,
+      "other_arm_decision": "NO_TARGET_ESTIMATE"
+     },
+     {
+      "scene": 50971,
+      "stage": "B2",
+      "v2_recorded": "v2_rescue",
+      "target_src": "memory_base",
+      "hold_src": "frame",
+      "offset_est_mm": 25.3,
+      "offset_error_mm": 0.48,
+      "true_offset_mm": 24.84,
+      "other_arm_decision": "NO_TARGET_ESTIMATE"
+     },
+     {
+      "scene": 50986,
+      "stage": "B2",
+      "v2_recorded": "v2_rescue",
+      "target_src": "memory_base",
+      "hold_src": "frame",
+      "offset_est_mm": 42.22,
+      "offset_error_mm": 2.0,
+      "true_offset_mm": 42.98,
+      "other_arm_decision": "NO_TARGET_ESTIMATE"
+     },
+     {
+      "scene": 50993,
+      "stage": "B2",
+      "v2_recorded": "v2_rescue",
+      "target_src": "frame",
+      "hold_src": "memory",
+      "offset_est_mm": 21.17,
+      "offset_error_mm": 0.65,
+      "true_offset_mm": 20.63,
+      "other_arm_decision": "NO_HOLD_ESTIMATE"
+     },
+     {
+      "scene": 50997,
+      "stage": "B2",
+      "v2_recorded": "v2_rescue",
+      "target_src": "memory_base",
+      "hold_src": "frame",
+      "offset_est_mm": 27.02,
+      "offset_error_mm": 0.61,
+      "true_offset_mm": 26.55,
+      "other_arm_decision": "NO_TARGET_ESTIMATE"
+     },
+     {
+      "scene": 51034,
+      "stage": "B2",
+      "v2_recorded": "v2_rescue",
+      "target_src": "memory_base",
+      "hold_src": "frame",
+      "offset_est_mm": 22.54,
+      "offset_error_mm": 1.46,
+      "true_offset_mm": 21.15,
+      "other_arm_decision": "NO_TARGET_ESTIMATE"
+     },
+     {
+      "scene": 51036,
+      "stage": "B2",
+      "v2_recorded": "v2_rescue",
+      "target_src": "memory_hand",
+      "hold_src": "frame",
+      "offset_est_mm": 25.86,
+      "offset_error_mm": 0.94,
+      "true_offset_mm": 25.05,
+      "other_arm_decision": "NO_TARGET_ESTIMATE"
+     },
+     {
+      "scene": 51086,
+      "stage": "B2",
+      "v2_recorded": "v2_rescue",
+      "target_src": "memory_hand",
+      "hold_src": "frame",
+      "offset_est_mm": 24.57,
+      "offset_error_mm": 1.46,
+      "true_offset_mm": 25.77,
+      "other_arm_decision": "NO_TARGET_ESTIMATE"
+     },
+     {
+      "scene": 51099,
+      "stage": "B2",
+      "v2_recorded": "both_succeed",
+      "target_src": "memory_hand",
+      "hold_src": "frame",
+      "offset_est_mm": 22.27,
+      "offset_error_mm": 0.42,
+      "true_offset_mm": 21.92,
+      "other_arm_decision": "NO_TARGET_ESTIMATE"
+     }
+    ]
+   },
+   "VISION_CENTER_V1_acts_VISION_CENTER_V2_abstains": {
+    "n": 2,
+    "by_v2_recorded_outcome": {
+     "v2_rescue": 0,
+     "both_succeed": 0,
+     "both_fail": 2,
+     "v2_harm": 0
+    },
+    "scenes": [
+     {
+      "scene": 50892,
+      "stage": "B1",
+      "v2_recorded": "both_fail",
+      "target_src": "frame",
+      "hold_src": "frame",
+      "offset_est_mm": 41.29,
+      "offset_error_mm": null,
+      "true_offset_mm": 40.97,
+      "other_arm_decision": "SIDE_CONTACT_RISK"
+     },
+     {
+      "scene": 51004,
+      "stage": "B2",
+      "v2_recorded": "both_fail",
+      "target_src": "frame",
+      "hold_src": "frame",
+      "offset_est_mm": 51.05,
+      "offset_error_mm": null,
+      "true_offset_mm": 51.11,
+      "other_arm_decision": "SIDE_CONTACT_RISK"
+     }
+    ]
+   },
+   "same_act_or_abstain": 455,
+   "same_decision_source_and_estimate": 268,
+   "both_act_with_another_source_or_estimate": 0
+  },
+  "V2_NO_HAND_MEMORY|VISION_CENTER_V2": {
+   "VISION_CENTER_V2_acts_V2_NO_HAND_MEMORY_abstains": {
+    "n": 3,
+    "by_v2_recorded_outcome": {
+     "v2_rescue": 0,
+     "both_succeed": 3,
+     "both_fail": 0,
+     "v2_harm": 0
+    },
+    "scenes": [
+     {
+      "scene": 50652,
+      "stage": "B1",
+      "v2_recorded": "both_succeed",
+      "target_src": "memory_hand",
+      "hold_src": "frame",
+      "offset_est_mm": 19.81,
+      "offset_error_mm": 0.91,
+      "true_offset_mm": 19.11,
+      "other_arm_decision": "ALIGNED_WITHIN_UNCERTAINTY"
+     },
+     {
+      "scene": 50668,
+      "stage": "B1",
+      "v2_recorded": "both_succeed",
+      "target_src": "memory_hand",
+      "hold_src": "frame",
+      "offset_est_mm": 20.27,
+      "offset_error_mm": 0.72,
+      "true_offset_mm": 19.55,
+      "other_arm_decision": "ALIGNED_WITHIN_UNCERTAINTY"
+     },
+     {
+      "scene": 50778,
+      "stage": "B1",
+      "v2_recorded": "both_succeed",
+      "target_src": "memory_hand",
+      "hold_src": "frame",
+      "offset_est_mm": 20.86,
+      "offset_error_mm": 1.34,
+      "true_offset_mm": 19.64,
+      "other_arm_decision": "ALIGNED_WITHIN_UNCERTAINTY"
+     }
+    ]
+   },
+   "V2_NO_HAND_MEMORY_acts_VISION_CENTER_V2_abstains": {
+    "n": 2,
+    "by_v2_recorded_outcome": {
+     "v2_rescue": 0,
+     "both_succeed": 2,
+     "both_fail": 0,
+     "v2_harm": 0
+    },
+    "scenes": [
+     {
+      "scene": 50636,
+      "stage": "B1",
+      "v2_recorded": "both_succeed",
+      "target_src": "memory_base",
+      "hold_src": "frame",
+      "offset_est_mm": 24.74,
+      "offset_error_mm": 17.08,
+      "true_offset_mm": 9.64,
+      "other_arm_decision": "ALIGNED"
+     },
+     {
+      "scene": 50891,
+      "stage": "B1",
+      "v2_recorded": "both_succeed",
+      "target_src": "memory_base",
+      "hold_src": "frame",
+      "offset_est_mm": 22.24,
+      "offset_error_mm": 3.01,
+      "true_offset_mm": 19.24,
+      "other_arm_decision": "ALIGNED_WITHIN_UNCERTAINTY"
+     }
+    ]
+   },
+   "same_act_or_abstain": 479,
+   "same_decision_source_and_estimate": 325,
+   "both_act_with_another_source_or_estimate": 11
+  },
+  "V2_NO_BASE_MEMORY|VISION_CENTER_V2": {
+   "VISION_CENTER_V2_acts_V2_NO_BASE_MEMORY_abstains": {
+    "n": 12,
+    "by_v2_recorded_outcome": {
+     "v2_rescue": 10,
+     "both_succeed": 2,
+     "both_fail": 0,
+     "v2_harm": 0
+    },
+    "scenes": [
+     {
+      "scene": 50615,
+      "stage": "B1",
+      "v2_recorded": "both_succeed",
+      "target_src": "memory_base",
+      "hold_src": "frame",
+      "offset_est_mm": 24.94,
+      "offset_error_mm": 4.71,
+      "true_offset_mm": 22.49,
+      "other_arm_decision": "NO_TARGET_ESTIMATE"
+     },
+     {
+      "scene": 50623,
+      "stage": "B1",
+      "v2_recorded": "both_succeed",
+      "target_src": "memory_base",
+      "hold_src": "frame",
+      "offset_est_mm": 43.11,
+      "offset_error_mm": 5.02,
+      "true_offset_mm": 39.89,
+      "other_arm_decision": "NO_TARGET_ESTIMATE"
+     },
+     {
+      "scene": 50633,
+      "stage": "B1",
+      "v2_recorded": "v2_rescue",
+      "target_src": "memory_base",
+      "hold_src": "frame",
+      "offset_est_mm": 22.38,
+      "offset_error_mm": 0.87,
+      "true_offset_mm": 22.85,
+      "other_arm_decision": "NO_TARGET_ESTIMATE"
+     },
+     {
+      "scene": 50770,
+      "stage": "B1",
+      "v2_recorded": "v2_rescue",
+      "target_src": "memory_base",
+      "hold_src": "frame",
+      "offset_est_mm": 37.81,
+      "offset_error_mm": 2.28,
+      "true_offset_mm": 35.73,
+      "other_arm_decision": "NO_TARGET_ESTIMATE"
+     },
+     {
+      "scene": 50775,
+      "stage": "B1",
+      "v2_recorded": "v2_rescue",
+      "target_src": "memory_base",
+      "hold_src": "frame",
+      "offset_est_mm": 36.62,
+      "offset_error_mm": 1.17,
+      "true_offset_mm": 36.88,
+      "other_arm_decision": "NO_TARGET_ESTIMATE"
+     },
+     {
+      "scene": 50819,
+      "stage": "B1",
+      "v2_recorded": "v2_rescue",
+      "target_src": "memory_base",
+      "hold_src": "frame",
+      "offset_est_mm": 27.78,
+      "offset_error_mm": 1.99,
+      "true_offset_mm": 26.76,
+      "other_arm_decision": "NO_TARGET_ESTIMATE"
+     },
+     {
+      "scene": 50936,
+      "stage": "B2",
+      "v2_recorded": "v2_rescue",
+      "target_src": "memory_base",
+      "hold_src": "frame",
+      "offset_est_mm": 22.74,
+      "offset_error_mm": 2.02,
+      "true_offset_mm": 23.75,
+      "other_arm_decision": "NO_TARGET_ESTIMATE"
+     },
+     {
+      "scene": 50959,
+      "stage": "B2",
+      "v2_recorded": "v2_rescue",
+      "target_src": "memory_base",
+      "hold_src": "frame",
+      "offset_est_mm": 31.59,
+      "offset_error_mm": 5.08,
+      "true_offset_mm": 32.56,
+      "other_arm_decision": "NO_TARGET_ESTIMATE"
+     },
+     {
+      "scene": 50971,
+      "stage": "B2",
+      "v2_recorded": "v2_rescue",
+      "target_src": "memory_base",
+      "hold_src": "frame",
+      "offset_est_mm": 25.3,
+      "offset_error_mm": 0.48,
+      "true_offset_mm": 24.84,
+      "other_arm_decision": "NO_TARGET_ESTIMATE"
+     },
+     {
+      "scene": 50986,
+      "stage": "B2",
+      "v2_recorded": "v2_rescue",
+      "target_src": "memory_base",
+      "hold_src": "frame",
+      "offset_est_mm": 42.22,
+      "offset_error_mm": 2.0,
+      "true_offset_mm": 42.98,
+      "other_arm_decision": "NO_TARGET_ESTIMATE"
+     },
+     {
+      "scene": 50997,
+      "stage": "B2",
+      "v2_recorded": "v2_rescue",
+      "target_src": "memory_base",
+      "hold_src": "frame",
+      "offset_est_mm": 27.02,
+      "offset_error_mm": 0.61,
+      "true_offset_mm": 26.55,
+      "other_arm_decision": "NO_TARGET_ESTIMATE"
+     },
+     {
+      "scene": 51034,
+      "stage": "B2",
+      "v2_recorded": "v2_rescue",
+      "target_src": "memory_base",
+      "hold_src": "frame",
+      "offset_est_mm": 22.54,
+      "offset_error_mm": 1.46,
+      "true_offset_mm": 21.15,
+      "other_arm_decision": "NO_TARGET_ESTIMATE"
+     }
+    ]
+   },
+   "V2_NO_BASE_MEMORY_acts_VISION_CENTER_V2_abstains": {
+    "n": 0,
+    "by_v2_recorded_outcome": {
+     "v2_rescue": 0,
+     "both_succeed": 0,
+     "both_fail": 0,
+     "v2_harm": 0
+    },
+    "scenes": []
+   },
+   "same_act_or_abstain": 472,
+   "same_decision_source_and_estimate": 447,
+   "both_act_with_another_source_or_estimate": 0
+  },
+  "V2_NO_HOLD_MEMORY|VISION_CENTER_V2": {
+   "VISION_CENTER_V2_acts_V2_NO_HOLD_MEMORY_abstains": {
+    "n": 1,
+    "by_v2_recorded_outcome": {
+     "v2_rescue": 1,
+     "both_succeed": 0,
+     "both_fail": 0,
+     "v2_harm": 0
+    },
+    "scenes": [
+     {
+      "scene": 50993,
+      "stage": "B2",
+      "v2_recorded": "v2_rescue",
+      "target_src": "frame",
+      "hold_src": "memory",
+      "offset_est_mm": 21.17,
+      "offset_error_mm": 0.65,
+      "true_offset_mm": 20.63,
+      "other_arm_decision": "NO_HOLD_ESTIMATE"
+     }
+    ]
+   },
+   "V2_NO_HOLD_MEMORY_acts_VISION_CENTER_V2_abstains": {
+    "n": 0,
+    "by_v2_recorded_outcome": {
+     "v2_rescue": 0,
+     "both_succeed": 0,
+     "both_fail": 0,
+     "v2_harm": 0
+    },
+    "scenes": []
+   },
+   "same_act_or_abstain": 483,
+   "same_decision_source_and_estimate": 480,
+   "both_act_with_another_source_or_estimate": 0
+  },
+  "VISION_CENTER_V2|V2_RULES_OFF": {
+   "V2_RULES_OFF_acts_VISION_CENTER_V2_abstains": {
+    "n": 30,
+    "by_v2_recorded_outcome": {
+     "v2_rescue": 0,
+     "both_succeed": 19,
+     "both_fail": 11,
+     "v2_harm": 0
+    },
+    "scenes": [
+     {
+      "scene": 50602,
+      "stage": "B1",
+      "v2_recorded": "both_succeed",
+      "target_src": "memory_hand",
+      "hold_src": "frame",
+      "offset_est_mm": 18.33,
+      "offset_error_mm": 0.13,
+      "true_offset_mm": 18.41,
+      "other_arm_decision": "ALIGNED_WITHIN_UNCERTAINTY"
+     },
+     {
+      "scene": 50605,
+      "stage": "B1",
+      "v2_recorded": "both_succeed",
+      "target_src": "memory_hand",
+      "hold_src": "frame",
+      "offset_est_mm": 18.11,
+      "offset_error_mm": 1.3,
+      "true_offset_mm": 18.01,
+      "other_arm_decision": "ALIGNED_WITHIN_UNCERTAINTY"
+     },
+     {
+      "scene": 50613,
+      "stage": "B1",
+      "v2_recorded": "both_fail",
+      "target_src": "memory_base",
+      "hold_src": "frame",
+      "offset_est_mm": 19.71,
+      "offset_error_mm": 2.13,
+      "true_offset_mm": 18.83,
+      "other_arm_decision": "ALIGNED_WITHIN_UNCERTAINTY"
+     },
+     {
+      "scene": 50648,
+      "stage": "B1",
+      "v2_recorded": "both_fail",
+      "target_src": "memory_base",
+      "hold_src": "frame",
+      "offset_est_mm": 28.02,
+      "offset_error_mm": 1.57,
+      "true_offset_mm": 26.51,
+      "other_arm_decision": "SIDE_CONTACT_RISK"
+     },
+     {
+      "scene": 50657,
+      "stage": "B1",
+      "v2_recorded": "both_succeed",
+      "target_src": "memory_base",
+      "hold_src": "frame",
+      "offset_est_mm": 19.37,
+      "offset_error_mm": 1.39,
+      "true_offset_mm": 18.0,
+      "other_arm_decision": "ALIGNED_WITHIN_UNCERTAINTY"
+     },
+     {
+      "scene": 50666,
+      "stage": "B1",
+      "v2_recorded": "both_succeed",
+      "target_src": "memory_base",
+      "hold_src": "frame",
+      "offset_est_mm": 18.01,
+      "offset_error_mm": 1.48,
+      "true_offset_mm": 16.55,
+      "other_arm_decision": "ALIGNED_WITHIN_UNCERTAINTY"
+     },
+     {
+      "scene": 50722,
+      "stage": "B1",
+      "v2_recorded": "both_succeed",
+      "target_src": "memory_hand",
+      "hold_src": "frame",
+      "offset_est_mm": 15.04,
+      "offset_error_mm": 1.37,
+      "true_offset_mm": 15.98,
+      "other_arm_decision": "ALIGNED_WITHIN_UNCERTAINTY"
+     },
+     {
+      "scene": 50753,
+      "stage": "B1",
+      "v2_recorded": "both_fail",
+      "target_src": "memory_base",
+      "hold_src": "frame",
+      "offset_est_mm": 31.01,
+      "offset_error_mm": 4.4,
+      "true_offset_mm": 27.33,
+      "other_arm_decision": "SIDE_CONTACT_RISK"
+     },
+     {
+      "scene": 50780,
+      "stage": "B1",
+      "v2_recorded": "both_fail",
+      "target_src": "memory_base",
+      "hold_src": "frame",
+      "offset_est_mm": 17.91,
+      "offset_error_mm": 3.97,
+      "true_offset_mm": 21.85,
+      "other_arm_decision": "ALIGNED_WITHIN_UNCERTAINTY"
+     },
+     {
+      "scene": 50797,
+      "stage": "B1",
+      "v2_recorded": "both_succeed",
+      "target_src": "memory_hand",
+      "hold_src": "frame",
+      "offset_est_mm": 17.32,
+      "offset_error_mm": 0.17,
+      "true_offset_mm": 17.48,
+      "other_arm_decision": "ALIGNED_WITHIN_UNCERTAINTY"
+     },
+     {
+      "scene": 50822,
+      "stage": "B1",
+      "v2_recorded": "both_succeed",
+      "target_src": "memory_hand",
+      "hold_src": "frame",
+      "offset_est_mm": 15.53,
+      "offset_error_mm": 1.85,
+      "true_offset_mm": 13.77,
+      "other_arm_decision": "ALIGNED_WITHIN_UNCERTAINTY"
+     },
+     {
+      "scene": 50838,
+      "stage": "B1",
+      "v2_recorded": "both_succeed",
+      "target_src": "memory_base",
+      "hold_src": "frame",
+      "offset_est_mm": 17.52,
+      "offset_error_mm": 2.45,
+      "true_offset_mm": 17.73,
+      "other_arm_decision": "ALIGNED_WITHIN_UNCERTAINTY"
+     },
+     {
+      "scene": 50853,
+      "stage": "B1",
+      "v2_recorded": "both_fail",
+      "target_src": "memory_base",
+      "hold_src": "frame",
+      "offset_est_mm": 30.83,
+      "offset_error_mm": 0.8,
+      "true_offset_mm": 31.2,
+      "other_arm_decision": "SIDE_CONTACT_RISK"
+     },
+     {
+      "scene": 50870,
+      "stage": "B1",
+      "v2_recorded": "both_succeed",
+      "target_src": "memory_base",
+      "hold_src": "frame",
+      "offset_est_mm": 17.92,
+      "offset_error_mm": 6.91,
+      "true_offset_mm": 12.72,
+      "other_arm_decision": "ALIGNED_WITHIN_UNCERTAINTY"
+     },
+     {
+      "scene": 50891,
+      "stage": "B1",
+      "v2_recorded": "both_succeed",
+      "target_src": "memory_hand",
+      "hold_src": "frame",
+      "offset_est_mm": 18.41,
+      "offset_error_mm": 0.89,
+      "true_offset_mm": 19.24,
+      "other_arm_decision": "ALIGNED_WITHIN_UNCERTAINTY"
+     },
+     {
+      "scene": 50892,
+      "stage": "B1",
+      "v2_recorded": "both_fail",
+      "target_src": "frame",
+      "hold_src": "frame",
+      "offset_est_mm": 41.29,
+      "offset_error_mm": 0.44,
+      "true_offset_mm": 40.97,
+      "other_arm_decision": "SIDE_CONTACT_RISK"
+     },
+     {
+      "scene": 50902,
+      "stage": "B2",
+      "v2_recorded": "both_succeed",
+      "target_src": "memory_hand",
+      "hold_src": "frame",
+      "offset_est_mm": 15.61,
+      "offset_error_mm": 1.23,
+      "true_offset_mm": 14.63,
+      "other_arm_decision": "ALIGNED_WITHIN_UNCERTAINTY"
+     },
+     {
+      "scene": 50904,
+      "stage": "B2",
+      "v2_recorded": "both_succeed",
+      "target_src": "memory_hand",
+      "hold_src": "frame",
+      "offset_est_mm": 15.06,
+      "offset_error_mm": 1.02,
+      "true_offset_mm": 14.21,
+      "other_arm_decision": "ALIGNED_WITHIN_UNCERTAINTY"
+     },
+     {
+      "scene": 50905,
+      "stage": "B2",
+      "v2_recorded": "both_succeed",
+      "target_src": "memory_hand",
+      "hold_src": "frame",
+      "offset_est_mm": 16.19,
+      "offset_error_mm": 0.89,
+      "true_offset_mm": 16.85,
+      "other_arm_decision": "ALIGNED_WITHIN_UNCERTAINTY"
+     },
+     {
+      "scene": 50921,
+      "stage": "B2",
+      "v2_recorded": "both_succeed",
+      "target_src": "memory_hand",
+      "hold_src": "frame",
+      "offset_est_mm": 18.89,
+      "offset_error_mm": 0.47,
+      "true_offset_mm": 18.42,
+      "other_arm_decision": "ALIGNED_WITHIN_UNCERTAINTY"
+     },
+     {
+      "scene": 50964,
+      "stage": "B2",
+      "v2_recorded": "both_succeed",
+      "target_src": "memory_base",
+      "hold_src": "frame",
+      "offset_est_mm": 16.86,
+      "offset_error_mm": 5.34,
+      "true_offset_mm": 11.57,
+      "other_arm_decision": "ALIGNED_WITHIN_UNCERTAINTY"
+     },
+     {
+      "scene": 50973,
+      "stage": "B2",
+      "v2_recorded": "both_succeed",
+      "target_src": "memory_base",
+      "hold_src": "frame",
+      "offset_est_mm": 21.66,
+      "offset_error_mm": 3.65,
+      "true_offset_mm": 18.21,
+      "other_arm_decision": "ALIGNED_WITHIN_UNCERTAINTY"
+     },
+     {
+      "scene": 51003,
+      "stage": "B2",
+      "v2_recorded": "both_fail",
+      "target_src": "memory_hand",
+      "hold_src": "frame",
+      "offset_est_mm": 26.35,
+      "offset_error_mm": 1.8,
+      "true_offset_mm": 27.4,
+      "other_arm_decision": "LOW_CARRY"
+     },
+     {
+      "scene": 51004,
+      "stage": "B2",
+      "v2_recorded": "both_fail",
+      "target_src": "frame",
+      "hold_src": "frame",
+      "offset_est_mm": 51.05,
+      "offset_error_mm": 1.53,
+      "true_offset_mm": 51.11,
+      "other_arm_decision": "SIDE_CONTACT_RISK"
+     },
+     {
+      "scene": 51019,
+      "stage": "B2",
+      "v2_recorded": "both_succeed",
+      "target_src": "memory_base",
+      "hold_src": "frame",
+      "offset_est_mm": 16.57,
+      "offset_error_mm": 1.8,
+      "true_offset_mm": 15.61,
+      "other_arm_decision": "ALIGNED_WITHIN_UNCERTAINTY"
+     },
+     {
+      "scene": 51022,
+      "stage": "B2",
+      "v2_recorded": "both_succeed",
+      "target_src": "memory_base",
+      "hold_src": "frame",
+      "offset_est_mm": 16.46,
+      "offset_error_mm": 3.33,
+      "true_offset_mm": 13.13,
+      "other_arm_decision": "ALIGNED_WITHIN_UNCERTAINTY"
+     },
+     {
+      "scene": 51030,
+      "stage": "B2",
+      "v2_recorded": "both_succeed",
+      "target_src": "memory_hand",
+      "hold_src": "frame",
+      "offset_est_mm": 16.75,
+      "offset_error_mm": 1.12,
+      "true_offset_mm": 15.71,
+      "other_arm_decision": "ALIGNED_WITHIN_UNCERTAINTY"
+     },
+     {
+      "scene": 51049,
+      "stage": "B2",
+      "v2_recorded": "both_fail",
+      "target_src": "memory_base",
+      "hold_src": "frame",
+      "offset_est_mm": 21.2,
+      "offset_error_mm": 0.75,
+      "true_offset_mm": 21.87,
+      "other_arm_decision": "ALIGNED_WITHIN_UNCERTAINTY"
+     },
+     {
+      "scene": 51067,
+      "stage": "B2",
+      "v2_recorded": "both_fail",
+      "target_src": "memory_base",
+      "hold_src": "frame",
+      "offset_est_mm": 20.58,
+      "offset_error_mm": 2.27,
+      "true_offset_mm": 21.74,
+      "other_arm_decision": "ALIGNED_WITHIN_UNCERTAINTY"
+     },
+     {
+      "scene": 51071,
+      "stage": "B2",
+      "v2_recorded": "both_fail",
+      "target_src": "memory_base",
+      "hold_src": "frame",
+      "offset_est_mm": 75.44,
+      "offset_error_mm": 4.03,
+      "true_offset_mm": 72.93,
+      "other_arm_decision": "LOW_CARRY"
+     }
+    ]
+   },
+   "VISION_CENTER_V2_acts_V2_RULES_OFF_abstains": {
+    "n": 0,
+    "by_v2_recorded_outcome": {
+     "v2_rescue": 0,
+     "both_succeed": 0,
+     "both_fail": 0,
+     "v2_harm": 0
+    },
+    "scenes": []
+   },
+   "same_act_or_abstain": 454,
+   "same_decision_source_and_estimate": 443,
+   "both_act_with_another_source_or_estimate": 0
+  },
+  "VISION_CENTER_V2|VISION_CENTER_V2S": {
+   "VISION_CENTER_V2S_acts_VISION_CENTER_V2_abstains": {
+    "n": 0,
+    "by_v2_recorded_outcome": {
+     "v2_rescue": 0,
+     "both_succeed": 0,
+     "both_fail": 0,
+     "v2_harm": 0
+    },
+    "scenes": []
+   },
+   "VISION_CENTER_V2_acts_VISION_CENTER_V2S_abstains": {
+    "n": 7,
+    "by_v2_recorded_outcome": {
+     "v2_rescue": 6,
+     "both_succeed": 1,
+     "both_fail": 0,
+     "v2_harm": 0
+    },
+    "scenes": [
+     {
+      "scene": 50633,
+      "stage": "B1",
+      "v2_recorded": "v2_rescue",
+      "target_src": "memory_base",
+      "hold_src": "frame",
+      "offset_est_mm": 22.38,
+      "offset_error_mm": 0.87,
+      "true_offset_mm": 22.85,
+      "other_arm_decision": "ALIGNED_WITHIN_UNCERTAINTY"
+     },
+     {
+      "scene": 50652,
+      "stage": "B1",
+      "v2_recorded": "both_succeed",
+      "target_src": "memory_hand",
+      "hold_src": "frame",
+      "offset_est_mm": 19.81,
+      "offset_error_mm": 0.91,
+      "true_offset_mm": 19.11,
+      "other_arm_decision": "NO_TARGET_ESTIMATE"
+     },
+     {
+      "scene": 50702,
+      "stage": "B1",
+      "v2_recorded": "v2_rescue",
+      "target_src": "memory_hand",
+      "hold_src": "frame",
+      "offset_est_mm": 25.48,
+      "offset_error_mm": 5.23,
+      "true_offset_mm": 28.75,
+      "other_arm_decision": "NO_TARGET_ESTIMATE"
+     },
+     {
+      "scene": 50936,
+      "stage": "B2",
+      "v2_recorded": "v2_rescue",
+      "target_src": "memory_base",
+      "hold_src": "frame",
+      "offset_est_mm": 22.74,
+      "offset_error_mm": 2.02,
+      "true_offset_mm": 23.75,
+      "other_arm_decision": "NO_TARGET_ESTIMATE"
+     },
+     {
+      "scene": 50971,
+      "stage": "B2",
+      "v2_recorded": "v2_rescue",
+      "target_src": "memory_base",
+      "hold_src": "frame",
+      "offset_est_mm": 25.3,
+      "offset_error_mm": 0.48,
+      "true_offset_mm": 24.84,
+      "other_arm_decision": "NO_TARGET_ESTIMATE"
+     },
+     {
+      "scene": 50997,
+      "stage": "B2",
+      "v2_recorded": "v2_rescue",
+      "target_src": "memory_base",
+      "hold_src": "frame",
+      "offset_est_mm": 27.02,
+      "offset_error_mm": 0.61,
+      "true_offset_mm": 26.55,
+      "other_arm_decision": "NO_TARGET_ESTIMATE"
+     },
+     {
+      "scene": 51034,
+      "stage": "B2",
+      "v2_recorded": "v2_rescue",
+      "target_src": "memory_base",
+      "hold_src": "frame",
+      "offset_est_mm": 22.54,
+      "offset_error_mm": 1.46,
+      "true_offset_mm": 21.15,
+      "other_arm_decision": "ALIGNED_WITHIN_UNCERTAINTY"
+     }
+    ]
+   },
+   "same_act_or_abstain": 477,
+   "same_decision_source_and_estimate": 326,
+   "both_act_with_another_source_or_estimate": 0
+  }
+ },
+ "identity_matrix_same_decision_source_estimate": {
+  "VISION_CENTER_V1": {
+   "VISION_CENTER_V1": 484,
+   "V2_SINGLE_FRAME": 463,
+   "VISION_CENTER_V2": 268,
+   "V2_NO_HAND_MEMORY": 279,
+   "V2_NO_BASE_MEMORY": 305,
+   "V2_NO_HOLD_MEMORY": 269,
+   "V2_RULES_OFF": 270,
+   "VISION_CENTER_V2S": 327
+  },
+  "V2_SINGLE_FRAME": {
+   "VISION_CENTER_V1": 463,
+   "V2_SINGLE_FRAME": 484,
+   "VISION_CENTER_V2": 285,
+   "V2_NO_HAND_MEMORY": 297,
+   "V2_NO_BASE_MEMORY": 322,
+   "V2_NO_HOLD_MEMORY": 289,
+   "V2_RULES_OFF": 283,
+   "VISION_CENTER_V2S": 344
+  },
+  "VISION_CENTER_V2": {
+   "VISION_CENTER_V1": 268,
+   "V2_SINGLE_FRAME": 285,
+   "VISION_CENTER_V2": 484,
+   "V2_NO_HAND_MEMORY": 325,
+   "V2_NO_BASE_MEMORY": 447,
+   "V2_NO_HOLD_MEMORY": 480,
+   "V2_RULES_OFF": 443,
+   "VISION_CENTER_V2S": 326
+  },
+  "V2_NO_HAND_MEMORY": {
+   "VISION_CENTER_V1": 279,
+   "V2_SINGLE_FRAME": 297,
+   "VISION_CENTER_V2": 325,
+   "V2_NO_HAND_MEMORY": 484,
+   "V2_NO_BASE_MEMORY": 288,
+   "V2_NO_HOLD_MEMORY": 322,
+   "V2_RULES_OFF": 307,
+   "VISION_CENTER_V2S": 309
+  },
+  "V2_NO_BASE_MEMORY": {
+   "VISION_CENTER_V1": 305,
+   "V2_SINGLE_FRAME": 322,
+   "VISION_CENTER_V2": 447,
+   "V2_NO_HAND_MEMORY": 288,
+   "V2_NO_BASE_MEMORY": 484,
+   "V2_NO_HOLD_MEMORY": 443,
+   "V2_RULES_OFF": 422,
+   "VISION_CENTER_V2S": 318
+  },
+  "V2_NO_HOLD_MEMORY": {
+   "VISION_CENTER_V1": 269,
+   "V2_SINGLE_FRAME": 289,
+   "VISION_CENTER_V2": 480,
+   "V2_NO_HAND_MEMORY": 322,
+   "V2_NO_BASE_MEMORY": 443,
+   "V2_NO_HOLD_MEMORY": 484,
+   "V2_RULES_OFF": 439,
+   "VISION_CENTER_V2S": 323
+  },
+  "V2_RULES_OFF": {
+   "VISION_CENTER_V1": 270,
+   "V2_SINGLE_FRAME": 283,
+   "VISION_CENTER_V2": 443,
+   "V2_NO_HAND_MEMORY": 307,
+   "V2_NO_BASE_MEMORY": 422,
+   "V2_NO_HOLD_MEMORY": 439,
+   "V2_RULES_OFF": 484,
+   "VISION_CENTER_V2S": 305
+  },
+  "VISION_CENTER_V2S": {
+   "VISION_CENTER_V1": 327,
+   "V2_SINGLE_FRAME": 344,
+   "VISION_CENTER_V2": 326,
+   "V2_NO_HAND_MEMORY": 309,
+   "V2_NO_BASE_MEMORY": 318,
+   "V2_NO_HOLD_MEMORY": 323,
+   "V2_RULES_OFF": 305,
+   "VISION_CENTER_V2S": 484
+  }
+ },
+ "identity_matrix_same_act_or_abstain": {
+  "VISION_CENTER_V1": {
+   "VISION_CENTER_V1": 484,
+   "V2_SINGLE_FRAME": 481,
+   "VISION_CENTER_V2": 455,
+   "V2_NO_HAND_MEMORY": 456,
+   "V2_NO_BASE_MEMORY": 467,
+   "V2_NO_HOLD_MEMORY": 456,
+   "V2_RULES_OFF": 429,
+   "VISION_CENTER_V2S": 462
+  },
+  "V2_SINGLE_FRAME": {
+   "VISION_CENTER_V1": 481,
+   "V2_SINGLE_FRAME": 484,
+   "VISION_CENTER_V2": 458,
+   "V2_NO_HAND_MEMORY": 459,
+   "V2_NO_BASE_MEMORY": 470,
+   "V2_NO_HOLD_MEMORY": 459,
+   "V2_RULES_OFF": 428,
+   "VISION_CENTER_V2S": 465
+  },
+  "VISION_CENTER_V2": {
+   "VISION_CENTER_V1": 455,
+   "V2_SINGLE_FRAME": 458,
+   "VISION_CENTER_V2": 484,
+   "V2_NO_HAND_MEMORY": 479,
+   "V2_NO_BASE_MEMORY": 472,
+   "V2_NO_HOLD_MEMORY": 483,
+   "V2_RULES_OFF": 454,
+   "VISION_CENTER_V2S": 477
+  },
+  "V2_NO_HAND_MEMORY": {
+   "VISION_CENTER_V1": 456,
+   "V2_SINGLE_FRAME": 459,
+   "VISION_CENTER_V2": 479,
+   "V2_NO_HAND_MEMORY": 484,
+   "V2_NO_BASE_MEMORY": 467,
+   "V2_NO_HOLD_MEMORY": 478,
+   "V2_RULES_OFF": 451,
+   "VISION_CENTER_V2S": 474
+  },
+  "V2_NO_BASE_MEMORY": {
+   "VISION_CENTER_V1": 467,
+   "V2_SINGLE_FRAME": 470,
+   "VISION_CENTER_V2": 472,
+   "V2_NO_HAND_MEMORY": 467,
+   "V2_NO_BASE_MEMORY": 484,
+   "V2_NO_HOLD_MEMORY": 471,
+   "V2_RULES_OFF": 442,
+   "VISION_CENTER_V2S": 475
+  },
+  "V2_NO_HOLD_MEMORY": {
+   "VISION_CENTER_V1": 456,
+   "V2_SINGLE_FRAME": 459,
+   "VISION_CENTER_V2": 483,
+   "V2_NO_HAND_MEMORY": 478,
+   "V2_NO_BASE_MEMORY": 471,
+   "V2_NO_HOLD_MEMORY": 484,
+   "V2_RULES_OFF": 453,
+   "VISION_CENTER_V2S": 476
+  },
+  "V2_RULES_OFF": {
+   "VISION_CENTER_V1": 429,
+   "V2_SINGLE_FRAME": 428,
+   "VISION_CENTER_V2": 454,
+   "V2_NO_HAND_MEMORY": 451,
+   "V2_NO_BASE_MEMORY": 442,
+   "V2_NO_HOLD_MEMORY": 453,
+   "V2_RULES_OFF": 484,
+   "VISION_CENTER_V2S": 447
+  },
+  "VISION_CENTER_V2S": {
+   "VISION_CENTER_V1": 462,
+   "V2_SINGLE_FRAME": 465,
+   "VISION_CENTER_V2": 477,
+   "V2_NO_HAND_MEMORY": 474,
+   "V2_NO_BASE_MEMORY": 475,
+   "V2_NO_HOLD_MEMORY": 476,
+   "V2_RULES_OFF": 447,
+   "VISION_CENTER_V2S": 484
+  }
+ },
+ "duplicate_arms_on_these_scenes": {
+  "identical_decision_source_and_estimate_in_every_scene": [],
+  "identical_act_or_abstain_in_every_scene": []
+ },
+ "acts_with_true_offset_within_tolerance": {
+  "VISION_CENTER_V1": [],
+  "V2_SINGLE_FRAME": [],
+  "VISION_CENTER_V2": [],
+  "V2_NO_HAND_MEMORY": [
+   50636
+  ],
+  "V2_NO_BASE_MEMORY": [],
+  "V2_NO_HOLD_MEMORY": [],
+  "V2_RULES_OFF": [],
+  "VISION_CENTER_V2S": []
+ },
+ "offset_error_at_act": {
+  "V2_SINGLE_FRAME": {
+   "n": 62,
+   "median_mm": 1.02,
+   "max_mm": 5.41
+  },
+  "VISION_CENTER_V2": {
+   "n": 88,
+   "median_mm": 1.06,
+   "max_mm": 5.41
+  },
+  "V2_NO_HAND_MEMORY": {
+   "n": 87,
+   "median_mm": 1.17,
+   "max_mm": 17.08
+  },
+  "V2_NO_BASE_MEMORY": {
+   "n": 76,
+   "median_mm": 1.02,
+   "max_mm": 5.41
+  },
+  "V2_NO_HOLD_MEMORY": {
+   "n": 87,
+   "median_mm": 1.08,
+   "max_mm": 5.41
+  },
+  "V2_RULES_OFF": {
+   "n": 118,
+   "median_mm": 1.17,
+   "max_mm": 6.91
+  },
+  "VISION_CENTER_V2S": {
+   "n": 81,
+   "median_mm": 1.08,
+   "max_mm": 5.41
+  }
+ },
+ "acts_outside_own_bound_or_over_5mm_on_memory": {
+  "V2_SINGLE_FRAME": [
+   {
+    "scene": 50661,
+    "offset_error_mm": 5.02,
+    "bound_mm": 7.0,
+    "src": "memory_base"
+   }
+  ],
+  "VISION_CENTER_V2": [
+   {
+    "scene": 50623,
+    "offset_error_mm": 5.02,
+    "bound_mm": 12.0,
+    "src": "memory_base"
+   },
+   {
+    "scene": 50702,
+    "offset_error_mm": 5.23,
+    "bound_mm": 9.0,
+    "src": "memory_hand"
+   },
+   {
+    "scene": 50959,
+    "offset_error_mm": 5.08,
+    "bound_mm": 12.0,
+    "src": "memory_base"
+   }
+  ],
+  "V2_NO_HAND_MEMORY": [
+   {
+    "scene": 50623,
+    "offset_error_mm": 5.02,
+    "bound_mm": 12.0,
+    "src": "memory_base"
+   },
+   {
+    "scene": 50636,
+    "offset_error_mm": 17.08,
+    "bound_mm": 12.0,
+    "src": "memory_base"
+   },
+   {
+    "scene": 50661,
+    "offset_error_mm": 5.02,
+    "bound_mm": 7.0,
+    "src": "memory_base"
+   },
+   {
+    "scene": 50959,
+    "offset_error_mm": 5.08,
+    "bound_mm": 12.0,
+    "src": "memory_base"
+   }
+  ],
+  "V2_NO_BASE_MEMORY": [
+   {
+    "scene": 50702,
+    "offset_error_mm": 5.23,
+    "bound_mm": 9.0,
+    "src": "memory_hand"
+   }
+  ],
+  "V2_NO_HOLD_MEMORY": [
+   {
+    "scene": 50623,
+    "offset_error_mm": 5.02,
+    "bound_mm": 12.0,
+    "src": "memory_base"
+   },
+   {
+    "scene": 50702,
+    "offset_error_mm": 5.23,
+    "bound_mm": 9.0,
+    "src": "memory_hand"
+   },
+   {
+    "scene": 50959,
+    "offset_error_mm": 5.08,
+    "bound_mm": 12.0,
+    "src": "memory_base"
+   }
+  ],
+  "V2_RULES_OFF": [
+   {
+    "scene": 50623,
+    "offset_error_mm": 5.02,
+    "bound_mm": 12.0,
+    "src": "memory_base"
+   },
+   {
+    "scene": 50702,
+    "offset_error_mm": 5.23,
+    "bound_mm": 9.0,
+    "src": "memory_hand"
+   },
+   {
+    "scene": 50870,
+    "offset_error_mm": 6.91,
+    "bound_mm": 12.0,
+    "src": "memory_base"
+   },
+   {
+    "scene": 50959,
+    "offset_error_mm": 5.08,
+    "bound_mm": 12.0,
+    "src": "memory_base"
+   },
+   {
+    "scene": 50964,
+    "offset_error_mm": 5.34,
+    "bound_mm": 12.0,
+    "src": "memory_base"
+   }
+  ],
+  "VISION_CENTER_V2S": [
+   {
+    "scene": 50623,
+    "offset_error_mm": 5.02,
+    "bound_mm": 13.5,
+    "src": "memory_base"
+   },
+   {
+    "scene": 50959,
+    "offset_error_mm": 5.08,
+    "bound_mm": 13.5,
+    "src": "memory_base"
+   }
+  ]
+ },
+ "v2s": {
+  "constants": {
+   "u_base_s_m": 0.0065,
+   "z_margin_m": 0.002,
+   "cube_reach_m": 0.05656854249492381,
+   "finger_reach_m": 0.0782842712474619,
+   "finger_z_margin_m": 0.01,
+   "unknown_hold_radius_m": 0.1,
+   "unknown_hold_tcp_z_m": 0.09,
+   "confirm_min_before_trigger": 3
+  },
+  "remembered_targets_of_v2_at_the_trigger": {
+   "n": 196,
+   "wrong_by_label": {
+    "n": 4,
+    "definition": "target error over 5 mm, or over the target part of its own bound",
+    "scenes": [
+     {
+      "scene": 50623,
+      "stage": "B1",
+      "target_error_mm": 5.2,
+      "v2_bound_mm": 12.0,
+      "v2_decision": "ACT",
+      "v2s": "kept",
+      "v2s_decision": "ACT"
+     },
+     {
+      "scene": 50702,
+      "stage": "B1",
+      "target_error_mm": 5.89,
+      "v2_bound_mm": 9.0,
+      "v2_decision": "ACT",
+      "v2s": "refused:invalidated_by_contact",
+      "v2s_decision": "NO_TARGET_ESTIMATE"
+     },
+     {
+      "scene": 50870,
+      "stage": "B1",
+      "target_error_mm": 5.19,
+      "v2_bound_mm": 12.0,
+      "v2_decision": "ALIGNED_WITHIN_UNCERTAINTY",
+      "v2s": "kept",
+      "v2s_decision": "ALIGNED_WITHIN_UNCERTAINTY"
+     },
+     {
+      "scene": 51009,
+      "stage": "B2",
+      "target_error_mm": 37.69,
+      "v2_bound_mm": 12.0,
+      "v2_decision": "LOW_CARRY",
+      "v2s": "refused:invalidated_by_contact",
+      "v2s_decision": "NO_TARGET_ESTIMATE"
+     }
+    ],
+    "refused_by_v2s": 2,
+    "kept_by_v2s": 2
+   },
+   "right_by_label": {
+    "n": 192,
+    "refused_by_v2s": 57,
+    "kept_by_v2s": 135,
+    "refusal_reasons": {
+     "refused:invalidated_by_contact": 57
+    }
+   }
+  },
+  "invalidations": {
+   "scenes_with_one": 104,
+   "events": 110,
+   "by_reason": {
+    "gripper_low_near_target": 14,
+    "held_cube_low_near_target": 71,
+    "held_cube_unknown_near_target": 25
+   },
+   "events_where_the_target_then_moved_over_1mm_before_the_trigger": 17,
+   "events_where_it_had_already_moved_over_1mm": 3,
+   "scenes_where_the_target_moved_over_5mm": [
+    50636,
+    50702,
+    50892,
+    50907,
+    50926,
+    51005,
+    51009,
+    51025
+   ]
+  },
+  "acts": {
+   "v2": 88,
+   "v2s": 81,
+   "v2_acts_v2s_abstains": {
+    "n": 7,
+    "by_v2_recorded_outcome": {
+     "v2_rescue": 6,
+     "both_succeed": 1,
+     "both_fail": 0,
+     "v2_harm": 0
+    }
+   },
+   "v2s_acts_v2_abstains": {
+    "n": 0,
+    "by_v2_recorded_outcome": {
+     "v2_rescue": 0,
+     "both_succeed": 0,
+     "both_fail": 0,
+     "v2_harm": 0
+    }
+   },
+   "v2_acts_v2s_abstains_scenes": [
+    {
+     "scene": 50633,
+     "stage": "B1",
+     "v2_recorded": "v2_rescue",
+     "target_src": "memory_base",
+     "hold_src": "frame",
+     "offset_est_mm": 22.38,
+     "offset_error_mm": 0.87,
+     "true_offset_mm": 22.85,
+     "other_arm_decision": "ALIGNED_WITHIN_UNCERTAINTY"
+    },
+    {
+     "scene": 50652,
+     "stage": "B1",
+     "v2_recorded": "both_succeed",
+     "target_src": "memory_hand",
+     "hold_src": "frame",
+     "offset_est_mm": 19.81,
+     "offset_error_mm": 0.91,
+     "true_offset_mm": 19.11,
+     "other_arm_decision": "NO_TARGET_ESTIMATE"
+    },
+    {
+     "scene": 50702,
+     "stage": "B1",
+     "v2_recorded": "v2_rescue",
+     "target_src": "memory_hand",
+     "hold_src": "frame",
+     "offset_est_mm": 25.48,
+     "offset_error_mm": 5.23,
+     "true_offset_mm": 28.75,
+     "other_arm_decision": "NO_TARGET_ESTIMATE"
+    },
+    {
+     "scene": 50936,
+     "stage": "B2",
+     "v2_recorded": "v2_rescue",
+     "target_src": "memory_base",
+     "hold_src": "frame",
+     "offset_est_mm": 22.74,
+     "offset_error_mm": 2.02,
+     "true_offset_mm": 23.75,
+     "other_arm_decision": "NO_TARGET_ESTIMATE"
+    },
+    {
+     "scene": 50971,
+     "stage": "B2",
+     "v2_recorded": "v2_rescue",
+     "target_src": "memory_base",
+     "hold_src": "frame",
+     "offset_est_mm": 25.3,
+     "offset_error_mm": 0.48,
+     "true_offset_mm": 24.84,
+     "other_arm_decision": "NO_TARGET_ESTIMATE"
+    },
+    {
+     "scene": 50997,
+     "stage": "B2",
+     "v2_recorded": "v2_rescue",
+     "target_src": "memory_base",
+     "hold_src": "frame",
+     "offset_est_mm": 27.02,
+     "offset_error_mm": 0.61,
+     "true_offset_mm": 26.55,
+     "other_arm_decision": "NO_TARGET_ESTIMATE"
+    },
+    {
+     "scene": 51034,
+     "stage": "B2",
+     "v2_recorded": "v2_rescue",
+     "target_src": "memory_base",
+     "hold_src": "frame",
+     "offset_est_mm": 22.54,
+     "offset_error_mm": 1.46,
+     "true_offset_mm": 21.15,
+     "other_arm_decision": "ALIGNED_WITHIN_UNCERTAINTY"
+    }
+   ],
+   "v2s_acts_v2_abstains_scenes": [],
+   "v2s_decisions_in_scenes_where_v2_acted": {
+    "ACT": 81,
+    "ALIGNED_WITHIN_UNCERTAINTY": 2,
+    "NO_TARGET_ESTIMATE": 5
+   },
+   "v2s_acts_on_memory": 19,
+   "v2_acts_on_memory": 26
+  },
+  "control_replay_along_v2_frames": {
+   "scenes": 81,
+   "v2s_would_stop_where_v2_went_on": [
+    {
+     "scene": 50632,
+     "stage": "B1",
+     "v2_recorded": "v2_rescue",
+     "control_step": 3,
+     "reason": "estimate_lost:NO_TARGET_ESTIMATE:invalidated_by_contact",
+     "v2_went_on": true,
+     "v2_end_reason": "within_tolerance"
+    },
+    {
+     "scene": 50819,
+     "stage": "B1",
+     "v2_recorded": "v2_rescue",
+     "control_step": 10,
+     "reason": "estimate_lost:NO_TARGET_ESTIMATE:invalidated_by_contact",
+     "v2_went_on": true,
+     "v2_end_reason": "step_budget"
+    },
+    {
+     "scene": 50861,
+     "stage": "B1",
+     "v2_recorded": "both_succeed",
+     "control_step": 2,
+     "reason": "estimate_lost:NO_TARGET_ESTIMATE:invalidated_by_contact",
+     "v2_went_on": true,
+     "v2_end_reason": "within_tolerance"
+    },
+    {
+     "scene": 50872,
+     "stage": "B1",
+     "v2_recorded": "v2_rescue",
+     "control_step": 10,
+     "reason": "estimate_lost:NO_TARGET_ESTIMATE:invalidated_by_contact",
+     "v2_went_on": true,
+     "v2_end_reason": "step_budget"
+    },
+    {
+     "scene": 50927,
+     "stage": "B2",
+     "v2_recorded": "both_succeed",
+     "control_step": 4,
+     "reason": "estimate_lost:NO_TARGET_ESTIMATE:invalidated_by_contact",
+     "v2_went_on": true,
+     "v2_end_reason": "within_tolerance"
+    }
+   ],
+   "largest_offset_difference_to_v2_mm": 0.0,
+   "note": "v2s is replayed on the frames v2 produced; valid up to the first step where v2s would stop, because until then both send the same command"
+  },
+  "scene_51009": {
+   "v2": {
+    "decision": "LOW_CARRY",
+    "act": false,
+    "target_src": "memory_base",
+    "hold_src": "frame",
+    "u": 0.012,
+    "offset_norm_m": 0.014391833386476696,
+    "gap_m": -0.023631650687657355,
+    "target_xy": [
+     0.007850128719397997,
+     -0.20691984483840645
+    ],
+    "memory_reason": null,
+    "memory_t_last": 120,
+    "memory_exposed": 12,
+    "offset_error_m": 0.03693828102267547,
+    "target_error_m": 0.03768636184279382,
+    "within_bound": false
+   },
+   "v2s": {
+    "decision": "NO_TARGET_ESTIMATE",
+    "act": false,
+    "target_src": null,
+    "hold_src": "frame",
+    "u": null,
+    "offset_norm_m": null,
+    "gap_m": -0.023631650687657355,
+    "target_xy": null,
+    "memory_reason": "invalidated_by_contact",
+    "memory_t_last": null,
+    "memory_exposed": null,
+    "offset_error_m": null,
+    "target_error_m": null,
+    "within_bound": null
+   },
+   "invalidations": [
+    {
+     "t": 125,
+     "reason": "held_cube_low_near_target",
+     "src": "base",
+     "n": 121,
+     "t_last": 120,
+     "target_moved_since_t_last_until_trigger_m": 0.03879043288343672,
+     "target_moved_since_t_last_until_then_m": 2.4579197833697253e-07
+    }
+   ]
+  },
+  "technical_criteria": {
+   "reproduces_nothing_privileged": true,
+   "detects_scene_51009": true,
+   "no_act_on_a_memory_wrong_by_label": false,
+   "not_degenerate_still_acts_on_memory": true,
+   "not_identical_to_another_arm": true
+  },
+  "technically_valid": false
+ }
+}
