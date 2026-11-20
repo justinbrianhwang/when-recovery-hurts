@@ -7,7 +7,7 @@
 ================================== FAILURES ===================================
 ________ test_audit_seeds_are_used_development_scenes_not_pilot_scenes ________
 
-X = <module 'oxy_driver' from 'C:\\Users\\황선준\\Desktop\\Coding\\Robot\\robot harm intervention starter\\scripts/31_recovery_v1_oracle_xy.py'>
+X = <module 'oxy_driver' from '.\\scripts/31_recovery_v1_oracle_xy.py'>
 
     def test_audit_seeds_are_used_development_scenes_not_pilot_scenes(X):
         v = read_json('configs/vision_v1_splits.json')['splits']['vision_v1_select']; assert set(X.AUDIT_SEEDS) <= set(v) and not set(X.AUDIT_SEEDS) & set(range(50700, 50800))
@@ -19,7 +19,7 @@ E       AssertionError: assert not {'results/vision_center_v2_c1_001/preparation
 tests\test_recovery_v1_oracle.py:524: AssertionError
 ============================== warnings summary ===============================
 tests/test_vision_center.py::test_scene_where_vision_acts
-  C:\Users\황선준\Desktop\Coding\Robot\robot harm intervention starter\tests\test_vision_center.py:124: UserWarning: Creating a tensor from a list of numpy.ndarrays is extremely slow. Please consider converting the list to a single numpy.ndarray with numpy.array() before converting to a tensor. (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\torch\csrc\utils\tensor_new.cpp:255.)
+  tests\test_vision_center.py:124: UserWarning: Creating a tensor from a list of numpy.ndarrays is extremely slow. Please consider converting the list to a single numpy.ndarray with numpy.array() before converting to a tensor. (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\torch\csrc\utils\tensor_new.cpp:255.)
     o = super().obs(); o['extra']['tcp_pose'] = torch.cat([self.p, torch.tensor([DOWN], dtype=torch.float32)], -1); p = o['extra']['tcp_pose'][0].numpy().astype(float)
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
