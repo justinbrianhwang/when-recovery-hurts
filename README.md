@@ -14,6 +14,11 @@ A robot policy that is about to fail can sometimes be saved by intervening: thro
 </p>
 <p align="center"><sub>StackCube-v1 in ManiSkill3, rendered on the experiment host. This clip replays an official motion-planning demonstration; it is not the learned policy.</sub></p>
 
+<p align="center">
+  <img src="assets/research_gifs/recovery_success.gif" width="820" alt="Synchronised panels for development scene 50632: recorded camera frames of the uncorrected run and of the Vision-CENTER v2 run, a top view of the held cube and the target, and per-step plots of the offset and the finger opening. Without intervention the policy opens the gripper with the cube 25.6 mm off-centre and fails; v2 moves the held cube over the target in 11 small steps and the policy then stacks it.">
+</p>
+<p align="center"><sub>One development episode from the stored records of the Vision-CENTER v2 run (scene 50632; nothing was re-simulated). It illustrates the mechanism; it is not a statistical result. Left: camera frames as recorded; grey panels mark steps with no stored frame. Right: logged simulator state, labelled POST-HOC GROUND TRUTH, which no vision controller receives. Details in <a href="#visual-evidence">Visual evidence</a>.</sub></p>
+
 > **Status: early pipeline validation.** The environment, rendering, demonstration conversion, policy training loop and state-restore check have been run on a real GPU host. No hypothesis in this project has been tested yet, and no success-rate or harm-rate claim is made. See [Current status](#current-status) for exactly what has and has not been run.
 
 ---
@@ -25,6 +30,7 @@ A robot policy that is about to fail can sometimes be saved by intervening: thro
 - [How an experiment runs](#how-an-experiment-runs)
 - [The simulator](#the-simulator)
 - [Current status](#current-status)
+- [Visual evidence](#visual-evidence)
 - [Finding: restoring simulator state by `set_state` is not exact](#finding-restoring-simulator-state-by-set_state-is-not-exact)
 - [Installation](#installation)
 - [Running the pipeline](#running-the-pipeline)
@@ -421,6 +427,96 @@ By the rule fixed beforehand, no new rollout is authorised and no further model,
 At the same state, Refresh discarded the 4 remaining queued actions, triggered one new inference, and changed the next action by at most 0.007 in normalized units.
 
 **Cost per rollout.** A 200-step episode takes 18.3 s, of which 16.7 s is policy inference (25 calls of 100 denoising steps). At that rate the planned 120-seed pilot is at most 5,760 branch rollouts, about 19.5 GPU-hours.
+
+## Visual evidence
+
+The three animations below are made from **stored records** of the Vision-CENTER v2 run: train seed 1, development scenes
+that are already used. Nothing was re-simulated for them, and no frame was generated. Each shows a single episode. They
+illustrate what the robot did; none of them is a statistical result or a test of a hypothesis.
+
+**How to read them.** Every panel shows the same simulation step *t*.
+
+- **A, camera frames.** Base and wrist camera frames exactly as recorded.
+  - Up to the trigger, both rows show the same stored frame, because the arms share that part of the episode.
+  - After the trigger, a frame exists only for the steps a vision controller stored during its move.
+  - Every other step is a grey **NO RGB RECORDED** panel. Nothing is interpolated.
+- **B, top view.** Logged positions in the world frame, in millimetres:
+  - held cube: solid line, with its 40 mm footprint filled;
+  - target cube: dashed line and outline;
+  - gripper (TCP): dotted line;
+  - the controller's own estimate of the target: ×.
+- **C, per step.**
+  - True offset from the held cube to the target.
+  - The controller's estimates (×).
+  - Finger opening, with each open command marked |.
+  - Markers: shaded band = recovery move; black line = trigger; yellow line = current step.
+- **D, the record.** Decisions, reasons, event steps and key numbers. Events: trigger and start of the intervention,
+  end of control, policy resumes, first open command, success or end of the episode.
+- **Colours:**
+  - grey: C0, the policy alone;
+  - blue: Vision-CENTER v1;
+  - red: v2;
+  - orange: the oracle. The oracle is a **privileged reference** that reads the true cube positions. It is not ground
+    truth for correct behaviour.
+- **Ground truth versus controller input.** Everything in B and C except the × marks is **POST-HOC GROUND TRUTH** from
+  the simulator log. The vision controllers never receive it. The × marks are what the controller itself estimated.
+
+### Rescue (scene 50632)
+
+<p align="center"><img src="assets/research_gifs/recovery_success.gif" width="820" alt="Scene 50632: without intervention the policy opens the gripper one step after the trigger with the cube 25.6 mm off-centre and fails; v2 makes 11 move steps, the offset falls to 4.6 mm, the policy resumes and the stack succeeds at step 127."></p>
+
+- **Problem.** At step 112 the policy is about to open the gripper with the held cube 25.6 mm off the target centre.
+- **Without intervention (C0).** The policy opens at step 113 and the episode fails.
+- **v2.**
+  - It makes 11 horizontal steps of at most 5 mm.
+  - It decides to move from the current camera frame at the trigger. From step 115 the target position comes from its
+    hand-camera memory.
+  - The offset falls to 4.6 mm, and the target moves 0.02 mm.
+  - The policy resumes at step 124 and opens at step 127.
+- **Result.** The stack succeeds: a rescue.
+- **Recorded frames.** C0 has none after the trigger, and v2 none after its move.
+
+### Unsafe move versus abstention (scene 51004)
+
+<p align="center"><img src="assets/research_gifs/unsafe_intervention.gif" width="820" alt="Scene 51004: v1 moves for 5 steps, pushes the target cube 5.7 mm and stops on target motion; v2 abstains because of side-contact risk; all arms fail."></p>
+
+- **Problem.** At step 125 the held cube is 51.1 mm off the target.
+- **v1.**
+  - It moves for 5 steps, and the held cube pushes the target 5.7 mm.
+  - v1 stops itself on the target's motion.
+  - The offset falls only to 47.7 mm.
+- **v2.** From its own camera reading, it judges that a sideways move risks contact with the target and abstains
+  (`SIDE_CONTACT_RISK`). Its episode is identical to C0.
+- **Result.** Every arm fails. This is not a harm, because the episode also fails without intervention. It is an unsafe
+  move: the target moved more than the 1 mm limit.
+- **Recorded frames.** v1 stored only its wrist camera during its move.
+
+### Stale memory (scene 51009)
+
+<p align="center"><img src="assets/research_gifs/memory_failure.gif" width="820" alt="Scene 51009: the target was last seen at step 120 and is then pushed about 39 mm; at the trigger v2's remembered target is 37.7 mm from the true target, outside its 12 mm bound; v2 abstains for a low carry height; the oracle moves for 12 steps and pushes the target a further 20.7 mm; all fail."></p>
+
+- **Problem.** v2 last saw the target in the base camera at step 120. The target is then pushed about 39 mm, which v2
+  cannot see.
+- **v2 at the trigger (step 133).**
+  - Its remembered target is 37.7 mm from the true one, outside its own bound of 12 mm.
+  - With that memory it would have estimated the offset at 14.4 mm. The true offset is 47.8 mm.
+  - It abstains for another reason: the held cube is carried too low (`LOW_CARRY`). The stale memory itself was not
+    detected.
+- **Oracle.** It moves for 12 steps and pushes the target a further 20.7 mm; the offset falls only from 47.8 mm to
+  47.1 mm.
+- **Result.** All arms fail, and no arm caused harm. The scene shows a failure mode of remembered positions that v2's
+  checks did not catch.
+- **Recorded frames.** They exist up to the trigger, and they show the push. The dash-dot purple curve in C is the
+  distance between the remembered and the true target, computed after the fact.
+
+**Provenance.**
+
+| Item | Where |
+|---|---|
+| Generator | `scripts/make_research_gifs.py` |
+| Independent check | `scripts/verify_research_gifs.py`, against the raw records. Result in `assets/research_gifs/VERIFICATION.json`: each shown frame is closest to its own step's stored frame (small pixel differences come from GIF colour encoding and scaling), every placeholder is grey, and all numbers match the trace. |
+| Source hashes and per-step frame provenance | `assets/research_gifs/MANIFEST.json` |
+| Full-resolution 1280×720 versions | `assets/research_gifs/hires/` |
 
 ## Finding: restoring simulator state by `set_state` is not exact
 
