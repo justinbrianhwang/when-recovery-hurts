@@ -41,14 +41,23 @@ def scene(seed, T=5, K=3, move=0.004, y=(0, 1, 1), push=0.0, decision='ACT', why
     return rec, {'seed': seed, 'traces': tr}
 
 
+MOCK_PLAN = 'ab' * 32                                     # a synthetic plan hash: never the frozen C1 plan
+
+
 def write_run(root, scenes, stage='pass_train_seed_1'):
-    d = Path(root) / stage; (d / 'scenes').mkdir(parents=True); (d / 'traces').mkdir()
+    d = Path(root) / stage; (d / 'scenes').mkdir(parents=True, exist_ok=True); (d / 'traces').mkdir(exist_ok=True)
     for rec, tr in scenes:
         p = d / 'traces' / f'trace_{rec["scene"]}.json.gz'
         with gzip.open(p, 'wt', encoding='utf-8') as f: json.dump(tr, f)
-        rec = {**rec, 'trace': f'traces/{p.name}', 'trace_sha256': hashlib.sha256(p.read_bytes()).hexdigest()}
+        (d / 'frames').mkdir(exist_ok=True); fp = d / 'frames' / f'frames_{rec["scene"]}.npz'; fp.write_bytes(b'synthetic frames ' + str(rec['scene']).encode())
+        rec = {'policy_id': stage.replace('pass_', '', 1), 'plan_sha256': MOCK_PLAN, 'frames': f'frames/{fp.name}', 'frames_sha256': hashlib.sha256(fp.read_bytes()).hexdigest(), **rec, 'trace': f'traces/{p.name}', 'trace_sha256': hashlib.sha256(p.read_bytes()).hexdigest()}
         (d / 'scenes' / f'{rec["scene"]}.json').write_text(json.dumps(rec), encoding='utf-8')
     return d
+
+
+def mock_manifest(tmp, scenes, arms=('C0', 'VISION_CENTER_V2', 'CENTER_ORACLE'), policies=('train_seed_1', 'train_seed_2'), name='mock_expected.json', **kw):
+    """A MOCK expected manifest (review F2): the small synthetic set the gate compares the run with."""
+    p = Path(tmp) / name; p.write_text(json.dumps({'kind': 'MOCK_EXPECTED_MANIFEST', 'policies': list(policies), 'scenes': list(scenes), 'arms': list(arms), 'record_plan_sha256': MOCK_PLAN, **kw}), encoding='utf-8'); return p
 
 
 def analyse(tmp_path, scenes):
@@ -132,7 +141,8 @@ def test_miss_classification_follows_code_order():
 
 def test_trace_hash_mismatch_is_refused(tmp_path):
     d = write_run(tmp_path, [scene(SYN + 1)]); p = d / 'scenes' / f'{SYN + 1}.json'; r = json.loads(p.read_text()); r['trace_sha256'] = '0' * 64; p.write_text(json.dumps(r))
-    with pytest.raises(ValueError, match='trace sha mismatch'): M.analyse_run(M.Run(tmp_path, 'MOCK', 'syn', {'s': 'pass_train_seed_1'}, 'train_seed_1'))
+    res = M.analyse_run(M.Run(tmp_path, 'MOCK', 'syn', {'s': 'pass_train_seed_1'}, 'train_seed_1'))
+    assert res['rows'] == [] and [e['status'] for e in res['errors']] == ['TRACE_SHA_MISMATCH']          # never used; recorded (review F2), not a traceback
 
 
 def test_s6_fail_is_preserved_and_shape_matching_is_exact():
@@ -156,51 +166,22 @@ def test_offline_replay_arms_have_no_outcome(tmp_path):
 
 
 def test_c1_command_reads_a_run_keeps_inputs_and_refuses_overwrite(tmp_path):
-    run = tmp_path / 'run'; write_run(run, [scene(SYN + 1), scene(SYN + 2, y=(1, 0, 1))]); write_run(run, [scene(SYN + 1)], stage='pass_train_seed_2')
+    run = tmp_path / 'run'; sc = [scene(SYN + 1), scene(SYN + 2, y=(1, 0, 1))]; write_run(run, sc); write_run(run, sc, stage='pass_train_seed_2')
     before = {p: hashlib.sha256(p.read_bytes()).hexdigest() for p in run.rglob('*') if p.is_file()}
-    cmd = [sys.executable, str(HERE / 'run_analysis.py'), 'c1', '--run', str(run), '--out', str(tmp_path / 'out'), '--source-kind', 'MOCK']
-    r = subprocess.run(cmd, capture_output=True, text=True, encoding='utf-8', errors='replace'); assert r.returncode == 0, (r.stderr or '') + (r.stdout or '')
+    cmd = [sys.executable, str(HERE / 'run_analysis.py'), 'c1', '--run', str(run), '--out', str(tmp_path / 'out'), '--source-kind', 'MOCK', '--expected', str(mock_manifest(tmp_path, [SYN + 1, SYN + 2]))]
+    r = subprocess.run(cmd, capture_output=True, text=True, encoding='utf-8', errors='replace'); assert r.returncode == 3, (r.stderr or '') + (r.stdout or '')
     after = {p: hashlib.sha256(p.read_bytes()).hexdigest() for p in run.rglob('*') if p.is_file()}; assert before == after
-    man = json.loads((tmp_path / 'out' / 'analysis_manifest.json').read_text(encoding='utf-8')); assert man['status'] == 'COMPLETE' and man['source_kind'] == 'MOCK'
-    pp = (tmp_path / 'out' / 'policy_paired_outcomes.csv').read_text(encoding='utf-8'); assert 'not 400 independent samples' in pp
+    man = json.loads((tmp_path / 'out' / 'analysis_manifest.json').read_text(encoding='utf-8')); assert man['status'] == 'INCOMPLETE' and man['source_kind'] == 'MOCK'
+    assert man['problems'] and all(p.startswith('MOCK_MANIFEST_REDUCED') for p in man['problems'])      # a 3-arm synthetic set is never a complete C1-format result (review f1)
     assert subprocess.run(cmd, capture_output=True, text=True).returncode != 0                 # refuses an existing output folder
     r2 = subprocess.run([sys.executable, str(HERE / 'run_analysis.py'), 'c1', '--run', str(tmp_path / 'nothing'), '--out', str(tmp_path / 'o2')], capture_output=True, text=True); assert r2.returncode != 0
-
-
-def test_a_c1_format_mock_run_from_the_real_collector_is_read(tmp_path):
-    """C1.collect_scene on the mock runtime (as tests/test_c1_trajectory_runner.py), both policies, all nine arms,
-    synthetic seeds 7 and 8. The analysis reads it as MOCK; nothing is pooled across policies."""
-    pytest.importorskip('torch'); sys.path.insert(0, str(HERE.parent / 'tests'))
-    import importlib.util
-    from test_recovery_v1_oracle import CFG
-    from test_vision_center import BiasPolicy
-    from test_vision_center_v2 import VisionEnv2
-    from test_trajectory_audit import probe2
-    from hci.simulation import Runtime
-    from hci import vision_center_c1 as C1
-    spec = importlib.util.spec_from_file_location('c1_driver_mech', HERE.parent / 'scripts/34_vision_center_c1.py'); X34 = importlib.util.module_from_spec(spec); spec.loader.exec_module(X34)
-    bias = {('train_seed_1', 7): (.028, .012), ('train_seed_1', 8): (-.004, .0), ('train_seed_2', 7): (-.028, .0), ('train_seed_2', 8): (.028, .012)}
-    run = tmp_path / 'run'; run.mkdir()
-    for pid in C1.POLICIES:
-        for s in (7, 8):
-            r = Runtime(VisionEnv2(), BiasPolicy(bias[(pid, s)]), CFG); rec, tr, fr = C1.collect_scene(r, s, CFG, probe=probe2, arms=C1.BASE_ARMS, policy_id=pid)
-            X34.Z.save_scene(run / f'pass_{pid}', s, rec, tr, fr)
-    out = tmp_path / 'out'
-    r = subprocess.run([sys.executable, str(HERE / 'run_analysis.py'), 'c1', '--run', str(run), '--out', str(out), '--source-kind', 'MOCK'], capture_output=True, text=True, encoding='utf-8')
-    assert r.returncode == 0, r.stdout + r.stderr
-    import csv
-    rows = list(csv.DictReader(open(out / 'scene_arm_summary.csv', encoding='utf-8')))
-    assert {x['policy'] for x in rows} == set(C1.POLICIES) and {x['arm'] for x in rows} == set(C1.BASE_ARMS) and {x['source_kind'] for x in rows} == {'MOCK'}
-    assert len(rows) == 2 * 2 * len(C1.BASE_ARMS)
-    fun = list(csv.DictReader(open(out / 'opportunity_funnel.csv', encoding='utf-8')))
-    assert {x['policy'] for x in fun} == set(C1.POLICIES) and all(int(x['numerator']) <= int(x['denominator']) for x in fun if x['denominator'])
 
 
 def test_review_m1_missing_outcomes_leave_the_denominators_and_fail_the_check(tmp_path):
     rec, tr = scene(SYN + 1, y=(1, 1, 1)); rec['cells'][1]['y'] = None
     res = analyse(tmp_path, [(rec, tr), scene(SYN + 2, y=(1, 1, 1))]); f = M.funnel(res['rows'], ['C0', 'VISION_CENTER_V2', 'CENTER_ORACLE']); d = {(r['arm'], r['step']): r for r in f}
-    assert d[('VISION_CENTER_V2', 'harm_of_all_c0_success')]['denominator'] == 1                 # the scene without an outcome is not a harm-free success
-    assert d[('VISION_CENTER_V2', 'outcome_missing_excluded_from_outcome_rates')]['numerator'] == 1
+    assert d[('VISION_CENTER_V2', 'overall_harm_of_c0_success')]['denominator'] == 1 and d[('VISION_CENTER_V2', 'triggered_harm_of_c0_success')]['denominator'] == 1    # the scene without an outcome is not a harm-free success
+    assert d[('VISION_CENTER_V2', 'outcome_missing_completeness_error')]['numerator'] == 1
     assert any('outcomes missing' in p for p in M.check_funnel(f))
     assert any('no recorded outcome' in p for r in res['rows'] for p in M.check_integrity(r))
 
@@ -231,12 +212,12 @@ def test_review_m1_s6_with_excluded_rows_is_never_pass():
 
 def test_review_m1_mock_c1_outputs_are_labelled_not_a_result(tmp_path):
     run = tmp_path / 'run'; write_run(run, [scene(SYN + 1)])
-    r = subprocess.run([sys.executable, str(HERE / 'run_analysis.py'), 'c1', '--run', str(run), '--out', str(tmp_path / 'out'), '--source-kind', 'MOCK'], capture_output=True, text=True, encoding='utf-8')
+    r = subprocess.run([sys.executable, str(HERE / 'run_analysis.py'), 'c1', '--run', str(run), '--out', str(tmp_path / 'out'), '--source-kind', 'MOCK', '--expected', str(mock_manifest(tmp_path, [SYN + 1]))], capture_output=True, text=True, encoding='utf-8')
     assert r.returncode == 3                                                                     # pass train_seed_2 missing: INCOMPLETE
     assert (tmp_path / 'out' / 'MOCK_NOT_A_RESULT.txt').exists()
     man = json.loads((tmp_path / 'out' / 'analysis_manifest.json').read_text(encoding='utf-8')); assert man['is_research_result'] is False and man['status'] == 'INCOMPLETE'
     import csv
-    assert {x['source_kind'] for x in csv.DictReader(open(tmp_path / 'out' / 'opportunity_funnel.csv', encoding='utf-8'))} == {'MOCK'}
+    assert any(p.startswith('MISSING_POLICY_PASS') for p in man['problems']) and not (tmp_path / 'out' / 'C1_MECHANISM_REPORT.md').exists()
 
 
 def test_review_m4_a_row_without_poses_or_grasp_flag_is_na_never_a_value(tmp_path):
@@ -276,9 +257,9 @@ def test_review_m6_malformed_scenes_and_cells_give_an_incomplete_status_and_exit
     res = M.analyse_run(M.Run(run, 'MOCK', 'syn', {'s': 'pass_train_seed_1'}, 'train_seed_1')); st = {(e.get('scene'), e['status']) for e in res['errors']}
     assert (SYN + 1, 'MALFORMED_RECORD') in st and (SYN + 2, 'MALFORMED_RECORD') in st     # a non-mapping cell also breaks the arm-cell check (review m9)
     assert {r['scene'] for r in res['rows']} == {SYN + 3}                                  # the valid scene is kept; the bad ones are listed
-    r = subprocess.run([sys.executable, str(HERE / 'run_analysis.py'), 'c1', '--run', str(run), '--out', str(tmp_path / 'out'), '--source-kind', 'MOCK'], capture_output=True, text=True, encoding='utf-8', errors='replace')
+    r = subprocess.run([sys.executable, str(HERE / 'run_analysis.py'), 'c1', '--run', str(run), '--out', str(tmp_path / 'out'), '--source-kind', 'MOCK', '--expected', str(mock_manifest(tmp_path, [SYN + 1, SYN + 2, SYN + 3]))], capture_output=True, text=True, encoding='utf-8', errors='replace')
     man = json.loads((tmp_path / 'out' / 'analysis_manifest.json').read_text(encoding='utf-8'))
-    assert r.returncode == 3 and man['status'] == 'INCOMPLETE' and any('MALFORMED' in p for p in man['problems'])
+    assert r.returncode == 3 and man['status'] == 'INCOMPLETE' and any(p.startswith('CELLS_DIFFER_FROM_REGISTRY') for p in man['problems'])      # the gate sees it first (review F2)
 
 
 def test_review_m7_an_unreadable_scene_file_is_a_recorded_error(tmp_path):
@@ -286,8 +267,9 @@ def test_review_m7_an_unreadable_scene_file_is_a_recorded_error(tmp_path):
     (d / 'scenes' / f'{SYN + 2}.json').write_text('{not json', encoding='utf-8'); (d / 'scenes' / f'{SYN + 3}.json').write_text('[1, 2]', encoding='utf-8')
     res = M.analyse_run(M.Run(run, 'MOCK', 'syn', {'s': 'pass_train_seed_1'}, 'train_seed_1'))
     assert sum(e['status'] == 'UNREADABLE_RECORD' for e in res['errors']) == 2 and {r['scene'] for r in res['rows']} == {SYN + 1}
-    r = subprocess.run([sys.executable, str(HERE / 'run_analysis.py'), 'c1', '--run', str(run), '--out', str(tmp_path / 'out'), '--source-kind', 'MOCK'], capture_output=True, text=True, encoding='utf-8', errors='replace')
-    assert r.returncode == 3 and json.loads((tmp_path / 'out' / 'analysis_manifest.json').read_text(encoding='utf-8'))['status'] == 'INCOMPLETE'
+    r = subprocess.run([sys.executable, str(HERE / 'run_analysis.py'), 'c1', '--run', str(run), '--out', str(tmp_path / 'out'), '--source-kind', 'MOCK', '--expected', str(mock_manifest(tmp_path, [SYN + 1]))], capture_output=True, text=True, encoding='utf-8', errors='replace')
+    man = json.loads((tmp_path / 'out' / 'analysis_manifest.json').read_text(encoding='utf-8'))
+    assert r.returncode == 3 and man['status'] == 'INCOMPLETE' and any(p.startswith('UNREADABLE_RECORD') for p in man['problems']) and any(p.startswith('MALFORMED_RECORD') for p in man['problems'])
 
 
 def test_review_m8_bad_outcomes_bad_scene_ids_and_absent_commands(tmp_path):

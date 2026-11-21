@@ -67,23 +67,76 @@ Checked by `check_time_order`:
 - An engagement with zero steps and the recorded end reason `within_tolerance` is `ORACLE_WITHIN_TOLERANCE_AT_START`.
 - A zero-step engagement with any other recorded end reason (for example `episode_ended`, `target_cap`) is `ORACLE_ZERO_STEPS:<reason>` and is counted separately.
 
-**Harm and rescue.** These use C0 of the same run, stage, policy and scene:
+**Harm and rescue.** These use C0 of the same run, stage, policy and scene. There are three scopes. They are never mixed, and each is named in its step (review F1, targeted fix v1.0):
 
-| Count | Numerator | Denominator |
-|---|---|---|
-| Harm, all | harm | all C0 successes |
-| Harm, moved | harm | C0 successes the arm moved in |
-| Protected by abstention | – | C0 successes where the arm abstained and kept success |
-| Kept with movement | – | C0 successes where the arm moved and kept success |
-| Rescue | rescue | all C0 failures |
-| Oracle rescues also rescued | – | oracle rescues; computed only where the oracle ran (B2) |
-| Rescued where the oracle failed | – | – |
+| Scope | Step | Numerator | Denominator |
+|---|---|---|---|
+| **Overall** (all scenes with both outcomes, triggered or not) | `overall_success` | arm successes | scenes with complete outcomes |
+| Overall | `overall_rescue_of_c0_failure` | rescue | **every** C0 failure |
+| Overall | `overall_harm_of_c0_success` | harm | **every** C0 success |
+| Overall | `overall_net_rescue_minus_harm` | rescue − harm | scenes with complete outcomes |
+| Not triggered | `not_triggered_rescue_of_c0_failure` / `not_triggered_harm_of_c0_success` | rescue / harm | C0 failures / successes without a trigger |
+| **Trigger-conditional** | `triggered_rescue_of_c0_failure` | rescue | C0 failures among triggered scenes |
+| Trigger-conditional | `triggered_harm_of_c0_success` | harm | C0 successes among triggered scenes |
+| Trigger-conditional | `triggered_c0_success_kept_by_abstention` | abstained and kept success | C0 successes among triggered scenes |
+| **Move-conditional** | `moved_harm_of_c0_success_where_arm_moved` | harm | C0 successes in which the arm moved the TCP ≥ 1 mm |
+| Move-conditional | `moved_c0_success_kept_where_arm_moved` | kept success | the same |
+| Oracle opportunity | `oracle_rescue_also_rescued`, `oracle_rescue_missed[:class]` | – | all scenes where C0 failed and the oracle succeeded |
+| Oracle opportunity | `overall_rescued_where_oracle_failed` | – | every C0 failure |
+
+`not_triggered` (the arm never ran) and `abstained_or_no_action` (triggered, then abstained) are counted apart, and both stay in every overall count. The Phase B check values are B1 V2 rescue 22/47 overall and 22/34 conditional on the trigger; B2 19/35 overall and 19/32 conditional.
 
 **Rules:**
 - A zero denominator gives NA.
-- A missing outcome stays missing; it is never counted as success or zero.
+- A missing outcome (arm or C0) is the completeness error `outcome_missing_completeness_error`. It is excluded from every scope, never counted as success, failure or zero, and makes the analysis INCOMPLETE.
 - An abstention is not a safety pass.
-- `check_funnel` asserts that ACT + abstained = triggered, and that the miss classes sum to the misses.
+- `check_funnel` asserts the following:
+  - ACT + abstained = triggered;
+  - the miss classes sum to the misses;
+  - triggered + not triggered = scenes;
+  - C0 success + C0 failure = complete scenes;
+  - overall = triggered + not-triggered, for both rescue and harm;
+  - arm success = C0 success + rescue − harm;
+  - net = rescue − harm;
+  - each arm's C0 counts equal the C0 arm's own counts.
+- **Independent recount.** The overall counts are compared with the collector's own summary (`tables/crosscheck_against_collector_summary.csv`):
+  - Phase B: `shadow/shadow_result.json` and `pilot/result.json`;
+  - C1: `result.json`, with `per_policy.<policy>.against_C0`.
+
+  Any mismatch makes the analysis INCOMPLETE.
+
+## 3a. Completeness gate of a C1 run (review F2)
+
+`run_analysis.py c1` checks the run folder against an **independent expected set** before any analysis. The gate (`completeness.py`) only reads; it never writes a ledger or changes the run.
+
+**Expected set, `C1_ORIGINAL`:**
+- The plan **file** given by `--plan`. Its own SHA256 must equal the frozen hash; a SHA string from the CLI is never copied as proof.
+- The seed and arm registries the plan hashes, with their SHA256 checked: 200 scenes 51100–51299, the 9 included arms in registry order, and the policies in plan order.
+- The run's provenance records (`scenes.json`, probe check, audit, both budget gates, the `ledger.json` copy, `authorization.json`) must name the plan, and no `budget_stop.json` may exist.
+- The collector summary `result.json` must exist.
+
+**Expected set, `MOCK`:**
+- A separate `MOCK_EXPECTED_MANIFEST` (`--expected`) gives policies, scenes, arms and the synthetic plan hash. The records must carry that hash.
+- The same completeness rules apply; MOCK is not an exception to them.
+- A MOCK manifest may not name C1 research scenes or the frozen plan, and a MOCK run folder may not hold a ledger.
+
+**Blocked, each with its own problem code** (exit code 3, status INCOMPLETE, no report or claims):
+- an empty `scenes/` folder;
+- a missing or extra policy pass;
+- missing or extra scenes, including 199 of 200;
+- the same number of scenes per policy with different IDs;
+- a duplicate scene;
+- a scene file name that differs from its scene ID;
+- `arms`, or `cells`, that differ from the registry, including the same arm missing from both;
+- an error, incomplete or unreadable record;
+- a record of another policy or plan;
+- a missing trace, or a trace whose SHA256 differs from the record;
+- missing provenance, a stopped run or a ledger that differs from the plan;
+- a missing collector summary.
+
+**After the analysis**, every expected (policy, scene, arm) must have exactly one row.
+
+A complete input passes. The status is `ANALYSIS_COMPLETE` only when every output listed in `run_analysis.C1_REQUIRED` exists.
 
 ## 4. Decomposition A: observation, estimate, memory
 

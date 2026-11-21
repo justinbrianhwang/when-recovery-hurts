@@ -14,7 +14,9 @@ HERE = Path(__file__).resolve().parent; sys.path[:0] = [str(HERE), str(HERE.pare
 import numpy as np
 import mechanism as M
 
-CODE_FILES = ['mechanism_analysis/mechanism.py', 'mechanism_analysis/s6_validity.py', 'mechanism_analysis/run_analysis.py', 'mechanism_analysis/figures.py', 'mechanism_analysis/report.py', 'mechanism_analysis/metric_dictionary.json', 'mechanism_analysis/docs/ANALYSIS_SPEC.md', 'mechanism_analysis/docs/C1_ANALYSIS_READINESS.md', 'mechanism_analysis/tests/test_mechanism.py']
+CODE_FILES = ['mechanism_analysis/mechanism.py', 'mechanism_analysis/completeness.py', 'mechanism_analysis/s6_validity.py', 'mechanism_analysis/run_analysis.py', 'mechanism_analysis/figures.py', 'mechanism_analysis/report.py', 'mechanism_analysis/metric_dictionary.json', 'mechanism_analysis/docs/ANALYSIS_SPEC.md', 'mechanism_analysis/docs/C1_ANALYSIS_READINESS.md', 'mechanism_analysis/tests/test_mechanism.py', 'mechanism_analysis/tests/test_targeted_fix.py']
+import completeness as _G
+FROZEN = _G.FROZEN_PLAN_SHA256
 CASES = (50632, 50892, 51004, 51009, 50959, 50702)
 PHASE_B = {'B1_shadow': 'shadow', 'B2_pilot': 'pilot'}
 
@@ -37,10 +39,10 @@ def inventory(run, kind, run_id, host, code, repo, extra=()):
 def hashes(paths): return {str(p): M.sha256(p) for p in paths}
 
 
-def summaries(res, off):
+def summaries(res, off, arms=('VISION_CENTER_V1', 'VISION_CENTER_V2', 'CENTER_ORACLE')):
     rows = [r for r in res['rows']]; s = {}
     # memory decomposition (target), per arm and source, with coverage
-    for arm in ('VISION_CENTER_V1', 'VISION_CENTER_V2'):
+    for arm in [x for x in arms if x in M.VISION_ARMS]:
         mm = [m for m in res['memory'] if m['arm'] == arm]; cov = Counter(m['status'] if m['status'] != 'ESTIMATED' else f"ESTIMATED:{m['target_src']}" for m in mm)
         s[f'target_estimate_{arm}'] = {'triggered_with_control_record': len(mm), 'coverage': dict(cov),
                                         'no_estimate_reasons': dict(Counter(f"{m.get('why')}:{m.get('memory_reason')}" for m in mm if m['status'] == 'NO_TARGET_ESTIMATE')),
@@ -61,7 +63,7 @@ def summaries(res, off):
                                       'err_now_xy_mm': {k: (x * 1e3 if k != 'n' and x is not None else x) for k, x in M.dist([h.get('err_now_xy_m') for h in hh if h['status'] == 'ESTIMATED']).items()},
                                       'held_rel_tcp_change_since_fit_mm': {k: (x * 1e3 if k != 'n' and x is not None else x) for k, x in M.dist([h.get('held_rel_tcp_change_since_fit_m') for h in hh]).items()}}
     # motion during control
-    for arm in ('VISION_CENTER_V1', 'VISION_CENTER_V2', 'CENTER_ORACLE'):
+    for arm in arms:
         a = [r for r in rows if r['arm'] == arm and r['control_steps'] > 0]
         mm = lambda k: {kk: (x * 1e3 if kk != 'n' and x is not None else x) for kk, x in M.dist([r.get(k) for r in a]).items()}
         s[f'motion_{arm}'] = {'branches_with_control': len(a), 'moved': sum(1 for r in a if r['moved']), 'cmd_path_mm': mm('cmd_path_m'), 'cmd_net_mm': mm('cmd_net_m'), 'tcp_xy_net_mm': mm('tcp_xy_net_m'),
@@ -81,10 +83,10 @@ def summaries(res, off):
     return s
 
 
-def select_cases(rows):
+def select_cases(rows, fixed=CASES):
     """Fixed rule: the six existing cases; then, per type, the lowest seed: v2 rescue with push assistance; v2 move whose
     estimate error was outside its own bound; each oracle-rescue-missed class for v2 and v1; every harm event."""
-    sel = {c: 'existing explanatory case' for c in CASES}
+    sel = {c: 'existing explanatory case' for c in fixed}
     def first(pred, why):
         c = sorted(r['scene'] for r in rows if pred(r))
         for s in c:
@@ -102,7 +104,7 @@ def existing(a):
     out = Path(a.out)
     if out.exists(): raise SystemExit(f'Refused overwrite: {out}')
     repo = HERE.parent; run = M.Run(a.phase_b, 'PHASE_B_ORIGINAL', 'vision_center_v2_001', PHASE_B, 'train_seed_1', host='Phase B server (RTX 4090, plan host record)')
-    inputs = [p for st in PHASE_B.values() for p in sorted((Path(a.phase_b) / st).rglob('*')) if p.is_file()] + [Path(a.offline)] + sorted(Path(a.replay).rglob('*.gz')) + [Path(a.replay) / 'replay_summary.json']
+    inputs = [p for st in PHASE_B.values() for p in sorted((Path(a.phase_b) / st).rglob('*')) if p.is_file()] + [Path(a.offline)] + sorted(Path(a.replay).rglob('*.gz')) + [Path(a.replay) / 'replay_summary.json'] + [repo / f for f in CODE_FILES if (repo / f).is_file()]
     before = hashes(inputs)
     res = M.analyse_run(run); off = M.offline_rows(a.offline)
     problems = M.check_keys(res['rows']) + M.check_keys(off) + [f'{r["branch"]}: {p}' for r in res['rows'] for p in M.check_time_order(r) + M.check_integrity(r)]
@@ -137,68 +139,172 @@ def existing(a):
         import csv
         cols = sorted({k for r in s6rows for k in r}); w = csv.DictWriter(g, fieldnames=cols); w.writeheader(); [w.writerow({k: ('' if r.get(k) is None else r[k]) for k in cols}) for r in s6rows]
     (out / 'tables' / 's6_validity_summary.json').write_text(json.dumps({**s6, 'source_kind': 'LOCAL_CPU_REPLAY_OF_RECORDED_ACTIONS'}, indent=1), encoding='utf-8')
+    # review F1/F3: independent recount against the collector's own Phase B summaries (O.paired layout, all scenes)
+    import completeness as G
+    pb = Path(a.phase_b); ref = {}
+    for stage, f, keys in (('B1_shadow', pb / 'shadow' / 'shadow_result.json', {'VISION_CENTER_V2': 'paired_V2_vs_C0', 'VISION_CENTER_V1': 'paired_V1_vs_C0'}),
+                           ('B2_pilot', pb / 'pilot' / 'result.json', {'VISION_CENTER_V2': 'primary_V2_vs_C0', 'VISION_CENTER_V1': 'baseline_V1_vs_C0', 'CENTER_ORACLE': 'reference_CENTER_ORACLE_vs_C0'})):
+        if not f.is_file(): problems.append(f'COLLECTOR_RESULT_MISSING: {f.name}'); continue
+        cr = M.read_json(f)
+        for arm, k in keys.items(): ref[(stage, 'train_seed_1', arm)] = cr[k]
+    cc_rows, cc_p = G.crosscheck(fun, ref); problems += cc_p
+    M.write_csv(out / 'tables' / 'crosscheck_against_collector_summary.csv', cc_rows); M.write_csv(out / 'tables' / 'denominator_check.csv', denominator_check(fun))
     sel = select_cases(res['rows'])
     import figures as F
     figs = F.case_figures(run, res, sel, out / 'figures')
     import report as R
-    results = {'funnel': fun, 'offline_funnel': off_fun, 'summaries': s, 's6': s6, 'cases': {str(k): v for k, v in sel.items()}, 'figures': figs, 'problems': problems, 'errors': res['errors']}
+    results = {'funnel': fun, 'offline_funnel': off_fun, 'denominator_check': denominator_check(fun), 'crosscheck': cc_rows, 'summaries': s, 's6': s6, 'cases': {str(k): v for k, v in sel.items()}, 'figures': figs, 'problems': problems, 'errors': res['errors']}
     (out / 'results.json').write_text(json.dumps(results, indent=1, default=str), encoding='utf-8')
-    claims = R.claims(results); M.write_csv(out / 'claims_to_evidence.csv', claims)
     M.write_csv(out / 'source_inventory.csv', inventory(run, 'PHASE_B_ORIGINAL', 'vision_center_v2_001', 'Phase B server', 'plan b7078afb (Phase B)', repo, [Path(a.phase_b) / 'plan.json'])
                 + [{'path': rel(a.offline, repo), 'source_kind': 'OFFLINE_DECISION_REPLAY', 'run': 'offline_replay_r4', 'stage': '', 'host': 'local CPU', 'code': 'results/vision_center_v2_c1_001/preparation/offline_replay.py', 'sha256': M.sha256(a.offline), 'bytes': Path(a.offline).stat().st_size}]
                 + [{'path': 'LOCAL_REPLAY/' + p.name, 'source_kind': 'LOCAL_CPU_REPLAY_OF_RECORDED_ACTIONS', 'run': 'replay_003', 'stage': '', 'host': 'local WSL CPU (pinned ManiSkill a4a4f92, SAPIEN 3.0.3)', 'code': 'scripts/37_c1_probe_sim_check.py replay', 'sha256': M.sha256(p), 'bytes': p.stat().st_size} for p in sorted(Path(a.replay).rglob('*')) if p.is_file()]
-                + [{'path': 'C1_ORIGINAL', 'source_kind': 'C1_ORIGINAL', 'run': 'vision_center_v2_c1_001', 'stage': '', 'host': '', 'code': f'plan {a.c1_plan_sha256}', 'sha256': '', 'bytes': 0, 'note': 'does not exist: no C1 run was made'}])
+                + [{'path': 'C1_ORIGINAL', 'source_kind': 'C1_ORIGINAL', 'run': 'vision_center_v2_c1_001', 'stage': '', 'host': '', 'code': f'plan {FROZEN}', 'sha256': '', 'bytes': 0, 'note': 'does not exist: no C1 run was made'}])
     (out / 'metric_dictionary.json').write_text((HERE / 'metric_dictionary.json').read_text(encoding='utf-8'), encoding='utf-8')
     after = hashes(inputs)
     if after != before: problems.append('an input file changed during the analysis')
-    R.write_reports(out, results)
+    if not problems and not res['errors']: M.write_csv(out / 'claims_to_evidence.csv', R.claims(results)); R.write_reports(out, results)      # review F2: no report from an incomplete analysis
+    else: incomplete_marker(out, problems + [str(e) for e in res['errors']])
     man = {'what': 'C1 mechanism decomposition on stored records (no simulation, no rendering, no rollout)', 'created_utc': datetime.now(timezone.utc).isoformat(), 'python': platform.python_version(), 'numpy': np.__version__,
-           'c1_plan_sha256': a.c1_plan_sha256, 'c1_plan_file_sha256': M.sha256(a.c1_plan) if a.c1_plan and Path(a.c1_plan).exists() else None,
+           'c1_plan_sha256': FROZEN, 'c1_plan_file_sha256': M.sha256(a.c1_plan) if a.c1_plan and Path(a.c1_plan).exists() else None,
            'code_sha256': {f: M.sha256(repo / f) for f in CODE_FILES if (repo / f).exists()}, 'inputs': {'phase_b_files': len([p for p in before if 'server_backup' in p or 'shadow' in p or 'pilot' in p]), 'input_sha256_unchanged': after == before,
            'offline_replay': {'path': rel(a.offline, repo), 'sha256': M.sha256(a.offline)}, 'local_replay_files': {Path(p).name: h for p, h in before.items() if Path(a.replay) in Path(p).parents or Path(p).parent == Path(a.replay)}},
            'settings': {k: getattr(M, k) for k in ('MOVE_MIN_M', 'PUSH_MIN_M', 'NA_NORM_M', 'RESIDUAL_TOL_M', 'TARGET_CAP_M', 'STEP_CMD_M', 'MAX_STEPS')},
-           'outputs': {p.relative_to(out).as_posix(): M.sha256(p) for p in sorted(out.rglob('*')) if p.is_file()}, 'problems': problems, 'status': 'COMPLETE' if not problems and not res['errors'] else 'INCOMPLETE'}
-    (out / 'analysis_manifest.json').write_text(json.dumps(man, indent=1), encoding='utf-8')
-    print(json.dumps({'status': man['status'], 'problems': problems[:10], 'rows': len(res['rows']), 'offline_rows': len(off), 's6_pairs': len(s6rows), 'cases': len(sel)}, indent=1))
-    if man['status'] != 'COMPLETE': raise SystemExit(3)                          # any problem or recorded error (review m6)
+           'problems': problems, 'status': 'ANALYSIS_COMPLETE' if not problems and not res['errors'] else 'INCOMPLETE'}
+    finish(out, man, {'rows': len(res['rows']), 'offline_rows': len(off), 's6_pairs': len(s6rows), 'cases': len(sel)})          # exit 3 on any problem or recorded error (review m6)
+
+
+C1_REQUIRED = ('gate_report.json', 'scene_arm_summary.csv', 'event_table.csv', 'opportunity_funnel.csv', 'policy_paired_outcomes.csv', 'tables/target_estimate_and_memory_decomposition.csv',
+               'tables/held_estimate_decomposition.csv', 'tables/executed_ablation_chain.csv', 'tables/denominator_check.csv', 'tables/crosscheck_against_collector_summary.csv', 'tables/s6_validity_summary.json', 'tables/s6_pair_rows.csv.gz',
+               'case_index.csv', 'results.json', 'claims_to_evidence.csv', 'C1_MECHANISM_REPORT.md', 'START_HERE.md', 'metric_dictionary.json')
+
+
+def denominator_check(fun):
+    """OVERALL / TRIGGERED / MOVED denominators side by side (review F1), one row per stage, policy and arm."""
+    d = {(x['stage'], x['policy'], x['arm'], x['step']): x for x in fun}; out = []
+    for st, pol, arm in sorted({(x['stage'], x['policy'], x['arm']) for x in fun}):
+        g = lambda s, k='numerator': (d.get((st, pol, arm, s)) or {}).get(k)
+        out.append({'stage': st, 'policy': pol, 'arm': arm, 'all_scenes': g('scenes'), 'triggered': g('triggered'), 'not_triggered': g('not_triggered'), 'complete_outcomes': g('overall_scenes_with_complete_outcomes'),
+                    'c0_success_all': g('overall_c0_success'), 'c0_failure_all': g('overall_c0_failure'), 'c0_failure_triggered': g('triggered_rescue_of_c0_failure', 'denominator'), 'c0_success_triggered': g('triggered_harm_of_c0_success', 'denominator'),
+                    'success_all': g('overall_success'), 'rescue': g('overall_rescue_of_c0_failure'), 'rescue_over_all_c0_failures': g('overall_rescue_of_c0_failure', 'fraction'),
+                    'rescue_over_triggered_c0_failures': g('triggered_rescue_of_c0_failure', 'fraction'), 'harm': g('overall_harm_of_c0_success'), 'harm_over_all_c0_successes': g('overall_harm_of_c0_success', 'fraction'),
+                    'harm_over_triggered_c0_successes': g('triggered_harm_of_c0_success', 'fraction'), 'c0_successes_where_arm_moved': g('moved_harm_of_c0_success_where_arm_moved', 'denominator'),
+                    'harm_where_arm_moved': g('moved_harm_of_c0_success_where_arm_moved'), 'net_rescue_minus_harm': g('overall_net_rescue_minus_harm'), 'outcome_missing': g('outcome_missing_completeness_error')})
+    return out
+
+
+def finish(out, man, extra_print=None):
+    man['outputs'] = {p.relative_to(out).as_posix(): M.sha256(p) for p in sorted(out.rglob('*')) if p.is_file() and p.name != 'analysis_manifest.json'}
+    (out / 'analysis_manifest.json').write_text(json.dumps(man, indent=1, default=str), encoding='utf-8')
+    if not (out / 'analysis_manifest.json').is_file(): raise SystemExit('analysis_manifest.json was not written')
+    print(json.dumps({'status': man['status'], 'problems': man['problems'][:12], **(extra_print or {})}, indent=1))
+    if man['status'] != 'ANALYSIS_COMPLETE': raise SystemExit(3)
+
+
+def incomplete_marker(out, problems):
+    (out / 'INCOMPLETE_NOT_A_RESULT.txt').write_text('This analysis is INCOMPLETE. No performance, test or mechanism report was written; the tables here (if any) are partial data kept with the problem list.\n\n'
+                                                     + '\n'.join(problems) + '\n', encoding='utf-8')
 
 
 def c1(a):
-    """A C1 run folder: one Run per policy pass, the same tables, never pooled across policies."""
+    """A C1 run folder: an expected-set gate first (review F2), then one Run per policy pass with every existing table and the
+    S6, ablation, case and report chain (review F3). Policies are never pooled."""
+    import completeness as G, s6_validity as S6, report as R
     out = Path(a.out)
     if out.exists(): raise SystemExit(f'Refused overwrite: {out}')
-    root = Path(a.run); kind = a.source_kind; problems = []; allrows = []; fun = []
-    passes = {pid: root / f'pass_{pid}' for pid in ('train_seed_1', 'train_seed_2')}
-    if not any(p.exists() for p in passes.values()): raise SystemExit(f'no pass folder under {root}')
-    out.mkdir(parents=True); res_all = {}
-    for pid, d in passes.items():
-        if not d.exists(): problems.append(f'pass {pid} missing: the run is INCOMPLETE'); continue
-        run = M.Run(root, kind, root.name, {f'C1_{pid}': d.name}, pid); res = M.analyse_run(run); res_all[pid] = res
-        problems += M.check_keys(res['rows']) + [f'{r["branch"]}: {p}' for r in res['rows'] for p in M.check_time_order(r) + M.check_integrity(r)]
-        problems += [f'{e}' for e in res['errors']]
-        problems += [f"{e['branch']} {e['event']} at row {e['t']}: pose missing" for e in res['events'] if e['t'] is not None and e.get('pose_missing')]
-        f = M.funnel(res['rows'], ['C0'] + list(M.VISION_ARMS) + [M.ORACLE]); problems += M.check_funnel(f); fun += f; allrows += res['rows']
-    fun = [{**x, 'source_kind': kind} for x in fun]
-    M.write_csv(out / 'scene_arm_summary.csv', allrows); M.write_csv(out / 'opportunity_funnel.csv', fun)
+    root = Path(a.run); kind = a.source_kind; repo = HERE.parent
+    if kind == 'C1_ORIGINAL':
+        if a.expected: raise SystemExit('usage: --expected is only for MOCK; a C1_ORIGINAL run is checked against the plan file and its registries')
+        exp, gate = G.expected_from_plan(a.plan, repo, FROZEN)
+    else:
+        if not a.expected: raise SystemExit('usage: MOCK needs --expected <MOCK expected manifest>; the completeness gate is never skipped')
+        exp, gate = G.expected_from_mock(a.expected, repo, FROZEN)
+    inputs = sorted(p for p in root.rglob('*') if p.is_file()) if root.is_dir() else []
+    inputs += [Path(x) for x in ((a.plan, repo / 'configs/vision_center_c1_splits.json', repo / 'configs/vision_center_c1_arms.json') if kind == 'C1_ORIGINAL' else (a.expected, repo / 'configs/vision_center_c1_arms.json', repo / 'configs/vision_center_c1_splits.json', a.plan)) if Path(x).is_file()]
+    inputs += [repo / f for f in CODE_FILES if (repo / f).is_file()]      # the analysis code, dictionary and docs copied into the outputs (review f5)
+    before = hashes(inputs)      # the run folder and every external file the gate read (review f1 MINOR)
+    gate += G.check_run(root, exp, kind)
+    out.mkdir(parents=True)
     if kind == 'MOCK': (out / 'MOCK_NOT_A_RESULT.txt').write_text('Every table here comes from MOCK records (tool verification). No count, rate or outcome here is a research result.\n', encoding='utf-8')
-    M.write_csv(out / 'event_table.csv', [e for r in res_all.values() for e in r['events']])
+    exp_summary = {k: v for k, v in (exp or {}).items() if k not in ('scenes',)}; exp_summary['scenes_n'] = None if not exp or exp.get('scenes') is None else len(exp['scenes'])
+    exp_summary['scenes_first_last'] = None if not exp or not exp.get('scenes') else [exp['scenes'][0], exp['scenes'][-1]]
+    (out / 'gate_report.json').write_text(json.dumps({'expected': exp_summary, 'problems': gate, 'pass': not gate}, indent=1), encoding='utf-8')
+    man = {'what': 'C1 mechanism decomposition on stored records (no simulation, no rendering, no rollout)', 'created_utc': datetime.now(timezone.utc).isoformat(), 'python': platform.python_version(), 'numpy': np.__version__,
+           'source_kind': kind, 'is_research_result': kind == 'C1_ORIGINAL', 'run': root.name, 'expected': exp_summary, 'frozen_plan_sha256': FROZEN,
+           'code_sha256': {f: M.sha256(repo / f) for f in CODE_FILES if (repo / f).exists()}, 'settings': {k: getattr(M, k) for k in ('MOVE_MIN_M', 'PUSH_MIN_M', 'NA_NORM_M', 'RESIDUAL_TOL_M', 'TARGET_CAP_M', 'STEP_CMD_M', 'MAX_STEPS')}}
+    if gate:
+        incomplete_marker(out, gate); man.update(stage_failed='expected-set gate', problems=gate, status='INCOMPLETE'); return finish(out, man, {'rows': 0})
+    problems = []; allrows, fun, events, mem, hold, s6rows_all, cases = [], [], [], [], [], [], []; res_all = {}; s = {}; s6 = {}
+    stage_of = lambda pid: f'C1_{pid}'
+    for pid in exp['policies']:
+        run = M.Run(root, kind, root.name, {stage_of(pid): f'pass_{pid}'}, pid); res = M.analyse_run(run); res_all[pid] = res
+        problems += M.check_keys(res['rows']) + [f'{r["branch"]}: {p}' for r in res['rows'] for p in M.check_time_order(r) + M.check_integrity(r)]
+        problems += [f"{e['status']}: {e}" for e in res['errors']]
+        problems += [f"{e['branch']} {e['event']} at row {e['t']}: pose missing" for e in res['events'] if e['t'] is not None and e.get('pose_missing')]
+        f = M.funnel(res['rows'], list(exp['arms'])); problems += M.check_funnel(f); fun += f; allrows += res['rows']; events += res['events']; mem += res['memory']; hold += res['hold']
+        s[pid] = summaries(res, [], arms=[x for x in exp['arms'] if x != M.REF])
+        if exp['spatial_fields']:
+            items = [(rec, run.trace(st, rec)[0]) for st, _, rec in run.scenes() if isinstance(rec, dict) and M.UNREADABLE not in rec and rec.get('scene') in {r['scene'] for r in res['rows']}]
+            rows6 = S6.collect_c1(items); s6[pid] = {**S6.summarise(rows6, excluded=S6.collect_c1.excluded), 'source_kind': kind, 'policy': pid}
+            if not rows6 or s6[pid]['official_S6']['status'] == 'NOT_OBSERVABLE': problems.append(f"S6_NOT_OBSERVABLE for {pid}: spatial fields were expected ({s6[pid]['official_S6']['excluded']})")
+            ex = S6.collect_c1.excluded
+            if ex['rows_without_contacts_or_link_poses'] or ex['scenes_without_collision_geometry']: problems.append(f'SPATIAL_FIELDS_MISSING for {pid}: {ex} (every C1 row is planned to carry them)')
+            s6rows_all += [{**x, 'policy': pid} for x in rows6]
+        else: s6[pid] = {'official_S6': {'status': 'NOT_EXPECTED', 'why': 'the MOCK manifest declares no spatial fields'}, 'source_kind': kind, 'policy': pid}
+        for scene, why in select_cases(res['rows'], fixed=()).items():
+            recp = root / f'pass_{pid}' / 'scenes' / f'{scene}.json'; rec = M.read_json(recp); frp = root / f'pass_{pid}' / str(rec.get('frames'))
+            st = 'INDEXED' if rec.get('frames') and frp.is_file() and M.sha256(frp) == rec.get('frames_sha256') else 'FRAMES_NOT_RECORDED_OR_CHANGED'
+            if st != 'INDEXED': problems.append(f'CASE_FRAMES_MISSING {pid} {scene}')      # both kinds (review f3)
+            cases.append({'source_kind': kind, 'policy': pid, 'scene': scene, 'why': why, 'status': st, 'record': rel(recp, root), 'record_sha256': M.sha256(recp), 'trace': f"pass_{pid}/{rec.get('trace')}", 'trace_sha256': rec.get('trace_sha256'),
+                          'frames': f"pass_{pid}/{rec.get('frames')}" if rec.get('frames') else None, 'frames_sha256': rec.get('frames_sha256'), 'rule': 'select_cases (fixed before the run): first scene per rule, lowest seed'})
+    problems += G.row_coverage(allrows, exp, stage_of)
+    fun = [{**x, 'source_kind': kind} for x in fun]
+    ref = {}
+    if exp.get('collector_result'):
+        cr = M.read_json(root / exp['collector_result'])
+        if cr.get('plan_sha256') != exp['record_plan_sha256']: problems.append(f"COLLECTOR_RESULT_OTHER_PLAN: {cr.get('plan_sha256')!r}")      # both kinds (review f2)
+        for pid in exp['policies']:
+            for arm, v in (((cr.get('per_policy') or {}).get(pid) or {}).get('against_C0') or {}).items(): ref[(stage_of(pid), pid, arm)] = v
+            problems += [f'CROSSCHECK_MISSING {pid} {arm}: the collector summary has no paired counts for it' for arm in exp['arms'] if arm != M.REF and (stage_of(pid), pid, arm) not in ref]
+        cc_rows, cc_p = G.crosscheck(fun, ref); problems += cc_p
+    else: cc_rows = [{'note': 'CROSSCHECK_NOT_AVAILABLE: the MOCK manifest names no collector summary'}]
+    (out / 'tables').mkdir()
+    M.write_csv(out / 'scene_arm_summary.csv', allrows); M.write_csv(out / 'opportunity_funnel.csv', fun); M.write_csv(out / 'event_table.csv', events)
+    M.write_csv(out / 'tables' / 'target_estimate_and_memory_decomposition.csv', mem); M.write_csv(out / 'tables' / 'held_estimate_decomposition.csv', hold)
+    abl = M.executed_ablation_table(allrows); M.write_csv(out / 'tables' / 'executed_ablation_chain.csv', abl)
+    M.write_csv(out / 'tables' / 'denominator_check.csv', denominator_check(fun)); M.write_csv(out / 'tables' / 'crosscheck_against_collector_summary.csv', cc_rows)
+    (out / 'tables' / 's6_validity_summary.json').write_text(json.dumps(s6, indent=1, default=str), encoding='utf-8')
+    if s6rows_all:
+        import csv
+        with gzip.open(out / 'tables' / 's6_pair_rows.csv.gz', 'wt', encoding='utf-8', newline='') as g:
+            cols = sorted({k for r in s6rows_all for k in r}); w = csv.DictWriter(g, fieldnames=cols); w.writeheader(); [w.writerow({k: ('' if r.get(k) is None else r[k]) for k in cols}) for r in s6rows_all]
+    M.write_csv(out / 'case_index.csv', cases)
     paired = {}
     for r in allrows: paired.setdefault((r['scene'], r['arm']), {})[r['policy']] = r.get('outcome_vs_c0')
-    M.write_csv(out / 'policy_paired_outcomes.csv', [{'source_kind': kind, 'scene': s, 'arm': arm, 'train_seed_1': v.get('train_seed_1'), 'train_seed_2': v.get('train_seed_2'), 'note': 'scene-paired; the 200 shared scenes are not 400 independent samples'} for (s, arm), v in sorted(paired.items())])
-    man = {'source_kind': kind, 'is_research_result': kind == 'C1_ORIGINAL', 'run': str(root.name), 'plan_sha256': a.c1_plan_sha256, 'problems': problems, 'status': 'COMPLETE' if not problems else 'INCOMPLETE',
-           'outputs': {p.relative_to(out).as_posix(): M.sha256(p) for p in sorted(out.rglob('*')) if p.is_file()}}
-    (out / 'analysis_manifest.json').write_text(json.dumps(man, indent=1), encoding='utf-8')
-    print(json.dumps({'status': man['status'], 'problems': problems[:10], 'rows': len(allrows)}, indent=1))
-    if man['status'] != 'COMPLETE': raise SystemExit(3)
+    M.write_csv(out / 'policy_paired_outcomes.csv', [{'source_kind': kind, 'scene': sc, 'arm': arm, **{pid: v.get(pid) for pid in exp['policies']}, 'note': 'scene-paired; shared scenes are not independent samples across policies'} for (sc, arm), v in sorted(paired.items())])
+    (out / 'metric_dictionary.json').write_text((HERE / 'metric_dictionary.json').read_text(encoding='utf-8'), encoding='utf-8')
+    results = {'source_kind': kind, 'policies': exp['policies'], 'arms': exp['arms'], 'funnel': fun, 'denominator_check': denominator_check(fun), 'summaries': s, 'executed_ablation': abl, 's6': s6, 'cases': cases,
+               'crosscheck': cc_rows, 'problems': problems, 'errors': {pid: r['errors'] for pid, r in res_all.items()}}
+    (out / 'results.json').write_text(json.dumps(results, indent=1, default=str), encoding='utf-8')
+    after = hashes(inputs)
+    if after != before: problems.append('INPUT_CHANGED: an input file changed during the analysis')
+    man.update(inputs={'files': len(inputs), 'input_sha256_unchanged': after == before})
+    if problems:
+        incomplete_marker(out, problems); man.update(stage_failed='analysis', problems=problems, status='INCOMPLETE'); return finish(out, man, {'rows': len(allrows)})
+    M.write_csv(out / 'claims_to_evidence.csv', R.claims_c1(results)); R.write_c1_report(out, results)
+    missing = [p for p in C1_REQUIRED if not (out / p).is_file()]
+    man.update(required_outputs={p: (out / p).is_file() for p in C1_REQUIRED}, problems=[f'REQUIRED_OUTPUT_MISSING: {p}' for p in missing], status='ANALYSIS_COMPLETE' if not missing else 'INCOMPLETE')
+    if missing: incomplete_marker(out, man['problems'])
+    finish(out, man, {'rows': len(allrows), 'cases': len(cases), 's6_pairs': len(s6rows_all)})
 
 
 def main():
     p = argparse.ArgumentParser(); s = p.add_subparsers(dest='cmd', required=True)
     q = s.add_parser('existing'); q.add_argument('--phase-b', default='runs/vision_center_v2_001/server_backup/extracted/runs/vision_center_v2_001')
     q.add_argument('--offline', default='results/vision_center_v2_c1_001/preparation/offline_replay_r4.json'); q.add_argument('--replay', required=True)
-    q.add_argument('--c1-plan', default='results/vision_center_v2_c1_001/preparation_v3/plan.json'); q.add_argument('--c1-plan-sha256', default='6b3f04fea1ea5346d6f0725b6e49ae9ce04c4fb132f37450243a807024e5dbf7'); q.add_argument('--out', required=True)
+    q.add_argument('--c1-plan', default='results/vision_center_v2_c1_001/preparation_v3/plan.json'); q.add_argument('--out', required=True)
     q = s.add_parser('c1'); q.add_argument('--run', required=True); q.add_argument('--out', required=True); q.add_argument('--source-kind', default='C1_ORIGINAL', choices=['C1_ORIGINAL', 'MOCK'])
-    q.add_argument('--c1-plan-sha256', default='6b3f04fea1ea5346d6f0725b6e49ae9ce04c4fb132f37450243a807024e5dbf7')
+    q.add_argument('--plan', default=str(HERE.parent / 'results/vision_center_v2_c1_001/preparation_v3/plan.json'), help='C1_ORIGINAL: the frozen plan FILE; its own sha256 must equal the frozen hash in completeness.FROZEN_PLAN_SHA256 (not settable from the CLI)')
+    q.add_argument('--expected', help='MOCK only: a MOCK_EXPECTED_MANIFEST json (policies, scenes, arms, record_plan_sha256)')
     a = p.parse_args(); {'existing': existing, 'c1': c1}[a.cmd](a)
 
 

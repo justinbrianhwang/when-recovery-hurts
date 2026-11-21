@@ -70,6 +70,12 @@ def ratio(n, d): return None if not d else n / d
 
 
 # ---------------------------------------------------------------- loading
+class TraceError(ValueError):
+    """A trace that is missing or whose bytes differ from the record's trace_sha256. The scene is never analysed; the run
+    is INCOMPLETE (review F2: recorded with its status instead of an uncaught traceback)."""
+    def __init__(self, status, msg): super().__init__(msg); self.status = status
+
+
 class Run:
     """One stored run folder: <root>/<stage>/scenes/*.json with traces/ and frames/ beside them."""
 
@@ -88,7 +94,8 @@ class Run:
 
     def trace(self, stage, rec):
         p = self.root / self.stages[stage] / rec['trace']
-        if sha256(p) != rec['trace_sha256']: raise ValueError(f'trace sha mismatch: {p}')
+        if not p.is_file(): raise TraceError('TRACE_MISSING', f'trace missing: {p}')
+        if sha256(p) != rec['trace_sha256']: raise TraceError('TRACE_SHA_MISMATCH', f'trace sha mismatch: {p}')
         return read_json(p)['traces'], p
 
 
@@ -341,8 +348,9 @@ def analyse_run(run, offline=None):
             if not isinstance(rec.get('arms'), list): raise TypeError('the record has no arms list (review m10)')
             if sorted(map(str, rec['arms'])) != sorted(map(str, got)): raise ValueError(f'arm cells {got} differ from the record arms {rec["arms"]}')      # review m9: no branch silently absent
             tr, _ = run.trace(stage, rec)
+        except TraceError as e:                                                        # a changed or absent input is never used; the run is INCOMPLETE
+            errors.append({'stage': stage, 'scene': scene_id, 'file': f.name, 'status': e.status, 'error': str(e)}); continue
         except BAD as e:
-            if 'trace sha mismatch' in str(e): raise                                   # a changed input is never tolerated
             errors.append({'stage': stage, 'scene': scene_id, 'file': f.name, 'status': 'MALFORMED_RECORD', 'error': repr(e)}); continue
         for i, cell in enumerate(rec['cells']):
             arm = cell.get('arm') if isinstance(cell, dict) else None
@@ -413,19 +421,24 @@ def funnel(rows, arms):
             tri = [r for r in a if r['triggered']]; act = [r for r in tri if r['decision'] == 'ACT']
             ctl = [r for r in act if r['control_steps'] > 0]; mov = [r for r in ctl if r['moved']]
             abst = [r for r in tri if not r['acted']]; err = [r for r in a if not r['completed']]
-            stop0 = [r for r in act if r['control_steps'] == 0]
-            c0 = {r['scene']: r['y_c0'] for r in a}
-            missing = [r for r in tri if r['y_arm'] is None or r['y_c0'] is None]
-            c0s = [r for r in tri if r['y_c0'] == 1 and r['y_arm'] is not None]; c0f = [r for r in tri if r['y_c0'] == 0 and r['y_arm'] is not None]
-            harm = [r for r in c0s if r['outcome_vs_c0'] == 'HARM']; rescue = [r for r in c0f if r['outcome_vs_c0'] == 'RESCUE']
-            harm_act = [r for r in c0s if r['moved'] and r['outcome_vs_c0'] == 'HARM']; c0s_act = [r for r in c0s if r['moved']]
-            orr = [r for r in tri if r['oracle_rescue_scene'] and r['y_arm'] is not None]; orr_v = [r for r in orr if r['y_arm'] == 1]
+            stop0 = [r for r in act if r['control_steps'] == 0]; untr = [r for r in a if not r['triggered']]
+            # review F1: three scopes, never mixed. OVERALL = every scene of the arm with both outcomes recorded (triggered or not);
+            # TRIGGERED = the triggered subset only; MOVED = C0 successes in which the arm actually moved. A missing outcome is a
+            # completeness error (never 0, never a failure) and is excluded from every scope.
+            complete = [r for r in a if r['y_arm'] is not None and r['y_c0'] is not None]; missing = [r for r in a if r['y_arm'] is None or r['y_c0'] is None]
+            scope = lambda rs: ([r for r in rs if r['y_c0'] == 1], [r for r in rs if r['y_c0'] == 0])
+            c0s_all, c0f_all = scope(complete); c0s, c0f = scope([r for r in complete if r['triggered']]); c0s_nt, c0f_nt = scope([r for r in complete if not r['triggered']])
+            H = lambda rs: [r for r in rs if r['outcome_vs_c0'] == 'HARM']; R = lambda rs: [r for r in rs if r['outcome_vs_c0'] == 'RESCUE']
+            harm_all, rescue_all = H(c0s_all), R(c0f_all); harm, rescue = H(c0s), R(c0f)
+            c0s_act = [r for r in c0s if r['moved']]; harm_act = H(c0s_act)
+            orr = [r for r in complete if r['oracle_rescue_scene']]; orr_v = [r for r in orr if r['y_arm'] == 1]
             def add(step, num, den, ids, parent=None, note=''):
                 out.append({'run': run_id, 'stage': stage, 'policy': policy, 'arm': arm, 'step': step, 'numerator': len(num) if isinstance(num, list) else num,
                             'denominator': den, 'fraction': ratio(len(num) if isinstance(num, list) else num, den), 'parent_step': parent,
                             'scenes': ' '.join(str(s) for s in sorted(ids)), 'note': note})
             add('scenes', a, len(scenes), [r['scene'] for r in a])
             add('triggered', tri, len(a), [r['scene'] for r in tri], 'scenes')
+            add('not_triggered', untr, len(a), [r['scene'] for r in untr], 'scenes', 'the arm never ran its controller (no trigger); kept in every OVERALL count')
             add('decision_ACT', act, len(tri), [r['scene'] for r in act], 'triggered')
             add('control_steps_executed', ctl, len(act), [r['scene'] for r in ctl], 'decision_ACT')
             add('actual_movement', mov, len(ctl), [r['scene'] for r in mov], 'control_steps_executed', f'TCP XY net displacement >= {MOVE_MIN_M} m')
@@ -435,23 +448,39 @@ def funnel(rows, arms):
                 add('oracle_within_tolerance_at_start', wt, len(tri), [r['scene'] for r in wt], 'triggered', 'engaged, zero control steps: already within its tolerance')
                 oz = [r for r in tri if str(r['decision']).startswith('ORACLE_ZERO_STEPS:')]
                 add('oracle_zero_steps_other_end_reason', oz, len(tri), [r['scene'] for r in oz], 'triggered', 'engaged, zero control steps, end reason other than within_tolerance (see decision)')
-            add('abstained_or_no_action', abst, len(tri), [r['scene'] for r in abst], 'triggered')
+            add('abstained_or_no_action', abst, len(tri), [r['scene'] for r in abst], 'triggered', 'triggered, then abstained (not the same as not_triggered); kept in every OVERALL count')
             add('technical_error_or_incomplete', err, len(a), [r['scene'] for r in err], 'scenes')
-            add('outcome_missing_excluded_from_outcome_rates', missing, len(tri), [r['scene'] for r in missing], 'triggered', 'never counted as success, harm-free or zero; any > 0 makes the analysis INCOMPLETE')
+            add('outcome_missing_completeness_error', missing, len(a), [r['scene'] for r in missing], 'scenes', 'arm or C0 outcome absent: never counted as success, failure, harm-free or zero; any > 0 makes the analysis INCOMPLETE')
+            # OVERALL (all scenes with a complete paired outcome); the denominators of the overall performance
+            ok = [r for r in complete if r['y_arm'] == 1]
+            add('overall_scenes_with_complete_outcomes', complete, len(a), [r['scene'] for r in complete], 'scenes')
+            add('overall_success', ok, len(complete), [r['scene'] for r in ok], 'overall_scenes_with_complete_outcomes', 'all scenes, triggered or not')
+            add('overall_c0_success', c0s_all, len(complete), [r['scene'] for r in c0s_all], 'overall_scenes_with_complete_outcomes')
+            add('overall_c0_failure', c0f_all, len(complete), [r['scene'] for r in c0f_all], 'overall_scenes_with_complete_outcomes')
             if arm != REF:
-                add('harm_of_all_c0_success', harm, len(c0s), [r['scene'] for r in harm], 'triggered')
-                add('harm_of_c0_success_with_movement', harm_act, len(c0s_act), [r['scene'] for r in harm_act], 'triggered')
-                add('c0_success_protected_by_abstention', [r for r in c0s if not r['acted'] and r['y_arm'] == 1], len(c0s), [r['scene'] for r in c0s if not r['acted'] and r['y_arm'] == 1], 'triggered')
-                add('c0_success_kept_with_movement', [r for r in c0s_act if r['y_arm'] == 1], len(c0s_act), [r['scene'] for r in c0s_act if r['y_arm'] == 1], 'triggered')
-                add('rescue_of_all_c0_failure', rescue, len(c0f), [r['scene'] for r in rescue], 'triggered')
+                add('overall_harm_of_c0_success', harm_all, len(c0s_all), [r['scene'] for r in harm_all], 'overall_c0_success', 'OVERALL: denominator = every C0 success, triggered or not')
+                add('overall_rescue_of_c0_failure', rescue_all, len(c0f_all), [r['scene'] for r in rescue_all], 'overall_c0_failure', 'OVERALL: denominator = every C0 failure, triggered or not')
+                add('overall_net_rescue_minus_harm', len(rescue_all) - len(harm_all), len(complete), [], 'overall_scenes_with_complete_outcomes', 'numerator = rescues - harms (may be negative); fraction = net per scene')
+                # NOT TRIGGERED: the arm equals C0 by construction; any difference is shown, never dropped
+                add('not_triggered_harm_of_c0_success', H(c0s_nt), len(c0s_nt), [r['scene'] for r in H(c0s_nt)], 'overall_c0_success', 'not triggered: the arm did not run')
+                add('not_triggered_rescue_of_c0_failure', R(c0f_nt), len(c0f_nt), [r['scene'] for r in R(c0f_nt)], 'overall_c0_failure', 'not triggered: the arm did not run')
+                # TRIGGERED-CONDITIONAL (labelled as such)
+                add('triggered_harm_of_c0_success', harm, len(c0s), [r['scene'] for r in harm], 'triggered', 'CONDITIONAL on the trigger: denominator = C0 successes among triggered scenes')
+                add('triggered_rescue_of_c0_failure', rescue, len(c0f), [r['scene'] for r in rescue], 'triggered', 'CONDITIONAL on the trigger: denominator = C0 failures among triggered scenes')
+                kept_abs = [r for r in c0s if not r['acted'] and r['y_arm'] == 1]
+                add('triggered_c0_success_kept_by_abstention', kept_abs, len(c0s), [r['scene'] for r in kept_abs], 'triggered', 'CONDITIONAL on the trigger; abstention is not a safety pass')
+                # MOVED-CONDITIONAL: C0 successes in which this arm actually moved (TCP XY >= MOVE_MIN_M)
+                kept_mv = [r for r in c0s_act if r['y_arm'] == 1]
+                add('moved_harm_of_c0_success_where_arm_moved', harm_act, len(c0s_act), [r['scene'] for r in harm_act], 'triggered', f'CONDITIONAL on actual movement (TCP XY >= {MOVE_MIN_M} m): denominator = C0 successes in which the arm moved')
+                add('moved_c0_success_kept_where_arm_moved', kept_mv, len(c0s_act), [r['scene'] for r in kept_mv], 'triggered', 'CONDITIONAL on actual movement')
                 if any(r['y_oracle'] is not None for r in a):
-                    add('oracle_rescue_also_rescued', orr_v, len(orr), [r['scene'] for r in orr_v], 'triggered', 'oracle is not an upper bound of all recoveries')
-                    vis_not_oracle = [r for r in tri if r['y_c0'] == 0 and r['y_arm'] == 1 and r['y_oracle'] == 0]
-                    add('rescued_where_oracle_failed', vis_not_oracle, len(c0f), [r['scene'] for r in vis_not_oracle], 'triggered')
+                    add('oracle_rescue_also_rescued', orr_v, len(orr), [r['scene'] for r in orr_v], 'overall_c0_failure', 'all scenes where C0 failed and the oracle succeeded; the oracle is one reference controller, not an upper bound of all recoveries')
+                    vis_not_oracle = [r for r in complete if r['y_c0'] == 0 and r['y_arm'] == 1 and r['y_oracle'] == 0]
+                    add('overall_rescued_where_oracle_failed', vis_not_oracle, len(c0f_all), [r['scene'] for r in vis_not_oracle], 'overall_c0_failure')
                     miss = [r for r in orr if r['y_arm'] == 0]; cnt = Counter(r['miss_class'] for r in miss)
                     for m in MISS_ORDER: add(f'oracle_rescue_missed:{m}', [r for r in miss if r['miss_class'] == m], len(miss), [r['scene'] for r in miss if r['miss_class'] == m], 'oracle_rescue_missed')
                     assert sum(cnt.values()) == len(miss)
-                    add('oracle_rescue_missed', miss, len(orr), [r['scene'] for r in miss], 'triggered')
+                    add('oracle_rescue_missed', miss, len(orr), [r['scene'] for r in miss], 'overall_c0_failure')
     return out
 
 
@@ -460,14 +489,26 @@ def check_funnel(f):
     p = []
     for r in f:
         if r['denominator'] is not None and r['numerator'] > r['denominator']: p.append(f'numerator above denominator: {r}')
-        if r['step'] == 'outcome_missing_excluded_from_outcome_rates' and r['numerator']: p.append(f"outcomes missing for {r['arm']} in {r['stage']}: {r['scenes']}")
-    by = group(f, ('run', 'stage', 'policy', 'arm'))
+        if r['step'] == 'outcome_missing_completeness_error' and r['numerator']: p.append(f"outcomes missing for {r['arm']} in {r['stage']}: {r['scenes']}")
+    by = group(f, ('run', 'stage', 'policy', 'arm')); ref = {k[:3]: {r['step']: r for r in g} for k, g in by.items() if k[3] == REF}
     for k, g in by.items():
-        d = {r['step']: r for r in g}
+        d = {r['step']: r for r in g}; n = lambda s: d[s]['numerator']
         if 'triggered' in d and 'decision_ACT' in d and 'abstained_or_no_action' in d and d['decision_ACT']['numerator'] + d['abstained_or_no_action']['numerator'] != d['triggered']['numerator']:
             if k[3] not in (ORACLE, REF): p.append(f'ACT + abstain != triggered at {k}')
         miss = [r for r in g if r['step'].startswith('oracle_rescue_missed:')]
         if miss and sum(r['numerator'] for r in miss) != d['oracle_rescue_missed']['numerator']: p.append(f'miss classes do not sum at {k}')
+        # review F1 identities
+        if 'not_triggered' in d and n('triggered') + n('not_triggered') != n('scenes'): p.append(f'triggered + not_triggered != scenes at {k}')
+        if 'overall_c0_success' in d and n('overall_c0_success') + n('overall_c0_failure') != n('overall_scenes_with_complete_outcomes'): p.append(f'C0 success + failure != complete scenes at {k}')
+        if 'overall_harm_of_c0_success' in d:
+            if n('overall_harm_of_c0_success') != n('triggered_harm_of_c0_success') + n('not_triggered_harm_of_c0_success'): p.append(f'overall harm != triggered + not-triggered harm at {k}')
+            if n('overall_rescue_of_c0_failure') != n('triggered_rescue_of_c0_failure') + n('not_triggered_rescue_of_c0_failure'): p.append(f'overall rescue != triggered + not-triggered rescue at {k}')
+            if n('overall_success') != n('overall_c0_success') + n('overall_rescue_of_c0_failure') - n('overall_harm_of_c0_success'): p.append(f'success != C0 success + rescue - harm at {k}')
+            if n('overall_net_rescue_minus_harm') != n('overall_rescue_of_c0_failure') - n('overall_harm_of_c0_success'): p.append(f'net != rescue - harm at {k}')
+            r0 = ref.get(k[:3])
+            if r0 is None: p.append(f'no C0 rows for {k}')
+            elif (r0['overall_success']['numerator'], r0['overall_scenes_with_complete_outcomes']['numerator']) != (n('overall_c0_success'), n('overall_scenes_with_complete_outcomes')) and n('outcome_missing_completeness_error') == 0:
+                p.append(f'C0 success of {k} differs from the C0 arm itself')
     return p
 
 
@@ -512,6 +553,31 @@ def ablation_table(off):
                         'act_gained_vs_v2': sum(1 for r in s if r['v2_decision'] != 'ACT' and r['act']),
                         'command_motion_change': 'NOT_RUN', 'outcome_difference': 'NOT_RUN' if arm != 'VISION_CENTER_V1' else 'PHASE_B_ORIGINAL (v1 executed)', 'physical_side_effect_difference': 'NOT_RUN',
                         'source_kind': 'OFFLINE_DECISION_REPLAY'})
+    return out
+
+
+def executed_ablation_table(rows):
+    """C1 (review F3): the same decision-change columns as ablation_table, from EXECUTED arms, with the executed motion and
+    outcome beside them. Per policy and stage, triggered scenes only for the decision columns; outcomes over all scenes.
+    Paired by scene against VISION_CENTER_V2 of the same policy; a difference is a description, not a causal effect."""
+    out = []
+    for (run_id, stage, policy), grp in sorted(group(rows, ('run', 'stage', 'policy')).items()):
+        v2 = {r['scene']: r for r in grp if r['arm'] == 'VISION_CENTER_V2'}
+        for arm, what in ABLATION.items():
+            a = [r for r in grp if r['arm'] == arm and r['scene'] in v2]
+            if not a: continue
+            tri = [r for r in a if r['triggered']]; both = [r for r in a if r['y_arm'] is not None and v2[r['scene']]['y_arm'] is not None]
+            out.append({'run': run_id, 'stage': stage, 'policy': policy, 'arm': arm, 'removed_element': what, 'triggered_scenes': len(tri),
+                        'information_changed_target_src': sum(1 for r in tri if r['target_src'] != v2[r['scene']]['target_src']),
+                        'decision_changed': sum(1 for r in tri if r['decision'] != v2[r['scene']]['decision']),
+                        'act_lost_vs_v2': sum(1 for r in tri if v2[r['scene']]['decision'] == 'ACT' and r['decision'] != 'ACT'),
+                        'act_gained_vs_v2': sum(1 for r in tri if v2[r['scene']]['decision'] != 'ACT' and r['decision'] == 'ACT'),
+                        'moved': sum(1 for r in tri if r['moved']), 'v2_moved': sum(1 for r in tri if v2[r['scene']]['moved']),
+                        'target_moved_over_1mm': sum(1 for r in tri if r.get('target_moved')), 'v2_target_moved_over_1mm': sum(1 for r in tri if v2[r['scene']].get('target_moved')),
+                        'scenes_with_both_outcomes': len(both), 'success': sum(1 for r in both if r['y_arm'] == 1), 'v2_success': sum(1 for r in both if v2[r['scene']]['y_arm'] == 1),
+                        'success_only_this_arm': sum(1 for r in both if r['y_arm'] == 1 and v2[r['scene']]['y_arm'] == 0), 'success_only_v2': sum(1 for r in both if r['y_arm'] == 0 and v2[r['scene']]['y_arm'] == 1),
+                        'harm_vs_c0': sum(1 for r in a if r['outcome_vs_c0'] == 'HARM'), 'rescue_vs_c0': sum(1 for r in a if r['outcome_vs_c0'] == 'RESCUE'),
+                        'command_motion_change': 'EXECUTED (columns moved / v2_moved)', 'outcome_difference': 'EXECUTED (paired by scene; descriptive, not causal)', 'source_kind': grp[0]['source_kind']})
     return out
 
 

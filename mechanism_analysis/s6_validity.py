@@ -59,32 +59,50 @@ def phase_of(arm, t, trigger, K):
 
 
 def collect(replay_dir, records):
-    """records: {scene: phase-B record} for the control step counts. Returns one row per (scene, arm, t, shape pair)."""
+    """records: {scene: phase-B record} for the control step counts. Returns one row per (scene, arm, t, shape pair).
+    Layout of the stored local replay: <replay_dir>/traces/trace_<seed>.json.gz with seed, trigger_step and the collision
+    geometry in the trunk's initial row."""
     out = []; collect.excluded = {'rows_without_contacts_or_link_poses': 0, 'separated_pairs_not_reconstructed': 0}
     for f in sorted(Path(replay_dir, 'traces').glob('trace_*.json.gz')):
-        t = json.load(gzip.open(f, 'rt', encoding='utf-8')); seed = int(t['seed']); T = t.get('trigger_step'); tr = t['traces']
-        geo = tr['trunk'][0]['collision_geometry']; rec = records.get(seed) or {}
-        Ks = {c['arm']: int(c.get('control_steps') or 0) for c in rec.get('cells', [])}
-        for arm, rows in tr.items():
-            for r0, r1 in zip(rows, rows[1:]):
-                if arm != 'trunk' and T is not None and int(r1['t']) <= T: continue      # an arm trace repeats the trunk prefix up to the trigger: count it once (in the trunk)
-                if 'contacts' not in r1 or r1.get('link_pose') is None: collect.excluded['rows_without_contacts_or_link_poses'] += 1; continue
-                dt_c = float(r1['sim_timestep_s']) * float(r1['sim_substeps_per_control']); dt_s = float(r1['sim_timestep_s'])
-                m = SL.row_metrics(r1, geo)
-                collect.excluded['separated_pairs_not_reconstructed'] += sum(1 for s in m['contact_shape_pairs_not_reconstructed'] if s['physx_min_separation_m'] > 0)
-                for s in m['separation_vs_reconstruction']:
-                    if s['physx_min_separation_m'] <= 0: continue      # the S6 population: pairs PhysX reports separated
-                    n, sep = min_point(r1['contacts'], s['a'], s['shape_a'], s['b'], s['shape_b'])
-                    pa0, pa1, pb0, pb1 = body_pos(r0, s['a']), body_pos(r1, s['a']), body_pos(r0, s['b']), body_pos(r1, s['b'])
-                    vrel = None if any(x is None for x in (pa0, pa1, pb0, pb1)) else ((pa1 - pa0) - (pb1 - pb0)) / dt_c
-                    va = None if pa0 is None or pa1 is None else (pa1 - pa0) / dt_c
-                    out.append({'scene': seed, 'arm': arm, 't': int(r1['t']), 'phase': phase_of(arm, int(r1['t']), T, Ks.get(arm, 0)),
-                                'a': s['a'], 'shape_a': s['shape_a'], 'b': s['b'], 'shape_b': s['shape_b'], 'kind': SL.category(s['a'], s['b']),
-                                'physx_sep_m': s['physx_min_separation_m'], 'recon_m': s['reconstructed_m'], 'diff_m': s['physx_min_separation_m'] - s['reconstructed_m'],
-                                'normal': None if n is None else n.tolist(), 'normal_z_abs': None if n is None else abs(float(n[2])),
-                                'vrel_dot_n_mps': None if vrel is None or n is None else float(np.dot(vrel, n)), 'speed_rel_mps': None if vrel is None else float(np.linalg.norm(vrel)),
-                                'vrel_z_mps': None if vrel is None else float(vrel[2]), 'v_a_z_mps': None if va is None else float(va[2]),
-                                'ang_speed_a_rps': ang_speed(body_quat(r0, s['a']), body_quat(r1, s['a']), dt_c), 'dt_sub_s': dt_s, 'dt_control_s': dt_c})
+        t = json.load(gzip.open(f, 'rt', encoding='utf-8')); seed = int(t['seed']); tr = t['traces']
+        out += scene_rows(seed, t.get('trigger_step'), tr, tr['trunk'][0]['collision_geometry'], records.get(seed) or {}, collect.excluded)
+    return out
+
+
+def collect_c1(items):
+    """The same rows for C1 records (review F3): items = [(record, traces)] of one pass. The C1 collector stores the collision
+    geometry in record.initial_state (hci.spatial_probe); the trigger step comes from the record."""
+    out = []; collect_c1.excluded = {'rows_without_contacts_or_link_poses': 0, 'separated_pairs_not_reconstructed': 0, 'scenes_without_collision_geometry': 0}
+    for rec, tr in items:
+        geo = (rec.get('initial_state') or {}).get('collision_geometry') or (tr.get('trunk') or [{}])[0].get('collision_geometry')
+        if geo is None: collect_c1.excluded['scenes_without_collision_geometry'] += 1; continue
+        out += scene_rows(rec['scene'], rec['trigger']['step'] if rec.get('triggered') else None, tr, geo, rec, collect_c1.excluded)
+    return out
+
+
+def scene_rows(seed, T, tr, geo, rec, excluded):
+    out = []; Ks = {c['arm']: int(c.get('control_steps') or 0) for c in rec.get('cells', [])}
+    for arm, rows in tr.items():
+        for r0, r1 in zip(rows, rows[1:]):
+            if arm != 'trunk' and T is not None and int(r1['t']) <= T: continue      # an arm trace repeats the trunk prefix up to the trigger: count it once (in the trunk)
+            if 'contacts' not in r1 or r1.get('link_pose') is None: excluded['rows_without_contacts_or_link_poses'] += 1; continue
+            dt_c = float(r1['sim_timestep_s']) * float(r1['sim_substeps_per_control']); dt_s = float(r1['sim_timestep_s'])
+            m = SL.row_metrics(r1, geo)
+            excluded['separated_pairs_not_reconstructed'] += sum(1 for s in m['contact_shape_pairs_not_reconstructed'] if s['physx_min_separation_m'] > 0)
+            for s in m['separation_vs_reconstruction']:
+                if s['physx_min_separation_m'] <= 0: continue      # the S6 population: pairs PhysX reports separated
+                n, sep = min_point(r1['contacts'], s['a'], s['shape_a'], s['b'], s['shape_b'])
+                pa0, pa1, pb0, pb1 = body_pos(r0, s['a']), body_pos(r1, s['a']), body_pos(r0, s['b']), body_pos(r1, s['b'])
+                vrel = None if any(x is None for x in (pa0, pa1, pb0, pb1)) else ((pa1 - pa0) - (pb1 - pb0)) / dt_c
+                va = None if pa0 is None or pa1 is None else (pa1 - pa0) / dt_c
+                out.append({'scene': seed, 'arm': arm, 't': int(r1['t']), 'phase': phase_of(arm, int(r1['t']), T, Ks.get(arm, 0)),
+                            'a': s['a'], 'shape_a': s['shape_a'], 'b': s['b'], 'shape_b': s['shape_b'], 'kind': SL.category(s['a'], s['b']),
+                            'physx_sep_m': s['physx_min_separation_m'], 'recon_m': s['reconstructed_m'], 'diff_m': s['physx_min_separation_m'] - s['reconstructed_m'],
+                            'listed_in_contact_list': True, 'nonzero_impulse_recorded': s.get('observed'),      # listed pair vs a recorded nonzero impulse: kept apart
+                            'normal': None if n is None else n.tolist(), 'normal_z_abs': None if n is None else abs(float(n[2])),
+                            'vrel_dot_n_mps': None if vrel is None or n is None else float(np.dot(vrel, n)), 'speed_rel_mps': None if vrel is None else float(np.linalg.norm(vrel)),
+                            'vrel_z_mps': None if vrel is None else float(vrel[2]), 'v_a_z_mps': None if va is None else float(va[2]),
+                            'ang_speed_a_rps': ang_speed(body_quat(r0, s['a']), body_quat(r1, s['a']), dt_c), 'dt_sub_s': dt_s, 'dt_control_s': dt_c})
     return out
 
 
@@ -117,6 +135,9 @@ def summarise(rows, tol=SL.SEPARATION_TOL_M, excluded=None):
                             'note': 'unchanged; the explanatory fit below never changes it'},
             'abs_diff_mm': {'median': q(d, 50) * 1e3 if d else None, 'p90': q(d, 90) * 1e3 if d else None, 'p99': q(d, 99) * 1e3 if d else None, 'max': q(d, 100) * 1e3 if d else None},
             'signed_diff_mm_median': float(np.median(d)) * 1e3 if d else None,
+            'contact_list_vs_impulse': {'separated_pairs_listed_in_contact_list': len(rows), 'of_which_nonzero_impulse_recorded': int(sum(1 for r in rows if r.get('nonzero_impulse_recorded') is True)),
+                                        'of_which_impulse_flag_absent': int(sum(1 for r in rows if r.get('nonzero_impulse_recorded') is None)),
+                                        'note': 'a listed pair is a PhysX contact-list entry (proximity); a recorded nonzero impulse is an observed contact; the two are never merged'},
             'explanatory_fit_diff_vs_vreln_dtsub': {**f, 'pairs_without_velocity': len(rows) - len(ok),
                                                     'residual_abs_mm_after_fit': {'median': q(resid, 50) * 1e3 if resid else None, 'p99': q(resid, 99) * 1e3 if resid else None, 'max': q(resid, 100) * 1e3 if resid else None},
                                                     'residual_over_tol_after_fit': int(sum(abs(x) > tol for x in resid)), 'status': 'EXPLANATORY_ONLY'},
