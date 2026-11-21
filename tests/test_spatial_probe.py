@@ -280,7 +280,7 @@ def probe_check_rig(X34, tmp_path, monkeypatch, spatial):
 def test_probe_check_passes_saves_both_runs_and_is_required_before_the_audit(X34, tmp_path, monkeypatch):
     plan, run, h = probe_check_rig(X34, tmp_path, monkeypatch, mock_spatial(np.random.default_rng(3)))
     ns = argparse.Namespace(plan=str(plan), run=str(run), upstream='x', device='cpu')
-    X34.cmd_probe_check(ns); rep = json.loads((run / 'probe_check' / 'probe_check.json').read_text())
+    X34.cmd_probe_check(ns); rep = json.loads((run / 'probe_check' / 'probe_check.json').read_text(encoding='utf-8'))
     assert rep['pass'] and rep['status'] == 'OK' and rep['plan_sha256'] == h and [x['scene'] for x in rep['scenes']] == [7, 8] and rep['arm_runs_that_acted'] >= 1 and rep['tolerance'] == 'none: bitwise equality'
     assert all(x['global_rng_after_equal'] and x['record_equal_except_durations'] for x in rep['scenes']) and 'logging_time_overhead_fraction' in rep
     for name in ('earlier_logger', 'spatial_logger'): assert sorted(p.name for p in (run / 'probe_check' / name / 'scenes').iterdir()) == ['7.json', '8.json']
@@ -295,10 +295,10 @@ def test_probe_check_blocks_a_logger_with_a_side_effect(X34, tmp_path, monkeypat
     def drawing(rt, z): np.random.rand(); return mock_spatial()(rt, z)                     # consumes the global RNG
     plan, run, h = probe_check_rig(X34, tmp_path, monkeypatch, drawing); ns = argparse.Namespace(plan=str(plan), run=str(run), upstream='x', device='cpu')
     with pytest.raises(SystemExit): X34.cmd_probe_check(ns)
-    rep = json.loads((run / 'probe_check' / 'probe_check.json').read_text()); assert not rep['pass'] and rep['status'] == 'TECHNICAL_BLOCKED' and not rep['scenes'][0]['global_rng_after_equal']
+    rep = json.loads((run / 'probe_check' / 'probe_check.json').read_text(encoding='utf-8')); assert not rep['pass'] and rep['status'] == 'TECHNICAL_BLOCKED' and not rep['scenes'][0]['global_rng_after_equal']
     (tmp_path / 'b').mkdir(); plan2, run2, _ = probe_check_rig(X34, tmp_path / 'b', monkeypatch, lambda rt, z: _nudge(rt) or mock_spatial()(rt, z))
     with pytest.raises(SystemExit): X34.cmd_probe_check(argparse.Namespace(plan=str(plan2), run=str(run2), upstream='x', device='cpu'))
-    rep = json.loads((run2 / 'probe_check' / 'probe_check.json').read_text()); s0 = rep['scenes'][0]
+    rep = json.loads((run2 / 'probe_check' / 'probe_check.json').read_text(encoding='utf-8')); s0 = rep['scenes'][0]
     assert not rep['pass'] and rep['status'] == 'TECHNICAL_BLOCKED' and (s0.get('error_in') == 'spatial_logger' or not s0['earlier_trace_fields_equal'])
 
 
@@ -313,7 +313,7 @@ def test_review_a1_an_error_in_the_comparison_or_the_save_leaves_a_failure_recor
     def broken(*a, **k): raise OSError('disk full (injected by the test)')
     monkeypatch.setattr(X34.Z, 'save_scene', broken)
     with pytest.raises(SystemExit, match='PROBE CHECK FAILED'): X34.cmd_probe_check(argparse.Namespace(plan=str(plan), run=str(run), upstream='x', device='cpu'))
-    rep = json.loads((run / 'probe_check' / 'probe_check.json').read_text()); assert not rep['pass'] and rep['status'] == 'TECHNICAL_BLOCKED' and 'disk full' in rep['scenes'][-1]['error']
+    rep = json.loads((run / 'probe_check' / 'probe_check.json').read_text(encoding='utf-8')); assert not rep['pass'] and rep['status'] == 'TECHNICAL_BLOCKED' and 'disk full' in rep['scenes'][-1]['error']
     assert not X34.probe_check_passed(run, h)
 
 
@@ -353,4 +353,4 @@ def test_review_a4_an_error_while_writing_the_report_leaves_a_failure_record(X34
         return real(p, x)
     monkeypatch.setattr(X34, 'write_json', flaky)
     with pytest.raises(SystemExit, match='finalisation'): X34.cmd_probe_check(argparse.Namespace(plan=str(plan), run=str(run), upstream='x', device='cpu'))
-    rep = json.loads((run / 'probe_check' / 'probe_check.json').read_text()); assert rep['pass'] is False and 'cannot write' in rep['scenes'][-1]['error'] and not X34.probe_check_passed(run, h)
+    rep = json.loads((run / 'probe_check' / 'probe_check.json').read_text(encoding='utf-8')); assert rep['pass'] is False and 'cannot write' in rep['scenes'][-1]['error'] and not X34.probe_check_passed(run, h)
