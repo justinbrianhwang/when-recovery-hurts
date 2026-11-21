@@ -140,6 +140,41 @@ def test_f2_a_missing_trace_and_changed_frames_are_both_reported(tmp_path):
     assert any(p.startswith('FRAMES_SHA_MISMATCH') for p in man['problems'])                     # the two checks are independent (found by the final test run)
 
 
+@pytest.mark.parametrize('field, value, code', [('trace', 'traces/a\u0000b.json.gz', 'TRACE_PATH_INVALID'), ('frames', 'frames/\u0000', 'FRAMES_PATH_INVALID'),
+                                               ('trace', ['traces', 'x'], 'TRACE_PATH_INVALID'), ('frames', {'p': 1}, 'FRAMES_PATH_INVALID')])
+def test_f6_malformed_paths_are_recorded_not_raised(tmp_path, field, value, code):
+    run = two_pass(tmp_path); p = run / 'pass_train_seed_1' / 'scenes' / f'{SYN + 1}.json'; rec = json.loads(p.read_text(encoding='utf-8')); rec[field] = value; p.write_text(json.dumps(rec), encoding='utf-8')
+    r, man = run_c1(run, tmp_path / 'out', '--expected', str(mock_manifest(tmp_path, [SYN + 1, SYN + 2]))); blocked(r, man, tmp_path / 'out', code)
+
+
+def test_f6_one_record_with_both_trace_and_frames_changed_reports_both(tmp_path):
+    run = two_pass(tmp_path); d = run / 'pass_train_seed_2'; rec = json.loads((d / 'scenes' / f'{SYN + 1}.json').read_text(encoding='utf-8'))
+    (d / rec['trace']).write_bytes(gzip.compress(b'{"traces": {}}')); (d / rec['frames']).write_bytes(b'changed')
+    r, man = run_c1(run, tmp_path / 'out', '--expected', str(mock_manifest(tmp_path, [SYN + 1, SYN + 2]))); blocked(r, man, tmp_path / 'out', 'TRACE_SHA_MISMATCH')
+    same = [x for x in man['problems'] if f'pass_train_seed_2/{SYN + 1}.json' in x]
+    assert any(x.startswith('TRACE_SHA_MISMATCH') for x in same) and any(x.startswith('FRAMES_SHA_MISMATCH') for x in same)
+
+
+@pytest.mark.parametrize('where', ['resolve', 'is_file', 'sha256'])
+@pytest.mark.parametrize('exc', [ValueError('embedded null byte'), OSError(36, 'File name too long')])
+def test_f6_path_errors_are_caught_on_any_platform(tmp_path, monkeypatch, where, exc):
+    """Forces the exceptions Linux raises (embedded NUL, overlong names) on any OS, so Windows runs check the same branch."""
+    import completeness as G
+    (tmp_path / 'f.bin').write_bytes(b'x'); good = hashlib.sha256(b'x').hexdigest()
+    assert G.record_file_problem(tmp_path, 'f.bin', good, 'TRACE') is None                              # a normal input is unchanged
+    def boom(*a, **k): raise exc
+    if where == 'sha256': monkeypatch.setattr(G.M, 'sha256', boom)
+    else: monkeypatch.setattr(Path, where, boom)
+    assert G.record_file_problem(tmp_path, 'f.bin', good, 'FRAMES') == 'FRAMES_PATH_INVALID'
+
+
+def test_f6_record_file_problem_codes():
+    import completeness as G
+    base = Path(__file__).resolve().parent
+    assert [G.record_file_problem(base, v, None, 'TRACE') for v in (None, '', 'a\x00b', 5, '/abs/x', '../x', 'missing.gz')] == \
+           ['TRACE_MISSING', 'TRACE_MISSING', 'TRACE_PATH_INVALID', 'TRACE_PATH_INVALID', 'TRACE_OUTSIDE_RUN', 'TRACE_OUTSIDE_RUN', 'TRACE_MISSING']
+
+
 @pytest.mark.parametrize('kw, code', [({'scenes': [51100, 51101]}, 'MOCK_USES_RESEARCH_SEEDS'), ({'record_plan_sha256': FROZEN}, 'MOCK_USES_RESEARCH_PLAN'), ({'kind': 'C1_PLAN'}, 'MOCK_MANIFEST_INVALID'), ({'arms': ['C0', 'V2S']}, 'MOCK_MANIFEST_INVALID')])
 def test_f2_a_mock_manifest_cannot_borrow_research_seeds_or_the_plan(tmp_path, kw, code):
     run = two_pass(tmp_path); m = json.loads(mock_manifest(tmp_path, [SYN + 1, SYN + 2]).read_text(encoding='utf-8')); m.update(kw); p = tmp_path / 'm.json'; p.write_text(json.dumps(m), encoding='utf-8')

@@ -93,6 +93,22 @@ def expected_from_mock(path, repo, frozen_sha):
     return exp, p
 
 
+def record_file_problem(base, value, want_sha, kind):
+    """One file a record names (trace or frames), relative to its pass folder. Returns a problem code or None.
+    Order: <KIND>_MISSING (no entry), <KIND>_PATH_INVALID (not a string, a NUL character, or a ValueError / OSError /
+    TypeError while resolving, checking or hashing the path; review f6), <KIND>_OUTSIDE_RUN, <KIND>_MISSING (no file),
+    <KIND>_SHA_MISMATCH. Never raises for a malformed record."""
+    if not value: return f'{kind}_MISSING'
+    if not isinstance(value, str) or '\x00' in value: return f'{kind}_PATH_INVALID'
+    try:
+        if Path(value).is_absolute(): return f'{kind}_OUTSIDE_RUN'
+        q = Path(base) / value
+        if not q.resolve().is_relative_to(Path(base).resolve()): return f'{kind}_OUTSIDE_RUN'
+        if not q.is_file(): return f'{kind}_MISSING'
+        return f'{kind}_SHA_MISMATCH' if M.sha256(q) != want_sha else None
+    except (ValueError, OSError, TypeError): return f'{kind}_PATH_INVALID'
+
+
 def _short(xs, n=10): xs = sorted(xs, key=str); return f'{xs[:n]}{" ..." if len(xs) > n else ""} ({len(xs)})'
 
 
@@ -132,16 +148,9 @@ def check_run(root, exp, kind):
             if exp.get('role') is not None and rec.get('role') != exp['role']: p.append(f"WRONG_ROLE {where}: {rec.get('role')!r}")
             if exp['require_policy_id'] and rec.get('policy_id') != pid: p.append(f"WRONG_POLICY {where}: policy_id {rec.get('policy_id')!r}")
             if rec.get('plan_sha256') != exp['record_plan_sha256']: p.append(f"WRONG_PLAN_IN_RECORD {where}: {rec.get('plan_sha256')!r}")
-            tp = d.parent / str(rec.get('trace'))
-            inside = lambda q: q.resolve().is_relative_to(d.parent.resolve()) and not Path(str(rec.get('trace'))).is_absolute()
-            if rec.get('trace') and not inside(tp): p.append(f'TRACE_OUTSIDE_RUN {where}: {rec.get("trace")!r}')      # review f2: every input lies inside the hashed run folder
-            elif not rec.get('trace') or not tp.is_file(): p.append(f'TRACE_MISSING {where}')
-            elif M.sha256(tp) != rec.get('trace_sha256'): p.append(f'TRACE_SHA_MISMATCH {where}')
-            fp = rec.get('frames')
-            if not fp: p.append(f'FRAMES_MISSING {where}: no frames entry (the collector stores the frames of every scene)')
-            elif Path(str(fp)).is_absolute() or not (d.parent / str(fp)).resolve().is_relative_to(d.parent.resolve()): p.append(f'FRAMES_OUTSIDE_RUN {where}: {fp!r}')
-            elif not (d.parent / str(fp)).is_file(): p.append(f'FRAMES_MISSING {where}')
-            elif M.sha256(d.parent / str(fp)) != rec.get('frames_sha256'): p.append(f'FRAMES_SHA_MISMATCH {where}')      # review f3: both kinds
+            for kind_, key in (('TRACE', 'trace'), ('FRAMES', 'frames')):          # two independent checks (reviews f2, f3, f6)
+                q = record_file_problem(d.parent, rec.get(key), rec.get(f'{key}_sha256'), kind_)
+                if q: p.append(f'{q} {where}' + (f': {rec.get(key)!r}' if q.endswith(('_OUTSIDE_RUN', '_PATH_INVALID')) else ''))
         got_ids = set(seen); ids[pid] = got_ids
         if scenes - got_ids: p.append(f'MISSING_SCENES in pass_{pid}: {_short(scenes - got_ids)}')
         if got_ids - scenes: p.append(f'EXTRA_SCENES in pass_{pid}: {_short(got_ids - scenes)}')
