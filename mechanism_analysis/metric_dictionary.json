@@ -1,0 +1,50 @@
+{
+ "conventions": {
+  "trace_row_t": "state after t environment steps; row 0 is the record's initial_state; row t carries the action executed at step index t-1",
+  "offset": "target cube XY minus held cube XY (world frame, metres); the controllers' command direction",
+  "ground_truth": "POST-HOC GROUND TRUTH from the same run's trace; never an input of any arm",
+  "NA": "empty cell: denominator 0, a vector shorter than NA_NORM_M (1 mm), or the event did not occur (null_reason in event_table.csv)"
+ },
+ "metrics": {
+  "triggered": {"meaning": "the unchanged oracle-pilot trigger fired in the trunk", "unit": "bool", "function": "mechanism.branch_row", "fields": "record.triggered", "denominator": "scenes", "observability": "DIRECT"},
+  "decision": {"meaning": "the arm's recorded decision at the trigger (ACT or the first abstention reason in code order); oracle: ACT if it executed at least one control step, ORACLE_WITHIN_TOLERANCE_AT_START if it engaged with zero steps and the recorded end reason within_tolerance, ORACLE_ZERO_STEPS:<end_reason> for any other zero-step engagement", "unit": "label", "function": "mechanism.branch_row", "fields": "cell.control.decision, cell.acted, cell.control_steps, cell.control.end_reason", "denominator": "triggered", "observability": "DIRECT"},
+  "control_steps": {"meaning": "control actions executed by the arm (K)", "unit": "steps", "function": "mechanism.branch_row", "fields": "cell.control_steps", "denominator": "decision_ACT", "observability": "DIRECT"},
+  "moved": {"meaning": "ACT with TCP XY net displacement during control >= MOVE_MIN_M (1 mm)", "unit": "bool", "function": "mechanism.motion", "fields": "trace trunk row T and branch row T+K: tcp", "denominator": "control_steps_executed", "observability": "DIRECT (post-hoc GT)"},
+  "y_arm / y_c0 / y_oracle": {"meaning": "recorded task success of the branch / of C0 / of the oracle in the same run, stage, policy and scene", "unit": "0/1", "function": "mechanism.pair_rows", "fields": "cell.y", "denominator": "triggered", "observability": "DIRECT; only for executed arms. Decision-replay arms: NOT_RUN"},
+  "outcome_vs_c0": {"meaning": "RESCUE (C0 0, arm 1), HARM (C0 1, arm 0), BOTH_SUCCESS, BOTH_FAIL", "unit": "label", "function": "mechanism.outcome_class", "fields": "cell.y of C0 and of the arm", "denominator": "triggered", "observability": "DIRECT"},
+  "miss_class": {"meaning": "single label for a vision branch where C0 failed, the oracle succeeded and the arm failed: the first block in code order (mechanism.MISS_ORDER). Not the unique physical cause", "unit": "label", "function": "mechanism.classify_miss", "fields": "decision, abstain_why, memory_reason, target_fit, moved, offset_after_m", "denominator": "oracle_rescue_missed", "observability": "DIRECT for the label; the cause is a HYPOTHESIS"},
+  "miss_flags": {"meaning": "auxiliary flags that may overlap (estimate outside own bound, memory sources, target moved, push-assisted, offset grew before opening, ended during control)", "unit": "list", "function": "mechanism.miss_flags", "denominator": "oracle_rescue_missed", "observability": "DIRECT"},
+  "err_now_m": {"meaning": "|target estimate - true target| in XY at the trigger", "unit": "m", "function": "mechanism.memory_decomposition", "fields": "readings[0].target_xy, trunk row T cubeB", "denominator": "branches with a target estimate (coverage reported separately)", "observability": "DIRECT (post-hoc GT)"},
+  "err_at_store_m": {"meaning": "|stored (fused) memory value - true target at the memory's t_last|", "unit": "m", "function": "mechanism.memory_decomposition", "fields": "readings[0].memory_target.xy, .t_last, trunk row t_last cubeB", "denominator": "memory-sourced estimates", "observability": "DIRECT; the memory is a fused track, not a single frame"},
+  "target_move_since_store_m": {"meaning": "|true target at T - true target at t_last|", "unit": "m", "function": "mechanism.memory_decomposition", "denominator": "memory-sourced estimates", "observability": "DIRECT"},
+  "identity_residual_m": {"meaning": "|err_now - (err_at_store - move)| as vectors; must be ~0 (float rounding). Magnitudes do not add", "unit": "m", "function": "mechanism.memory_decomposition", "observability": "CHECK"},
+  "held_rel_tcp_change_since_fit_m": {"meaning": "change of the true held-cube XY position relative to the TCP between the last accepted hold fit (memory.hold_steps) and the trigger, world frame", "unit": "m", "function": "mechanism.hold_decomposition", "denominator": "branches with at least one hold fit before T", "observability": "DIRECT (post-hoc GT); world-frame approximation of the in-gripper shift"},
+  "cmd_path_m / cmd_net_m": {"meaning": "sum of |per-step commanded XY| / |sum of commanded XY| over the control steps", "unit": "m", "function": "mechanism.motion", "fields": "control.steps[].commanded_xy_m", "observability": "DIRECT"},
+  "cmd_target_from_start_m": {"meaning": "the controller's recorded target distance from the start of control at its last step (bounded by TARGET_CAP_M 3 cm)", "unit": "m", "function": "mechanism.motion", "observability": "DIRECT"},
+  "tcp_xy_net_m / tcp_xy_path_m": {"meaning": "actual TCP XY net displacement / path length over the control rows", "unit": "m", "function": "mechanism.motion", "observability": "DIRECT (post-hoc GT)"},
+  "held_xy_net_m / target_xy_net_m": {"meaning": "actual XY displacement of the held / target cube during control", "unit": "m", "function": "mechanism.motion", "observability": "DIRECT"},
+  "reduction_from_held_move_m / reduction_from_target_move_m": {"meaning": "projection of the held cube's displacement, and of minus the target's displacement, on the unit true offset at the start: the vector contributions of each cube to closing the offset", "unit": "m", "function": "mechanism.motion", "observability": "DIRECT; NA if the start offset is < 1 mm"},
+  "push_assisted": {"meaning": "reduction_from_target_move > 1 mm and >= half of the positive reduction: the alignment improved mostly because the target moved", "unit": "bool", "function": "mechanism.motion", "observability": "DIRECT; not a judgement of harm"},
+  "cos_cmd_vs_true_offset": {"meaning": "cosine between the net commanded XY and the true start offset", "unit": "1", "function": "mechanism.motion", "observability": "NA when either vector < 1 mm"},
+  "offset_before_m / offset_after_m": {"meaning": "true XY offset at row T and at row T+K", "unit": "m", "function": "mechanism.motion", "observability": "DIRECT"},
+  "offset_at_first_open_m": {"meaning": "true XY offset at the row before the first opening command (the state the opening command acted on)", "unit": "m", "function": "mechanism.branch_row", "observability": "DIRECT"},
+  "offset_at_release_m": {"meaning": "the recorded GT offset one row before the grasp flag went off", "unit": "m", "function": "hci.recovery_v1_oracle.release_reading (stored)", "observability": "DIRECT"},
+  "steps_control_end_to_open": {"meaning": "t_first_open - t_control_end", "unit": "steps", "function": "mechanism.branch_row", "observability": "DIRECT"},
+  "S6": {"meaning": "|PhysX min separation - reconstructed gap| <= 1 mm for every listed pair PhysX reports separated; official FAIL kept", "unit": "m", "function": "s6_validity.summarise (decomposition), hci.spatial_links.spatial_items (official)", "fields": "contacts[].points[9], link_pose, collision_geometry", "denominator": "separated listed shape-pair rows", "observability": "LOCAL_CPU_REPLAY only (Phase B records have no contact list)"},
+  "S6_explanatory_fit": {"meaning": "least-squares slope of diff on (v_rel . n) * dt_sub; EXPLANATORY_ONLY, never a correction of S6", "unit": "1", "function": "s6_validity.summarise", "observability": "velocity is a finite difference over the control step (approximation)"}
+ },
+ "interpretability": {
+  "decision counts, ACT, control steps, movement, outcome pairing (Phase B, executed arms)": "INTERPRETABLE",
+  "estimate error and coverage by source (Phase B)": "INTERPRETABLE",
+  "memory error vector decomposition": "INTERPRETABLE (fused memory as stored)",
+  "held-cube in-gripper shift": "LIMITED (world-frame XY relative to TCP; no hand-frame rotation correction)",
+  "command vs motion vs alignment, push assistance": "INTERPRETABLE",
+  "miss classification (first block in code order)": "LIMITED (a code-order label, not a physical cause)",
+  "contact type, clearances, swept volume": "LIMITED (LOCAL_CPU_REPLAY only; another host; last sub-step)",
+  "S5": "LIMITED (one-sided: recorded contacts are not reconstructed far apart; says nothing about penetration depth or non-contact distances)",
+  "S6 / PhysX separation as a distance": "NOT_VERIFIABLE_NOW (official FAIL; the time-offset explanation is partial)",
+  "sub-step contacts, continuous-time safety": "NOT_VERIFIABLE_NOW",
+  "decision-replay arms' outcomes and motions": "NOT_RUN",
+  "policy-seed generalisation": "NOT_VERIFIABLE_NOW (Phase B has train_seed_1 only)"
+ }
+}
