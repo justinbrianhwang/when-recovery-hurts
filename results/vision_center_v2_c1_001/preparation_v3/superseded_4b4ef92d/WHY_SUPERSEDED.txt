@@ -1,0 +1,4 @@
+Plan 4b4ef92d1829b3a311480d3ddeba5eff78ac99c711903820cf8367f1eb1da790 (made at commit d7a2624) is superseded and must not be approved:
+1. the final full test run on Windows failed 4 tests in tests/test_spatial_probe.py, a file this plan hashes: the tests read probe_check.json with the locale codec (cp949 on Windows) although the driver writes it as UTF-8 (hci.io.write_json); a non-ASCII temporary path made the read fail. Linux passed. The tests now read UTF-8 (review a22 NIT, a24 GO); the file's hash changed, so this plan no longer binds the tree;
+2. no code that runs on the server changed: driver, run.sh, src/hci/spatial_probe.py and every other hashed file except that test file are byte-identical.
+The plan was regenerated at a clean commit. Files kept unchanged here (the sha256 line in plan.json.sha256 still names the old path preparation_v3/plan.json).
