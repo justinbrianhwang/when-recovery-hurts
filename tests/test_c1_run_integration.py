@@ -8,10 +8,11 @@ check, error files), C1.collect_scene and Z.save_scene, cmd_summarize (check_run
 What is replaced, and only this:
   * LEDGER points into the test's temporary folder (the real artifacts/ledger is never touched; checked);
   * runtime_for returns the mock runtime of the other C1 tests (mock physics, synthetic renderer, scripted policy);
-  * X.gt_probe is the mock probe; C1.pilot_seeds returns synthetic seeds 7, 8, 9 (no C1 scene 51100-51299 is used);
+  * X.gt_probe and the driver's PROBE (the spatial logger) are the mock probe; C1.pilot_seeds returns synthetic seeds 7, 8, 9 (no C1 scene 51100-51299 is used);
   * bound() returns the test plan (a copy of plan_v2.json), the mock config and the nine arms; the real bound() is
     tested separately on the real plan;
-  * the placement check and the server audit (they need ManiSkill) are written by the test as passed gate files; the
+  * the placement check, the logging ON/OFF check and the server audit (they need ManiSkill and the policy) are written by
+    the test as passed gate files (the ON/OFF check itself is tested in tests/test_spatial_probe.py); the
     session clock and the budget gate are written by the real cmd_clock and cmd_budget.
 
 Linux only where SIGALRM is needed (signal.setitimer); elsewhere those tests are SKIPPED, never passed.
@@ -31,7 +32,7 @@ from hci import vision_center_c1 as C1
 LINUX = hasattr(signal, 'setitimer')
 needs_alarm = pytest.mark.skipif(not LINUX, reason='SIGALRM deadline needs signal.setitimer (Linux); not verified on this platform')
 SEEDS = [7, 8, 9]
-REAL_PLAN = Path('results/vision_center_v2_c1_001/preparation/plan_v2.json')
+REAL_PLAN = Path('results/vision_center_v2_c1_001/preparation_v3/plan.json')        # the current C1 plan (Option A: spatial logging); plan_v2.json (dd3af27e) is superseded
 REAL_LEDGER = Path('artifacts/ledger/vision_center_c1.json')
 REAL_RUN = Path('runs/vision_center_v2_c1_001')
 
@@ -60,7 +61,7 @@ def rig(X34, tmp_path, monkeypatch, request):
     ledger = tmp_path / 'artifacts' / 'ledger' / 'vision_center_c1.json'
     monkeypatch.setattr(X34, 'LEDGER', str(ledger)); monkeypatch.setattr(X34, 'bound', lambda p: (json.loads(Path(p).read_text(encoding='utf-8')), CFG, arms))
     monkeypatch.setattr(X34, 'runtime_for', lambda c, pid, a: Runtime(Env(), BiasPolicy((.028, .012) if pid == 'train_seed_1' else (-.028, .0)), CFG))
-    monkeypatch.setattr(X34.X, 'gt_probe', probe2); monkeypatch.setattr(C1, 'pilot_seeds', lambda manifest, used: list(rig.seeds))
+    monkeypatch.setattr(X34.X, 'gt_probe', probe2); monkeypatch.setattr(X34, 'PROBE', probe2); monkeypatch.setattr(C1, 'pilot_seeds', lambda manifest, used: list(rig.seeds))
     run = tmp_path / 'run'; run.mkdir(); events = []; real_collect = C1.collect_scene
 
     def collect(r, s, c, **kw):                                                   # calls the real collector; records where an exception left it
@@ -82,6 +83,7 @@ def rig(X34, tmp_path, monkeypatch, request):
         if seeds: rig.seeds = seeds
         (run / 'authorization.json').write_text(json.dumps({'approved_by': 'user', 'paid_compute_authorized': True, 'cap_usd': cap, 'plan_sha256': rig.h}))
         (run / 'scenes.json').write_text(json.dumps({'pass': True, 'plan_sha256': rig.h, 'note': 'written by the test: the placement check needs ManiSkill'}))
+        (run / 'probe_check').mkdir(); (run / 'probe_check' / 'probe_check.json').write_text(json.dumps({'pass': True, 'plan_sha256': rig.h, 'note': 'written by the test: the ON/OFF check needs the policy'}))
         (run / 'audit').mkdir(); (run / 'audit' / 'audit.json').write_text(json.dumps({'pass': True, 'plan_sha256': rig.h, 'arms': list(arms), 'seconds_per_env_step': 1e-6, 'seconds_per_reading': 1e-6, 'seconds_per_memory_step': 1e-6,
                                                                                     'note': 'written by the test: the server audit needs ManiSkill'}))
         X34.cmd_clock(ns(plan_path, run, usd_per_hour=usd_per_hour, spent_before_usd=0.)); X34.cmd_budget(ns(plan_path, run))
@@ -195,6 +197,22 @@ def test_9_an_ordinary_error_in_a_scene_fails_closed(X34, rig):
     assert not (rig.run / 'result.json').exists() and not (rig.run / 'budget_stop.json').exists()
     with pytest.raises(SystemExit, match='INCOMPLETE: error files'): X34.cmd_summarize(ns(rig.plan, rig.run, out=str(rig.run / 'result.json')))
     with pytest.raises(SystemExit, match='exists'): X34.cmd_run(ns(rig.plan, rig.run))
+
+
+@needs_alarm
+def test_a_logging_error_inside_a_scene_fails_the_run_closed(X34, rig, monkeypatch):
+    """The spatial logger raises during scene 8 (as hci.spatial_probe does for a shape it cannot read): the scene gets an
+    error file, no later scene starts, the run is INCOMPLETE and is not summarised; no row without the logged fields."""
+    rig.ready(seeds=[7, 8, 9]); state = {}
+    def flaky(rt, z):
+        if rt.episode == 8 and rt.t == 5: raise RuntimeError('probe_spatial: contact shape not found (injected by the test)')
+        return probe2(rt, z)
+    monkeypatch.setattr(X34, 'PROBE', flaky)
+    with pytest.raises(RuntimeError, match='contact shape not found'): X34.cmd_run(ns(rig.plan, rig.run))
+    out = rig.run / 'pass_train_seed_1'; err = json.loads((out / 'scenes' / '8.error.json').read_text())
+    assert err['completed'] is False and 'contact shape not found' in err['error'] and scenes_written(out) == [7] and not (out / 'traces' / 'trace_8.json.gz').exists()
+    assert [e[:2] for e in rig.events if e[0] != 'interrupted'] == [('start', 7), ('end', 7), ('start', 8)] and not (rig.run / 'pass_train_seed_2').exists() and not (rig.run / 'result.json').exists()
+    with pytest.raises(SystemExit, match='INCOMPLETE: error files'): X34.cmd_summarize(ns(rig.plan, rig.run, out=str(rig.run / 'result.json')))
 
 
 # ---------------------------------------------------------------- 8: a missing or wrong approval, a wrong plan

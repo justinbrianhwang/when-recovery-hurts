@@ -6,6 +6,9 @@ calibration, no Test. v1, v2 and the oracle are used unchanged.
   dry-run     local: files and volume; starts nothing
   clock       server, first: writes the session clock once (start time, hourly price, spend before this instance)
   scenes      server: cube placements of the 200 new seeds against every placement on record (no policy)
+  probe-check server: the 3 used audit scenes with train seed 1, every arm, once with the earlier logger (hci.recovery_v1
+              probe) and once with the spatial logger (hci.spatial_probe): record, decisions, actions, frames and every
+              earlier trace field must be bit-identical; measures the logging time. Logging only; decides nothing
   audit       server: 3 used selection scenes x both policies, every arm: technical checks and timing
   budget      server: worst-case projection of the whole run from the audit timing and the session clock
   run         server: ledger first, then the pass with train seed 1 and the pass with train seed 2. No resume.
@@ -23,6 +26,7 @@ from hci import vision_center_v2 as V2
 from hci import vision_center_c1 as C1
 from hci import vision_center_v2s as S
 from hci import recovery_v1_oracle as O
+from hci import spatial_probe as SP
 
 _spec = importlib.util.spec_from_file_location('vc2_driver', Path(__file__).with_name('33_vision_center_v2.py')); Z = importlib.util.module_from_spec(_spec); _spec.loader.exec_module(Z)
 X = Z.X; D = Z.D
@@ -40,12 +44,22 @@ UNCHANGED = ('src/hci/vision_center.py', 'src/hci/vision_center_v2.py', 'src/hci
 OFFLINE = 'results/vision_center_v2_c1_001/preparation/offline_replay_summary_r4.json'     # fourth replay: final code (recording change, Unix line endings); replays 1-3 are kept; all four have identical rows
 AUDIT_SEEDS = Z.AUDIT_SEEDS
 USED = {**Z.USED, 'vision_center_v2': Z.MANIFEST}
-CODE = sorted({*Z.CODE, 'src/hci/vision_center_c1.py', 'src/hci/vision_center_v2s.py', 'src/hci/trajectory_audit.py', 'tests/test_trajectory_audit.py', 'scripts/34_vision_center_c1.py', 'scripts/vision_center_c1/run.sh', MANIFEST, REGISTRY, Z.MANIFEST})
+CODE = sorted({*Z.CODE, 'src/hci/vision_center_c1.py', 'src/hci/vision_center_v2s.py', 'src/hci/trajectory_audit.py', 'tests/test_trajectory_audit.py', 'scripts/34_vision_center_c1.py', 'scripts/vision_center_c1/run.sh', MANIFEST, REGISTRY, Z.MANIFEST,
+               'src/hci/spatial_probe.py', 'tests/test_spatial_probe.py'})
+PROBE = SP.gt_probe_spatial                     # the logger of every C1 trace (Option A); the earlier logger X.gt_probe is used only by probe-check, for the comparison
+PROBE_CHECK_SEEDS = AUDIT_SEEDS                 # already used; train seed 1 only
+POSTHOC = ('scripts/36_c1_spatial_audit.py', 'src/hci/spatial_audit.py', 'src/hci/spatial_geometry.py', 'src/hci/spatial_figures.py', 'src/hci/spatial_links.py', 'scripts/37_c1_probe_sim_check.py', 'scripts/38_c1_spatial_audit_v2.py',
+           'assets/upstream_geometry/panda_hand_hull.json', 'assets/upstream_geometry/panda_hand_collision.stl')     # hashed in the plan for the record; not run on the server and not checked by `bound`
 SERVER_READS = sorted({*CODE, *Z.SERVER_READS, *(p['path'] + '/' + f for p in POLICIES.values() for f in ('weights.pt', 'policy_meta.json'))})
 LEDGER = 'artifacts/ledger/vision_center_c1.json'
 DRIVE = 'Robot Harm/results/vision_center_v2_c1_001/'
 RESERVE_USD = 0.30; MARGIN = 1.25
-STATUS = {'phase_c1': 'PREPARATION_ONLY', 'paid_compute': 'NOT_AUTHORIZED', 'new_scenes_51100_51299': 'NOT_USED', 'vision_center_v2': 'EXECUTED_ONCE (V2_GATE_PASS on development scenes); code, records and result unchanged',
+PREVIOUS_PLAN = {'path': 'results/vision_center_v2_c1_001/preparation/plan_v2.json', 'sha256': 'dd3af27e5484b9ba395820470d5adf5c7865a820514dd23964483c06ecd699a6',
+                 'status': 'SUPERSEDED by this plan (Option A, logging only); kept unchanged; its code hashes no longer bind the working tree, so `bound` refuses it'}
+EVIDENCE = 'results/vision_center_v2_c1_001/preparation_v3/evidence'          # local checks of the spatial logger on the real pinned simulator (scripts/37)
+INVARIANCE_SEEDS = (50632, 51004, 51009, 50892, 50959, 50702, 50600, 50601, 50602, 50603, 50604, 50900, 50901, 50902, 50903, 50904)   # used Phase B scenes, fixed before the check
+LOG_TIME_FACTOR = 1.5                                                           # ASSUMPTION for the estimate only: server logging time = local measurement x 1.5; measured by probe-check and audit
+STATUS = {'phase_c1': 'PREPARATION_ONLY', 'paid_compute': 'NOT_AUTHORIZED', 'spatial_logging': 'Option A: every C1 trace is written by hci.spatial_probe (logging only); approved for implementation and planning, not for a run', 'new_scenes_51100_51299': 'NOT_USED', 'vision_center_v2': 'EXECUTED_ONCE (V2_GATE_PASS on development scenes); code, records and result unchanged',
           'base_policies': 'FROZEN: Vision-V1 train seed 1 and train seed 2, 80k EMA, unchanged; nothing is adapted to train seed 2', 'new_training': 'NOT_PLANNED', 'calibration': 'NOT_RUN, LOCKED', 'final_test': 'NOT_RUN, LOCKED'}
 
 
@@ -77,18 +91,34 @@ def check_policy_2(problems):
     return facts
 
 
+def logging_evidence():
+    """The local measurements of the spatial logger (scripts/37 on the pinned simulator), by file hash."""
+    tm = read_json(EVIDENCE + '/timing.json'); rp = read_json(EVIDENCE + '/replay_summary.json'); inv = read_json(EVIDENCE + '/invariance.json')
+    rows = sum(b['steps'] + 1 for s in rp['scenes'].values() for b in s['fidelity'].values()); by = sum(s['trace_bytes'] for s in rp['scenes'].values())
+    return {'files_sha256': {f: sha256(f'{EVIDENCE}/{f}') for f in ('timing.json', 'replay_summary.json', 'invariance.json')}, 'ms_added_per_logged_step_local': tm['ms_added_by_spatial_over_earlier_logger'],
+            'ms_earlier_logger_per_step_local': tm['ms_earlier_logger_over_none'], 'trace_bytes_per_logged_row_local': by / rows, 'invariance_pass': inv['pass'],
+            'invariance_branches': sum(len(s['branches']) for s in inv['scenes'].values()), 'invariance_steps': sum(b['steps'] for s in inv['scenes'].values() for b in s['branches'].values())}
+
+
 def cost_estimate(arms):
-    """From the timing measured in Phase B (one host). The budget gate on the server uses the times it measures itself."""
+    """From the timing measured in Phase B (one host) plus the locally measured logging time. The budget gate on the server uses the times it measures itself."""
     au = read_json('results/vision_center_v2_001/execution/audit/audit.json'); res = read_json(V2_RESULT); price = 0.4604; vis = len([a for a in arms if a in C1.VISION_ARMS]); n = C1.RANGE[1] - C1.RANGE[0] + 1
-    t = {'seconds_per_env_step': au['seconds_per_env_step'], 'seconds_per_reading': au['seconds_per_reading'], 'seconds_per_memory_step': 2.5 * au['seconds_per_memory_step']}
+    ev = logging_evidence(); add_s = ev['ms_added_per_logged_step_local'] / 1e3 * LOG_TIME_FACTOR
+    t = {'seconds_per_env_step': au['seconds_per_env_step'] + add_s, 'seconds_per_reading': au['seconds_per_reading'], 'seconds_per_memory_step': 2.5 * au['seconds_per_memory_step']}
     worst = C1.projected_cost(**t, usd_per_hour=price, spent_usd=0.30, cap_usd=float('inf'), scene_runs=2 * n, arms=len(arms), vision_arms=vis, reserve_usd=RESERVE_USD, margin=MARGIN)
-    per4 = res['wall_seconds'] / 200; exp = 2 * n * (per4 + (len(arms) - 4) * 2.5 + 3.0) / 3600
+    rows_per_run = 118.3 + len(arms) * 10.5; log_h = 2 * n * rows_per_run * add_s / 3600          # Phase B means: 118.3 trunk rows, 10.5 rows per arm after the trigger
+    per4 = res['wall_seconds'] / 200; exp = 2 * n * (per4 + (len(arms) - 4) * 2.5 + 3.0) / 3600 + log_h
+    trace_gb = 2 * n * rows_per_run * ev['trace_bytes_per_logged_row_local'] / 1e9; geo_gb = 2 * n * 75e3 / 1e9
     return {'status': 'ESTIMATE; nothing was run. The budget gate on the server uses measured times, not these numbers', 'basis': {'host': 'Phase B: RTX 4090, AMD Ryzen 7 7800X3D, US$0.4604/h, thread limit 1', **{k + '_phase_b': au[k] for k in ('seconds_per_env_step', 'seconds_per_reading', 'seconds_per_memory_step')},
                       'memory_step_factor_assumed': 2.5, 'memory_step_note': 'each trunk step updates the original v2 memory with its own fits and all other memories from one shared set of fits; the factor is an assumption until the audit measures it',
-                      'seconds_per_scene_4_arms_phase_b': per4, 'seconds_per_extra_arm_assumed': 2.5},
+                      'seconds_per_scene_4_arms_phase_b': per4, 'seconds_per_extra_arm_assumed': 2.5,
+                      'spatial_logging': {**ev, 'seconds_added_per_env_step_assumed': add_s, 'factor_assumed': LOG_TIME_FACTOR, 'logged_rows_per_scene_run_estimate': rows_per_run, 'logging_hours_expected': log_h,
+                                          'worst_case_note': 'the worst-case projection adds the logging time to EVERY environment step of the bound (also the restore replays, which are not logged): an upper bound',
+                                          'note': 'local WSL CPU without rendering or policy; on the server, probe-check measures the earlier and the spatial logger on the same scenes and the audit measures seconds per environment step with the spatial logger, which the budget gate uses'}},
             'expected_minutes': {'install_checks_placement_audit': [25, 40], 'two_passes': [round(exp * 60 * 0.9), round(exp * 60 * 1.3)], 'pack_download': [10, 20]}, 'expected_total_usd': [round(0.35 + exp * 0.9 * price, 2), round(0.60 + exp * 1.3 * price, 2)],
             'worst_case_gate_projection_usd': worst['projected_total_usd'], 'worst_case_hours': worst['projected_remaining_hours'], 'worst_case_inputs': worst['inputs'],
-            'proposed_cap_usd': 6.0, 'proposed_cap_is': 'a proposal, not an approval', 'storage_gb': [3.5, 6.0], 'storage_note': 'both cameras: every step up to the trigger, the control frames of the vision arms, and after the trigger the frames of C0 and of every arm that moved under hci.vision_center_c1.FRAME_POLICY (estimated from the Phase B records: about 2.7 GB before the trigger and 0.6 GB after it at 67 kB per compressed frame); the download adds the per-GB transfer price',
+            'proposed_cap_usd': 6.0, 'proposed_cap_is': 'a proposal, not an approval', 'storage_gb': [round(3.5 + trace_gb + geo_gb, 2), round(6.0 + 2 * (trace_gb + geo_gb), 2)],
+            'storage_spatial_logging_gb_expected': round(trace_gb + geo_gb, 3), 'storage_spatial_note': 'compressed traces at the locally measured bytes per logged row (the whole row, not only the added fields: an upper bound of the increase) plus the collision geometry in each scene record (about 75 kB); the upper storage figure doubles it', 'storage_note': 'both cameras: every step up to the trigger, the control frames of the vision arms, and after the trigger the frames of C0 and of every arm that moved under hci.vision_center_c1.FRAME_POLICY (estimated from the Phase B records: about 2.7 GB before the trigger and 0.6 GB after it at 67 kB per compressed frame); the download adds the per-GB transfer price',
             'gate_rule': 'the budget step projects the whole run from the times measured in the audit with every scene at its bound, margin 1.25, reserve US$0.30, and refuses above the approved cap; spend so far is computed from the session clock; '
                          'before every scene the run stops INCOMPLETE if one more scene at its bound could pass the cap. Scenes, arms and bounds are never reduced'}
 
@@ -118,6 +148,18 @@ def cmd_plan(a):
     crlf = [f for f in SERVER_READS if Path(f).suffix in ('.py', '.sh', '.yaml') and b'\r' in Path(f).read_bytes()]
     if crlf: problems.append(f'Windows line endings in files executed on the Linux server: {crlf}')
     if [c['policy'][k] for k in ('obs_horizon', 'act_horizon', 'pred_horizon')] != [2, 8, 16] or c['env']['horizon'] != 200 or c['env']['control_mode'] != 'pd_ee_delta_pos' or c['env']['robot_uid'] != 'panda_wristcam': problems.append('config is not the fixed setting')
+    try:
+        ev = logging_evidence(); inv = read_json(EVIDENCE + '/invariance.json')
+        br = [b for sc in inv['scenes'].values() for b in sc['branches'].values()]
+        for sd in INVARIANCE_SEEDS:                                     # every declared scene, with the trunk and every arm branch of its stored record
+            part = next((p for p in ('shadow', 'pilot') if Path(f'results/vision_center_v2_001/execution/{p}/scenes/{sd}.json').exists()), None)
+            want = {'trunk'} | ({c['arm'] for c in read_json(f'results/vision_center_v2_001/execution/{part}/scenes/{sd}.json')['cells']} if part and read_json(f'results/vision_center_v2_001/execution/{part}/scenes/{sd}.json').get('triggered') else set())
+            got = inv['scenes'].get(str(sd), {}).get('branches', {})
+            if part is None or set(got) != want or any(int(b.get('steps', 0)) <= 0 for b in got.values()): problems.append(f'the local invariance check does not cover scene {sd} with the trunk and every arm branch')
+        if not (ev['invariance_pass'] is True and br and all(b['state_obs_reward_info_bitwise_equal_all_4_runs'] is True and b['rng_changed_by_probe_at_steps'] == [] and b['probe_rows_equal_between_the_two_on_runs'] is True for b in br)):
+            problems.append('the local logging ON/OFF invariance check on the simulator did not pass in every branch')
+        if sha256('src/hci/spatial_probe.py') != inv.get('spatial_probe_sha256'): problems.append('the local invariance check was not made with the current src/hci/spatial_probe.py')
+    except (OSError, KeyError, ValueError) as e: problems.append(f'local logging evidence missing or unreadable: {e!r}')
     off = read_json(OFFLINE) if Path(OFFLINE).exists() else None
     if off is None: problems.append('offline replay summary missing')
     elif not off['v2_reproduced_exactly'] or off['code_sha256'] != {k: sha256(k) for k in off['code_sha256']}: problems.append('the offline replay does not reproduce the recorded v2 decisions, or was made with other code')
@@ -134,6 +176,13 @@ def cmd_plan(a):
                                        'project_rule': 'AGENTS.md: "모니터/정책에 객체 정답 pose, task success, 미래 라벨을 입력하지 않습니다."'},
             'repository': {'head': D.git('rev-parse', 'HEAD'), 'working_tree_changes_at_plan_time': D.git('status', '--porcelain').splitlines()},
             'builds_on': {'v2_plan': V2_PLAN, 'v2_plan_sha256': V2_PLAN_SHA, 'v2_execution_commit': 'fd23aa2', 'unchanged_files_equal_to_v2_plan': {f: sha256(f) for f in UNCHANGED}},
+            'supersedes': PREVIOUS_PLAN,
+            'spatial_logging': {'logger': 'hci.spatial_probe.gt_probe_spatial (calls the unchanged hci.recovery_v1.probe first, then only adds fields)', 'schema': SP.SCHEMA, 'step_fields': list(SP.STEP_FIELDS), 'initial_row_fields': list(SP.INITIAL_FIELDS),
+                                'not_observable': ['contacts of the first four of the five PhysX sub-steps of a control step', 'any contact between two logged steps', 'continuous-time collision freedom'],
+                                'step_loop': 'unchanged', 'controller_inputs': 'unchanged: no added field is read by the policy, the memories, the abstention rules or any controller',
+                                'server_check': {'command': 'probe-check', 'scenes': list(PROBE_CHECK_SEEDS), 'policy': C1.POLICIES[0], 'compares': 'record without durations, every frame, every earlier trace field, the global RNG states after each scene; bitwise',
+                                                 'requires': 'at least one arm acted', 'on_failure': 'TECHNICAL_BLOCKED: no audit, no new scene'},
+                                'local_evidence': logging_evidence(), 'posthoc_audit_code_sha256': {f: sha256(f) for f in POSTHOC}},
             'policies': {'train_seed_1': {**POLICIES['train_seed_1'], 'checks': p1}, 'train_seed_2': {**POLICIES['train_seed_2'], 'checks': p2}, 'order': list(C1.POLICIES),
                          'rule': 'frozen; not retrained, not fine-tuned, no other checkpoint; no constant or rule of any arm is adapted to either policy'},
             'config': {'path': CONFIG, 'file_sha256': sha256(CONFIG), 'config_sha256': digest(c), 'env': c['env'], 'policy': c['policy'], 'audit': c['audit']},
@@ -150,18 +199,18 @@ def cmd_plan(a):
                           'memories': 'built in the trunk from the policy\'s own observation; they never touch the policy, its queue or its observation history; the mirrored memory must equal the original v2 memory at every trigger'},
             'analysis': analysis(arms), 'offline_replay': off,
             'audit': {'seeds': list(AUDIT_SEEDS), 'policies': list(C1.POLICIES), 'does': ['every arm with every technical check of the run, with both policies', 'seconds per environment step, per vision reading and per memory step for the budget gate'], 'outcomes': 'decide nothing'},
-            'run': {'order': ['clock', 'scenes', 'audit', 'budget', 'run (train_seed_1, then train_seed_2)'], 'ledger': LEDGER + ', created exclusively before any rollout on a new scene; one ledger for both passes; no resume, no second pass',
+            'run': {'order': ['clock', 'scenes', 'probe-check', 'audit', 'budget', 'run (train_seed_1, then train_seed_2)'], 'ledger': LEDGER + ', created exclusively before any rollout on a new scene; one ledger for both passes; no resume, no second pass',
                     'on_error': 'the run stops and stays INCOMPLETE; no scene is dropped or replaced; a partial run has no summary',
-                    'stored': 'one record per scene and policy, per-step ground-truth traces (logging), both cameras\' frames of every step up to the trigger, the frames of every vision arm at the trigger and during control, and after the trigger the frames given by FRAME_POLICY; per arm a branch id, the snapshot digest, the first open command after the move and the success step', 'frame_policy': C1.FRAME_POLICY,
+                    'stored': 'one record per scene and policy, per-step ground-truth traces (logging, with the spatial fields of hci.spatial_probe), both cameras\' frames of every step up to the trigger, the frames of every vision arm at the trigger and during control, and after the trigger the frames given by FRAME_POLICY; per arm a branch id, the snapshot digest, the first open command after the move and the success step', 'frame_policy': C1.FRAME_POLICY,
                     'thread_limit': 'OMP_NUM_THREADS, OPENBLAS_NUM_THREADS, MKL_NUM_THREADS, NUMEXPR_NUM_THREADS, BLIS_NUM_THREADS = 1 before every Python process (run.sh exports them)'},
-            'volume': {'policies': 2, 'scenes': n, 'scene_runs': 2 * n, 'arms': len(arms), 'vision_arms': len([x for x in arms if x in C1.VISION_ARMS]), 'audit_scene_runs': 2 * len(AUDIT_SEEDS), 'steps_per_scene_bound': 200 + len(arms) * 200,
+            'volume': {'policies': 2, 'scenes': n, 'scene_runs': 2 * n, 'arms': len(arms), 'vision_arms': len([x for x in arms if x in C1.VISION_ARMS]), 'audit_scene_runs': 2 * len(AUDIT_SEEDS), 'probe_check_scene_runs': 2 * len(PROBE_CHECK_SEEDS), 'steps_per_scene_bound': 200 + len(arms) * 200,
                        'env_steps_bound_total': 2 * n * (200 + len(arms) * 200), 'readings_per_scene_bound': len([x for x in arms if x in C1.VISION_ARMS]) * 13},
             'cost_estimate': ce,
-            'technical_stop_conditions': ['no authorization, or one that names another plan', 'a code file, a policy file, the seed registry or the arm registry differs from this plan', 'tests fail on the server; CUDA or Vulkan check fails (the host is discarded before any scene)',
+            'technical_stop_conditions': ['no authorization, or one that names another plan', 'the logging ON/OFF check (probe-check) finds any difference or fails', 'a code file, a policy file, the seed registry or the arm registry differs from this plan', 'tests fail on the server; CUDA or Vulkan check fails (the host is discarded before any scene)',
                                           'an identical initial placement for a new seed', 'the restored runtime differs from the snapshot; C0 or an abstaining arm does not reproduce the trunk', 'ground truth reaches a vision arm (oracle read counter)',
                                           'the mirrored memory differs from hci.vision_center_v2.Memory at a trigger', 'policy inference during a control part, or a queue left at the hand-back', 'the budget projection exceeds the cap before the run, after five scenes of a pass, or before any scene',
                                           'the ledger already exists', 'any error in a scene'],
-            'command_order': ['local: tests, offline replay, `plan`, `dry-run`', 'user: explicit approval naming a total USD cap and this plan hash -> authorization.json', 'server: install', 'server: run.sh env', 'server: run.sh scenes', 'server: run.sh audit',
+            'command_order': ['local: tests, offline replay, `plan`, `dry-run`', 'user: explicit approval naming a total USD cap and this plan hash -> authorization.json', 'server: install', 'server: run.sh env', 'server: run.sh scenes', 'server: run.sh probecheck', 'server: run.sh audit',
                               'server: run.sh run (budget gate first)', 'server: run.sh pack', 'local: download, hash checks, `summarize` from the raw records', 'local: delete only the instances created for this run', f'Drive: report and results to {DRIVE}'],
             'outputs': {'local': 'results/vision_center_v2_c1_001/', 'drive': DRIVE, 'report_md': 'not modified unless asked'},
             'files_read_on_the_server': SERVER_READS, 'code': {f: sha256(f) for f in CODE}, 'upstream_commit': UPSTREAM_COMMIT,
@@ -265,14 +314,64 @@ def runtime_for(c, pid, a):
     return V.runtime(c, POLICIES[pid]['path'], a.upstream, a.device)
 
 
+def cmd_probe_check(a):
+    """Logging ON/OFF on the server: the same scene, policy, noise keys, settings and global RNG states, once with the earlier
+    logger and once with the spatial logger. Bitwise; no tolerance. Saves both outputs; decides nothing about outcomes."""
+    run = Path(a.run); D.require_authorization(run, a.plan); plan, c, arms = bound(a.plan); h = sha256(a.plan)
+    if not (run / 'scenes.json').exists() or read_json(run / 'scenes.json').get('pass') is not True or read_json(run / 'scenes.json').get('plan_sha256') != h: raise SystemExit('scenes.json missing or not passed for this plan')
+    out = run / 'probe_check'; out.mkdir(parents=True, exist_ok=False); pid = C1.POLICIES[0]; rows = []; acted = 0; r = None; s = None
+    def fail(where, e):
+        import traceback
+        rows.append({'scene': None if s is None else int(s), 'pass': False, 'error_in': where, 'error': repr(e), 'traceback': traceback.format_exc()}); write_json(out / 'probe_check.json', {'pass': False, 'status': 'TECHNICAL_BLOCKED', 'scenes': rows, 'plan_sha256': h})
+        raise SystemExit(f'PROBE CHECK FAILED: {where} raised {e!r} in scene {s}')
+    try:
+      try:
+        r = runtime_for(c, pid, a)
+        for s in PROBE_CHECK_SEEDS:
+            got = {}; rng0 = SP.rng_snapshot()
+            for name, pr in (('earlier_logger', X.gt_probe), ('spatial_logger', PROBE)):
+                SP.rng_restore(rng0); t0 = time.perf_counter()
+                try: res = C1.collect_scene(r, s, c, probe=pr, arms=arms, role='vision_center_v2_c1_probe_check', policy_id=pid)
+                except Exception as e: fail(name, e)                     # a technical error of either run: recorded, the check fails, nothing goes on
+                got[name] = {'res': res, 'seconds': time.perf_counter() - t0, 'rng_after': SP.rng_digest()}
+            cmp = SP.compare_on_off(got['earlier_logger']['res'], got['spatial_logger']['res']); cmp['global_rng_after_equal'] = got['earlier_logger']['rng_after'] == got['spatial_logger']['rng_after']
+            cmp['pass'] = bool(cmp['pass'] and cmp['global_rng_after_equal']); rec = got['spatial_logger']['res'][0]; acted += sum(1 for x in rec['cells'] if x.get('acted'))
+            rows.append({'scene': int(s), **cmp, 'seconds': {k: v['seconds'] for k, v in got.items()}, 'env_steps': rec['counts']['env_steps'], 'triggered': rec['triggered']})
+            for name, v in got.items(): (out / name).mkdir(exist_ok=True); Z.save_scene(out / name, s, *v['res'])          # after the comparison (save_scene adds file keys to the record)
+            print(json.dumps({'probe_check_scene': int(s), 'pass': cmp['pass'], 'seconds': rows[-1]['seconds']}), flush=True)
+      except Exception as e: fail('runtime, comparison or save', e)    # anything else in the check: the same failure record
+    finally:
+        if r is not None:
+            try: r.env.close()
+            except Exception as e: fail('closing the runtime', e)      # review a5: also a failure record
+    try:                                                                # finalisation in the same failure-record path (review a4)
+        steps = sum(x['env_steps'] for x in rows); t_off = sum(x['seconds']['earlier_logger'] for x in rows); t_on = sum(x['seconds']['spatial_logger'] for x in rows)
+        if len(rows) != len(PROBE_CHECK_SEEDS) or steps <= 0 or t_off <= 0: raise RuntimeError(f'{len(rows)} scenes compared, {steps} environment steps: nothing or not every scene was compared')
+        ok = bool(all(x['pass'] for x in rows) and acted >= 1)
+        report = {'pass': ok, 'status': 'OK' if ok else 'TECHNICAL_BLOCKED', 'policy': pid, 'scenes': rows, 'arm_runs_that_acted': acted, 'requirement': 'every compared item bit-identical in every scene, and at least one arm acted (the control path ran with the logger)',
+                  'seconds_per_env_step_earlier_logger': t_off / steps, 'seconds_per_env_step_spatial_logger': t_on / steps, 'logging_time_overhead_fraction': t_on / t_off - 1., 'tolerance': 'none: bitwise equality', 'plan_sha256': h, 'runtime': runtime_info(),
+                  'scope': 'Logging only, on already-used audit scenes. Outcomes here decide nothing. The budget gate uses the audit timing, which is measured with the spatial logger.'}
+        write_json(out / 'probe_check.json', report)
+    except Exception as e: fail('finalisation', e)
+    print(json.dumps({k: report[k] for k in ('pass', 'status', 'arm_runs_that_acted', 'logging_time_overhead_fraction')}, indent=1))
+    if not ok: raise SystemExit(2)
+
+
+def probe_check_passed(run, h):
+    p = Path(run) / 'probe_check' / 'probe_check.json'
+    return p.exists() and read_json(p).get('pass') is True and read_json(p).get('plan_sha256') == h
+
+
 def cmd_audit(a):
-    run = Path(a.run); D.require_authorization(run, a.plan); plan, c, arms = bound(a.plan); out = run / 'audit'; out.mkdir(parents=True, exist_ok=False); recs = []; facts = {}
+    run = Path(a.run); D.require_authorization(run, a.plan); plan, c, arms = bound(a.plan)
+    if not probe_check_passed(run, sha256(a.plan)): raise SystemExit('probe_check missing or not passed for this plan: the logging ON/OFF comparison comes before the audit')
+    out = run / 'audit'; out.mkdir(parents=True, exist_ok=False); recs = []; facts = {}
     for pid in C1.POLICIES:
         r = runtime_for(c, pid, a)
         try:
             facts[pid] = X.controller_facts(r)
             for s in AUDIT_SEEDS:
-                rec, traces, frames = C1.collect_scene(r, s, c, probe=X.gt_probe, arms=arms, role='vision_center_v2_c1_audit', policy_id=pid); (out / pid).mkdir(exist_ok=True); Z.save_scene(out / pid, s, rec, traces, frames); recs.append(rec)
+                rec, traces, frames = C1.collect_scene(r, s, c, probe=PROBE, arms=arms, role='vision_center_v2_c1_audit', policy_id=pid); (out / pid).mkdir(exist_ok=True); Z.save_scene(out / pid, s, rec, traces, frames); recs.append(rec)
                 print(json.dumps({'audit_scene': s, 'policy': pid, 'triggered': rec['triggered'], 'wall_seconds': rec['wall_seconds']}), flush=True)
         finally:
             r.env.close()
@@ -327,7 +426,7 @@ def passes(r, pid, seeds, c, out, arms, run, plan_path, cap, runs_left_after, pl
         if spent + one_scene_bound_usd(run, arms, k) + RESERVE_USD > cap:
             write_json(out / 'budget_stop.json', {'before_scene': int(s), 'scenes_finished': done, 'spent_from_session_clock_usd': spent, 'cap_usd': cap, 'plan_sha256': plan_hash}); raise SystemExit('BUDGET_STOP: one more scene could pass the cap; the run stops INCOMPLETE and is backed up')
         try:
-            rec, traces, frames = C1.collect_scene(r, s, c, probe=X.gt_probe, arms=arms, role=C1.ROLE, policy_id=pid); rec['plan_sha256'] = plan_hash; Z.save_scene(out, s, rec, traces, frames)
+            rec, traces, frames = C1.collect_scene(r, s, c, probe=PROBE, arms=arms, role=C1.ROLE, policy_id=pid); rec['plan_sha256'] = plan_hash; Z.save_scene(out, s, rec, traces, frames)
         except Exception as e:
             import traceback
             write_json(out / 'scenes' / f'{s}.error.json', {'scene': int(s), 'policy': pid, 'completed': False, 'error': repr(e), 'traceback': traceback.format_exc(), 'scenes_finished_before': done}); raise
@@ -357,8 +456,9 @@ def load_records(d, seeds, c, arms, pid=None, plan_hash=None):
 
 def cmd_run(a):
     run = Path(a.run); auth = D.require_authorization(run, a.plan); plan, c, arms = bound(a.plan); h = sha256(a.plan); cap = float(auth['cap_usd'])
-    for name in ('scenes.json', 'audit/audit.json', 'budget_gate.json'):
-        if not (run / name).exists(): raise SystemExit(f'{name} missing: placement check, audit and budget gate come first')
+    for name in ('scenes.json', 'probe_check/probe_check.json', 'audit/audit.json', 'budget_gate.json'):
+        if not (run / name).exists(): raise SystemExit(f'{name} missing: placement check, logging check, audit and budget gate come first')
+    if not probe_check_passed(run, h): raise SystemExit('the logging ON/OFF comparison did not pass for this plan')
     sc = read_json(run / 'scenes.json'); au = read_json(run / 'audit' / 'audit.json'); bg = read_json(run / 'budget_gate.json')
     if not (sc['pass'] and sc['plan_sha256'] == h and au['pass'] and au['plan_sha256'] == h and list(au['arms']) == list(arms) and bg['fits_cap'] and bg.get('plan_sha256') == h): raise SystemExit('placement check, audit or budget gate not passed for this plan')
     if Path(LEDGER).exists(): raise SystemExit(f'{LEDGER} exists: the C1 scenes already have a recorded use')
@@ -397,8 +497,9 @@ def check_run_gates(run, plan, h, arms):
     run = Path(run)
     stops = sorted(str(p.relative_to(run)) for p in run.rglob('budget_stop.json'))
     if stops: raise SystemExit(f'INCOMPLETE: budget stop {stops}; a partial run is not summarised')
-    for name in ('scenes.json', 'audit/audit.json', 'budget_gate.json', 'budget_gate_at_start.json', 'ledger.json'):
+    for name in ('scenes.json', 'probe_check/probe_check.json', 'audit/audit.json', 'budget_gate.json', 'budget_gate_at_start.json', 'ledger.json'):
         if not (run / name).exists() or read_json(run / name).get('plan_sha256') != h: raise SystemExit(f'{name} missing or of another plan: the run did not go through the approved steps')
+    if read_json(run / 'probe_check' / 'probe_check.json').get('pass') is not True: raise SystemExit('the logging ON/OFF comparison of this run did not pass: it is not summarised')
     sc, au, bg, b0, lg = (read_json(run / n) for n in ('scenes.json', 'audit/audit.json', 'budget_gate.json', 'budget_gate_at_start.json', 'ledger.json'))
     if not (sc.get('pass') is True and au.get('pass') is True and list(au.get('arms', [])) == list(arms) and bg.get('fits_cap') is True and b0.get('fits_cap') is True):
         raise SystemExit('a gate of this run did not pass (placement, audit or budget): it is not summarised')
@@ -426,9 +527,9 @@ def main():
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter); s = p.add_subparsers(dest='cmd', required=True)
     q = s.add_parser('plan'); q.add_argument('--out', required=True)
     q = s.add_parser('dry-run'); q.add_argument('--plan', required=True); q.add_argument('--run', default=RUN_DEFAULT); q.add_argument('--out')
-    for name in ('clock', 'scenes', 'audit', 'budget', 'run'):
+    for name in ('clock', 'scenes', 'probe-check', 'audit', 'budget', 'run'):
         q = s.add_parser(name); q.add_argument('--plan', required=True); q.add_argument('--run', default=RUN_DEFAULT)
-        if name in ('audit', 'run'): q.add_argument('--upstream', default='third_party/ManiSkill'); q.add_argument('--device', default='cuda')
+        if name in ('probe-check', 'audit', 'run'): q.add_argument('--upstream', default='third_party/ManiSkill'); q.add_argument('--device', default='cuda')
         if name == 'clock': q.add_argument('--usd-per-hour', type=float, required=True); q.add_argument('--spent-before-usd', type=float, required=True)
     q = s.add_parser('check-auth'); q.add_argument('--plan', required=True); q.add_argument('--run', default=RUN_DEFAULT)
     q = s.add_parser('summarize'); q.add_argument('--run', required=True); q.add_argument('--plan', required=True); q.add_argument('--out', required=True)

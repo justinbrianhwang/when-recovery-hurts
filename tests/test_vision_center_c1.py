@@ -301,7 +301,7 @@ def ns(plan, run, **k): return argparse.Namespace(plan=str(plan), run=str(run), 
 
 
 def test_every_server_command_refuses_without_an_explicit_authorization(X34, tmp_path):
-    plan = tmp_path / 'plan.json'; plan.write_text('{"code": {}}'); run = tmp_path / 'run'; run.mkdir(); had_ledger = Path(X34.LEDGER).exists(); cmds = (X34.cmd_clock, X34.cmd_scenes, X34.cmd_audit, X34.cmd_budget, X34.cmd_run)
+    plan = tmp_path / 'plan.json'; plan.write_text('{"code": {}}'); run = tmp_path / 'run'; run.mkdir(); had_ledger = Path(X34.LEDGER).exists(); cmds = (X34.cmd_clock, X34.cmd_scenes, X34.cmd_probe_check, X34.cmd_audit, X34.cmd_budget, X34.cmd_run)
     for cmd in cmds:
         with pytest.raises(SystemExit, match='no authorization'): cmd(ns(plan, run, usd_per_hour=.4, spent_before_usd=0.))
     (run / 'authorization.json').write_text(json.dumps({'approved_by': 'agent', 'paid_compute_authorized': True, 'cap_usd': 2.5, 'plan_sha256': X34.sha256(plan)}))
@@ -452,13 +452,17 @@ def test_a_deadline_stop_writes_the_marker_and_the_run_is_not_summarised(X34, tm
 
 
 def test_summary_gates_refuse_failed_steps_and_a_foreign_ledger(X34, tmp_path):
-    h = 'p' * 64; arms = list(C1.BASE_ARMS); run = tmp_path / 'run'; (run / 'audit').mkdir(parents=True)
+    h = 'p' * 64; arms = list(C1.BASE_ARMS); run = tmp_path / 'run'; (run / 'audit').mkdir(parents=True); (run / 'probe_check').mkdir()
     plan = {'arm_registry': {'sha256': 'a'}, 'seed_registry': {'sha256': 's'}}
-    good = {'scenes.json': {'pass': True}, 'audit/audit.json': {'pass': True, 'arms': arms}, 'budget_gate.json': {'fits_cap': True}, 'budget_gate_at_start.json': {'fits_cap': True},
+    good = {'scenes.json': {'pass': True}, 'probe_check/probe_check.json': {'pass': True}, 'audit/audit.json': {'pass': True, 'arms': arms}, 'budget_gate.json': {'fits_cap': True}, 'budget_gate_at_start.json': {'fits_cap': True},
             'ledger.json': {'set': C1.SET, 'arms': arms, 'policies': {pid: X34.POLICIES[pid]['weights.pt'] for pid in C1.POLICIES}, 'arm_registry_sha256': 'a', 'seed_manifest_sha256': 's'}}
     def write(d):
         for n, v in d.items(): (run / n).write_text(json.dumps({**v, 'plan_sha256': h}))
     write(good); X34.check_run_gates(run, plan, h, arms)
+    write({**good, 'probe_check/probe_check.json': {'pass': False}})
+    with pytest.raises(SystemExit, match='logging ON/OFF comparison'): X34.check_run_gates(run, plan, h, arms)
+    write(good); (run / 'probe_check' / 'probe_check.json').unlink()
+    with pytest.raises(SystemExit, match='probe_check.json missing'): X34.check_run_gates(run, plan, h, arms)
     for n, k, v in (('scenes.json', 'pass', False), ('audit/audit.json', 'pass', False), ('audit/audit.json', 'arms', arms[:-1]), ('budget_gate.json', 'fits_cap', False), ('budget_gate_at_start.json', 'fits_cap', False)):
         write({**good, n: {**good[n], k: v}})
         with pytest.raises(SystemExit, match='did not pass'): X34.check_run_gates(run, plan, h, arms)

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Vision-CENTER v2 Phase C1 driver (vision_center_v2_c1_001). PREPARED, NOT RUN.
-# Usage: run.sh env|scenes|audit|run|pack
+# Usage: run.sh env|scenes|probecheck|audit|run|pack
 # Every phase needs runs/vision_center_v2_c1_001/authorization.json (written by the user side: approval, total cap, plan hash).
 # env needs USD_PER_HOUR (all-in hourly price of this instance) and SPENT_BEFORE_USD (spend of this work before this instance);
 # it writes the session clock once. Later steps compute the spend from that clock.
@@ -27,8 +27,12 @@ case "$1" in
     grep -q "^ENV_DONE" $ST || { echo "scenes: environment checks have not passed" >> $ST; exit 1; }
     run c1_scenes "${PY[@]}" scenes --plan $PLAN --run $R || { echo "PLACEMENT CHECK FAILED: no run on this set" >> $ST; exit 1; }
     echo "SCENES_DONE" >> $ST ;;
+  probecheck)  # logging ON/OFF on the 3 used audit scenes with train seed 1: bitwise, decides nothing
+    grep -q "^SCENES_DONE" $ST || { echo "probecheck: the placement check has not passed" >> $ST; exit 1; }
+    run c1_probe_check "${PY[@]}" probe-check --plan $PLAN --run $R || { echo "PROBE CHECK FAILED: TECHNICAL_BLOCKED, no new scene is touched" >> $ST; exit 1; }
+    echo "PROBE_CHECK_DONE" >> $ST ;;
   audit)   # 3 already-used scenes x both policies, every arm: technical checks and timing
-    grep -q "^SCENES_DONE" $ST || { echo "audit: the placement check has not passed" >> $ST; exit 1; }
+    grep -q "^PROBE_CHECK_DONE" $ST || { echo "audit: the logging ON/OFF check has not passed" >> $ST; exit 1; }
     run c1_audit "${PY[@]}" audit --plan $PLAN --run $R || { echo "AUDIT FAILED: TECHNICAL_BLOCKED, no new scene is touched" >> $ST; exit 1; }
     echo "AUDIT_DONE" >> $ST ;;
   run)     # budget gate, ledger, then the pass with train seed 1 and the pass with train seed 2; never resumed
@@ -45,5 +49,5 @@ case "$1" in
     ( cd $A.verify && find . -type f | sed 's|^\./||' | sort | xargs -d '\n' sha256sum ) > $A.sha256 || exit 1
     rm -rf $A.verify
     sha256sum $A.tgz; wc -l < $A.sha256; ls -la $A.tgz ;;
-  *) echo "usage: run.sh env|scenes|audit|run|pack"; exit 2 ;;
+  *) echo "usage: run.sh env|scenes|probecheck|audit|run|pack"; exit 2 ;;
 esac
