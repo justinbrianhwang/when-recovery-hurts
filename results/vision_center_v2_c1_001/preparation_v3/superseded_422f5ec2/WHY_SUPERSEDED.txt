@@ -1,0 +1,4 @@
+Plan 422f5ec2ea5653b9dda8081dd587dc90b6a929adb7e7bde429e12c4f601d9243 (made at commit 96a076a) is superseded and must not be approved:
+1. the working tree was not clean when it was made: a temporary stdout file (plan_out.tmp) was in the repository; the plan records it under repository.working_tree_changes_at_plan_time;
+2. its cost estimate left out the time of the new server step probe-check (6 scene-runs).
+Both were fixed (the estimate change was reviewed, round 21 GO) and the plan was regenerated at a clean commit. Files kept unchanged here.
