@@ -59,27 +59,36 @@ class SubstepLogger:
         return sorted(({'a': nm(c.bodies[0].entity), 'b': nm(c.bodies[1].entity), 'shape_a': idx(c.bodies[0], c.shapes[0]), 'shape_b': idx(c.bodies[1], c.shapes[1]),
                         'points': [f32(p.position) + f32(p.normal) + f32(p.impulse) + f32(p.separation) for p in c.points]} for c in u.scene.get_contacts()), key=CONTACT_ORDER)
 
-    def install(self, r):
-        from hci import simulation as SIM
+    def _wrap(self, u):
+        """Wrap scene.step of the CURRENT scene. ManiSkill may build a new scene object at every env.reset (try 1 wrapped
+        only the first scene and logged nothing), so this runs after every reset and restore."""
         from hci.trees import as_numpy
-        u = r.env; sc = u.scene; orig_step = sc.step; log = self
+        sc = u.scene
+        if getattr(sc, '_substep_logger_wrapped', False): return
+        orig_step = sc.step; log = self
         def step():
             if not log.on: return orig_step()
             pre = log.state(u); el = int(as_numpy(u.elapsed_steps).reshape(-1)[0]); seg = log.segments[-1]
             k = sum(1 for x in seg['substeps'] if x['control_step'] == el + 1)
             out = orig_step(); seg['substeps'].append({'control_step': el + 1, 'k': k, 'pre': pre, 'post': log.state(u), 'contacts': log.contacts(u)}); return out
-        sc.step = step; self._scene = sc; self._orig_step = orig_step
+        sc.step = step; sc._substep_logger_wrapped = True; self._wrapped.append((sc, orig_step))
+
+    def install(self, r):
+        from hci import simulation as SIM
+        self._wrapped = []; log = self; u = r.env
         R = SIM.Runtime; self._orig = {'reset': R.reset, 'restore': R.restore}; o = self._orig
         def reset(rt, episode):
-            log.on = False; out = o['reset'](rt, episode); log.segments.append({'kind': 'trunk', 'substeps': []}); log.on = True; return out
+            log.on = False; out = o['reset'](rt, episode); log._wrap(rt.env); log.segments.append({'kind': 'trunk', 'substeps': []}); log.on = True; return out
         def restore(rt, s):
-            log.on = False; out = o['restore'](rt, s); log.segments.append({'kind': 'arm_from_trigger', 't': rt.t, 'substeps': []}); log.on = True; return out
+            log.on = False; out = o['restore'](rt, s); log._wrap(rt.env); log.segments.append({'kind': 'arm_from_trigger', 't': rt.t, 'substeps': []}); log.on = True; return out
         R.reset, R.restore = reset, restore
 
     def uninstall(self):
         from hci import simulation as SIM
         for k, v in self._orig.items(): setattr(SIM.Runtime, k, v)
-        self._scene.step = self._orig_step; self.on = False
+        for sc, f in self._wrapped:
+            sc.step = f; sc._substep_logger_wrapped = False
+        self.on = False
 
 
 def canon(x): return json.dumps(json.loads(json.dumps(x, default=float)), sort_keys=True)          # through a JSON round trip, as the records are stored
@@ -107,6 +116,7 @@ def main():
                     lg = SubstepLogger(); lg.install(r)
                     try: rec_on, tr_on, _ = C1.collect_scene(r, seed, c, probe=SP.gt_probe_spatial, arms=C1.BASE_ARMS, role=C1_ROLE, policy_id=pid)
                     finally: lg.uninstall()
+                    if sum(len(x['substeps']) for x in lg.segments) == 0: raise RuntimeError('the sub-step logger recorded nothing (scene.step was not wrapped)')
                     strip = lambda rec: {k: v for k, v in rec.items() if k not in ('wall_seconds',)} | {'cells': [{kk: vv for kk, vv in x.items() if kk != 'wall_seconds'} for x in rec['cells']]}
                     same = canon(tr_off) == canon(tr_on) and canon(strip(rec_off)['cells']) == canon(strip(rec_on)['cells'])
                     orig_rec = json.loads((Path(a.c1_records) / f'pass_{pid}' / 'scenes' / f'{seed}.json').read_text(encoding='utf-8'))
