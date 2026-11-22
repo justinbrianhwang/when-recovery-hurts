@@ -1,0 +1,93 @@
+{
+ "work": "ras_v2_confirm_001",
+ "created_utc": "2026-11-22T21:24:30+00:00",
+ "files_sha256": {
+  "approvals/approval_amendment_017.json": "4b851b3ad0c65aee4bdcf50889e665fe3780c26fc7b63830861c756f390f74be",
+  "artifacts/policies/stack_v1_s1_d500_clean_resnet18_i080000/policy_meta.json": "4ccfba34ee42b3bab344f7d320c57c6a97011f5adf8b93c04a36b886303b138e",
+  "artifacts/policies/stack_v1_s1_d500_clean_resnet18_i080000/weights.pt": "a37be25603d6c7b7d5cfa1872e6c1134c436f78de02b745c481c88d5d0f69629",
+  "artifacts/policies/stack_v1_s2_d500_clean_resnet18_i080000/policy_meta.json": "c3606292f65c91e7280ba08be983c7f7a65c76d9450abd5604934656973302c7",
+  "artifacts/policies/stack_v1_s2_d500_clean_resnet18_i080000/weights.pt": "52eff6a94a075bb3947e68756f8185bc1bfcb1893b691ee3529bbbc0c521b97b",
+  "configs/splits.json": "828b8f131d85e7ba6a3e720cfdaff022165f6848dd29e0b714bba609797e3224",
+  "configs/stackcube.yaml": "b145ca59607f4edf45f20bd45624f1bd4c8ff028a035ee4ab12b7de40bb08d8b",
+  "results/ras_submission_readiness_001/AMENDMENT_017_FINAL_PROPOSAL.md": "b8fd632494512e109bc914c469cd6de85e7e09dc235b67017aafa7762985816e",
+  "runs/ras_v2_confirm_001/pip_freeze.txt": "36f331db7acc51a25409b73ef38dfacbc6b7449ca905f510093a0fe37dd1e9c5",
+  "scripts/30_recovery_v1_diag.py": "3f104a1a95e23ee83ff0bf285b469fbbaaca738812b3225990158b470e64468b",
+  "scripts/31_recovery_v1_oracle_xy.py": "c87c3576358ad6de7acbd55a1061550330c6d681d3568665096398b01c16ad15",
+  "scripts/32_vision_center.py": "06f0ef885cfaef9052fab9dae08cd1e8a16d484b695f2c8c13b26958df662ccf",
+  "scripts/33_vision_center_v2.py": "9a4cd5ff72d363eb57e182110b58272bbf08b09e4c58d2d9a12ccbb5f87481d6",
+  "scripts/40_v2_confirm.py": "0b2a4241784963dd0077dfed97575f89045dc302cf6243b0d600905538587008",
+  "src/hci/io.py": "60f2701b2e52ba80fc7e05142a06ae56c306c4298cd749ca5e418b54cb454a44",
+  "src/hci/policies.py": "d9083dfe1eff702bae087b96840d2703dbb609fb7947c01eb49864bbd0eb9157",
+  "src/hci/recovery_v1.py": "84512bbf4e89661b9e4b2923d37b896461f4a7d0fd5ea93fd27b1341d2d40464",
+  "src/hci/recovery_v1_oracle.py": "f652ead0a47750bd55ff990391ff4bb02d4af44331d351d4adea7112a973e765",
+  "src/hci/simulation.py": "c42626728cac7eb9ebeffd5372683fc4ba01e41ef9d050f01e51134b0208fe9d",
+  "src/hci/spatial_probe.py": "77fe1027bebddc6718b8624c5a5aa329c176750e5e8bc84a54cc5f4e8959d122",
+  "src/hci/statistics.py": "2e43b5f3134359412913abeee3eca3f30e27681ece10f1ae195ae0490ce1f5ad",
+  "src/hci/trees.py": "5f0fc7c28a89b32175abea983ac5202ffe535a0fe105e1ff6e855299177d8a60",
+  "src/hci/v2_confirm.py": "c46eb84217ecd2f8f024a076376c5789608b502bbe3223ad9e472b51a33928f4",
+  "src/hci/vision_center.py": "cc4a743976eb33da0824c1954a0ac19d075fc87b1369e45139812c09dce2797d",
+  "src/hci/vision_center_c1.py": "8e914ed2d7ad2e5e48c1080b0fd8505aa452598bcb2df22712d6612f185cfcd2",
+  "src/hci/vision_center_v2.py": "ab548ccc3825f9e25a7f979d4348563c34c1926c078e0acbd51f0101fd174fbc",
+  "src/hci/vision_v1.py": "deab7d2697dea81a995519cc568622f9c0d90df256d9281f2e3517811f06c9f7",
+  "tests/test_v2_confirm.py": "5180af6ac1a14e11f27fc1148b19a53746a225202a4d449b8bad17e5e2766930"
+ },
+ "stage": "calibration",
+ "candidate": "VISION_CENTER_V2",
+ "arms": [
+  "C0",
+  "VISION_CENTER_V2"
+ ],
+ "family": [
+  {
+   "candidate": "VISION_CENTER_V2",
+   "policy": "train_seed_1"
+  },
+  {
+   "candidate": "VISION_CENTER_V2",
+   "policy": "train_seed_2"
+  }
+ ],
+ "epsilon": 0.05,
+ "delta": 0.05,
+ "alpha_efficacy": 0.05,
+ "splits": {
+  "calibration": [
+   30000,
+   30399
+  ],
+  "test": [
+   90000,
+   90399
+  ]
+ },
+ "policies": {
+  "train_seed_1": "artifacts/policies/stack_v1_s1_d500_clean_resnet18_i080000",
+  "train_seed_2": "artifacts/policies/stack_v1_s2_d500_clean_resnet18_i080000"
+ },
+ "amendment_approval": {
+  "approved_by": "user",
+  "recorded_by": "coding agent, on the user's explicit instruction in chat on 2026-11-22 ('\ube44\uc6a9 \ub4e4\uc5b4\ub3c4 \ub3d9\uc758~ \ud55c\ubc88\uc5d0 \ud574\uc918.' and, asked whether they must write this file themselves: '\uadf8\ub0e5 \ub108\uac00 \ud574\ub3c4 \ub418\ub294\ub370')",
+  "amendment": "results/ras_submission_readiness_001/AMENDMENT_017_FINAL_PROPOSAL.md",
+  "amendment_sha256": "b8fd632494512e109bc914c469cd6de85e7e09dc235b67017aafa7762985816e",
+  "approved_utc": "2026-11-22",
+  "decisions": {
+   "D1": "VISION_CENTER_V2 only",
+   "D2": "both policies, Holm family 2, joint statement only if both pass",
+   "D3": "400 calibration scenes 30000-30399",
+   "D4": "efficacy on the Final Test only",
+   "D5": "memory errors reported only"
+  },
+  "paid_compute": {
+   "B1_calibration_cap_usd": 2.0,
+   "B3_generalization_cap_usd": 1.5,
+   "B4_s6_substep_cap_usd": 1.0,
+   "combined_cap_usd": 4.5
+  },
+  "not_approved": [
+   "B2 Final Test (separate approval after calibration results; RUN_FROZEN_TEST supplied by the user)"
+  ]
+ },
+ "upstream_commit": "a4a4f9272ad64b1564035874b605ceb687b63ed8",
+ "pip_freeze_sha256": "36f331db7acc51a25409b73ef38dfacbc6b7449ca905f510093a0fe37dd1e9c5",
+ "note": "Operational lock against accidental contamination, not access control."
+}
