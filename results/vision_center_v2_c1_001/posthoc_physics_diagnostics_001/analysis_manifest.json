@@ -1,0 +1,164 @@
+{
+ "code_sha256": {
+  "research_diagnostics/c1_physics_001/common.py": "013a961bc0d87e802980f51d523ae843b5c4b91d05783df3ca6f87f9785b5186",
+  "research_diagnostics/c1_physics_001/diagnose_check4_offline.py": "8df3261d5966bf471fdbc3ba68adc107f502e9b8cf5d53e506ce19cd805c638d",
+  "research_diagnostics/c1_physics_001/diagnose_s6_offline.py": "fb2518d9c8eab9149a863a3fa2969efb47d524fa70268e5450a33e0bc46a650f",
+  "research_diagnostics/c1_physics_001/geometry_reference.py": "aaab0a592e322176fb4e76ae29ff283ba5859fc5a43d3c2f1e2c0465c27389cf",
+  "research_diagnostics/c1_physics_001/make_manifest.py": "761b80a8436aee7cc4fcb2176614a5890d55b09a0cf7ee79cb5ada7e07116f50",
+  "research_diagnostics/c1_physics_001/run_geometry_validation.py": "be4ac64493adc99b977da435b7107fe28b48a039b32ad02b9d151c28972070e8",
+  "research_diagnostics/c1_physics_001/s6_case_figures.py": "529a1bfed54ce061df8a4afcb3d61bcbb7accfdaed31a4eb3d19a9c84ab61bb1",
+  "research_diagnostics/c1_physics_001/s6_normal_ray_check.py": "576fa96bc52954ec7cff16303d2ae47f4a169567d68d640c6e4de29ccff48932",
+  "research_diagnostics/c1_physics_001/test_diagnostics_loaders.py": "198d4eea1dcf222b2e4e04cffb81a8f1e7866fe420930466d5a329cf81ad2f98",
+  "research_diagnostics/c1_physics_001/test_geometry_known_truth.py": "53b901741cbad9fea87233fdc58de6f0b48c53863744d4d27c09d0dc795d0ac5"
+ },
+ "commands": [
+  "python -P research_diagnostics/c1_physics_001/diagnose_s6_offline.py --workers 3",
+  "python -P research_diagnostics/c1_physics_001/s6_normal_ray_check.py   (second run; the first run without the support-plane column is logged as logs/s6_normal_ray_check_try1_without_support_plane.log, its outputs were replaced)",
+  "python -P research_diagnostics/c1_physics_001/s6_case_figures.py",
+  "python -P research_diagnostics/c1_physics_001/diagnose_check4_offline.py",
+  "python -P research_diagnostics/c1_physics_001/run_geometry_validation.py",
+  "python -P -m pytest -v -p no:cacheprovider research_diagnostics/c1_physics_001/test_geometry_known_truth.py research_diagnostics/c1_physics_001/test_diagnostics_loaders.py",
+  "python -P -m pytest -q -p no:cacheprovider tests/test_spatial_links.py tests/test_spatial_audit.py tests/test_trajectory_audit.py tests/test_spatial_probe.py",
+  "python -P research_diagnostics/c1_physics_001/make_manifest.py"
+ ],
+ "created_utc": "2026-11-22T14:01:48+00:00",
+ "environment": {
+  "matplotlib": "3.11.1",
+  "numpy": "2.4.6",
+  "pandas": "3.0.3",
+  "platform": "Windows-11",
+  "python": "3.14.4",
+  "scipy": "1.18.0"
+ },
+ "frozen_plan": {
+  "equal": true,
+  "path": "results/vision_center_v2_c1_001/preparation_v3/plan.json",
+  "sha256_expected": "6b3f04fea1ea5346d6f0725b6e49ae9ce04c4fb132f37450243a807024e5dbf7",
+  "sha256_now": "6b3f04fea1ea5346d6f0725b6e49ae9ce04c4fb132f37450243a807024e5dbf7"
+ },
+ "inputs_from_drive": {
+  "DRIVE:development_run_001/C1_DEVELOPMENT_EXECUTION_REPORT.md": {
+   "equals_drive_manifest": true,
+   "sha256": "4fec3354716c0331dacb8b368bf646128861b39acaa7bf8813fd1a8a341bf65a"
+  },
+  "DRIVE:development_run_001/mechanism_c1_001/C1_MECHANISM_REPORT.md": {
+   "equals_drive_manifest": true,
+   "sha256": "eae14168cf62393ff4d47c3d40259eb20135d16daacd177a98a9c71b4001b604"
+  },
+  "DRIVE:development_run_001/mechanism_c1_001/analysis_manifest.json": {
+   "equals_drive_manifest": true,
+   "sha256": "c59525ff18a21387446a4c33db3f8ff015f3f3f5214c71952fb9f2e5f5af0fa5"
+  },
+  "DRIVE:development_run_001/mechanism_c1_001/tables/s6_pair_rows.csv.gz": {
+   "equals_drive_manifest": true,
+   "sha256": "30c6bb322a3d33388b667a48f02ea4ab86a1bf7922d662df1f6319eb7a2f98a7"
+  },
+  "DRIVE:development_run_001/mechanism_c1_001/tables/s6_validity_summary.json": {
+   "equals_drive_manifest": true,
+   "sha256": "7eb3dd05181734d448d2c9e92382d2c3c5c1fb99f9bd1b0f5e7daeed877f28c9"
+  },
+  "DRIVE:development_run_001/trajectory_audit_001/audit_summary.json": {
+   "equals_drive_manifest": true,
+   "sha256": "e41744233165cdc0b6aefd71b3094d147feba5e6ad6f20d5b00505bc7f4f959d"
+  },
+  "DRIVE:development_run_001/trajectory_audit_001/per_scene_checks.csv": {
+   "equals_drive_manifest": true,
+   "sha256": "5765e911458a383ce34cd5bacfd51713e28bd4e0f20306b89a8f18eb85ecadde"
+  }
+ },
+ "label": "POST_HOC_EXPLORATORY",
+ "not_done": [
+  "sub-step or controller-internal observation (needs a simulator; see FUTURE_DIAGNOSTIC_OPTIONS.md)",
+  "closed-form truth for convex-mesh penetration",
+  "EPA (NOT_IMPLEMENTED; Qhull Minkowski facets used instead)",
+  "S4/S5 re-analysis with hull geometry"
+ ],
+ "outputs": {
+  "CHECK4_ALL_MOVES.csv": "582c4b37b9d12cb78a39154289c5946a08934f130029f087791b506cf3d91ccd",
+  "CHECK4_CASE_NOTES.md": "b8916ea287786dcac4ad85bd385c19ab079bfbd71b195e304529d17450281ce2",
+  "CHECK4_DIAGNOSTIC_REPORT.md": "a712e10ca4add2edeb1a18bfc2915c414db67d81e37db5db5b16472ae2cdb641",
+  "CHECK4_FAILURE_CASES.csv": "fa7e20d37b58a40ad7d01b3c787a370c61e8edba9a179c7943ffcc1afc7cc311",
+  "CHECK4_FIRST_STEP_MODEL_PREDICTIONS.csv": "6b0e0339c1ccb4d94a31ce28706d1b0408834f9dccd9ebf869c4cf6464cbea38",
+  "CHECK4_STEPWISE.csv": "244bd73aadb9050e55ae1ad2a9effb2f96a3060bcf407eedeae4a28c6f152260",
+  "CHECK4_SUMMARY.json": "a6e9518114e9c2ec604d30e6787d35f13ac7417dcc81b6672464626cf24df4e3",
+  "CLAIMS_TO_EVIDENCE.csv": "128bef9d571c69532761e96b1796554467298c7f2e9704d65ff5e547816c5de0",
+  "FUTURE_DIAGNOSTIC_OPTIONS.md": "3a8c00c27926ffe137935d7783c722ad733cbaa6bbe0b1ded33273dd0706f4d1",
+  "GEOMETRY_KNOWN_TRUTH_RESULTS.csv": "b211666812639328c85acf6f820b2b3f5bc1e4db5af028b4e70ff9a717b55beb",
+  "GEOMETRY_LOGGED_MESH_CHECK.json": "34ed7c37b90c90cc6ba631bee295d161baafccebe3d8b1bec66e4bfb556891b3",
+  "GEOMETRY_REFERENCE_NOTES.md": "3842ed0c4ccdfd453879ac13eefa1eed15e9d6955c0f05a7d181aad92a8bfeaa",
+  "GEOMETRY_VALIDATION_REPORT.md": "8060081ab2eb6e88b909d79f250309d7e676dea2c04bb62ef263f5cbe01f60ac",
+  "S6_DIAGNOSTIC_REPORT.md": "cec1f86fb3da17817ea7f742f781b6b0d935cf58ca9cefcb44492220e657b6a3",
+  "S6_DIAGNOSTIC_SUMMARY.json": "a0f8163b717072e0d60d218da029edd044dce1dd0f4432f389aa03d998a6160f",
+  "S6_ERRORS_BY_GROUP.csv": "542990b69b36dcc7d0c75f219e043393437dc4f995945e8720f7f734baa342e8",
+  "S6_EXTREME_CASES.csv": "85b29cc9e77331b4f45a7a693ce8ee36f2576fc494969ea9d11506d99751cd14",
+  "S6_NORMAL_RAY_CHECK.csv": "6a0594847c811c5e854bc509c107e33a7cdc57152b6f35cb65bb87e784092a5a",
+  "S6_NORMAL_RAY_SUMMARY.json": "7eefe20287b79279c9cf13e87910bf01f603470f9479b40ac211eeacc584b829",
+  "S6_RECOMPUTED_SUBSET.csv.gz": "a31ddea2c04ec0ea51e9bd72edb916751ff548f382f453d1de173040568ac0ba",
+  "S6_TIME_SHIFT_BY_KIND.csv": "3e8f00c000b7788d15477908a1cfd3872bba0b948879a1f7991de9596dc9a61e",
+  "SOURCE_INVENTORY.md": "0264af5b7d96329aaa94c6a9324cebf75d02a4531c7883ad745c31e6d784e85c",
+  "START_HERE.md": "5044e589821ec0c45ec088f4ddecdda562280c510953aba1ee3afb0110504d3c",
+  "figures/check4_first_step_model.png": "7230e7e1d866b1c5676ab77402d7b9df9defa0c897f406d11ca613f56368bd1d",
+  "figures/check4_first_step_vectors.png": "e7f320aa8046f990420770877d83dd9abfe42745507c5fc06681bf5761f9028c",
+  "figures/check4_v2_stepwise.png": "a719facd5b2f0251aeebe8cd59d270df6676e108bde8127399b6130755b8895a",
+  "figures/s6_by_separation_and_motion.png": "cb7419fda55c15299720b15cf30aa572bee2059b561209c83ce38b6d7625f5ba",
+  "figures/s6_extreme_cases.png": "82abfa7b3936a4ae65cba824a0ad65cd26cb06225e3555a17305bc577fb632fe",
+  "figures/s6_time_shift_sensitivity.png": "3c4c64407be09f58cfb9db2d37530bb0d56fe096b4c695393d910c020e8a06d7",
+  "logs/diagnose_check4_offline.log": "98510dd02c8a5f18fbcd3c1dac4f7d635a2cc96af022333a8947a32336e05de3",
+  "logs/diagnose_s6_offline.log": "1632d85eb79e792545211d56c7d7dd198e9362af3b92a02151baccfbdd8a59d0",
+  "logs/make_manifest.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "logs/pytest_existing_related.log": "cb15c97e606d00d709cbaddf3ee11aaf00813ddf9334a1aad8db088937539b96",
+  "logs/pytest_new_tests.log": "ccaa109b4dc1503ba5c452dd9bb95d31aaa42b28e82993147472a28d4443f169",
+  "logs/run_geometry_validation.log": "ddf5e91411f47f1a21de1d88525669dce20ae660aef4848952f7bb9532cc0181",
+  "logs/s6_case_figures.log": "6f0cd90fe3e1be23c66d9ced0f4676566258b21ed93365a3cb6a39710c776d33",
+  "logs/s6_normal_ray_check.log": "60001d454275796ef2f4db1a1be756500f7d6a32dcee8f6c008be6a9271784fd",
+  "logs/s6_normal_ray_check_try1_without_support_plane.log": "728cd3e86238dc7baef1c4dbc29b0ddf9bc3c9a552153931adef6333ced83751"
+ },
+ "protected_files": {
+  "changed_vs_HEAD": [],
+  "git_head": "42852e5c421ae2f49173144c98c18a620f5d77c6",
+  "sha256": {
+   "configs/stackcube.yaml": "b145ca59607f4edf45f20bd45624f1bd4c8ff028a035ee4ab12b7de40bb08d8b",
+   "mechanism_analysis/run_analysis.py": "a9dfaeaa2afa8082eda41c1e97da85836e09dd9b6b1cec7ac829adc8ef2ba410",
+   "mechanism_analysis/s6_validity.py": "9b9d8fe10487d66ada20c08a8fe32f85b405623db3b7ab1edbbf76fcb96ca7c2",
+   "results/vision_center_v2_c1_001/preparation_v3/plan.json": "6b3f04fea1ea5346d6f0725b6e49ae9ce04c4fb132f37450243a807024e5dbf7",
+   "scripts/34_vision_center_c1.py": "0931964665f25f5aefb8a93f99d333b224051f83ee545a9e2be71e0c82771a91",
+   "scripts/35_c1_trajectory_audit.py": "89a8fbcc4535a2b9e7af732d6ecf9aa00a4086c64ef23ba93b1e0412f7c944dc",
+   "scripts/38_c1_spatial_audit_v2.py": "d19d57140f2ffce86d397e401deacbdda89e00947fb0ab4e2438798c5c0cd713",
+   "src/hci/recovery_v1_oracle.py": "f652ead0a47750bd55ff990391ff4bb02d4af44331d351d4adea7112a973e765",
+   "src/hci/simulation.py": "c42626728cac7eb9ebeffd5372683fc4ba01e41ef9d050f01e51134b0208fe9d",
+   "src/hci/spatial_geometry.py": "3485cf5b133883228bbf7d8b63feb7d5945bf489bd619b4f12c8498df36ab22b",
+   "src/hci/spatial_links.py": "8d9e945704470923d1f1a9a69b7401f490360d8a4165dea51ddcf187c99860a8",
+   "src/hci/spatial_probe.py": "77fe1027bebddc6718b8624c5a5aa329c176750e5e8bc84a54cc5f4e8959d122",
+   "src/hci/trajectory_audit.py": "b0aca2c493423a95c9094961467bf2440531469bb34f08e1aae351ce15bc90a3",
+   "src/hci/vision_center.py": "cc4a743976eb33da0824c1954a0ac19d075fc87b1369e45139812c09dce2797d",
+   "src/hci/vision_center_c1.py": "8e914ed2d7ad2e5e48c1080b0fd8505aa452598bcb2df22712d6612f185cfcd2",
+   "src/hci/vision_center_v2.py": "ab548ccc3825f9e25a7f979d4348563c34c1926c078e0acbd51f0101fd174fbc"
+  },
+  "unchanged": true
+ },
+ "raw_archive": {
+  "equal": true,
+  "path": "runs/vision_center_v2_c1_001_server/vision_center_v2_c1_out.tgz",
+  "sha256_expected": "c3960c8db0b0dcfa7a9da56cf602056c57c691bcbe06bea22151e359782b60f2",
+  "sha256_now": "c3960c8db0b0dcfa7a9da56cf602056c57c691bcbe06bea22151e359782b60f2"
+ },
+ "results_unchanged": {
+  "Check4_V2": "9/41 and 5/39 FAIL",
+  "S6_official": "FAIL (both policies)",
+  "V2_rescue_harm_vs_C0": "14/1 (train_seed_1), 16/0 (train_seed_2)"
+ },
+ "run_folder_vs_server_sha256_list": {
+  "files_in_run_folder": 1252,
+  "listed_on_server": 1252,
+  "sha256_mismatch_or_unlisted": [],
+  "unchanged_since_packaging": true
+ },
+ "status": "COMPLETE",
+ "upstream_source_read": "ManiSkill a4a4f9272ad64b1564035874b605ceb687b63ed8 (raw.githubusercontent.com, read-only): utils/structs/types.py, agents/robots/panda/panda.py, agents/controllers/pd_ee_pose.py, pd_joint_pos.py, base_controller.py, envs/sapien_env.py, envs/tasks/tabletop/stack_cube.py, envs/scene.py",
+ "verification_scope": {
+  "Check4": "all 715 moved branches of all arms; the 14 V2 failures reproduced three ways",
+  "S6": "official FAIL reproduced exactly; decomposition on all rows; raw recomputation on a rule-selected subset of 8,394 rows (400 scene-runs)",
+  "geometry": "19 closed-form cases + transform tests + cross-path checks; boxes verified, meshes cross-checked only"
+ },
+ "what": "C1 post-hoc physics diagnostics (S6 decomposition, Check 4 decomposition, independent geometry validation); stored records only; no simulation, rollout, inference, training, GPU or paid compute"
+}
