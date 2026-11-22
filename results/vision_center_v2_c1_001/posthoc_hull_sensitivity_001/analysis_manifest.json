@@ -1,0 +1,108 @@
+{
+ "code_reused_unchanged": {
+  "research_diagnostics/c1_physics_001/common.py": "013a961bc0d87e802980f51d523ae843b5c4b91d05783df3ca6f87f9785b5186",
+  "src/hci/spatial_geometry.py": "3485cf5b133883228bbf7d8b63feb7d5945bf489bd619b4f12c8498df36ab22b",
+  "src/hci/spatial_links.py": "8d9e945704470923d1f1a9a69b7401f490360d8a4165dea51ddcf187c99860a8"
+ },
+ "code_sha256": {
+  "research_diagnostics/c1_hull_sensitivity_001/aggregate.py": "7696b649de4839486deafdc7dbd565305ea2259cb7ec501efb5eeaca10a139bb",
+  "research_diagnostics/c1_hull_sensitivity_001/check_equivalence.py": "73a836e4b25666eef0fcc4638c1f8742a471e5a60d7011ba762160fcdde6d50e",
+  "research_diagnostics/c1_hull_sensitivity_001/failure_details.py": "be9c9174c0b028489a40ab6a2140edb8d2033dc64ba438bb874c93211b1822f4",
+  "research_diagnostics/c1_hull_sensitivity_001/hull_s45.py": "c79f899d4b68fcbc205ed86337cd489c9801ec2e7e5d4a9b381adff5612882d2",
+  "research_diagnostics/c1_hull_sensitivity_001/make_manifest.py": "611cad3345824b63a2495cd699c1eafe545e15867dda0e88daeaf6abae1944f3",
+  "research_diagnostics/c1_hull_sensitivity_001/run_all.py": "5d7a2443c02208286cfd38b982dc7190d861cccc8c4d9d1f0976956acbafc121",
+  "research_diagnostics/c1_hull_sensitivity_001/test_hull_s45.py": "a038cbed4c5a54dd6fcc6fee23c83b46a570c13181e20dede7e7ce0ffcb46765"
+ },
+ "commands": [
+  "python -P research_diagnostics/c1_hull_sensitivity_001/run_all.py --work runs/c1_hull_sensitivity_001/work --workers 4   (exit 0, 400/400, 493 s)",
+  "python -P research_diagnostics/c1_hull_sensitivity_001/aggregate.py --work runs/c1_hull_sensitivity_001/work --out results/vision_center_v2_c1_001/posthoc_hull_sensitivity_001   (exit 0)",
+  "python -P research_diagnostics/c1_hull_sensitivity_001/check_equivalence.py --out .../LEAN_VS_FULL_EQUIVALENCE.json   (exit 0, all identical)",
+  "python -P research_diagnostics/c1_hull_sensitivity_001/failure_details.py --branches .../S45_BRANCH_RESULTS.csv --out .../S45_FAILURE_DETAILS.json   (exit 0)",
+  "python -P -m pytest -v -p no:cacheprovider research_diagnostics/c1_hull_sensitivity_001/test_hull_s45.py   (exit 0, 4 passed)",
+  "python -P research_diagnostics/c1_hull_sensitivity_001/make_manifest.py"
+ ],
+ "created_utc": "2026-11-22T19:07:48+00:00",
+ "environment": {
+  "matplotlib": "3.11.1",
+  "numpy": "2.4.6",
+  "platform": "Windows-11",
+  "python": "3.14.4",
+  "scipy": "1.18.0"
+ },
+ "frozen_plan": {
+  "equal": true,
+  "path": "results/vision_center_v2_c1_001/preparation_v3/plan.json",
+  "sha256": "6b3f04fea1ea5346d6f0725b6e49ae9ce04c4fb132f37450243a807024e5dbf7"
+ },
+ "inputs": "every scene record and trace of both policies (400 scene-runs); each trace checked against the sha256 in its record at load; record and trace sha256 per branch in S45_BRANCH_RESULTS via the work files (runs/c1_hull_sensitivity_001/work, not in Git)",
+ "label": "POST_HOC_EXPLORATORY",
+ "outputs": {
+  "CLAIMS_TO_EVIDENCE.csv": "0d49110972df07466a64b33f0ddfbf68904f88355ca277459c0bcae5e3260fb5",
+  "LEAN_VS_FULL_EQUIVALENCE.json": "e67fdbb2959de221b9eded880755dae5a1df9a5b11ca9021d13ffc9b401a7054",
+  "MESH_SHAPE_STATS.csv": "9bb3e80616261275171db93500de3e547d44a0127f7900e8c31e9c58701fb366",
+  "RECORDED_CASES_REPRODUCTION.csv": "27c814e62f424359b6805c98a3d05906ffd965f79c9d161b0b23563d18365f6a",
+  "S45_BRANCH_RESULTS.csv": "05d7fa87befbc818b558f0c02c354e7d6b7f208b4e7427bbd990aa9219699197",
+  "S45_FAILURE_DETAILS.json": "0c45134f0168d087a66eb53485dc14e2cbd522b99ced7333311af605836da0d5",
+  "S45_HULL_SENSITIVITY_SUMMARY.json": "b23a948d3047dbcb65924f9c719f978cf3745107b1a57a15e501bb21ae22f32c",
+  "S4_MOVE_ROWS.csv": "abc2ece7689a572b8431ed8cbf90712820f32cb2d6a14064af1f4c002484506f",
+  "S5_OBSERVED_MESH_PAIR_ROWS.csv": "9e6c0be53d2b9692a5c386a55d831751d5942d9250d809b438c5a359dd122898",
+  "S5_OBSERVED_PAIRS_BY_KIND.csv": "3c62d7d82d5fafba1a9fe9e77b741d4b90a59a7e60d0b9cf5bc7703b6e5f1de2",
+  "figures/mesh_shapes_vs_hull.png": "a20dcd7fd9a84774eae00c035ee6c30b6f034eae212d53d12130051c7cfa6d64",
+  "figures/s4_logged_vs_hull.png": "c50d2efd0e41d25cdca2f8c56a8deb90d22d37b56fe3635c950b4c3fecc1ef3f",
+  "figures/s5_observed_pairs.png": "fc07bf357ebb63a135eb51cf2002d8323b8db9ea355b6b79b0e752806be274f0",
+  "logs/aggregate.log": "6926d0499bbf2ff07be3e9ffc457da00db39c442c9cd64d14f3cfa75278ea4ca",
+  "logs/aggregate_try1.log": "6926d0499bbf2ff07be3e9ffc457da00db39c442c9cd64d14f3cfa75278ea4ca",
+  "logs/check_equivalence.log": "de70988e3e2f1bdf47f5eeda781d65a81ca7316bcfbf1885e6b8a81e49c1f0d5",
+  "logs/failure_details.log": "7f2639c6174acb4d927a9b5ad693399c9b977caa93b8a1dd75ae2a7a793c777a",
+  "logs/pytest_new_tests.log": "05c806fb5011f8bb98af9e318eb65531b05cdf36666328f06d9697bc8d9cb2a2",
+  "logs/pytest_new_tests_try1_stat_definition_bug.log": "01387268e0e5f5987a92108aadb3940acf1217d54bf3eb87d03d70c3e29362a4",
+  "logs/run_all.log": "0fd602406f23822df1bcc98b2dc189f203d2d38738b29587937dd4e46397b471",
+  "logs/run_all_try1.log": "2ba5ee80b96ba415d5df2b190f836719840336ec6f329f0e692fb904fb7068cb"
+ },
+ "protected_files": {
+  "changed_vs_HEAD": [],
+  "git_head": "f38e3ff2b523f031e4be9c680d643eceacae40f9",
+  "sha256": {
+   "configs/stackcube.yaml": "b145ca59607f4edf45f20bd45624f1bd4c8ff028a035ee4ab12b7de40bb08d8b",
+   "mechanism_analysis/run_analysis.py": "a9dfaeaa2afa8082eda41c1e97da85836e09dd9b6b1cec7ac829adc8ef2ba410",
+   "mechanism_analysis/s6_validity.py": "9b9d8fe10487d66ada20c08a8fe32f85b405623db3b7ab1edbbf76fcb96ca7c2",
+   "results/vision_center_v2_c1_001/preparation_v3/plan.json": "6b3f04fea1ea5346d6f0725b6e49ae9ce04c4fb132f37450243a807024e5dbf7",
+   "scripts/34_vision_center_c1.py": "0931964665f25f5aefb8a93f99d333b224051f83ee545a9e2be71e0c82771a91",
+   "scripts/35_c1_trajectory_audit.py": "89a8fbcc4535a2b9e7af732d6ecf9aa00a4086c64ef23ba93b1e0412f7c944dc",
+   "scripts/38_c1_spatial_audit_v2.py": "d19d57140f2ffce86d397e401deacbdda89e00947fb0ab4e2438798c5c0cd713",
+   "src/hci/recovery_v1_oracle.py": "f652ead0a47750bd55ff990391ff4bb02d4af44331d351d4adea7112a973e765",
+   "src/hci/simulation.py": "c42626728cac7eb9ebeffd5372683fc4ba01e41ef9d050f01e51134b0208fe9d",
+   "src/hci/spatial_geometry.py": "3485cf5b133883228bbf7d8b63feb7d5945bf489bd619b4f12c8498df36ab22b",
+   "src/hci/spatial_links.py": "8d9e945704470923d1f1a9a69b7401f490360d8a4165dea51ddcf187c99860a8",
+   "src/hci/spatial_probe.py": "77fe1027bebddc6718b8624c5a5aa329c176750e5e8bc84a54cc5f4e8959d122",
+   "src/hci/trajectory_audit.py": "b0aca2c493423a95c9094961467bf2440531469bb34f08e1aae351ce15bc90a3",
+   "src/hci/vision_center.py": "cc4a743976eb33da0824c1954a0ac19d075fc87b1369e45139812c09dce2797d",
+   "src/hci/vision_center_c1.py": "8e914ed2d7ad2e5e48c1080b0fd8505aa452598bcb2df22712d6612f185cfcd2",
+   "src/hci/vision_center_v2.py": "ab548ccc3825f9e25a7f979d4348563c34c1926c078e0acbd51f0101fd174fbc"
+  },
+  "unchanged": true
+ },
+ "raw_archive": {
+  "equal": true,
+  "path": "runs/vision_center_v2_c1_001_server/vision_center_v2_c1_out.tgz",
+  "sha256_now": "c3960c8db0b0dcfa7a9da56cf602056c57c691bcbe06bea22151e359782b60f2"
+ },
+ "recorded_case_inputs": "DRIVE:development_run_001/figures/case_figures_001/*/*/plotted.json (sha256 per file in RECORDED_CASES_REPRODUCTION.csv)",
+ "results_unchanged": {
+  "Check4_V2": "9/41 and 5/39 FAIL",
+  "S6_official": "FAIL (both policies)",
+  "V2_rescue_harm_vs_C0": "14/1 (train_seed_1), 16/0 (train_seed_2)",
+  "plan": "6b3f04fea1ea5346d6f0725b6e49ae9ce04c4fb132f37450243a807024e5dbf7"
+ },
+ "run_folder_vs_server_sha256_list": {
+  "files": 1252,
+  "mismatch_or_unlisted": [],
+  "unchanged_since_packaging": true
+ },
+ "status": "COMPLETE",
+ "superseded": [
+  "try 1 (runs/c1_hull_sensitivity_001/superseded_try1/, not used): the mesh statistic logged_triangles_not_hull_faces counted a different diagonal of a planar hull face as off-hull (a new test failed); fixed to \"not on any hull facet plane\", then the whole run, aggregation and equivalence check were repeated in a new work folder. S4/S5 values of try 1 were identical.",
+  "failure_details try 1: the phase label of trunk rows used the branch trigger (None for the trunk); fixed and re-run; numbers unchanged."
+ ],
+ "what": "C1 S4/S5 sensitivity to the convex-mesh triangulation: logged PhysX meshes vs the convex hull of the same vertices; stored records only; no simulation, rollout, training, GPU or paid compute"
+}
