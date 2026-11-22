@@ -85,9 +85,19 @@ def require_authorization(run):
     return a
 
 
+def cmd_placement(a):
+    run = Path(a.run); require_authorization(run); out = run / 'placement.json'
+    if out.exists(): raise SystemExit(f'{out} exists')
+    import importlib.util
+    spec = importlib.util.spec_from_file_location('x40p', REPO / 'scripts' / '40_v2_confirm.py'); X40 = importlib.util.module_from_spec(spec); spec.loader.exec_module(X40)
+    rep = X40.placement_check(seeds(), WORK); out.write_text(json.dumps(rep, indent=1), encoding='utf-8'); print(json.dumps({k: rep[k] for k in ('pass', 'seeds_checked', 'references')}))
+    if not rep['pass']: raise SystemExit(2)
+
+
 def cmd_run(a):
     run = Path(a.run); require_authorization(run); plan = json.loads((run / 'plan.json').read_text(encoding='utf-8')); V.verify_manifest(plan)
     ss = seeds() if a.seeds is None else [int(s) for s in a.seeds]
+    if a.seeds is None and not ((run / 'placement.json').is_file() and json.loads((run / 'placement.json').read_text())['pass']): raise SystemExit('the placement check has not passed')
     if a.seeds is not None and (set(ss) & set(range(30000, 30400)) or set(ss) & set(range(90000, 90400))): raise SystemExit('--seeds may not name calibration or test seeds')
     out = run / 'pass'
     if out.exists(): raise SystemExit(f'{out} exists: never resumed or repeated')
@@ -139,9 +149,10 @@ def cmd_analyze(a):
 def main():
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter); s = p.add_subparsers(dest='cmd', required=True)
     q = s.add_parser('plan'); q.add_argument('--run', required=True)
+    q = s.add_parser('placement'); q.add_argument('--run', required=True)
     q = s.add_parser('run'); q.add_argument('--run', required=True); q.add_argument('--upstream', default='third_party/ManiSkill'); q.add_argument('--device', default='cuda'); q.add_argument('--seeds', nargs='*', default=None); q.add_argument('--ledger')
     q = s.add_parser('analyze'); q.add_argument('--run', required=True); q.add_argument('--out', required=True); q.add_argument('--seeds', nargs='*', default=None)
-    a = p.parse_args(); {'plan': cmd_plan, 'run': cmd_run, 'analyze': cmd_analyze}[a.cmd](a)
+    a = p.parse_args(); {'plan': cmd_plan, 'placement': cmd_placement, 'run': cmd_run, 'analyze': cmd_analyze}[a.cmd](a)
 
 
 if __name__ == '__main__':

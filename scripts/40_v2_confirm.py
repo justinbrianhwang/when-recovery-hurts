@@ -141,14 +141,14 @@ def cmd_analyze(a):
 
 
 # ---------------------------------------------------------------- placement (needs the simulator, no policy)
-def cmd_placement(a):
-    man = frozen(a.frozen); stage = man['stage']; out = Path(a.out) / f'placement_{stage}.json'
-    if out.exists(): raise SystemExit(f'{out} exists')
-    X34 = _load('c1_driver_for_keys', '34_vision_center_c1.py')                    # reference placements exactly as the C1 placement check
+def placement_check(seeds, label):
+    """Initial cube placements of `seeds` (env reset only, no policy) against every placement on record, exactly as the C1
+    placement check (scripts/34 cmd_scenes) plus the C1 development scenes. Returns the report dict."""
+    X34 = _load('c1_driver_for_keys', '34_vision_center_c1.py')
     from hci.simulation import make_env
     from hci.trees import as_numpy
     from hci.io import read_json
-    c = load_config(); env = make_env(c); seeds = V.split_seeds(SPLITS_JSON, stage)
+    c = load_config(); env = make_env(c)
 
     def key(seed):
         env.reset(seed=int(seed)); return np.array([*as_numpy(env.cubeA.pose.p)[0], *as_numpy(env.cubeB.pose.p)[0]], float)
@@ -158,17 +158,25 @@ def cmd_placement(a):
                 **{f'vision_v1/{k}': v for k, v in read_json(D.SEED_SOURCES['vision_v1'])['splits'].items()}, **{f'{n}/{k}': v for n, p in X34.USED.items() for k, v in read_json(p)['splits'].items()},
                 **{f'c1/{k}': v for k, v in read_json(X34.MANIFEST)['splits'].items()}}
         for name, ids in sets.items():
-            for s in ids: refs[f'{name}/{s}'] = key(s)
+            for s in ids:
+                if int(s) not in set(seeds): refs[f'{name}/{s}'] = key(s)
         names = list(refs); table = np.stack([refs[n] for n in names]); own = {}; clashes = []
         for s in seeds:
             k = key(s); dd = np.abs(table - k).max(1); j = int(dd.argmin()); twin = [t for t, v in own.items() if np.abs(v - k).max() <= X34.X.IDENTICAL_M]
             if dd[j] <= X34.X.IDENTICAL_M or twin: clashes.append({'seed': s, 'identical_to': names[j] if dd[j] <= X34.X.IDENTICAL_M else twin[0]})
             own[str(s)] = k
-        rep = {'pass': not clashes, 'stage': stage, 'identical_placements': clashes, 'seeds_checked': len(own), 'references': len(names), 'scope': 'initial cube placement only; no policy was run'}
-        Path(a.out).mkdir(parents=True, exist_ok=True); out.write_text(json.dumps(rep, indent=1), encoding='utf-8'); print(json.dumps({k: rep[k] for k in ('pass', 'seeds_checked', 'references')}))
-        if clashes: raise SystemExit(2)
+        return {'pass': not clashes, 'set': label, 'identical_placements': clashes, 'seeds_checked': len(own), 'references': len(names), 'identical_threshold_m': X34.X.IDENTICAL_M,
+                'scope': 'initial cube placement only; no policy was run'}
     finally:
         env.close()
+
+
+def cmd_placement(a):
+    man = frozen(a.frozen); stage = man['stage']; out = Path(a.out) / f'placement_{stage}.json'
+    if out.exists(): raise SystemExit(f'{out} exists')
+    rep = placement_check(V.split_seeds(SPLITS_JSON, stage), stage)
+    Path(a.out).mkdir(parents=True, exist_ok=True); out.write_text(json.dumps(rep, indent=1), encoding='utf-8'); print(json.dumps({k: rep[k] for k in ('pass', 'seeds_checked', 'references')}))
+    if not rep['pass']: raise SystemExit(2)
 
 
 def main():
