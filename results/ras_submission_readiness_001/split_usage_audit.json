@@ -1,0 +1,54 @@
+{
+ "scope": "seed-level usage of 30000-30399 and 90000-90399; no environment reset",
+ "files_scanned": 6198,
+ "files_unreadable": [
+  {
+   "file": "restore_divergence.csv",
+   "error": "TypeError"
+  },
+  {
+   "file": "training_eval.csv",
+   "error": "TypeError"
+  },
+  {
+   "file": "recomputed_summary.json",
+   "error": "JSONDecodeError"
+  },
+  {
+   "file": "timing_diagnostic.json",
+   "error": "JSONDecodeError"
+  }
+ ],
+ "n_unreadable": 4,
+ "uses_under_seed_keys": [],
+ "n_uses": 0,
+ "files_with_uses": {},
+ "files_named_like_a_split_seed": [],
+ "declarations": [
+  {
+   "file": "configs/splits.json",
+   "calibration": [
+    30000,
+    30399,
+    400
+   ],
+   "test": [
+    90000,
+    90399,
+    400
+   ]
+  }
+ ],
+ "ledgers": [
+  "policy_qualify_A.json",
+  "policy_qualify_B.json",
+  "recovery_v1_oracle_xy_pilot.json",
+  "vision_center_c1.json",
+  "vision_center_pilot.json",
+  "vision_center_v2_pilot.json",
+  "vision_v1_qualify.json"
+ ],
+ "test_started_markers": [],
+ "frozen_folders": [],
+ "verdict": "UNUSED"
+}

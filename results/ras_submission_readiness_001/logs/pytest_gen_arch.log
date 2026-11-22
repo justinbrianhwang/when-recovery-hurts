@@ -1,0 +1,18 @@
+============================= test session starts =============================
+platform win32 -- Python 3.14.4, pytest-9.1.1, pluggy-1.6.0 -- C:\Python314\python.exe
+rootdir: C:\Users\황선준\Desktop\Coding\Robot\robot harm intervention starter
+configfile: pyproject.toml
+plugins: anyio-4.15.1
+collecting ... collected 2 items
+
+tests/test_gen_arch_plainconv.py::test_constants_are_the_declared_design PASSED [ 50%]
+tests/test_gen_arch_plainconv.py::test_plan_authorization_ledger_run_analyze_and_refusals PASSED [100%]
+
+============================== warnings summary ===============================
+tests/test_gen_arch_plainconv.py::test_plan_authorization_ledger_run_analyze_and_refusals
+  C:\Users\황선준\Desktop\Coding\Robot\robot harm intervention starter\tests\test_vision_center.py:124: UserWarning: Creating a tensor from a list of numpy.ndarrays is extremely slow. Please consider converting the list to a single numpy.ndarray with numpy.array() before converting to a tensor. (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\torch\csrc\utils\tensor_new.cpp:255.)
+    o = super().obs(); o['extra']['tcp_pose'] = torch.cat([self.p, torch.tensor([DOWN], dtype=torch.float32)], -1); p = o['extra']['tcp_pose'][0].numpy().astype(float)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+================== 2 passed, 1 warning in 150.45s (0:02:30) ===================
+exit=0
