@@ -1,0 +1,103 @@
+{
+  "work": "rgb_replay_001",
+  "phase_b_plan_sha256": "1b4ea3bb65bd4cfdffc13a610fee010d568a5837e632701d4b0d265e6ba66e86",
+  "policy": {
+    "path": "artifacts/policies/stack_v1_s1_d500_clean_resnet18_i080000",
+    "weights.pt": "a37be25603d6c7b7d5cfa1872e6c1134c436f78de02b745c481c88d5d0f69629",
+    "policy_meta.json": "4ccfba34ee42b3bab344f7d320c57c6a97011f5adf8b93c04a36b886303b138e",
+    "train_seed": 1,
+    "iteration": 80000,
+    "weights": "EMA",
+    "source_checkpoint_sha256": "5cd8e95d589154981569cad2a3a5f4c8cd670da4444ac7ecb8bf6971484652ed"
+  },
+  "cases": {
+    "recovery_success": {
+      "stage": "shadow",
+      "scene": 50632,
+      "arms": [
+        "C0",
+        "VISION_CENTER_V1",
+        "VISION_CENTER_V2"
+      ],
+      "frames_file": "recovery_success/frames_50632.npz",
+      "frames_sha256": "237c88f89f22f78f847fa7df85184d092ae629525ba5a21db40374d2a446b8f6",
+      "frames_layout": "per arm: index t = observation after step t (index 0 = after reset); arms share the trunk frames up to the trigger; 128 x 256, base_camera left, hand_camera right",
+      "steps_per_arm": {
+        "trunk": 200,
+        "C0": 200,
+        "VISION_CENTER_V1": 128,
+        "VISION_CENTER_V2": 127
+      },
+      "stored_record_sha256": "cb1ab33d54ab21cc68a45c38e5002302a62d0683271868539fdd694cacb4e79a",
+      "trajectory_reproduced_exactly": true,
+      "wall_seconds": 19.081262113992125
+    },
+    "unsafe_intervention": {
+      "stage": "pilot",
+      "scene": 51004,
+      "arms": [
+        "C0",
+        "VISION_CENTER_V1",
+        "VISION_CENTER_V2",
+        "CENTER_ORACLE"
+      ],
+      "frames_file": "unsafe_intervention/frames_51004.npz",
+      "frames_sha256": "0ea8268a579baa28463452bca62d280ab278e7943fef3c74a5ebb6b3650929e7",
+      "frames_layout": "per arm: index t = observation after step t (index 0 = after reset); arms share the trunk frames up to the trigger; 128 x 256, base_camera left, hand_camera right",
+      "steps_per_arm": {
+        "trunk": 200,
+        "C0": 200,
+        "VISION_CENTER_V1": 200,
+        "VISION_CENTER_V2": 200,
+        "CENTER_ORACLE": 200
+      },
+      "stored_record_sha256": "8e79142bcc084a3cf9a01df0c5b8e139e3ac1d6a28f77cdf2375dbb1fb864821",
+      "trajectory_reproduced_exactly": true,
+      "wall_seconds": 27.17423388408497
+    },
+    "memory_failure": {
+      "stage": "pilot",
+      "scene": 51009,
+      "arms": [
+        "C0",
+        "VISION_CENTER_V1",
+        "VISION_CENTER_V2",
+        "CENTER_ORACLE"
+      ],
+      "frames_file": "memory_failure/frames_51009.npz",
+      "frames_sha256": "fe8e15c0ca960b754a583e229a66122f02e7ade886a6ab3117ad0056b5468c4b",
+      "frames_layout": "per arm: index t = observation after step t (index 0 = after reset); arms share the trunk frames up to the trigger; 128 x 256, base_camera left, hand_camera right",
+      "steps_per_arm": {
+        "trunk": 200,
+        "C0": 200,
+        "VISION_CENTER_V1": 200,
+        "VISION_CENTER_V2": 200,
+        "CENTER_ORACLE": 200
+      },
+      "stored_record_sha256": "a56d273bb8daf50e7d4b66a4ac5c25f517546494080d1858cb3046ac813c7aca",
+      "trajectory_reproduced_exactly": true,
+      "wall_seconds": 22.092592034023255
+    }
+  },
+  "runtime": {
+    "python": "3.10.12 (main, Aug 31 2026, 10:18:17) [GCC 11.4.0]",
+    "platform": "Linux-6.8.0-147-generic-x86_64-with-glibc2.35",
+    "packages": {
+      "torch": "2.6.0+cu124",
+      "torchvision": "0.21.0+cu124",
+      "mani_skill": "3.0.1",
+      "sapien": "3.0.3",
+      "gymnasium": "0.29.1",
+      "diffusers": "0.30.3",
+      "numpy": "1.26.4",
+      "scipy": "1.13.1",
+      "PyYAML": "6.0.2"
+    },
+    "nvidia_smi": {
+      "returncode": 0,
+      "stdout": "name, driver_version, memory.total [MiB]\nNVIDIA GeForce RTX 4090, 595.99.02, 24564 MiB\n",
+      "stderr": ""
+    }
+  },
+  "all_reproduced_exactly": true
+}

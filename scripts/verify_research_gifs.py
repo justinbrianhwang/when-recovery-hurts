@@ -6,7 +6,11 @@
      was stored, the panel is the uniform grey placeholder.
   3. numbers and events shown: recomputed from the raw trace rows and the scene record.
 
-usage: python scripts/verify_research_gifs.py <phase_b_root> <gif_dir>   -> writes <gif_dir>/VERIFICATION.json (refuses overwrite)
+  With <replay_dir> (GIFs made from the RGB re-run, scripts/39_rgb_replay.py): 1b. the re-run's trace rows equal the stored
+  rows exactly and its frames equal every stored frame of the same step; 2. every Panel A crop is closest to the re-run
+  frame of its own step (the last frame of an ended episode is held).
+
+usage: python scripts/verify_research_gifs.py <phase_b_root> <gif_dir> [<replay_dir>]   -> writes <gif_dir>/VERIFICATION.json (refuses overwrite)
 """
 import gzip, hashlib, json, sys
 from pathlib import Path
@@ -48,7 +52,7 @@ def compare(cr, f):
     return float(np.mean(np.abs(g[INSET:-INSET, INSET:-INSET] - up[INSET:-INSET, INSET:-INSET])))
 
 
-def main(root, gdir):
+def main(root, gdir, rdir=None):
     gdir = Path(gdir); out = gdir / 'VERIFICATION.json'
     if out.exists(): raise SystemExit(f'Refused overwrite: {out}')
     man = json.loads((gdir / 'MANIFEST.json').read_text(encoding='utf-8')); res = {'what': 'independent check of the README GIFs against the raw Phase B records', 'cases': {}}; ok_all = True
@@ -58,21 +62,36 @@ def main(root, gdir):
                                     sha(scene) == m['source_files']['scene']['sha256']])
         with gzip.open(d / rec['trace'], 'rt', encoding='utf-8') as f: tr = json.load(f)['traces']
         with np.load(d / rec['frames']) as z: fr = {k: z[k] for k in z.files}
-        t0 = rec['trigger']['step']; cells = {c['arm']: c for c in rec['cells']}; ta, tb = m['steps_shown']; rows = m['arms_shown']
+        t0 = rec['trigger']['step']; cells = {c['arm']: c for c in rec['cells']}; ta, tb = m['steps_shown']; rows = m['arms_shown']; rp = None
+        if rdir is not None:                                                     # 1b. the re-run against the stored record
+            rd = Path(rdir) / name; seed = m['scene']
+            with gzip.open(rd / f'trace_{seed}.json.gz', 'rt', encoding='utf-8') as f: rtr = json.load(f)['traces']
+            with np.load(rd / f'frames_{seed}.npz') as z: rp = {k: z[k] for k in z.files}
+            same_rows = set(rtr) == set(tr) and all(len(rtr[k]) == len(tr[k]) and all(json.dumps(x, sort_keys=True) == json.dumps(y, sort_keys=True) for x, y in zip(rtr[k], tr[k])) for k in tr)
+            fd = {'trunk': int(np.abs(rp['trunk'][:len(fr['trunk'])].astype(int) - fr['trunk'].astype(int)).max())}
+            for k in fr:
+                if k == 'trunk' or k not in rp: continue
+                new = rp[k][t0:t0 + len(fr[k])]; new = new[:, :, 128:] if fr[k].shape[2] == 128 else new; fd[k] = int(np.abs(new.astype(int) - fr[k].astype(int)).max())
+            lens = {a: len(rp[a]) - 1 == cells[a]['steps'] for a in rows}
+            chk['replay'] = {'trace_rows_identical_json': bool(same_rows), 'max_abs_pixel_diff_to_stored_frames': fd, 'frames_cover_whole_episode': lens}
         # 2. Panel A
         gif = Image.open(gdir / 'hires' / f'{name}_1280x720.gif'); assert gif.n_frames == tb - ta + 1, (name, gif.n_frames)
         shown = mism = grey = grey_bad = 0; bad = []; errs = []
         for n, t in enumerate(range(ta, tb + 1)):
             gif.seek(n); im = gif.copy()
             for i, a in enumerate(rows):
-                cand = {('trunk', q): fr['trunk'][q] for q in range(len(fr['trunk']))} | ({(a, j): fr[a][j] for j in range(len(fr[a]))} if a in fr else {})
-                exp = ('trunk', t) if t <= t0 else ((a, t - t0) if a in fr and t - t0 < len(fr[a]) else None)
+                if rp is not None:
+                    cand = {(a, q): rp[a][q] for q in range(len(rp[a]))}; exp = (a, min(t, len(rp[a]) - 1))
+                else:
+                    cand = {('trunk', q): fr['trunk'][q] for q in range(len(fr['trunk']))} | ({(a, j): fr[a][j] for j in range(len(fr[a]))} if a in fr else {})
+                    exp = ('trunk', t) if t <= t0 else ((a, t - t0) if a in fr and t - t0 < len(fr[a]) else None)
                 cr = crop(im, i, a)
                 if exp is None:
                     grey += 1; rr_, (t_, b_, l_, r_) = cr; c = rr_[int(t_) + INSET:int(b_) - INSET, int(l_) + INSET:int(r_) - INSET]; frac = np.mean(np.all(np.abs(c - 175) < 3, -1))
                     if frac < 0.85: grey_bad += 1; bad.append((t, a, 'placeholder expected', round(float(frac), 3)))
                     continue
-                shown += 1; near = [k for k in cand if (k[0] == 'trunk') == (exp[0] == 'trunk') and abs((k[1] if k[0] == 'trunk' else k[1] + t0) - t) <= 3] + [exp]
+                step = (lambda k: k[1]) if rp is not None else (lambda k: k[1] if k[0] == 'trunk' else k[1] + t0)
+                shown += 1; near = [k for k in cand if (k[0] == 'trunk') == (exp[0] == 'trunk') and abs(step(k) - step(exp)) <= 3] + [exp]
                 err = {k: compare(cr, cand[k]) for k in set(near)}; best = min(err, key=err.get); errs.append(err[exp])
                 if best != exp and err[best] < err[exp] - 1e-9: mism += 1; bad.append((t, a, 'closest raw frame', list(best), 'expected', list(exp)))
         chk['panel_A'] = {'frames_shown': shown, 'closest_raw_frame_is_the_step_s_own': shown - mism, 'placeholders': grey, 'placeholders_not_grey': grey_bad, 'max_mean_abs_pixel_difference_to_its_raw_frame': round(max(errs), 2) if errs else None, 'problems': bad[:10]}
@@ -104,11 +123,12 @@ def main(root, gdir):
             nmatch['memory'] = {'t_last': mt['t_last'], 'remembered_vs_true_target_at_trigger_mm': round(float(np.hypot(mt['xy'][0] - b[0], mt['xy'][1] - b[1])) * 1e3, 2),
                                 'target_moved_since_last_view_mm': round(float(np.hypot(b[0] - b_last[0], b[1] - b_last[1])) * 1e3, 2), 'ok': True}
         chk['numbers'] = nmatch; chk['events'] = ev
-        chk['pass'] = bool(chk['source_sha256'] and mism == 0 and grey_bad == 0 and all(v['ok'] for v in nmatch.values()) and all(all(x for k, x in e.items() if isinstance(x, bool)) for e in ev.values()))
+        rp_ok = rp is None or (chk['replay']['trace_rows_identical_json'] and all(v == 0 for v in chk['replay']['max_abs_pixel_diff_to_stored_frames'].values()) and all(chk['replay']['frames_cover_whole_episode'].values()) and grey == 0)
+        chk['pass'] = bool(rp_ok and chk['source_sha256'] and mism == 0 and grey_bad == 0 and all(v['ok'] for v in nmatch.values()) and all(all(x for k, x in e.items() if isinstance(x, bool)) for e in ev.values()))
         ok_all &= chk['pass']; res['cases'][name] = chk; print(name, 'PASS' if chk['pass'] else 'FAIL', chk['panel_A'])
     res['all_pass'] = ok_all; res['verifier_sha256'] = sha(__file__); res['gif_sha256'] = {p.relative_to(gdir).as_posix(): sha(p) for p in sorted(gdir.rglob('*.gif'))}
     out.write_bytes(json.dumps(res, indent=1, default=str).encode('utf-8')); return ok_all
 
 
 if __name__ == '__main__':
-    sys.exit(0 if main(sys.argv[1], sys.argv[2]) else 1)
+    sys.exit(0 if main(sys.argv[1], sys.argv[2], sys.argv[3] if len(sys.argv) > 3 else None) else 1)

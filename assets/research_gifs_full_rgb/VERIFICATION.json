@@ -1,0 +1,222 @@
+{
+ "what": "independent check of the README GIFs against the raw Phase B records",
+ "cases": {
+  "recovery_success": {
+   "source_sha256": true,
+   "replay": {
+    "trace_rows_identical_json": true,
+    "max_abs_pixel_diff_to_stored_frames": {
+     "trunk": 0,
+     "VISION_CENTER_V1": 0,
+     "VISION_CENTER_V2": 0
+    },
+    "frames_cover_whole_episode": {
+     "C0": true,
+     "VISION_CENTER_V2": true
+    }
+   },
+   "panel_A": {
+    "frames_shown": 102,
+    "closest_raw_frame_is_the_step_s_own": 102,
+    "placeholders": 0,
+    "placeholders_not_grey": 0,
+    "max_mean_abs_pixel_difference_to_its_raw_frame": 3.17,
+    "problems": []
+   },
+   "numbers": {
+    "true offset at trigger [POST-HOC]": {
+     "shown": "25.6 mm",
+     "raw": "25.6 mm",
+     "ok": true
+    },
+    "v2 target pushed during move [POST-HOC]": {
+     "shown": "0.0 mm (PASS)",
+     "raw_end_of_move_mm": 0.02,
+     "raw_max_during_move_mm": 0.02,
+     "ok": true
+    },
+    "v2 offset after move [POST-HOC]": {
+     "shown": "4.6 mm",
+     "raw": "4.6 mm",
+     "ok": true
+    },
+    "v2 estimate error at trigger [POST-HOC]": {
+     "shown": "1.0 mm (own bound 4 mm)",
+     "raw": "1.0 mm (own bound 4 mm)",
+     "ok": true
+    }
+   },
+   "events": {
+    "C0": {
+     "control_steps_equals_logged_steps": true,
+     "success_step": null,
+     "outcome_y_matches_trace": true,
+     "episode_length": 200,
+     "length_matches_record": true,
+     "first_open_command": 113,
+     "events_in_gif_match": true
+    },
+    "VISION_CENTER_V2": {
+     "control_steps_equals_logged_steps": true,
+     "success_step": 127,
+     "outcome_y_matches_trace": true,
+     "episode_length": 127,
+     "length_matches_record": true,
+     "first_open_command": 127,
+     "events_in_gif_match": true
+    }
+   },
+   "pass": true
+  },
+  "unsafe_intervention": {
+   "source_sha256": true,
+   "replay": {
+    "trace_rows_identical_json": true,
+    "max_abs_pixel_diff_to_stored_frames": {
+     "trunk": 0,
+     "VISION_CENTER_V1": 0,
+     "VISION_CENTER_V2": 0
+    },
+    "frames_cover_whole_episode": {
+     "VISION_CENTER_V1": true,
+     "VISION_CENTER_V2": true
+    }
+   },
+   "panel_A": {
+    "frames_shown": 92,
+    "closest_raw_frame_is_the_step_s_own": 92,
+    "placeholders": 0,
+    "placeholders_not_grey": 0,
+    "max_mean_abs_pixel_difference_to_its_raw_frame": 2.81,
+    "problems": []
+   },
+   "numbers": {
+    "true offset at trigger [POST-HOC]": {
+     "shown": "51.1 mm",
+     "raw": "51.1 mm",
+     "ok": true
+    },
+    "v1 target pushed during move [POST-HOC]": {
+     "shown": "5.7 mm (FAIL)",
+     "raw_end_of_move_mm": 5.69,
+     "raw_max_during_move_mm": 5.69,
+     "ok": true
+    },
+    "v1 offset after move [POST-HOC]": {
+     "shown": "47.7 mm",
+     "raw": "47.7 mm",
+     "ok": true
+    },
+    "v2 estimate error at trigger [POST-HOC]": {
+     "shown": "1.5 mm (own bound 4 mm)",
+     "raw": "1.5 mm (own bound 4 mm)",
+     "ok": true
+    }
+   },
+   "events": {
+    "VISION_CENTER_V1": {
+     "control_steps_equals_logged_steps": true,
+     "success_step": null,
+     "outcome_y_matches_trace": true,
+     "episode_length": 200,
+     "length_matches_record": true,
+     "first_open_command": 135,
+     "events_in_gif_match": true
+    },
+    "VISION_CENTER_V2": {
+     "control_steps_equals_logged_steps": true,
+     "success_step": null,
+     "outcome_y_matches_trace": true,
+     "episode_length": 200,
+     "length_matches_record": true,
+     "first_open_command": 126,
+     "events_in_gif_match": true
+    }
+   },
+   "pass": true
+  },
+  "memory_failure": {
+   "source_sha256": true,
+   "replay": {
+    "trace_rows_identical_json": true,
+    "max_abs_pixel_diff_to_stored_frames": {
+     "trunk": 0,
+     "VISION_CENTER_V1": 0,
+     "VISION_CENTER_V2": 0
+    },
+    "frames_cover_whole_episode": {
+     "VISION_CENTER_V2": true,
+     "CENTER_ORACLE": true
+    }
+   },
+   "panel_A": {
+    "frames_shown": 104,
+    "closest_raw_frame_is_the_step_s_own": 104,
+    "placeholders": 0,
+    "placeholders_not_grey": 0,
+    "max_mean_abs_pixel_difference_to_its_raw_frame": 2.71,
+    "problems": []
+   },
+   "numbers": {
+    "true offset at trigger [POST-HOC]": {
+     "shown": "47.8 mm",
+     "raw": "47.8 mm",
+     "ok": true
+    },
+    "oracle target pushed during move [POST-HOC]": {
+     "shown": "20.7 mm (FAIL)",
+     "raw_end_of_move_mm": 20.72,
+     "raw_max_during_move_mm": 20.72,
+     "ok": true
+    },
+    "oracle offset after move [POST-HOC]": {
+     "shown": "47.1 mm",
+     "raw": "47.1 mm",
+     "ok": true
+    },
+    "v2 estimate error at trigger [POST-HOC]": {
+     "shown": "36.9 mm (own bound 12 mm)",
+     "raw": "36.9 mm (own bound 12 mm)",
+     "ok": true
+    },
+    "memory": {
+     "t_last": 120,
+     "remembered_vs_true_target_at_trigger_mm": 37.69,
+     "target_moved_since_last_view_mm": 38.79,
+     "ok": true
+    }
+   },
+   "events": {
+    "VISION_CENTER_V2": {
+     "control_steps_equals_logged_steps": true,
+     "success_step": null,
+     "outcome_y_matches_trace": true,
+     "episode_length": 200,
+     "length_matches_record": true,
+     "first_open_command": 134,
+     "events_in_gif_match": true
+    },
+    "CENTER_ORACLE": {
+     "control_steps_equals_logged_steps": true,
+     "success_step": null,
+     "outcome_y_matches_trace": true,
+     "episode_length": 200,
+     "length_matches_record": true,
+     "first_open_command": 148,
+     "events_in_gif_match": true
+    }
+   },
+   "pass": true
+  }
+ },
+ "all_pass": true,
+ "verifier_sha256": "4a4a6d345975fd12af5852e4f37fbfd5601937b5c0706de94424eca87eec37d8",
+ "gif_sha256": {
+  "hires/memory_failure_1280x720.gif": "7f88bfe13852815064dcb156e39dddd3a7736e1c9c3fe6ad561f1bbc1ff5a8ee",
+  "hires/recovery_success_1280x720.gif": "d1a95a8f47c31bcd120301799c7a6721db2c7a2006696b879bd9152f58716e8f",
+  "hires/unsafe_intervention_1280x720.gif": "eeb9c99b4a3777053ae64001b63438e7354a894db6901d44ce2f132ef728e16a",
+  "memory_failure.gif": "4936bb1eed12016190e2e61de9ca84bdd671a12fc4c4569dc1fd422428c672ce",
+  "recovery_success.gif": "aca8cb1ec726657317ddf5a2e297ebf3565b2b970a653a2eae842408e8b2a714",
+  "unsafe_intervention.gif": "b82c6fd07c28512ab67b408a6b2d271a4bd0edb4e2708ecb4e8f4c18aed3e63e"
+ }
+}

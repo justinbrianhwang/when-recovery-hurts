@@ -1,0 +1,39 @@
+{
+ "what": "rgb_replay_001: re-run of the three README GIF scenes (50632 shadow, 51004 and 51009 pilot of vision_center_v2_001) with both cameras kept at every step; presentation only, no result changed or added",
+ "approved": "by the user in chat on 2026-11-22 (paid GPU, option A)",
+ "phase_b_plan_sha256": "1b4ea3bb65bd4cfdffc13a610fee010d568a5837e632701d4b0d265e6ba66e86",
+ "host": {
+  "provider": "Vast.ai",
+  "instance": 62014189,
+  "gpu": "RTX 4090",
+  "driver": "595.99.02 (same as the Phase B run)",
+  "usd_per_hour": 0.3481,
+  "destroyed": true
+ },
+ "cost_usd_credit_difference": 0.0602,
+ "upload": {
+  "code.tgz": "b9b4fdda3b328044c5e91cec06b64b4ae86746a24ddd8f1ad47b2ad4fe20ba44",
+  "data.tgz": "e8db4e82ae9e5202213fccc6c57b11947992fe94668c3c073e33a5f86d03a472"
+ },
+ "server_archive": {
+  "path": "runs/rgb_replay_001/server_backup/rgb_replay_out.tgz (not in Git)",
+  "sha256": "f4b1ad9fda0f22fe459f1cbe847910e5b4ff868db4a6587e194684fa025db0ee",
+  "equals_server_sha256": true
+ },
+ "frames_files_not_in_git": {
+  "extracted/runs/rgb_replay_001/replay/memory_failure/frames_51009.npz": "fe8e15c0ca960b754a583e229a66122f02e7ade886a6ab3117ad0056b5468c4b",
+  "extracted/runs/rgb_replay_001/replay/recovery_success/frames_50632.npz": "237c88f89f22f78f847fa7df85184d092ae629525ba5a21db40374d2a446b8f6",
+  "extracted/runs/rgb_replay_001/replay/unsafe_intervention/frames_51004.npz": "0ea8268a579baa28463452bca62d280ab278e7943fef3c74a5ebb6b3650929e7"
+ },
+ "commands": [
+  "python scripts/39_rgb_replay.py --phase-b runs/rgb_replay_001/phase_b --out runs/rgb_replay_001/replay   (server, exit 0)",
+  "python -P scripts/make_research_gifs.py runs/vision_center_v2_001/server_backup/extracted/runs/vision_center_v2_001 assets/research_gifs_full_rgb runs/rgb_replay_001/server_backup/extracted/runs/rgb_replay_001/replay   (local, exit 0)",
+  "python -P scripts/verify_research_gifs.py <same phase B root> assets/research_gifs_full_rgb <same replay dir>   (local, exit 0, all_pass)"
+ ],
+ "result": {
+  "all_three_scenes_reproduced_exactly": true,
+  "stored_frames_pixel_identical": true,
+  "gif_verification": "PASS (3/3), 0 grey placeholders"
+ },
+ "note": "A first local GIF build had overlapping labels; it was deleted before any commit and rebuilt with shorter labels."
+}

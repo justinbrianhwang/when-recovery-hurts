@@ -9,9 +9,12 @@ controller. Every panel shows the same simulation step t.
   Panel C  true XY offset and finger opening per step, intervention phase shaded, events marked.
   Panel D  decisions, reasons, key numbers and the event list, all read from the record.
 
-usage: python scripts/make_research_gifs.py <phase_b_root> <out_dir>
+usage: python scripts/make_research_gifs.py <phase_b_root> <out_dir> [<replay_dir>]
   <phase_b_root>  folder holding shadow/ and pilot/ (git-ignored server backup)
   <out_dir>       new folder; refused if it exists (no overwrite)
+  <replay_dir>    optional: output of scripts/39_rgb_replay.py. Used only if every scene's re-run reproduced the stored
+                  record exactly (every trace row and cell) and names the same stored record by sha256; Panel A then
+                  shows the re-run's frames at every step instead of grey panels.
 """
 import hashlib, json, sys
 from pathlib import Path
@@ -76,9 +79,17 @@ def limits(rec, case, S, ta, tb, mem):
     return (c[0] - half, c[0] + half, c[1] - half, c[1] + half), (ta, tb), max(20, off * 1.4)
 
 
-def frame_for(rec, fr, arm, t):
-    """(image, provenance) of the stored frame of `arm` at step t, or (None, why)."""
+REPLAY = None      # {case_name: {arm: frames}} from scripts/39_rgb_replay.py, set by build() only after its checks pass
+
+
+def frame_for(rec, fr, arm, t, rp=None):
+    """(image, provenance) of the frame of `arm` at step t, or (None, why). With `rp` (the replayed frames of this scene,
+    index t = observation after step t), every step comes from the re-run whose trajectory equals the stored record; after
+    the arm's episode ended its last frame is held and marked."""
     t0 = rec['trigger']['step']; c = T.cell(rec, arm)
+    if rp is not None:
+        a = rp[arm]; last = len(a) - 1
+        return a[min(t, last)], 'RGB re-run (rgb_replay_001), same trajectory as the record' + (f'; ended at step {last}, last frame held' if t > last else '')
     if t <= t0: return fr['trunk'][t], 'recorded RGB, shared prefix (same frame for every arm)'
     if arm in fr and t - t0 < len(fr[arm]):
         a = fr[arm][t - t0]
@@ -111,10 +122,10 @@ def draw(case_name, case, rec, fr, S, E, t, lims, memory):
     fig = plt.figure(figsize=(W / DPI, H / DPI), dpi=DPI); fig.patch.set_facecolor('white')
     fig.text(0.01, 0.975, f"scene {rec['scene']} (stage {'B1' if case['stage'] == 'shadow' else 'B2'}, used development scene)  |  policy train seed 1  |  {case['title']}", fontsize=9.5, weight='bold', va='top')
     fig.text(0.01, 0.945, f"simulation step t = {t}   (trigger at {t0}; every panel shows step t)", fontsize=9, va='top', color='#222')
-    fig.text(0.99, 0.945, 'A: recorded RGB as stored    B, C: POST-HOC GROUND TRUTH from the logged simulator state (not a controller input); x = controller estimate', fontsize=7.5, va='top', ha='right', color='#a00000')
+    fig.text(0.99, 0.945, ('A: RGB re-run, trajectory identical to the record' if REPLAY else 'A: recorded RGB as stored') + '    B, C: POST-HOC GROUND TRUTH from the logged simulator state (not a controller input); x = controller estimate', fontsize=7.5, va='top', ha='right', color='#a00000')
     # Panel A
     for i, a in enumerate(rows):
-        ax = fig.add_axes([0.01, 0.53 - i * 0.40, 0.33, 0.33]); img, why = frame_for(rec, fr, a, t)
+        ax = fig.add_axes([0.01, 0.53 - i * 0.40, 0.33, 0.33]); img, why = frame_for(rec, fr, a, t, (REPLAY or {}).get(case_name))
         if img is None:
             ax.imshow(np.full((128, 256, 3), 175, np.uint8)); ax.text(128, 64, 'NO RGB RECORDED\nfor this arm and step\n(trace only: Panels B, C)', ha='center', va='center', fontsize=10, weight='bold')
         else:
@@ -193,12 +204,27 @@ def numbers(rec, tr, case, S):
     return out, c
 
 
+def load_replay(rdir, root):
+    """Frames of scripts/39_rgb_replay.py, accepted only if each scene's re-run reproduced the stored record exactly."""
+    global REPLAY
+    rdir = Path(rdir); summ = json.loads((rdir / 'replay_summary.json').read_text(encoding='utf-8')); REPLAY = {}
+    if summ.get('all_reproduced_exactly') is not True: raise SystemExit('Refused: the replay did not reproduce every stored record')
+    for name, case in CASES.items():
+        e = summ['cases'][name]; cmp = json.loads((rdir / name / 'compare.json').read_text(encoding='utf-8'))
+        if not (e['trajectory_reproduced_exactly'] and cmp['trajectory_reproduced_exactly']) or e['scene'] != case['seed']: raise SystemExit(f'Refused: {name} not reproduced')
+        if sha(Path(root) / case['stage'] / 'scenes' / f"{case['seed']}.json") != e['stored_record_sha256']: raise SystemExit(f'Refused: {name} replay names another record')
+        fp = rdir / e['frames_file']
+        if sha(fp) != e['frames_sha256']: raise SystemExit(f'Refused: {fp} changed')
+        with np.load(fp) as z: REPLAY[name] = {k: z[k] for k in z.files}
+    return summ
+
+
 def build(root, out):
     from PIL import Image
     out = Path(out)
     if out.exists(): raise SystemExit(f'Refused overwrite: {out}')
-    (out / 'hires').mkdir(parents=True); man = {'what': 'README research GIFs from stored Phase B records; no simulator run', 'code_sha256': {}, 'cases': {}}
-    for p in ('scripts/make_research_gifs.py', 'src/hci/trajectory_audit.py'): man['code_sha256'][p] = sha(Path(__file__).resolve().parents[1] / p)
+    (out / 'hires').mkdir(parents=True); man = {'what': 'README research GIFs from stored Phase B records' + ('; Panel A from the RGB re-run rgb_replay_001 (trajectories identical to the records)' if REPLAY else '; no simulator run'), 'code_sha256': {}, 'cases': {}}
+    for p in ('scripts/make_research_gifs.py', 'src/hci/trajectory_audit.py') + (('scripts/39_rgb_replay.py',) if REPLAY else ()): man['code_sha256'][p] = sha(Path(__file__).resolve().parents[1] / p)
     for name, case in CASES.items():
         d, rec, tr, fr, S, E = scene_data(root, case); case = {**case}; case['numbers'], checks = numbers(rec, tr, case, S)
         ta, tb = window(rec, case, E); t0 = rec['trigger']['step']
@@ -208,7 +234,7 @@ def build(root, out):
         frames, durs, shown = [], [], []
         for t in range(ta, tb + 1):
             frames.append(draw(name, case, rec, fr, S, E, t, lims, mem)); durs.append(MS_EVENT if t in evsteps else MS)
-            shown.append({'t': t, **{a: frame_for(rec, fr, a, t)[1] for a in case['rows']}})
+            shown.append({'t': t, **{a: frame_for(rec, fr, a, t, (REPLAY or {}).get(name))[1] for a in case['rows']}})
         durs[0], durs[-1] = MS_FIRST, MS_LAST
         hi_imgs = [Image.fromarray(f) for f in frames]; small = [im.resize((README_W, README_W * H // W), Image.LANCZOS) for im in hi_imgs]
         for ims, path in ((small, out / f'{name}.gif'), (hi_imgs, out / 'hires' / f'{name}_1280x720.gif')):
@@ -230,4 +256,5 @@ def build(root, out):
 
 
 if __name__ == '__main__':
+    if len(sys.argv) == 4: load_replay(sys.argv[3], sys.argv[1])
     build(sys.argv[1], sys.argv[2])
