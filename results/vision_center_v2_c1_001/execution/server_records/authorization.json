@@ -1,0 +1,21 @@
+{
+ "approved_by": "user",
+ "paid_compute_authorized": true,
+ "cap_usd": 6.0,
+ "plan_sha256": "6b3f04fea1ea5346d6f0725b6e49ae9ce04c4fb132f37450243a807024e5dbf7",
+ "work_id": "vision_center_v2_c1_001",
+ "cap_meaning": "US$6.00 is the cap on the total spend of this work (Phase C1: both passes once, with the plan audit and probe-check).",
+ "approval_text": "2026-11-21, user message: approval of the paid run of the C1 collection plan, Plan SHA256 6b3f04fea1ea5346d6f0725b6e49ae9ce04c4fb132f37450243a807024e5dbf7, total cap US$6.00; scope 2 policies, 9 arms, development scenes 51100-51299, 400 new scene-runs, the plan's audit and probe-check; follow the plan's order and safeguards (probe-check: CUDA, rendering, real policy, logging ON/OFF invariance; plan, registry and policy hashes, scene overlap, audit, budget gate before any new scene); on a budget or technical problem stop INCOMPLETE without reducing scale or criteria.",
+ "pre_execution_review": "One read-only review of the last analyser change returned NO-GO (MAJOR: a NUL or otherwise unresolvable trace/frames path could raise in mechanism_analysis/completeness.py). Reported to the user without starting; the user approved the proposed fix (TRACE_PATH_INVALID / FRAMES_PATH_INVALID) and the run without a further review if the tests pass. The analyser is not used on the server.",
+ "forbidden": [
+  "calibration",
+  "final Test",
+  "additional training",
+  "any change of the research settings, arms, policies, scenes or criteria",
+  "fewer scenes or arms to save cost",
+  "more than US$6.00",
+  "a second pass or a resume"
+ ],
+ "run_limit": "one run: pass train_seed_1 then pass train_seed_2, each once",
+ "written_by": "the agent, recording the user's explicit approval (exact cap and plan hash stated by the user)"
+}

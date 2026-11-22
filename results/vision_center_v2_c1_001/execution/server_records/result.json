@@ -1,0 +1,1918 @@
+{
+  "role": "vision_center_v2_c1_dev",
+  "unit": "scene, within policy",
+  "scenes": 200,
+  "arms": [
+    "C0",
+    "VISION_CENTER_V1",
+    "V2_SINGLE_FRAME",
+    "VISION_CENTER_V2",
+    "CENTER_ORACLE",
+    "V2_NO_HAND_MEMORY",
+    "V2_NO_BASE_MEMORY",
+    "V2_NO_HOLD_MEMORY",
+    "V2_RULES_OFF"
+  ],
+  "per_policy": {
+    "train_seed_1": {
+      "scenes": 200,
+      "denominators": {
+        "all": 200,
+        "no_trigger": 5,
+        "triggered": 195,
+        "c0_success": 171,
+        "c0_failure": 29
+      },
+      "success": {
+        "C0": {
+          "k": 171,
+          "n": 200,
+          "wilson95": [
+            0.7995133246921847,
+            0.8971064935799559
+          ]
+        },
+        "VISION_CENTER_V1": {
+          "k": 175,
+          "n": 200,
+          "wilson95": [
+            0.8219857499741765,
+            0.9138802552428735
+          ]
+        },
+        "V2_SINGLE_FRAME": {
+          "k": 175,
+          "n": 200,
+          "wilson95": [
+            0.8219857499741765,
+            0.9138802552428735
+          ]
+        },
+        "VISION_CENTER_V2": {
+          "k": 184,
+          "n": 200,
+          "wilson95": [
+            0.874010511732856,
+            0.9501594141102401
+          ]
+        },
+        "CENTER_ORACLE": {
+          "k": 185,
+          "n": 200,
+          "wilson95": [
+            0.8799563897637055,
+            0.954025082815618
+          ]
+        },
+        "V2_NO_HAND_MEMORY": {
+          "k": 183,
+          "n": 200,
+          "wilson95": [
+            0.8681041292843443,
+            0.9462542498225244
+          ]
+        },
+        "V2_NO_BASE_MEMORY": {
+          "k": 179,
+          "n": 200,
+          "wilson95": [
+            0.8448196800887696,
+            0.9302925120731899
+          ]
+        },
+        "V2_NO_HOLD_MEMORY": {
+          "k": 183,
+          "n": 200,
+          "wilson95": [
+            0.8681041292843443,
+            0.9462542498225244
+          ]
+        },
+        "V2_RULES_OFF": {
+          "k": 185,
+          "n": 200,
+          "wilson95": [
+            0.8799563897637055,
+            0.954025082815618
+          ]
+        }
+      },
+      "against_C0": {
+        "VISION_CENTER_V1": {
+          "n": 200,
+          "both_succeed": 171,
+          "rescue": 4,
+          "harm": 0,
+          "both_fail": 25,
+          "net": 4,
+          "reference_success": 171,
+          "arm_success": 175,
+          "harm_given_reference_success": 0.0,
+          "reference_success_wilson95": [
+            0.7995133246921847,
+            0.8971064935799559
+          ],
+          "arm_success_wilson95": [
+            0.8219857499741765,
+            0.9138802552428735
+          ],
+          "harm_given_reference_success_wilson95": [
+            0.0,
+            0.021971097968438207
+          ],
+          "rescue_scenes": [
+            51136,
+            51200,
+            51209,
+            51231
+          ],
+          "harm_scenes": []
+        },
+        "V2_SINGLE_FRAME": {
+          "n": 200,
+          "both_succeed": 171,
+          "rescue": 4,
+          "harm": 0,
+          "both_fail": 25,
+          "net": 4,
+          "reference_success": 171,
+          "arm_success": 175,
+          "harm_given_reference_success": 0.0,
+          "reference_success_wilson95": [
+            0.7995133246921847,
+            0.8971064935799559
+          ],
+          "arm_success_wilson95": [
+            0.8219857499741765,
+            0.9138802552428735
+          ],
+          "harm_given_reference_success_wilson95": [
+            0.0,
+            0.021971097968438207
+          ],
+          "rescue_scenes": [
+            51136,
+            51200,
+            51209,
+            51231
+          ],
+          "harm_scenes": []
+        },
+        "VISION_CENTER_V2": {
+          "n": 200,
+          "both_succeed": 170,
+          "rescue": 14,
+          "harm": 1,
+          "both_fail": 15,
+          "net": 13,
+          "reference_success": 171,
+          "arm_success": 184,
+          "harm_given_reference_success": 0.005847953216374269,
+          "reference_success_wilson95": [
+            0.7995133246921847,
+            0.8971064935799559
+          ],
+          "arm_success_wilson95": [
+            0.874010511732856,
+            0.9501594141102401
+          ],
+          "harm_given_reference_success_wilson95": [
+            0.0010330543138187126,
+            0.032376978181304424
+          ],
+          "rescue_scenes": [
+            51103,
+            51136,
+            51142,
+            51198,
+            51199,
+            51200,
+            51209,
+            51216,
+            51220,
+            51231,
+            51250,
+            51264,
+            51275,
+            51277
+          ],
+          "harm_scenes": [
+            51157
+          ]
+        },
+        "CENTER_ORACLE": {
+          "n": 200,
+          "both_succeed": 170,
+          "rescue": 15,
+          "harm": 1,
+          "both_fail": 14,
+          "net": 14,
+          "reference_success": 171,
+          "arm_success": 185,
+          "harm_given_reference_success": 0.005847953216374269,
+          "reference_success_wilson95": [
+            0.7995133246921847,
+            0.8971064935799559
+          ],
+          "arm_success_wilson95": [
+            0.8799563897637055,
+            0.954025082815618
+          ],
+          "harm_given_reference_success_wilson95": [
+            0.0010330543138187126,
+            0.032376978181304424
+          ],
+          "rescue_scenes": [
+            51103,
+            51136,
+            51142,
+            51144,
+            51198,
+            51199,
+            51200,
+            51209,
+            51216,
+            51220,
+            51231,
+            51250,
+            51264,
+            51275,
+            51277
+          ],
+          "harm_scenes": [
+            51157
+          ]
+        },
+        "V2_NO_HAND_MEMORY": {
+          "n": 200,
+          "both_succeed": 170,
+          "rescue": 13,
+          "harm": 1,
+          "both_fail": 16,
+          "net": 12,
+          "reference_success": 171,
+          "arm_success": 183,
+          "harm_given_reference_success": 0.005847953216374269,
+          "reference_success_wilson95": [
+            0.7995133246921847,
+            0.8971064935799559
+          ],
+          "arm_success_wilson95": [
+            0.8681041292843443,
+            0.9462542498225244
+          ],
+          "harm_given_reference_success_wilson95": [
+            0.0010330543138187126,
+            0.032376978181304424
+          ],
+          "rescue_scenes": [
+            51103,
+            51136,
+            51142,
+            51198,
+            51199,
+            51200,
+            51209,
+            51216,
+            51220,
+            51231,
+            51250,
+            51275,
+            51277
+          ],
+          "harm_scenes": [
+            51157
+          ]
+        },
+        "V2_NO_BASE_MEMORY": {
+          "n": 200,
+          "both_succeed": 170,
+          "rescue": 9,
+          "harm": 1,
+          "both_fail": 20,
+          "net": 8,
+          "reference_success": 171,
+          "arm_success": 179,
+          "harm_given_reference_success": 0.005847953216374269,
+          "reference_success_wilson95": [
+            0.7995133246921847,
+            0.8971064935799559
+          ],
+          "arm_success_wilson95": [
+            0.8448196800887696,
+            0.9302925120731899
+          ],
+          "harm_given_reference_success_wilson95": [
+            0.0010330543138187126,
+            0.032376978181304424
+          ],
+          "rescue_scenes": [
+            51103,
+            51136,
+            51142,
+            51200,
+            51209,
+            51231,
+            51250,
+            51264,
+            51275
+          ],
+          "harm_scenes": [
+            51157
+          ]
+        },
+        "V2_NO_HOLD_MEMORY": {
+          "n": 200,
+          "both_succeed": 170,
+          "rescue": 13,
+          "harm": 1,
+          "both_fail": 16,
+          "net": 12,
+          "reference_success": 171,
+          "arm_success": 183,
+          "harm_given_reference_success": 0.005847953216374269,
+          "reference_success_wilson95": [
+            0.7995133246921847,
+            0.8971064935799559
+          ],
+          "arm_success_wilson95": [
+            0.8681041292843443,
+            0.9462542498225244
+          ],
+          "harm_given_reference_success_wilson95": [
+            0.0010330543138187126,
+            0.032376978181304424
+          ],
+          "rescue_scenes": [
+            51103,
+            51136,
+            51142,
+            51198,
+            51199,
+            51200,
+            51209,
+            51216,
+            51220,
+            51231,
+            51250,
+            51264,
+            51277
+          ],
+          "harm_scenes": [
+            51157
+          ]
+        },
+        "V2_RULES_OFF": {
+          "n": 200,
+          "both_succeed": 170,
+          "rescue": 15,
+          "harm": 1,
+          "both_fail": 14,
+          "net": 14,
+          "reference_success": 171,
+          "arm_success": 185,
+          "harm_given_reference_success": 0.005847953216374269,
+          "reference_success_wilson95": [
+            0.7995133246921847,
+            0.8971064935799559
+          ],
+          "arm_success_wilson95": [
+            0.8799563897637055,
+            0.954025082815618
+          ],
+          "harm_given_reference_success_wilson95": [
+            0.0010330543138187126,
+            0.032376978181304424
+          ],
+          "rescue_scenes": [
+            51103,
+            51136,
+            51142,
+            51144,
+            51198,
+            51199,
+            51200,
+            51209,
+            51216,
+            51220,
+            51231,
+            51250,
+            51264,
+            51275,
+            51277
+          ],
+          "harm_scenes": [
+            51157
+          ]
+        }
+      },
+      "arm_stats": {
+        "V2_SINGLE_FRAME": {
+          "triggered": 195,
+          "decisions": {
+            "ACT": 25,
+            "ALIGNED": 70,
+            "LOW_CARRY": 4,
+            "NO_HOLD_ESTIMATE": 14,
+            "NO_TARGET_ESTIMATE": 81,
+            "SIDE_CONTACT_RISK": 1
+          },
+          "acts": 25,
+          "acts_using_memory": 0,
+          "acts_by_source": {
+            "target_frame/hold_frame": 25
+          },
+          "abstain_rate_of_triggered": 0.8717948717948718,
+          "memory_errors": 0,
+          "memory_error_scenes": [],
+          "unnecessary_acts": 0,
+          "offset_error_at_act_m": {
+            "n": 25,
+            "median": 0.001176844326193663,
+            "max": 0.0036791335790745815
+          },
+          "target_pushed_more_than_1mm": 0,
+          "target_pushed_scenes": [],
+          "end_reasons": {
+            "within_tolerance": 25
+          }
+        },
+        "VISION_CENTER_V2": {
+          "triggered": 195,
+          "decisions": {
+            "ACT": 41,
+            "ALIGNED": 122,
+            "ALIGNED_WITHIN_UNCERTAINTY": 8,
+            "LOW_CARRY": 12,
+            "NO_HOLD_ESTIMATE": 6,
+            "NO_TARGET_ESTIMATE": 2,
+            "SIDE_CONTACT_RISK": 3,
+            "TOO_FEW_STEPS": 1
+          },
+          "acts": 41,
+          "acts_using_memory": 16,
+          "acts_by_source": {
+            "target_frame/hold_frame": 25,
+            "target_frame/hold_memory": 3,
+            "target_memory_base/hold_frame": 5,
+            "target_memory_hand/hold_frame": 8
+          },
+          "abstain_rate_of_triggered": 0.7897435897435897,
+          "memory_errors": 0,
+          "memory_error_scenes": [],
+          "unnecessary_acts": 0,
+          "offset_error_at_act_m": {
+            "n": 41,
+            "median": 0.0010247931242666456,
+            "max": 0.0036791335790745815
+          },
+          "target_pushed_more_than_1mm": 0,
+          "target_pushed_scenes": [],
+          "end_reasons": {
+            "step_budget": 7,
+            "within_tolerance": 34
+          }
+        },
+        "V2_NO_HAND_MEMORY": {
+          "triggered": 195,
+          "decisions": {
+            "ACT": 39,
+            "ALIGNED": 120,
+            "ALIGNED_WITHIN_UNCERTAINTY": 7,
+            "LOW_CARRY": 11,
+            "NO_HOLD_ESTIMATE": 6,
+            "NO_TARGET_ESTIMATE": 8,
+            "SIDE_CONTACT_RISK": 3,
+            "TOO_FEW_STEPS": 1
+          },
+          "acts": 39,
+          "acts_using_memory": 14,
+          "acts_by_source": {
+            "target_frame/hold_frame": 25,
+            "target_frame/hold_memory": 3,
+            "target_memory_base/hold_frame": 11
+          },
+          "abstain_rate_of_triggered": 0.8,
+          "memory_errors": 0,
+          "memory_error_scenes": [],
+          "unnecessary_acts": 0,
+          "offset_error_at_act_m": {
+            "n": 39,
+            "median": 0.0012817373736435018,
+            "max": 0.0036791335790745815
+          },
+          "target_pushed_more_than_1mm": 0,
+          "target_pushed_scenes": [],
+          "end_reasons": {
+            "estimate_lost": 1,
+            "step_budget": 8,
+            "within_tolerance": 30
+          }
+        },
+        "V2_NO_BASE_MEMORY": {
+          "triggered": 195,
+          "decisions": {
+            "ACT": 36,
+            "ALIGNED": 115,
+            "ALIGNED_WITHIN_UNCERTAINTY": 6,
+            "LOW_CARRY": 10,
+            "NO_HOLD_ESTIMATE": 6,
+            "NO_TARGET_ESTIMATE": 20,
+            "SIDE_CONTACT_RISK": 1,
+            "TOO_FEW_STEPS": 1
+          },
+          "acts": 36,
+          "acts_using_memory": 11,
+          "acts_by_source": {
+            "target_frame/hold_frame": 25,
+            "target_frame/hold_memory": 3,
+            "target_memory_hand/hold_frame": 8
+          },
+          "abstain_rate_of_triggered": 0.8153846153846154,
+          "memory_errors": 0,
+          "memory_error_scenes": [],
+          "unnecessary_acts": 0,
+          "offset_error_at_act_m": {
+            "n": 36,
+            "median": 0.0009527073310983288,
+            "max": 0.0036791335790745815
+          },
+          "target_pushed_more_than_1mm": 0,
+          "target_pushed_scenes": [],
+          "end_reasons": {
+            "step_budget": 3,
+            "within_tolerance": 33
+          }
+        },
+        "V2_NO_HOLD_MEMORY": {
+          "triggered": 195,
+          "decisions": {
+            "ACT": 38,
+            "ALIGNED": 118,
+            "ALIGNED_WITHIN_UNCERTAINTY": 8,
+            "LOW_CARRY": 11,
+            "NO_HOLD_ESTIMATE": 14,
+            "NO_TARGET_ESTIMATE": 2,
+            "SIDE_CONTACT_RISK": 3,
+            "TOO_FEW_STEPS": 1
+          },
+          "acts": 38,
+          "acts_using_memory": 13,
+          "acts_by_source": {
+            "target_frame/hold_frame": 25,
+            "target_memory_base/hold_frame": 5,
+            "target_memory_hand/hold_frame": 8
+          },
+          "abstain_rate_of_triggered": 0.8051282051282052,
+          "memory_errors": 0,
+          "memory_error_scenes": [],
+          "unnecessary_acts": 0,
+          "offset_error_at_act_m": {
+            "n": 38,
+            "median": 0.0011168073974741153,
+            "max": 0.0036791335790745815
+          },
+          "target_pushed_more_than_1mm": 0,
+          "target_pushed_scenes": [],
+          "end_reasons": {
+            "estimate_lost": 1,
+            "step_budget": 7,
+            "within_tolerance": 30
+          }
+        },
+        "V2_RULES_OFF": {
+          "triggered": 195,
+          "decisions": {
+            "ACT": 53,
+            "ALIGNED": 128,
+            "LOW_CARRY": 5,
+            "NO_HOLD_ESTIMATE": 6,
+            "NO_TARGET_ESTIMATE": 2,
+            "TOO_FEW_STEPS": 1
+          },
+          "acts": 53,
+          "acts_using_memory": 27,
+          "acts_by_source": {
+            "target_frame/hold_frame": 26,
+            "target_frame/hold_memory": 3,
+            "target_memory_base/hold_frame": 8,
+            "target_memory_hand/hold_frame": 16
+          },
+          "abstain_rate_of_triggered": 0.7282051282051282,
+          "memory_errors": 0,
+          "memory_error_scenes": [],
+          "unnecessary_acts": 0,
+          "offset_error_at_act_m": {
+            "n": 53,
+            "median": 0.001001283698995103,
+            "max": 0.0036791335790745815
+          },
+          "target_pushed_more_than_1mm": 0,
+          "target_pushed_scenes": [],
+          "end_reasons": {
+            "low_carry": 1,
+            "step_budget": 8,
+            "target_moved": 1,
+            "within_tolerance": 43
+          }
+        }
+      },
+      "paired": {
+        "VISION_CENTER_V2_against_VISION_CENTER_V1": {
+          "n": 200,
+          "both_succeed": 174,
+          "rescue": 10,
+          "harm": 1,
+          "both_fail": 15,
+          "net": 9,
+          "reference_success": 175,
+          "arm_success": 184,
+          "harm_given_reference_success": 0.005714285714285714,
+          "reference_success_wilson95": [
+            0.8219857499741765,
+            0.9138802552428735
+          ],
+          "arm_success_wilson95": [
+            0.874010511732856,
+            0.9501594141102401
+          ],
+          "harm_given_reference_success_wilson95": [
+            0.0010094249363413015,
+            0.031653352806658167
+          ],
+          "rescue_scenes": [
+            51103,
+            51142,
+            51198,
+            51199,
+            51216,
+            51220,
+            51250,
+            51264,
+            51275,
+            51277
+          ],
+          "harm_scenes": [
+            51157
+          ]
+        },
+        "VISION_CENTER_V2_against_V2_SINGLE_FRAME": {
+          "n": 200,
+          "both_succeed": 174,
+          "rescue": 10,
+          "harm": 1,
+          "both_fail": 15,
+          "net": 9,
+          "reference_success": 175,
+          "arm_success": 184,
+          "harm_given_reference_success": 0.005714285714285714,
+          "reference_success_wilson95": [
+            0.8219857499741765,
+            0.9138802552428735
+          ],
+          "arm_success_wilson95": [
+            0.874010511732856,
+            0.9501594141102401
+          ],
+          "harm_given_reference_success_wilson95": [
+            0.0010094249363413015,
+            0.031653352806658167
+          ],
+          "rescue_scenes": [
+            51103,
+            51142,
+            51198,
+            51199,
+            51216,
+            51220,
+            51250,
+            51264,
+            51275,
+            51277
+          ],
+          "harm_scenes": [
+            51157
+          ]
+        },
+        "V2_SINGLE_FRAME_against_VISION_CENTER_V1": {
+          "n": 200,
+          "both_succeed": 175,
+          "rescue": 0,
+          "harm": 0,
+          "both_fail": 25,
+          "net": 0,
+          "reference_success": 175,
+          "arm_success": 175,
+          "harm_given_reference_success": 0.0,
+          "reference_success_wilson95": [
+            0.8219857499741765,
+            0.9138802552428735
+          ],
+          "arm_success_wilson95": [
+            0.8219857499741765,
+            0.9138802552428735
+          ],
+          "harm_given_reference_success_wilson95": [
+            0.0,
+            0.02147968846835207
+          ],
+          "rescue_scenes": [],
+          "harm_scenes": []
+        },
+        "VISION_CENTER_V2_against_V2_NO_HAND_MEMORY": {
+          "n": 200,
+          "both_succeed": 183,
+          "rescue": 1,
+          "harm": 0,
+          "both_fail": 16,
+          "net": 1,
+          "reference_success": 183,
+          "arm_success": 184,
+          "harm_given_reference_success": 0.0,
+          "reference_success_wilson95": [
+            0.8681041292843443,
+            0.9462542498225244
+          ],
+          "arm_success_wilson95": [
+            0.874010511732856,
+            0.9501594141102401
+          ],
+          "harm_given_reference_success_wilson95": [
+            0.0,
+            0.02055999158292086
+          ],
+          "rescue_scenes": [
+            51264
+          ],
+          "harm_scenes": []
+        },
+        "VISION_CENTER_V2_against_V2_NO_BASE_MEMORY": {
+          "n": 200,
+          "both_succeed": 179,
+          "rescue": 5,
+          "harm": 0,
+          "both_fail": 16,
+          "net": 5,
+          "reference_success": 179,
+          "arm_success": 184,
+          "harm_given_reference_success": 0.0,
+          "reference_success_wilson95": [
+            0.8448196800887696,
+            0.9302925120731899
+          ],
+          "arm_success_wilson95": [
+            0.874010511732856,
+            0.9501594141102401
+          ],
+          "harm_given_reference_success_wilson95": [
+            0.0,
+            0.021009779978080914
+          ],
+          "rescue_scenes": [
+            51198,
+            51199,
+            51216,
+            51220,
+            51277
+          ],
+          "harm_scenes": []
+        },
+        "VISION_CENTER_V2_against_V2_NO_HOLD_MEMORY": {
+          "n": 200,
+          "both_succeed": 183,
+          "rescue": 1,
+          "harm": 0,
+          "both_fail": 16,
+          "net": 1,
+          "reference_success": 183,
+          "arm_success": 184,
+          "harm_given_reference_success": 0.0,
+          "reference_success_wilson95": [
+            0.8681041292843443,
+            0.9462542498225244
+          ],
+          "arm_success_wilson95": [
+            0.874010511732856,
+            0.9501594141102401
+          ],
+          "harm_given_reference_success_wilson95": [
+            0.0,
+            0.02055999158292086
+          ],
+          "rescue_scenes": [
+            51275
+          ],
+          "harm_scenes": []
+        },
+        "V2_RULES_OFF_against_VISION_CENTER_V2": {
+          "n": 200,
+          "both_succeed": 184,
+          "rescue": 1,
+          "harm": 0,
+          "both_fail": 15,
+          "net": 1,
+          "reference_success": 184,
+          "arm_success": 185,
+          "harm_given_reference_success": 0.0,
+          "reference_success_wilson95": [
+            0.874010511732856,
+            0.9501594141102401
+          ],
+          "arm_success_wilson95": [
+            0.8799563897637055,
+            0.954025082815618
+          ],
+          "harm_given_reference_success_wilson95": [
+            0.0,
+            0.02045053762258643
+          ],
+          "rescue_scenes": [
+            51144
+          ],
+          "harm_scenes": []
+        },
+        "CENTER_ORACLE_against_VISION_CENTER_V2": {
+          "n": 200,
+          "both_succeed": 184,
+          "rescue": 1,
+          "harm": 0,
+          "both_fail": 15,
+          "net": 1,
+          "reference_success": 184,
+          "arm_success": 185,
+          "harm_given_reference_success": 0.0,
+          "reference_success_wilson95": [
+            0.874010511732856,
+            0.9501594141102401
+          ],
+          "arm_success_wilson95": [
+            0.8799563897637055,
+            0.954025082815618
+          ],
+          "harm_given_reference_success_wilson95": [
+            0.0,
+            0.02045053762258643
+          ],
+          "rescue_scenes": [
+            51144
+          ],
+          "harm_scenes": []
+        }
+      },
+      "oracle_rescue_recovery": {
+        "VISION_CENTER_V1": {
+          "recovered": 4,
+          "oracle": 15
+        },
+        "V2_SINGLE_FRAME": {
+          "recovered": 4,
+          "oracle": 15
+        },
+        "VISION_CENTER_V2": {
+          "recovered": 14,
+          "oracle": 15
+        },
+        "V2_NO_HAND_MEMORY": {
+          "recovered": 13,
+          "oracle": 15
+        },
+        "V2_NO_BASE_MEMORY": {
+          "recovered": 9,
+          "oracle": 15
+        },
+        "V2_NO_HOLD_MEMORY": {
+          "recovered": 13,
+          "oracle": 15
+        },
+        "V2_RULES_OFF": {
+          "recovered": 15,
+          "oracle": 15
+        }
+      },
+      "safety": {
+        "VISION_CENTER_V2": {
+          "harm": 1,
+          "memory_errors": 0,
+          "target_pushed_over_1mm": 0,
+          "criteria": {
+            "harm_at_most": true,
+            "memory_errors_at_most": true,
+            "target_pushed_at_most": true
+          },
+          "met": true,
+          "thresholds": {
+            "harm_max": 2,
+            "memory_errors_max": 2,
+            "target_pushed_over_1mm_max": 1
+          }
+        }
+      }
+    },
+    "train_seed_2": {
+      "scenes": 200,
+      "denominators": {
+        "all": 200,
+        "no_trigger": 9,
+        "triggered": 191,
+        "c0_success": 164,
+        "c0_failure": 36
+      },
+      "success": {
+        "C0": {
+          "k": 164,
+          "n": 200,
+          "wilson95": [
+            0.7608852497127511,
+            0.8670537414057983
+          ]
+        },
+        "VISION_CENTER_V1": {
+          "k": 173,
+          "n": 200,
+          "wilson95": [
+            0.8107086162924745,
+            0.9055342954521209
+          ]
+        },
+        "V2_SINGLE_FRAME": {
+          "k": 173,
+          "n": 200,
+          "wilson95": [
+            0.8107086162924745,
+            0.9055342954521209
+          ]
+        },
+        "VISION_CENTER_V2": {
+          "k": 180,
+          "n": 200,
+          "wilson95": [
+            0.8505941875672826,
+            0.9343295513309041
+          ]
+        },
+        "CENTER_ORACLE": {
+          "k": 184,
+          "n": 200,
+          "wilson95": [
+            0.874010511732856,
+            0.9501594141102401
+          ]
+        },
+        "V2_NO_HAND_MEMORY": {
+          "k": 179,
+          "n": 200,
+          "wilson95": [
+            0.8448196800887696,
+            0.9302925120731899
+          ]
+        },
+        "V2_NO_BASE_MEMORY": {
+          "k": 178,
+          "n": 200,
+          "wilson95": [
+            0.839073090026985,
+            0.926227555398747
+          ]
+        },
+        "V2_NO_HOLD_MEMORY": {
+          "k": 179,
+          "n": 200,
+          "wilson95": [
+            0.8448196800887696,
+            0.9302925120731899
+          ]
+        },
+        "V2_RULES_OFF": {
+          "k": 183,
+          "n": 200,
+          "wilson95": [
+            0.8681041292843443,
+            0.9462542498225244
+          ]
+        }
+      },
+      "against_C0": {
+        "VISION_CENTER_V1": {
+          "n": 200,
+          "both_succeed": 164,
+          "rescue": 9,
+          "harm": 0,
+          "both_fail": 27,
+          "net": 9,
+          "reference_success": 164,
+          "arm_success": 173,
+          "harm_given_reference_success": 0.0,
+          "reference_success_wilson95": [
+            0.7608852497127511,
+            0.8670537414057983
+          ],
+          "arm_success_wilson95": [
+            0.8107086162924745,
+            0.9055342954521209
+          ],
+          "harm_given_reference_success_wilson95": [
+            0.0,
+            0.022887425119427582
+          ],
+          "rescue_scenes": [
+            51103,
+            51154,
+            51167,
+            51185,
+            51200,
+            51213,
+            51215,
+            51264,
+            51285
+          ],
+          "harm_scenes": []
+        },
+        "V2_SINGLE_FRAME": {
+          "n": 200,
+          "both_succeed": 164,
+          "rescue": 9,
+          "harm": 0,
+          "both_fail": 27,
+          "net": 9,
+          "reference_success": 164,
+          "arm_success": 173,
+          "harm_given_reference_success": 0.0,
+          "reference_success_wilson95": [
+            0.7608852497127511,
+            0.8670537414057983
+          ],
+          "arm_success_wilson95": [
+            0.8107086162924745,
+            0.9055342954521209
+          ],
+          "harm_given_reference_success_wilson95": [
+            0.0,
+            0.022887425119427582
+          ],
+          "rescue_scenes": [
+            51103,
+            51154,
+            51167,
+            51185,
+            51200,
+            51213,
+            51215,
+            51264,
+            51285
+          ],
+          "harm_scenes": []
+        },
+        "VISION_CENTER_V2": {
+          "n": 200,
+          "both_succeed": 164,
+          "rescue": 16,
+          "harm": 0,
+          "both_fail": 20,
+          "net": 16,
+          "reference_success": 164,
+          "arm_success": 180,
+          "harm_given_reference_success": 0.0,
+          "reference_success_wilson95": [
+            0.7608852497127511,
+            0.8670537414057983
+          ],
+          "arm_success_wilson95": [
+            0.8505941875672826,
+            0.9343295513309041
+          ],
+          "harm_given_reference_success_wilson95": [
+            0.0,
+            0.022887425119427582
+          ],
+          "rescue_scenes": [
+            51103,
+            51115,
+            51154,
+            51167,
+            51174,
+            51178,
+            51185,
+            51194,
+            51199,
+            51200,
+            51213,
+            51215,
+            51250,
+            51264,
+            51277,
+            51285
+          ],
+          "harm_scenes": []
+        },
+        "CENTER_ORACLE": {
+          "n": 200,
+          "both_succeed": 163,
+          "rescue": 21,
+          "harm": 1,
+          "both_fail": 15,
+          "net": 20,
+          "reference_success": 164,
+          "arm_success": 184,
+          "harm_given_reference_success": 0.006097560975609756,
+          "reference_success_wilson95": [
+            0.7608852497127511,
+            0.8670537414057983
+          ],
+          "arm_success_wilson95": [
+            0.874010511732856,
+            0.9501594141102401
+          ],
+          "harm_given_reference_success_wilson95": [
+            0.0010771813904626622,
+            0.03372625073970362
+          ],
+          "rescue_scenes": [
+            51103,
+            51109,
+            51115,
+            51135,
+            51154,
+            51167,
+            51174,
+            51178,
+            51185,
+            51194,
+            51198,
+            51199,
+            51200,
+            51213,
+            51214,
+            51215,
+            51216,
+            51250,
+            51264,
+            51277,
+            51285
+          ],
+          "harm_scenes": [
+            51253
+          ]
+        },
+        "V2_NO_HAND_MEMORY": {
+          "n": 200,
+          "both_succeed": 164,
+          "rescue": 15,
+          "harm": 0,
+          "both_fail": 21,
+          "net": 15,
+          "reference_success": 164,
+          "arm_success": 179,
+          "harm_given_reference_success": 0.0,
+          "reference_success_wilson95": [
+            0.7608852497127511,
+            0.8670537414057983
+          ],
+          "arm_success_wilson95": [
+            0.8448196800887696,
+            0.9302925120731899
+          ],
+          "harm_given_reference_success_wilson95": [
+            0.0,
+            0.022887425119427582
+          ],
+          "rescue_scenes": [
+            51103,
+            51154,
+            51167,
+            51174,
+            51178,
+            51185,
+            51194,
+            51199,
+            51200,
+            51213,
+            51215,
+            51250,
+            51264,
+            51277,
+            51285
+          ],
+          "harm_scenes": []
+        },
+        "V2_NO_BASE_MEMORY": {
+          "n": 200,
+          "both_succeed": 164,
+          "rescue": 14,
+          "harm": 0,
+          "both_fail": 22,
+          "net": 14,
+          "reference_success": 164,
+          "arm_success": 178,
+          "harm_given_reference_success": 0.0,
+          "reference_success_wilson95": [
+            0.7608852497127511,
+            0.8670537414057983
+          ],
+          "arm_success_wilson95": [
+            0.839073090026985,
+            0.926227555398747
+          ],
+          "harm_given_reference_success_wilson95": [
+            0.0,
+            0.022887425119427582
+          ],
+          "rescue_scenes": [
+            51103,
+            51115,
+            51154,
+            51167,
+            51174,
+            51178,
+            51185,
+            51194,
+            51200,
+            51213,
+            51215,
+            51250,
+            51264,
+            51285
+          ],
+          "harm_scenes": []
+        },
+        "V2_NO_HOLD_MEMORY": {
+          "n": 200,
+          "both_succeed": 164,
+          "rescue": 15,
+          "harm": 0,
+          "both_fail": 21,
+          "net": 15,
+          "reference_success": 164,
+          "arm_success": 179,
+          "harm_given_reference_success": 0.0,
+          "reference_success_wilson95": [
+            0.7608852497127511,
+            0.8670537414057983
+          ],
+          "arm_success_wilson95": [
+            0.8448196800887696,
+            0.9302925120731899
+          ],
+          "harm_given_reference_success_wilson95": [
+            0.0,
+            0.022887425119427582
+          ],
+          "rescue_scenes": [
+            51103,
+            51115,
+            51154,
+            51167,
+            51174,
+            51185,
+            51194,
+            51199,
+            51200,
+            51213,
+            51215,
+            51250,
+            51264,
+            51277,
+            51285
+          ],
+          "harm_scenes": []
+        },
+        "V2_RULES_OFF": {
+          "n": 200,
+          "both_succeed": 164,
+          "rescue": 19,
+          "harm": 0,
+          "both_fail": 17,
+          "net": 19,
+          "reference_success": 164,
+          "arm_success": 183,
+          "harm_given_reference_success": 0.0,
+          "reference_success_wilson95": [
+            0.7608852497127511,
+            0.8670537414057983
+          ],
+          "arm_success_wilson95": [
+            0.8681041292843443,
+            0.9462542498225244
+          ],
+          "harm_given_reference_success_wilson95": [
+            0.0,
+            0.022887425119427582
+          ],
+          "rescue_scenes": [
+            51103,
+            51109,
+            51115,
+            51154,
+            51167,
+            51174,
+            51178,
+            51185,
+            51194,
+            51198,
+            51199,
+            51200,
+            51213,
+            51215,
+            51216,
+            51250,
+            51264,
+            51277,
+            51285
+          ],
+          "harm_scenes": []
+        }
+      },
+      "arm_stats": {
+        "V2_SINGLE_FRAME": {
+          "triggered": 191,
+          "decisions": {
+            "ACT": 30,
+            "ALIGNED": 62,
+            "LOW_CARRY": 3,
+            "NO_HOLD_ESTIMATE": 12,
+            "NO_TARGET_ESTIMATE": 83,
+            "SIDE_CONTACT_RISK": 1
+          },
+          "acts": 30,
+          "acts_using_memory": 0,
+          "acts_by_source": {
+            "target_frame/hold_frame": 30
+          },
+          "abstain_rate_of_triggered": 0.8429319371727748,
+          "memory_errors": 0,
+          "memory_error_scenes": [],
+          "unnecessary_acts": 0,
+          "offset_error_at_act_m": {
+            "n": 30,
+            "median": 0.0009339759331596358,
+            "max": 0.0015614892370745866
+          },
+          "target_pushed_more_than_1mm": 0,
+          "target_pushed_scenes": [],
+          "end_reasons": {
+            "step_budget": 1,
+            "within_tolerance": 29
+          }
+        },
+        "VISION_CENTER_V2": {
+          "triggered": 191,
+          "decisions": {
+            "ACT": 39,
+            "ALIGNED": 118,
+            "ALIGNED_WITHIN_UNCERTAINTY": 6,
+            "LOW_CARRY": 13,
+            "NO_HOLD_ESTIMATE": 8,
+            "NO_TARGET_ESTIMATE": 2,
+            "SIDE_CONTACT_RISK": 4,
+            "TOO_FEW_STEPS": 1
+          },
+          "acts": 39,
+          "acts_using_memory": 9,
+          "acts_by_source": {
+            "target_frame/hold_frame": 30,
+            "target_memory_base/hold_frame": 2,
+            "target_memory_hand/hold_frame": 6,
+            "target_memory_hand/hold_memory": 1
+          },
+          "abstain_rate_of_triggered": 0.7958115183246073,
+          "memory_errors": 0,
+          "memory_error_scenes": [],
+          "unnecessary_acts": 0,
+          "offset_error_at_act_m": {
+            "n": 39,
+            "median": 0.0009421938305528892,
+            "max": 0.0018817121254323642
+          },
+          "target_pushed_more_than_1mm": 0,
+          "target_pushed_scenes": [],
+          "end_reasons": {
+            "step_budget": 5,
+            "within_tolerance": 34
+          }
+        },
+        "V2_NO_HAND_MEMORY": {
+          "triggered": 191,
+          "decisions": {
+            "ACT": 37,
+            "ALIGNED": 113,
+            "ALIGNED_WITHIN_UNCERTAINTY": 8,
+            "LOW_CARRY": 13,
+            "NO_HOLD_ESTIMATE": 8,
+            "NO_TARGET_ESTIMATE": 7,
+            "SIDE_CONTACT_RISK": 4,
+            "TOO_FEW_STEPS": 1
+          },
+          "acts": 37,
+          "acts_using_memory": 7,
+          "acts_by_source": {
+            "target_frame/hold_frame": 30,
+            "target_memory_base/hold_frame": 6,
+            "target_memory_base/hold_memory": 1
+          },
+          "abstain_rate_of_triggered": 0.806282722513089,
+          "memory_errors": 0,
+          "memory_error_scenes": [],
+          "unnecessary_acts": 0,
+          "offset_error_at_act_m": {
+            "n": 37,
+            "median": 0.0011448417767890647,
+            "max": 0.003940449558955973
+          },
+          "target_pushed_more_than_1mm": 0,
+          "target_pushed_scenes": [],
+          "end_reasons": {
+            "estimate_lost": 1,
+            "step_budget": 5,
+            "within_tolerance": 31
+          }
+        },
+        "V2_NO_BASE_MEMORY": {
+          "triggered": 191,
+          "decisions": {
+            "ACT": 37,
+            "ALIGNED": 110,
+            "ALIGNED_WITHIN_UNCERTAINTY": 2,
+            "LOW_CARRY": 8,
+            "NO_HOLD_ESTIMATE": 8,
+            "NO_TARGET_ESTIMATE": 23,
+            "SIDE_CONTACT_RISK": 2,
+            "TOO_FEW_STEPS": 1
+          },
+          "acts": 37,
+          "acts_using_memory": 7,
+          "acts_by_source": {
+            "target_frame/hold_frame": 30,
+            "target_memory_hand/hold_frame": 6,
+            "target_memory_hand/hold_memory": 1
+          },
+          "abstain_rate_of_triggered": 0.806282722513089,
+          "memory_errors": 0,
+          "memory_error_scenes": [],
+          "unnecessary_acts": 0,
+          "offset_error_at_act_m": {
+            "n": 37,
+            "median": 0.0009257580357663825,
+            "max": 0.0017657656649874701
+          },
+          "target_pushed_more_than_1mm": 0,
+          "target_pushed_scenes": [],
+          "end_reasons": {
+            "step_budget": 4,
+            "within_tolerance": 33
+          }
+        },
+        "V2_NO_HOLD_MEMORY": {
+          "triggered": 191,
+          "decisions": {
+            "ACT": 38,
+            "ALIGNED": 115,
+            "ALIGNED_WITHIN_UNCERTAINTY": 6,
+            "LOW_CARRY": 13,
+            "NO_HOLD_ESTIMATE": 12,
+            "NO_TARGET_ESTIMATE": 2,
+            "SIDE_CONTACT_RISK": 4,
+            "TOO_FEW_STEPS": 1
+          },
+          "acts": 38,
+          "acts_using_memory": 8,
+          "acts_by_source": {
+            "target_frame/hold_frame": 30,
+            "target_memory_base/hold_frame": 2,
+            "target_memory_hand/hold_frame": 6
+          },
+          "abstain_rate_of_triggered": 0.8010471204188482,
+          "memory_errors": 0,
+          "memory_error_scenes": [],
+          "unnecessary_acts": 0,
+          "offset_error_at_act_m": {
+            "n": 38,
+            "median": 0.0009339759331596358,
+            "max": 0.0018817121254323642
+          },
+          "target_pushed_more_than_1mm": 0,
+          "target_pushed_scenes": [],
+          "end_reasons": {
+            "step_budget": 4,
+            "within_tolerance": 34
+          }
+        },
+        "V2_RULES_OFF": {
+          "triggered": 191,
+          "decisions": {
+            "ACT": 50,
+            "ALIGNED": 126,
+            "LOW_CARRY": 4,
+            "NO_HOLD_ESTIMATE": 8,
+            "NO_TARGET_ESTIMATE": 2,
+            "TOO_FEW_STEPS": 1
+          },
+          "acts": 50,
+          "acts_using_memory": 19,
+          "acts_by_source": {
+            "target_frame/hold_frame": 31,
+            "target_memory_base/hold_frame": 7,
+            "target_memory_hand/hold_frame": 11,
+            "target_memory_hand/hold_memory": 1
+          },
+          "abstain_rate_of_triggered": 0.7382198952879581,
+          "memory_errors": 1,
+          "memory_error_scenes": [
+            51109
+          ],
+          "unnecessary_acts": 0,
+          "offset_error_at_act_m": {
+            "n": 50,
+            "median": 0.0009844027595670782,
+            "max": 0.009216301408489388
+          },
+          "target_pushed_more_than_1mm": 0,
+          "target_pushed_scenes": [],
+          "end_reasons": {
+            "low_carry": 1,
+            "step_budget": 9,
+            "within_tolerance": 40
+          }
+        }
+      },
+      "paired": {
+        "VISION_CENTER_V2_against_VISION_CENTER_V1": {
+          "n": 200,
+          "both_succeed": 173,
+          "rescue": 7,
+          "harm": 0,
+          "both_fail": 20,
+          "net": 7,
+          "reference_success": 173,
+          "arm_success": 180,
+          "harm_given_reference_success": 0.0,
+          "reference_success_wilson95": [
+            0.8107086162924745,
+            0.9055342954521209
+          ],
+          "arm_success_wilson95": [
+            0.8505941875672826,
+            0.9343295513309041
+          ],
+          "harm_given_reference_success_wilson95": [
+            0.0,
+            0.02172261440451652
+          ],
+          "rescue_scenes": [
+            51115,
+            51174,
+            51178,
+            51194,
+            51199,
+            51250,
+            51277
+          ],
+          "harm_scenes": []
+        },
+        "VISION_CENTER_V2_against_V2_SINGLE_FRAME": {
+          "n": 200,
+          "both_succeed": 173,
+          "rescue": 7,
+          "harm": 0,
+          "both_fail": 20,
+          "net": 7,
+          "reference_success": 173,
+          "arm_success": 180,
+          "harm_given_reference_success": 0.0,
+          "reference_success_wilson95": [
+            0.8107086162924745,
+            0.9055342954521209
+          ],
+          "arm_success_wilson95": [
+            0.8505941875672826,
+            0.9343295513309041
+          ],
+          "harm_given_reference_success_wilson95": [
+            0.0,
+            0.02172261440451652
+          ],
+          "rescue_scenes": [
+            51115,
+            51174,
+            51178,
+            51194,
+            51199,
+            51250,
+            51277
+          ],
+          "harm_scenes": []
+        },
+        "V2_SINGLE_FRAME_against_VISION_CENTER_V1": {
+          "n": 200,
+          "both_succeed": 173,
+          "rescue": 0,
+          "harm": 0,
+          "both_fail": 27,
+          "net": 0,
+          "reference_success": 173,
+          "arm_success": 173,
+          "harm_given_reference_success": 0.0,
+          "reference_success_wilson95": [
+            0.8107086162924745,
+            0.9055342954521209
+          ],
+          "arm_success_wilson95": [
+            0.8107086162924745,
+            0.9055342954521209
+          ],
+          "harm_given_reference_success_wilson95": [
+            0.0,
+            0.02172261440451652
+          ],
+          "rescue_scenes": [],
+          "harm_scenes": []
+        },
+        "VISION_CENTER_V2_against_V2_NO_HAND_MEMORY": {
+          "n": 200,
+          "both_succeed": 179,
+          "rescue": 1,
+          "harm": 0,
+          "both_fail": 20,
+          "net": 1,
+          "reference_success": 179,
+          "arm_success": 180,
+          "harm_given_reference_success": 0.0,
+          "reference_success_wilson95": [
+            0.8448196800887696,
+            0.9302925120731899
+          ],
+          "arm_success_wilson95": [
+            0.8505941875672826,
+            0.9343295513309041
+          ],
+          "harm_given_reference_success_wilson95": [
+            0.0,
+            0.021009779978080914
+          ],
+          "rescue_scenes": [
+            51115
+          ],
+          "harm_scenes": []
+        },
+        "VISION_CENTER_V2_against_V2_NO_BASE_MEMORY": {
+          "n": 200,
+          "both_succeed": 178,
+          "rescue": 2,
+          "harm": 0,
+          "both_fail": 20,
+          "net": 2,
+          "reference_success": 178,
+          "arm_success": 180,
+          "harm_given_reference_success": 0.0,
+          "reference_success_wilson95": [
+            0.839073090026985,
+            0.926227555398747
+          ],
+          "arm_success_wilson95": [
+            0.8505941875672826,
+            0.9343295513309041
+          ],
+          "harm_given_reference_success_wilson95": [
+            1.734723475976807e-18,
+            0.021125318976251826
+          ],
+          "rescue_scenes": [
+            51199,
+            51277
+          ],
+          "harm_scenes": []
+        },
+        "VISION_CENTER_V2_against_V2_NO_HOLD_MEMORY": {
+          "n": 200,
+          "both_succeed": 179,
+          "rescue": 1,
+          "harm": 0,
+          "both_fail": 20,
+          "net": 1,
+          "reference_success": 179,
+          "arm_success": 180,
+          "harm_given_reference_success": 0.0,
+          "reference_success_wilson95": [
+            0.8448196800887696,
+            0.9302925120731899
+          ],
+          "arm_success_wilson95": [
+            0.8505941875672826,
+            0.9343295513309041
+          ],
+          "harm_given_reference_success_wilson95": [
+            0.0,
+            0.021009779978080914
+          ],
+          "rescue_scenes": [
+            51178
+          ],
+          "harm_scenes": []
+        },
+        "V2_RULES_OFF_against_VISION_CENTER_V2": {
+          "n": 200,
+          "both_succeed": 180,
+          "rescue": 3,
+          "harm": 0,
+          "both_fail": 17,
+          "net": 3,
+          "reference_success": 180,
+          "arm_success": 183,
+          "harm_given_reference_success": 0.0,
+          "reference_success_wilson95": [
+            0.8505941875672826,
+            0.9343295513309041
+          ],
+          "arm_success_wilson95": [
+            0.8681041292843443,
+            0.9462542498225244
+          ],
+          "harm_given_reference_success_wilson95": [
+            0.0,
+            0.02089549792161305
+          ],
+          "rescue_scenes": [
+            51109,
+            51198,
+            51216
+          ],
+          "harm_scenes": []
+        },
+        "CENTER_ORACLE_against_VISION_CENTER_V2": {
+          "n": 200,
+          "both_succeed": 179,
+          "rescue": 5,
+          "harm": 1,
+          "both_fail": 15,
+          "net": 4,
+          "reference_success": 180,
+          "arm_success": 184,
+          "harm_given_reference_success": 0.005555555555555556,
+          "reference_success_wilson95": [
+            0.8505941875672826,
+            0.9343295513309041
+          ],
+          "arm_success_wilson95": [
+            0.874010511732856,
+            0.9501594141102401
+          ],
+          "harm_given_reference_success_wilson95": [
+            0.0009813660672160114,
+            0.030793070766379115
+          ],
+          "rescue_scenes": [
+            51109,
+            51135,
+            51198,
+            51214,
+            51216
+          ],
+          "harm_scenes": [
+            51253
+          ]
+        }
+      },
+      "oracle_rescue_recovery": {
+        "VISION_CENTER_V1": {
+          "recovered": 9,
+          "oracle": 21
+        },
+        "V2_SINGLE_FRAME": {
+          "recovered": 9,
+          "oracle": 21
+        },
+        "VISION_CENTER_V2": {
+          "recovered": 16,
+          "oracle": 21
+        },
+        "V2_NO_HAND_MEMORY": {
+          "recovered": 15,
+          "oracle": 21
+        },
+        "V2_NO_BASE_MEMORY": {
+          "recovered": 14,
+          "oracle": 21
+        },
+        "V2_NO_HOLD_MEMORY": {
+          "recovered": 15,
+          "oracle": 21
+        },
+        "V2_RULES_OFF": {
+          "recovered": 19,
+          "oracle": 21
+        }
+      },
+      "safety": {
+        "VISION_CENTER_V2": {
+          "harm": 0,
+          "memory_errors": 0,
+          "target_pushed_over_1mm": 0,
+          "criteria": {
+            "harm_at_most": true,
+            "memory_errors_at_most": true,
+            "target_pushed_at_most": true
+          },
+          "met": true,
+          "thresholds": {
+            "harm_max": 2,
+            "memory_errors_max": 2,
+            "target_pushed_over_1mm_max": 1
+          }
+        }
+      }
+    }
+  },
+  "primary": {
+    "alpha_familywise": 0.05,
+    "method": "exact conditional paired test (binomial on the discordant scenes), one-sided; H_mem by intersection-union over the two policies; Holm over the two hypotheses",
+    "H_gen": {
+      "statement": "with train seed 2, VISION_CENTER_V2 succeeds in more scenes than C0",
+      "v2_only": 16,
+      "c0_only": 0,
+      "p_one_sided": 1.52587890625e-05,
+      "rejected_null": true
+    },
+    "H_mem": {
+      "statement": "with each of the two policies, VISION_CENTER_V2 succeeds in more scenes than V2_SINGLE_FRAME",
+      "per_policy": {
+        "train_seed_1": {
+          "v2_only": 10,
+          "single_frame_only": 1,
+          "p_one_sided": 0.005859375
+        },
+        "train_seed_2": {
+          "v2_only": 7,
+          "single_frame_only": 0,
+          "p_one_sided": 0.0078125
+        }
+      },
+      "p_intersection_union": 0.0078125,
+      "rejected_null": true
+    }
+  },
+  "between_policies": {
+    "v2_net_gain": {
+      "train_seed_1": 13,
+      "train_seed_2": 16
+    },
+    "difference_seed2_minus_seed1_per_scene": 0.015,
+    "scene_bootstrap95": [
+      -0.03,
+      0.055
+    ],
+    "c0_outcome_differs_between_policies": 21,
+    "note": "two policy seeds give one degree of freedom for a between-seed variance: a range is reported, not a variance estimate"
+  },
+  "safety_all_met": true,
+  "scope": [
+    "Development data. Not calibration, not Test. The primary tests were fixed before the run; everything else is descriptive.",
+    "One task, two policy seeds trained on the same demonstrations, one noise repeat, simulator images.",
+    "The safety criteria are development criteria for going on; they do not certify a harm rate.",
+    "V2_RULES_OFF measures a bundle of rules, not any single rule."
+  ],
+  "set": "vision_center_v2_c1_dev",
+  "seeds": [
+    51100,
+    51299
+  ],
+  "policies": {
+    "train_seed_1": {
+      "path": "artifacts/policies/stack_v1_s1_d500_clean_resnet18_i080000",
+      "weights_sha256": "a37be25603d6c7b7d5cfa1872e6c1134c436f78de02b745c481c88d5d0f69629"
+    },
+    "train_seed_2": {
+      "path": "artifacts/policies/stack_v1_s2_d500_clean_resnet18_i080000",
+      "weights_sha256": "52eff6a94a075bb3947e68756f8185bc1bfcb1893b691ee3529bbbc0c521b97b"
+    }
+  },
+  "plan_sha256": "6b3f04fea1ea5346d6f0725b6e49ae9ce04c4fb132f37450243a807024e5dbf7",
+  "rules_sha256": {
+    "src/hci/vision_center.py": "cc4a743976eb33da0824c1954a0ac19d075fc87b1369e45139812c09dce2797d",
+    "src/hci/vision_center_v2.py": "ab548ccc3825f9e25a7f979d4348563c34c1926c078e0acbd51f0101fd174fbc",
+    "src/hci/vision_center_c1.py": "8e914ed2d7ad2e5e48c1080b0fd8505aa452598bcb2df22712d6612f185cfcd2",
+    "src/hci/vision_center_v2s.py": "ab4188f74fb17eb1b9bbf71f21cfe2b8708c7f53efe464e6ac8ad65252d22ed6"
+  },
+  "oracle_reads_outside_center": 0,
+  "wall_seconds": {
+    "train_seed_1": 4608.658375533996,
+    "train_seed_2": 4614.367312663002
+  },
+  "runtime": {
+    "python": "3.10.12 (main, Aug 31 2026, 10:18:17) [GCC 11.4.0]",
+    "platform": "Linux-6.8.0-57-generic-x86_64-with-glibc2.35",
+    "packages": {
+      "torch": "2.6.0+cu124",
+      "torchvision": "0.21.0+cu124",
+      "mani_skill": "3.0.1",
+      "sapien": "3.0.3",
+      "gymnasium": "0.29.1",
+      "diffusers": "0.30.3",
+      "numpy": "1.26.4",
+      "scipy": "1.13.1",
+      "PyYAML": "6.0.2"
+    },
+    "nvidia_smi": {
+      "returncode": 0,
+      "stdout": "name, driver_version, memory.total [MiB]\nNVIDIA GeForce RTX 4090, 550.120, 24564 MiB\n",
+      "stderr": ""
+    }
+  }
+}

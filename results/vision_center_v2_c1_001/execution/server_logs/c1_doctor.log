@@ -1,0 +1,33 @@
+{
+  "python": "3.10.12 (main, Aug 31 2026, 10:18:17) [GCC 11.4.0]",
+  "platform": "Linux-6.8.0-57-generic-x86_64-with-glibc2.35",
+  "packages": {
+    "torch": "2.6.0+cu124",
+    "torchvision": "0.21.0+cu124",
+    "mani_skill": "3.0.1",
+    "sapien": "3.0.3",
+    "gymnasium": "0.29.1",
+    "diffusers": "0.30.3",
+    "numpy": "1.26.4",
+    "scipy": "1.13.1",
+    "PyYAML": "6.0.2"
+  },
+  "nvidia_smi": {
+    "returncode": 0,
+    "stdout": "name, driver_version, memory.total [MiB]\nNVIDIA GeForce RTX 4090, 550.120, 24564 MiB\n",
+    "stderr": ""
+  },
+  "vulkan": {
+    "returncode": 0,
+    "stdout": "==========\nVULKANINFO\n==========\n\nVulkan Instance Version: 1.3.204\n\n\nInstance Extensions: count = 20\n-------------------------------\nVK_EXT_acquire_drm_display             : extension revision 1\nVK_EXT_acquire_xlib_display            : extension revision 1\nVK_EXT_debug_report                    : extension revision 10\nVK_EXT_debug_utils                     : extension revision 2\nVK_EXT_direct_mode_display             : extension revision 1\nVK_EXT_display_surface_counter         : extension revision 1\nVK_EXT_swapchain_colorspace            : extension revision 4\nVK_KHR_device_group_creation           : extension revision 1\nVK_KHR_display                         : extension revision 23\nVK_KHR_external_fence_capabilities     : extension revision 1\nVK_KHR_external_memory_capabilities    : extension revision 1\nVK_KHR_external_semaphore_capabilities : extension revision 1\nVK_KHR_get_display_properties2         : extension revision 1\nVK_KHR_get_physical_device_properties2 : extension revision 2\nVK_KHR_get_surface_capabilities2       : extension revision 1\nVK_KHR_surface                         : extension revision 25\nVK_KHR_surface_protected_capabilities  : extension revision 1\nVK_KHR_wayland_surface                 : extension revision 6\nVK_KHR_xcb_surface                     : extension revision 6\nVK_KHR_xlib_surface                    : extension revision 6\n\nInstance Layers: count = 1\n--------------------------\nVK_LAYER_NV_optimus NVIDIA Optimus layer 1.3.277  version 1\n\nDevices:\n========\nGPU0:\n\tapiVersion         = 4206869 (1.3.277)\n\tdriverVersion      = 2308833280 (0x899e0000)\n\tvendorID           = 0x10de\n\tdeviceID           = 0x2684\n\tdeviceType         = PHYSICAL_DEVICE_TYPE_DISCRETE_GPU\n\tdeviceName         = NVIDIA GeForce RTX 4090\n\tdriverID           = DRIVER_ID_NVIDIA_PROPRIETARY\n\tdriverName         = NVIDIA\n\tdriverInfo         = 550.120\n\tconformanceVersion = 1.3.7.2\n\tdeviceUUID         = 77cb4179-cd9c-4faa-a5e6-a2bbb692c5d9\n\tdriverUUID         = b0238158-7345-5c56-8ef8-c3afdfd4908a\n",
+    "stderr": "'DISPLAY' environment variable not set... skipping surface info\nerror: XDG_RUNTIME_DIR not set in the environment.\n"
+  },
+  "cuda_available": true,
+  "simulation_import": {
+    "returncode": 0,
+    "stdout": "3.0.1\n",
+    "stderr": "/workspace/robot_harm_intervention_starter_v0_3/.venv/lib/python3.10/site-packages/sapien/_vulkan_tricks.py:78: UserWarning: Failed to find Vulkan ICD file. This is probably due to an incorrect or partial installation of the NVIDIA driver. SAPIEN will attempt to provide an ICD file anyway but it may not work.\n  warn(\n"
+  },
+  "pass": true,
+  "scope": "CPU-only flag skips GPU validation; successful GPU info does not replace RGB smoke test."
+}

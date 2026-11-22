@@ -1,0 +1,50 @@
+{
+ "work_id": "vision_center_v2_c1_001",
+ "cap_usd": 6.0,
+ "plan_sha256": "6b3f04fea1ea5346d6f0725b6e49ae9ce04c4fb132f37450243a807024e5dbf7",
+ "credit_before_usd": 8.798728733630327,
+ "credit_after_usd": 7.334258092630279,
+ "spent_usd": 1.4645,
+ "method": "Vast credit before the first attempt minus credit after the last deletion; re-read 2026-11-22 after the analysis, unchanged (7.334258092630279); 0 instances",
+ "instances": [
+  {
+   "id": 61877760,
+   "attempt": 1,
+   "host": "Indiana US, RTX 4090, AMD Ryzen 7 7700X, driver 595.99.02, US$0.55/h all-in",
+   "created_utc": "2026-11-21T23:51:00Z",
+   "deleted_utc": "2026-11-22T00:14:55Z",
+   "outcome": "env failed: server test tests/test_spatial_probe.py::test_review_a2... FileNotFoundError runs/vision_v1_001/plan.json (omitted from the upload package). No scene, no ledger. Logs: runs/vision_center_v2_c1_001_attempt1_env_failed/",
+   "settled_spend_usd": 0.2164
+  },
+  {
+   "id": 61888561,
+   "attempt": "2a",
+   "host": "Montana US, RTX 4090, Ryzen 9 7950X3D",
+   "outcome": "create answered success false; the contract stayed stopped (required resources unavailable); deleted without any use",
+   "spend_usd": 0.0056
+  },
+  {
+   "id": 61890249,
+   "attempt": 2,
+   "host": "Poland, RTX 4090, Intel Core i7-13700K, driver 550.120, US$0.3633/h all-in",
+   "created_utc": "2026-11-22T01:37:40Z",
+   "deleted_utc": "2026-11-22T04:55:20Z",
+   "outcome": "complete: install, env (tests, dry-run), scenes, probe-check, audit, budget gate, run (both passes, 400 scene-runs), pack; deleted after the hash-checked backup"
+  }
+ ],
+ "budget_gate": {
+  "spent_before_usd_at_clock": 0.3056,
+  "prior_spent_usd_input": 0.222,
+  "projected_total_usd_worst_case": 3.4753,
+  "fits_cap": true
+ },
+ "backup": {
+  "archive": "runs/vision_center_v2_c1_001_server/vision_center_v2_c1_out.tgz",
+  "bytes": 4203350820,
+  "sha256": "c3960c8db0b0dcfa7a9da56cf602056c57c691bcbe06bea22151e359782b60f2",
+  "files": 1267,
+  "per_file_sha256": "all equal after local extraction"
+ },
+ "instances_left": 0,
+ "final_reread_credit_usd": 7.334258092630279
+}
