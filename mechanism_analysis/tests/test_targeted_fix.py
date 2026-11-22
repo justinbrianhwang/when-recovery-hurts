@@ -251,6 +251,14 @@ def test_f3_the_c1_command_produces_the_whole_chain(collector_run, tmp_path):
     assert (out / 'tables' / 's6_pair_rows.csv.gz').stat().st_size > 0 and 'shared scenes are not independent samples' in (out / 'policy_paired_outcomes.csv').read_text(encoding='utf-8')
 
 
+def test_s6_workers_give_identical_rows(collector_run):
+    import s6_validity as S6
+    run = collector_run[0]; d = run / 'pass_train_seed_1'
+    items = [(json.loads(p.read_text(encoding='utf-8')), str(d / json.loads(p.read_text(encoding='utf-8'))['trace'])) for p in sorted((d / 'scenes').glob('*.json'))]
+    one = S6.collect_c1(items, workers=1); ex1 = dict(S6.collect_c1.excluded); two = S6.collect_c1(items, workers=2); ex2 = dict(S6.collect_c1.excluded)
+    assert one and one == two and ex1 == ex2                                                     # speed only: same rows, same order, same exclusions
+
+
 def _copy(collector_run, tmp_path):
     run = tmp_path / 'run'; shutil.copytree(collector_run[0], run); return run
 

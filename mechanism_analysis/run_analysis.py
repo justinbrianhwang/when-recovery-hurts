@@ -243,8 +243,8 @@ def c1(a):
         f = M.funnel(res['rows'], list(exp['arms'])); problems += M.check_funnel(f); fun += f; allrows += res['rows']; events += res['events']; mem += res['memory']; hold += res['hold']
         s[pid] = summaries(res, [], arms=[x for x in exp['arms'] if x != M.REF])
         if exp['spatial_fields']:
-            items = [(rec, run.trace(st, rec)[0]) for st, _, rec in run.scenes() if isinstance(rec, dict) and M.UNREADABLE not in rec and rec.get('scene') in {r['scene'] for r in res['rows']}]
-            rows6 = S6.collect_c1(items); s6[pid] = {**S6.summarise(rows6, excluded=S6.collect_c1.excluded), 'source_kind': kind, 'policy': pid}
+            items = [(rec, str(root / f'pass_{pid}' / rec['trace'])) for st, _, rec in run.scenes() if isinstance(rec, dict) and M.UNREADABLE not in rec and rec.get('scene') in {r['scene'] for r in res['rows']}]      # trace paths: hashes checked by the gate
+            rows6 = S6.collect_c1(items, workers=a.workers); s6[pid] = {**S6.summarise(rows6, excluded=S6.collect_c1.excluded), 'source_kind': kind, 'policy': pid}
             if not rows6 or s6[pid]['official_S6']['status'] == 'NOT_OBSERVABLE': problems.append(f"S6_NOT_OBSERVABLE for {pid}: spatial fields were expected ({s6[pid]['official_S6']['excluded']})")
             ex = S6.collect_c1.excluded
             if ex['rows_without_contacts_or_link_poses'] or ex['scenes_without_collision_geometry']: problems.append(f'SPATIAL_FIELDS_MISSING for {pid}: {ex} (every C1 row is planned to carry them)')
@@ -305,6 +305,7 @@ def main():
     q = s.add_parser('c1'); q.add_argument('--run', required=True); q.add_argument('--out', required=True); q.add_argument('--source-kind', default='C1_ORIGINAL', choices=['C1_ORIGINAL', 'MOCK'])
     q.add_argument('--plan', default=str(HERE.parent / 'results/vision_center_v2_c1_001/preparation_v3/plan.json'), help='C1_ORIGINAL: the frozen plan FILE; its own sha256 must equal the frozen hash in completeness.FROZEN_PLAN_SHA256 (not settable from the CLI)')
     q.add_argument('--expected', help='MOCK only: a MOCK_EXPECTED_MANIFEST json (policies, scenes, arms, record_plan_sha256)')
+    q.add_argument('--workers', type=int, default=1, help='processes for the S6 decomposition (speed only; identical rows in the same order)')
     a = p.parse_args(); {'existing': existing, 'c1': c1}[a.cmd](a)
 
 

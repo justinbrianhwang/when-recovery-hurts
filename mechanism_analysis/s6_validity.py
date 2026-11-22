@@ -69,14 +69,29 @@ def collect(replay_dir, records):
     return out
 
 
-def collect_c1(items):
+def _c1_scene(item):
+    """One C1 scene: (rows, excluded counts). Pure function of the record and its traces."""
+    rec, tr = item
+    if isinstance(tr, (str, Path)): tr = json.load(gzip.open(tr, 'rt', encoding='utf-8'))['traces']     # a trace path (hash checked by the gate before)
+    ex = {'rows_without_contacts_or_link_poses': 0, 'separated_pairs_not_reconstructed': 0, 'scenes_without_collision_geometry': 0}
+    geo = (rec.get('initial_state') or {}).get('collision_geometry') or (tr.get('trunk') or [{}])[0].get('collision_geometry')
+    if geo is None: ex['scenes_without_collision_geometry'] += 1; return [], ex
+    return scene_rows(rec['scene'], rec['trigger']['step'] if rec.get('triggered') else None, tr, geo, rec, ex), ex
+
+
+def collect_c1(items, workers=1):
     """The same rows for C1 records (review F3): items = [(record, traces)] of one pass. The C1 collector stores the collision
-    geometry in record.initial_state (hci.spatial_probe); the trigger step comes from the record."""
+    geometry in record.initial_state (hci.spatial_probe); the trigger step comes from the record. workers > 1 computes the
+    scenes in a process pool: the same per-scene function, results kept in the input order (speed only)."""
+    items = list(items)
+    if workers > 1 and len(items) > 1:
+        from concurrent.futures import ProcessPoolExecutor
+        with ProcessPoolExecutor(max_workers=workers) as ex: res = list(ex.map(_c1_scene, items, chunksize=1))
+    else: res = [_c1_scene(i) for i in items]
     out = []; collect_c1.excluded = {'rows_without_contacts_or_link_poses': 0, 'separated_pairs_not_reconstructed': 0, 'scenes_without_collision_geometry': 0}
-    for rec, tr in items:
-        geo = (rec.get('initial_state') or {}).get('collision_geometry') or (tr.get('trunk') or [{}])[0].get('collision_geometry')
-        if geo is None: collect_c1.excluded['scenes_without_collision_geometry'] += 1; continue
-        out += scene_rows(rec['scene'], rec['trigger']['step'] if rec.get('triggered') else None, tr, geo, rec, collect_c1.excluded)
+    for rows, ex_ in res:
+        out += rows
+        for k, v in ex_.items(): collect_c1.excluded[k] += v
     return out
 
 
