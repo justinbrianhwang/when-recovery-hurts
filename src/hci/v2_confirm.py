@@ -173,3 +173,48 @@ def create_exclusive(path, payload):
 def require_test_approval(token):
     if token != APPROVAL: raise PermissionError('Explicit final Test approval token is required')
     return True
+
+
+# ---------------------------------------------------------------- Final Test environment and host equivalence (added before the Test freeze)
+HOST_CHECK_SEEDS = (51103, 51157, 51253)          # USED C1 development scenes; never a calibration or test seed
+
+
+def live_environment(upstream_dir='third_party/ManiSkill'):
+    """What the running host is: Python, GPU and driver (nvidia-smi), the full pip freeze, the upstream commit."""
+    import platform, subprocess, sys
+    pf = subprocess.run([sys.executable, '-m', 'pip', 'freeze'], capture_output=True, text=True, check=True).stdout
+    smi = subprocess.run(['nvidia-smi', '--query-gpu=name,driver_version', '--format=csv,noheader'], capture_output=True, text=True)
+    gpu, drv = ([x.strip() for x in smi.stdout.strip().splitlines()[0].split(',')] if smi.returncode == 0 and smi.stdout.strip() else (None, None))
+    up = subprocess.run(['git', '-C', upstream_dir, 'rev-parse', 'HEAD'], capture_output=True, text=True).stdout.strip()
+    return {'python': platform.python_version(), 'gpu': gpu, 'driver': drv, 'upstream_commit': up, 'pip_freeze': sorted(l.strip() for l in pf.splitlines() if l.strip())}
+
+
+def check_environment(live, expected):
+    """Problems (empty list = the host equals the frozen environment): driver, GPU, Python minor version, upstream commit,
+    and the pip freeze line by line."""
+    p = []
+    if live.get('driver') != expected['driver']: p.append(f"driver {live.get('driver')} != {expected['driver']}")
+    if live.get('gpu') != expected['gpu']: p.append(f"gpu {live.get('gpu')} != {expected['gpu']}")
+    if not str(live.get('python', '')).startswith(expected['python_minor'] + '.'): p.append(f"python {live.get('python')} is not {expected['python_minor']}.x")
+    if live.get('upstream_commit') != expected['upstream_commit']: p.append(f"upstream {live.get('upstream_commit')} != {expected['upstream_commit']}")
+    a, b = set(live.get('pip_freeze', [])), set(expected['pip_freeze'])
+    if a != b: p.append(f'pip freeze differs: missing {sorted(b - a)[:5]}, extra {sorted(a - b)[:5]}')
+    return p
+
+
+def compare_runs(ref_dir, new_dir, policies, seeds):
+    """Host equivalence: for every (policy, seed) the trunk, C0 and V2 trace rows (canonical JSON) and the C0/V2 outcomes of a
+    new runner pass equal the reference pass. Returns (all_identical, rows)."""
+    import gzip
+    rows = []; ok = True
+    canon = lambda x: json.dumps(x, sort_keys=True)
+    for pid in policies:
+        for s in seeds:
+            rd, nd = Path(ref_dir) / f'pass_{pid}', Path(new_dir) / f'pass_{pid}'
+            r0 = json.loads((rd / 'scenes' / f'{s}.json').read_text(encoding='utf-8')); r1 = json.loads((nd / 'scenes' / f'{s}.json').read_text(encoding='utf-8'))
+            with gzip.open(rd / r0['trace'], 'rt', encoding='utf-8') as f: t0 = json.load(f)['traces']
+            with gzip.open(nd / r1['trace'], 'rt', encoding='utf-8') as f: t1 = json.load(f)['traces']
+            c0 = {c['arm']: (c['y'], c['steps'], c.get('acted')) for c in r0['cells']}; c1 = {c['arm']: (c['y'], c['steps'], c.get('acted')) for c in r1['cells']}
+            e = {'policy': pid, 'scene': s, 'traces_identical': all(canon(t0.get(k)) == canon(t1.get(k)) for k in ('trunk',) + ARMS), 'cells_equal': c0 == c1}
+            e['identical'] = e['traces_identical'] and e['cells_equal']; ok &= e['identical']; rows.append(e)
+    return bool(ok and rows), rows

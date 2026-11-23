@@ -68,7 +68,12 @@ def cmd_freeze(a):
              'splits': {k: list(v) for k, v in V.SPLITS.items()}, 'policies': {p: POLICY_PATHS[p] for p in a.policies}, 'amendment_approval': appr, 'upstream_commit': a.upstream_commit,
              'pip_freeze_sha256': V.sha256(a.pip_freeze) if a.pip_freeze else None, 'note': 'Operational lock against accidental contamination, not access control.'}
     if a.stage == 'test':
-        if not (a.calibration_freeze and a.calibration_analysis): raise SystemExit('a test freeze needs the calibration freeze and the calibration analysis')
+        if not (a.calibration_freeze and a.calibration_analysis and a.pip_freeze and a.host_check_reference and a.driver and a.gpu):
+            raise SystemExit('a test freeze needs the calibration freeze and analysis, the calibration-host pip freeze, the host-check reference, driver and gpu')
+        ref = Path(a.host_check_reference); files += sorted(p.as_posix() for p in ref.rglob('*') if p.is_file())
+        extra['environment'] = {'driver': a.driver, 'gpu': a.gpu, 'python_minor': a.python_minor, 'upstream_commit': a.upstream_commit,
+                                'pip_freeze': sorted(l.strip() for l in Path(a.pip_freeze).read_text(encoding='utf-8').splitlines() if l.strip())}
+        extra['host_check'] = {'reference': ref.as_posix(), 'seeds': list(V.HOST_CHECK_SEEDS), 'rule': 'the Test may start only after host-check passed for this manifest'}
         files += [a.calibration_freeze, a.calibration_analysis]
         cal = json.loads(Path(a.calibration_analysis).read_text(encoding='utf-8'))
         extra['calibration_result'] = {'joint_statement_all_policies': cal['certificate']['joint_statement_all_policies'], 'members': cal['certificate']['members']}
@@ -85,25 +90,15 @@ def cmd_verify(a): frozen(a.frozen); print('VERIFIED')
 
 
 # ---------------------------------------------------------------- run
-def cmd_run(a):
-    man = frozen(a.frozen); stage = man['stage']; pid = a.policy
-    if pid not in man['policies']: raise SystemExit(f'{pid} is not a frozen policy')
-    if stage == 'test': V.require_test_approval(a.approval)
-    elif a.approval is not None: raise SystemExit('the approval token belongs to the Final Test only')
-    seeds = V.split_seeds(SPLITS_JSON, stage) if a.seeds is None else [int(s) for s in a.seeds]          # --seeds only for the tests (synthetic seeds)
-    if a.seeds is not None and set(seeds) & set(range(30000, 30400)) | set(seeds) & set(range(90000, 90400)): raise SystemExit('--seeds may not name calibration or test seeds')
-    out = Path(a.out) / f'pass_{pid}'
+def _run_pass(man, frozen_dir, pid, stage, seeds, out, ledger, upstream, device, marker=None):
+    """One pass of one policy: exclusive marker (Test) and ledger BEFORE the first rollout, then every seed once."""
     if out.exists(): raise SystemExit(f'{out} exists: a pass is never resumed or repeated')
-    placement = Path(a.out) / f'placement_{stage}.json'
-    if a.seeds is None and not (placement.is_file() and json.loads(placement.read_text())['pass']): raise SystemExit('the placement check of this stage has not passed')
-    ledger = Path(a.ledger_dir or LEDGER_DIR) / f'ras_v2_confirm_{stage}_{pid}.json'
-    if stage == 'test':
-        V.create_exclusive(Path(a.frozen) / f'TEST_STARTED_{pid}.json', {'policy': pid, 'out': str(out), 'started_utc': V.now()})
-    V.create_exclusive(ledger, {'set': f'{stage}', 'policy': pid, 'seeds': [seeds[0], seeds[-1], len(seeds)], 'frozen_manifest_sha256': V.sha256(Path(a.frozen) / 'manifest.json'), 'used_utc': V.now(),
+    if marker is not None: V.create_exclusive(marker, {'policy': pid, 'out': str(out), 'started_utc': V.now()})
+    V.create_exclusive(ledger, {'set': f'{stage}', 'policy': pid, 'seeds': [seeds[0], seeds[-1], len(seeds)], 'frozen_manifest_sha256': V.sha256(Path(frozen_dir) / 'manifest.json'), 'used_utc': V.now(),
                                 'note': 'single use; written before the first rollout'})
     (out / 'scenes').mkdir(parents=True)
     from hci import vision_center_c1 as C1
-    c = load_config(); r = make_runtime(c, man['policies'][pid], a.upstream, a.device); pr = probe(); started = time.time(); done = 0
+    c = load_config(); r = make_runtime(c, man['policies'][pid], upstream, device); pr = probe(); started = time.time(); done = 0
     try:
         for s in seeds:
             try:
@@ -114,7 +109,57 @@ def cmd_run(a):
             done += 1; print(f'{stage} {pid} scene={s} done={done}/{len(seeds)} wall={time.time() - started:.0f}s', flush=True)       # outcomes are not printed
     finally:
         r.env.close()
-    (out / 'PASS_DONE.json').write_text(json.dumps({'policy': pid, 'scenes': done, 'seconds': time.time() - started, 'frozen_manifest_sha256': V.sha256(Path(a.frozen) / 'manifest.json')}), encoding='utf-8')
+    (out / 'PASS_DONE.json').write_text(json.dumps({'policy': pid, 'scenes': done, 'seconds': time.time() - started, 'frozen_manifest_sha256': V.sha256(Path(frozen_dir) / 'manifest.json')}), encoding='utf-8')
+
+
+def live_environment():                                               # replaced by the tests
+    return V.live_environment()
+
+
+def environment_problems(man):
+    """Final Test only: the live host against the frozen environment (driver, GPU, Python minor, upstream, full pip freeze)."""
+    return V.check_environment(live_environment(), man['environment'])
+
+
+def cmd_host_check(a):
+    """Final Test only, before the Test: (1) the live environment equals the frozen one; (2) the runner on USED C1 development
+    scenes (HOST_CHECK_SEEDS, both policies) reproduces the frozen reference pass of the calibration host bit for bit.
+    Writes <out>/host_check.json. Uses no calibration or test seed and no Test ledger or marker."""
+    man = frozen(a.frozen)
+    if man['stage'] != 'test': raise SystemExit('host-check belongs to the Final Test freeze')
+    out = Path(a.out); res = out / 'host_check.json'
+    if res.exists(): raise SystemExit(f'{res} exists')
+    env = environment_problems(man); rep = {'frozen_manifest_sha256': V.sha256(Path(a.frozen) / 'manifest.json'), 'environment_problems': env, 'utc': V.now()}
+    if not env:
+        hc = out / 'host_check_runs'
+        for pid in man['policies']:
+            _run_pass(man, a.frozen, pid, man['stage'], list(V.HOST_CHECK_SEEDS), hc / f'pass_{pid}', hc / 'ledger' / f'host_check_{pid}.json', a.upstream, a.device)
+        ok, rows = V.compare_runs(man['host_check']['reference'], hc, list(man['policies']), list(V.HOST_CHECK_SEEDS)); rep.update(reproduces_reference=ok, rows=rows)
+    rep['pass'] = (not env) and bool(rep.get('reproduces_reference'))
+    out.mkdir(parents=True, exist_ok=True); res.write_text(json.dumps(rep, indent=1), encoding='utf-8')
+    print(json.dumps({'pass': rep['pass'], 'environment_problems': env, 'reproduces_reference': rep.get('reproduces_reference')}))
+    if not rep['pass']: raise SystemExit(2)
+
+
+def cmd_run(a):
+    man = frozen(a.frozen); stage = man['stage']; pid = a.policy
+    if pid not in man['policies']: raise SystemExit(f'{pid} is not a frozen policy')
+    if stage == 'test': V.require_test_approval(a.approval)
+    elif a.approval is not None: raise SystemExit('the approval token belongs to the Final Test only')
+    seeds = V.split_seeds(SPLITS_JSON, stage) if a.seeds is None else [int(s) for s in a.seeds]          # --seeds only for the tests (synthetic seeds)
+    if a.seeds is not None and (set(seeds) & set(range(30000, 30400)) or set(seeds) & set(range(90000, 90400))): raise SystemExit('--seeds may not name calibration or test seeds')
+    out = Path(a.out) / f'pass_{pid}'
+    if out.exists(): raise SystemExit(f'{out} exists: a pass is never resumed or repeated')
+    if stage == 'test':                                                # every check BEFORE the marker and the ledger: a refused start uses no test seed
+        env = environment_problems(man)
+        if env: raise SystemExit(f'Refused: the host differs from the frozen environment: {env}')
+        hc = Path(a.out) / 'host_check.json'
+        ok = hc.is_file() and json.loads(hc.read_text())['pass'] and json.loads(hc.read_text())['frozen_manifest_sha256'] == V.sha256(Path(a.frozen) / 'manifest.json')
+        if not ok: raise SystemExit('Refused: no passed host check for this frozen manifest')
+    placement = Path(a.out) / f'placement_{stage}.json'
+    if a.seeds is None and not (placement.is_file() and json.loads(placement.read_text())['pass']): raise SystemExit('the placement check of this stage has not passed')
+    ledger = Path(a.ledger_dir or LEDGER_DIR) / f'ras_v2_confirm_{stage}_{pid}.json'
+    _run_pass(man, a.frozen, pid, stage, seeds, out, ledger, a.upstream, a.device, marker=(Path(a.frozen) / f'TEST_STARTED_{pid}.json') if stage == 'test' else None)
 
 
 # ---------------------------------------------------------------- analyze
@@ -183,13 +228,14 @@ def main():
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter); s = p.add_subparsers(dest='cmd', required=True)
     q = s.add_parser('freeze'); q.add_argument('--stage', choices=('calibration', 'test'), required=True); q.add_argument('--out', required=True); q.add_argument('--amendment', required=True)
     q.add_argument('--approval-record', required=True); q.add_argument('--policies', nargs='+', default=list(V.POLICY_IDS)); q.add_argument('--upstream-commit', required=True)
-    q.add_argument('--pip-freeze'); q.add_argument('--calibration-freeze'); q.add_argument('--calibration-analysis')
+    q.add_argument('--pip-freeze'); q.add_argument('--calibration-freeze'); q.add_argument('--calibration-analysis'); q.add_argument('--host-check-reference'); q.add_argument('--driver'); q.add_argument('--gpu'); q.add_argument('--python-minor', default='3.10')
+    q = s.add_parser('host-check'); q.add_argument('--frozen', required=True); q.add_argument('--out', required=True); q.add_argument('--upstream', default='third_party/ManiSkill'); q.add_argument('--device', default='cuda')
     q = s.add_parser('verify'); q.add_argument('--frozen', required=True)
     q = s.add_parser('placement'); q.add_argument('--frozen', required=True); q.add_argument('--out', required=True)
     q = s.add_parser('run'); q.add_argument('--frozen', required=True); q.add_argument('--policy', required=True); q.add_argument('--out', required=True); q.add_argument('--approval')
     q.add_argument('--upstream', default='third_party/ManiSkill'); q.add_argument('--device', default='cuda'); q.add_argument('--seeds', nargs='*', default=None); q.add_argument('--ledger-dir')
     q = s.add_parser('analyze'); q.add_argument('--frozen', required=True); q.add_argument('--run', required=True); q.add_argument('--out', required=True); q.add_argument('--seeds', nargs='*', default=None)
-    a = p.parse_args(); {'freeze': cmd_freeze, 'verify': cmd_verify, 'placement': cmd_placement, 'run': cmd_run, 'analyze': cmd_analyze}[a.cmd](a)
+    a = p.parse_args(); {'freeze': cmd_freeze, 'verify': cmd_verify, 'placement': cmd_placement, 'host-check': cmd_host_check, 'run': cmd_run, 'analyze': cmd_analyze}[a.cmd](a)
 
 
 if __name__ == '__main__':

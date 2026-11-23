@@ -111,7 +111,7 @@ def rig(X40, tmp_path, monkeypatch):
     monkeypatch.setattr(X40, 'load_config', lambda: CFG); monkeypatch.setattr(X40, 'probe', lambda: probe2)
     am = tmp_path / 'AMENDMENT_017_FINAL.md'; am.write_text('the amendment text'); ap = tmp_path / 'approval_017.json'
     ap.write_text(json.dumps({'approved_by': 'user', 'amendment_sha256': sha(am), 'scope': ['test fixture']}))
-    yield {'tmp': tmp_path, 'am': am, 'ap': ap, 'ledgers': tmp_path / 'ledger'}
+    yield {'tmp': tmp_path, 'am': am, 'ap': ap, 'ledgers': tmp_path / 'ledger', 'mp': monkeypatch}
     assert (sorted(p.name for p in REAL_LEDGER_DIR.glob('*')) if REAL_LEDGER_DIR.exists() else []) == before, 'the test touched the real ledger folder'
 
 
@@ -120,9 +120,9 @@ def ns(**k): return argparse.Namespace(**k)
 
 def test_end_to_end_calibration_then_test_with_every_refusal(X40, rig):
     t = rig['tmp']; F = t / 'frozen_cal'
-    X40.cmd_freeze(ns(stage='calibration', out=str(F), amendment=str(rig['am']), approval_record=str(rig['ap']), policies=['train_seed_1', 'train_seed_2'], upstream_commit='a4a4f92', pip_freeze=None, calibration_freeze=None, calibration_analysis=None))
+    X40.cmd_freeze(ns(stage='calibration', out=str(F), amendment=str(rig['am']), approval_record=str(rig['ap']), policies=['train_seed_1', 'train_seed_2'], upstream_commit='a4a4f92', pip_freeze=None, calibration_freeze=None, calibration_analysis=None, host_check_reference=None, driver=None, gpu=None, python_minor='3.10'))
     with pytest.raises(SystemExit, match='exists'):
-        X40.cmd_freeze(ns(stage='calibration', out=str(F), amendment=str(rig['am']), approval_record=str(rig['ap']), policies=['train_seed_1'], upstream_commit='x', pip_freeze=None, calibration_freeze=None, calibration_analysis=None))
+        X40.cmd_freeze(ns(stage='calibration', out=str(F), amendment=str(rig['am']), approval_record=str(rig['ap']), policies=['train_seed_1'], upstream_commit='x', pip_freeze=None, calibration_freeze=None, calibration_analysis=None, host_check_reference=None, driver=None, gpu=None, python_minor='3.10'))
     run = t / 'cal_run'
     with pytest.raises(SystemExit, match='calibration or test seeds'):
         X40.cmd_run(ns(frozen=str(F), policy='train_seed_1', out=str(run), approval=None, upstream='x', device='cpu', seeds=['30000'], ledger_dir=str(rig['ledgers'])))
@@ -139,16 +139,77 @@ def test_end_to_end_calibration_then_test_with_every_refusal(X40, rig):
     res = json.loads(ana.read_text()); assert [m['policy'] for m in res['certificate']['members']] == ['train_seed_1', 'train_seed_2'] and all(m['scenes'] == 2 for m in res['certificate']['members'])
     assert 'efficacy' not in res and len(res['record_sha256']) == 4
     with pytest.raises(SystemExit, match='INCOMPLETE'): X40.cmd_analyze(ns(frozen=str(F), run=str(run), out=str(t / 'a2.json'), seeds=['7', '8', '9']))
-    # a changed frozen file blocks every later command
+    # Final Test freeze: environment of the calibration host + host-check reference on USED development seeds
+    ref = t / 'host_check_reference'; man_cal = X40.frozen(str(F))
+    for pid in ('train_seed_1', 'train_seed_2'):
+        X40._run_pass(man_cal, str(F), pid, 'calibration', list(V.HOST_CHECK_SEEDS), ref / f'pass_{pid}', t / 'ref_ledger' / f'{pid}.json', 'x', 'cpu')
+    pf = t / 'pip_freeze.txt'; pf.write_text('numpy==1.26.4\nsapien==3.0.3\n')
+    env_ok = {'python': '3.10.12', 'gpu': 'NVIDIA GeForce RTX 4090', 'driver': '595.99.02', 'upstream_commit': 'a4a4f92', 'pip_freeze': ['numpy==1.26.4', 'sapien==3.0.3']}
     tf = t / 'frozen_test'
-    X40.cmd_freeze(ns(stage='test', out=str(tf), amendment=str(rig['am']), approval_record=str(rig['ap']), policies=['train_seed_1', 'train_seed_2'], upstream_commit='a4a4f92', pip_freeze=None,
-                      calibration_freeze=str(F / 'manifest.json'), calibration_analysis=str(ana)))
+    X40.cmd_freeze(ns(stage='test', out=str(tf), amendment=str(rig['am']), approval_record=str(rig['ap']), policies=['train_seed_1', 'train_seed_2'], upstream_commit='a4a4f92', pip_freeze=str(pf),
+                      calibration_freeze=str(F / 'manifest.json'), calibration_analysis=str(ana), host_check_reference=str(ref), driver='595.99.02', gpu='NVIDIA GeForce RTX 4090', python_minor='3.10'))
     trun = t / 'test_run'
     with pytest.raises(PermissionError): X40.cmd_run(ns(frozen=str(tf), policy='train_seed_1', out=str(trun), approval=None, upstream='x', device='cpu', seeds=['7', '8'], ledger_dir=str(rig['ledgers'])))
-    assert not (tf / 'TEST_STARTED_train_seed_1.json').exists()
+    rig['mp'].setattr(X40, 'live_environment', lambda: {**env_ok, 'driver': '550.120'})            # another driver: refused before the marker
+    with pytest.raises(SystemExit, match='differs from the frozen environment'):
+        X40.cmd_run(ns(frozen=str(tf), policy='train_seed_1', out=str(trun), approval=V.APPROVAL, upstream='x', device='cpu', seeds=['7', '8'], ledger_dir=str(rig['ledgers'])))
+    with pytest.raises(SystemExit): X40.cmd_host_check(ns(frozen=str(tf), out=str(trun / 'hc_wrong_env'), upstream='x', device='cpu'))
+    assert json.loads((trun / 'hc_wrong_env' / 'host_check.json').read_text())['pass'] is False
+    rig['mp'].setattr(X40, 'live_environment', lambda: {**env_ok, 'pip_freeze': env_ok['pip_freeze'] + ['extra==1.0']})
+    with pytest.raises(SystemExit, match='pip freeze differs'):
+        X40.cmd_run(ns(frozen=str(tf), policy='train_seed_1', out=str(trun), approval=V.APPROVAL, upstream='x', device='cpu', seeds=['7', '8'], ledger_dir=str(rig['ledgers'])))
+    rig['mp'].setattr(X40, 'live_environment', lambda: dict(env_ok))
+    with pytest.raises(SystemExit, match='no passed host check'):                                      # environment equal but no host check yet
+        X40.cmd_run(ns(frozen=str(tf), policy='train_seed_1', out=str(trun), approval=V.APPROVAL, upstream='x', device='cpu', seeds=['7', '8'], ledger_dir=str(rig['ledgers'])))
+    assert not list(tf.glob('TEST_STARTED_*')) and not list(Path(rig['ledgers']).glob('ras_v2_confirm_test_*'))   # nothing refused above used the test
+    X40.cmd_host_check(ns(frozen=str(tf), out=str(trun), upstream='x', device='cpu'))
+    hc = json.loads((trun / 'host_check.json').read_text()); assert hc['pass'] and hc['reproduces_reference'] and len(hc['rows']) == 6
     X40.cmd_run(ns(frozen=str(tf), policy='train_seed_1', out=str(trun), approval=V.APPROVAL, upstream='x', device='cpu', seeds=['7', '8'], ledger_dir=str(rig['ledgers'])))
     assert (tf / 'TEST_STARTED_train_seed_1.json').exists()
-    with pytest.raises(FileExistsError):                                       # the started marker blocks a second Test of the same policy
+    with pytest.raises(SystemExit, match='no passed host check'):              # a fresh output folder has no host check: refused before the marker
         X40.cmd_run(ns(frozen=str(tf), policy='train_seed_1', out=str(t / 'test_run_2'), approval=V.APPROVAL, upstream='x', device='cpu', seeds=['7', '8'], ledger_dir=str(t / 'fresh_ledger')))
+    (t / 'test_run_2').mkdir(); (t / 'test_run_2' / 'host_check.json').write_text((trun / 'host_check.json').read_text())
+    with pytest.raises(FileExistsError):                                       # even with a copied host check, a fresh output and a fresh ledger folder, the started marker blocks a second Test
+        X40.cmd_run(ns(frozen=str(tf), policy='train_seed_1', out=str(t / 'test_run_2'), approval=V.APPROVAL, upstream='x', device='cpu', seeds=['7', '8'], ledger_dir=str(t / 'fresh_ledger')))
+    assert not list((t / 'fresh_ledger').glob('*')) if (t / 'fresh_ledger').exists() else True
+    with pytest.raises(SystemExit, match='INCOMPLETE'):                       # only one policy passed: the Test analysis refuses
+        X40.cmd_analyze(ns(frozen=str(tf), run=str(trun), out=str(t / 'test_analysis_partial.json'), seeds=['7', '8']))
+    X40.cmd_run(ns(frozen=str(tf), policy='train_seed_2', out=str(trun), approval=V.APPROVAL, upstream='x', device='cpu', seeds=['7', '8'], ledger_dir=str(rig['ledgers'])))
+    (trun / 'pass_train_seed_2' / 'PASS_DONE.json').rename(trun / 'pass_train_seed_2' / 'PASS_DONE.moved')
+    with pytest.raises(SystemExit, match='PASS_DONE'):                        # every scene present but the pass did not finish: refused
+        X40.cmd_analyze(ns(frozen=str(tf), run=str(trun), out=str(t / 'test_analysis_nodone.json'), seeds=['7', '8']))
+    (trun / 'pass_train_seed_2' / 'PASS_DONE.moved').rename(trun / 'pass_train_seed_2' / 'PASS_DONE.json')
+    X40.cmd_analyze(ns(frozen=str(tf), run=str(trun), out=str(t / 'test_analysis.json'), seeds=['7', '8']))
+    tres = json.loads((t / 'test_analysis.json').read_text()); assert 'efficacy' in tres and [r['policy'] for r in tres['efficacy']['per_policy']] == ['train_seed_1', 'train_seed_2']
     ana.write_text('{"changed": true}')
     with pytest.raises(SystemExit, match='frozen inputs changed'): X40.cmd_verify(ns(frozen=str(tf)))
+
+
+# ---------------------------------------------------------------- parallel passes: the single-use files are atomic across processes
+def _race(path):
+    try:
+        V.create_exclusive(path, {'pid': __import__('os').getpid()}); return 1
+    except FileExistsError:
+        return 0
+
+
+def test_exclusive_ledger_is_atomic_across_parallel_processes(tmp_path):
+    from concurrent.futures import ProcessPoolExecutor
+    target = tmp_path / 'ledger' / 'ras_v2_confirm_test_train_seed_1.json'
+    with ProcessPoolExecutor(4) as ex: wins = list(ex.map(_race, [target] * 8))
+    assert sum(wins) == 1 and target.exists()
+
+
+def test_environment_check_and_run_comparison(tmp_path):
+    exp = {'driver': '595.99.02', 'gpu': 'NVIDIA GeForce RTX 4090', 'python_minor': '3.10', 'upstream_commit': 'a4a4f92', 'pip_freeze': ['a==1', 'b==2']}
+    live = {'driver': '595.99.02', 'gpu': 'NVIDIA GeForce RTX 4090', 'python': '3.10.12', 'upstream_commit': 'a4a4f92', 'pip_freeze': ['b==2', 'a==1']}
+    assert V.check_environment(live, exp) == []
+    for k, v in (('driver', '550.120'), ('gpu', 'RTX 3090'), ('python', '3.11.4'), ('upstream_commit', 'x'), ('pip_freeze', ['a==1'])):
+        assert len(V.check_environment({**live, k: v}, exp)) == 1
+    import gzip
+    def write(d, pid, s, y):
+        q = d / f'pass_{pid}'; (q / 'scenes').mkdir(parents=True, exist_ok=True); (q / 'traces').mkdir(exist_ok=True)
+        with gzip.open(q / 'traces' / f'trace_{s}.json.gz', 'wt', encoding='utf-8') as f: json.dump({'traces': {'trunk': [{'t': 1}], 'C0': [], 'VISION_CENTER_V2': []}}, f)
+        (q / 'scenes' / f'{s}.json').write_text(json.dumps({'trace': f'traces/trace_{s}.json.gz', 'cells': [{'arm': 'C0', 'y': y, 'steps': 9}, {'arm': V.CANDIDATE, 'y': 1, 'steps': 9, 'acted': False}]}))
+    write(tmp_path / 'a', 'p', 5, 1); write(tmp_path / 'b', 'p', 5, 1); write(tmp_path / 'c', 'p', 5, 0)
+    assert V.compare_runs(tmp_path / 'a', tmp_path / 'b', ['p'], [5])[0] and not V.compare_runs(tmp_path / 'a', tmp_path / 'c', ['p'], [5])[0]
