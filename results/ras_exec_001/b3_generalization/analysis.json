@@ -1,0 +1,70 @@
+{
+ "work": "gen_arch_plainconv_001",
+ "scenes": 200,
+ "triggered": 135,
+ "arms": {
+  "C0": {
+   "success": 52,
+   "wilson95": [
+    0.20413830063574687,
+    0.32490745602534116
+   ],
+   "acted": 0
+  },
+  "V2_SINGLE_FRAME": {
+   "success": 79,
+   "wilson95": [
+    0.32984101013207967,
+    0.46411650840714636
+   ],
+   "acted": 45,
+   "rescue": 29,
+   "harm": 2,
+   "net": 27
+  },
+  "VISION_CENTER_V2": {
+   "success": 87,
+   "wilson95": [
+    0.36815725502699076,
+    0.504292637402054
+   ],
+   "acted": 61,
+   "rescue": 37,
+   "harm": 2,
+   "net": 35
+  },
+  "CENTER_ORACLE": {
+   "success": 90,
+   "wilson95": [
+    0.3826406840224836,
+    0.5192438486152432
+   ],
+   "acted": 135,
+   "rescue": 45,
+   "harm": 7,
+   "net": 38
+  }
+ },
+ "H_arch": {
+  "v2_only": 37,
+  "c0_only": 2,
+  "p_one_sided": 1.420630724169314e-09,
+  "alpha": 0.05,
+  "rejected_null": true
+ },
+ "oracle_rescues": 45,
+ "oracle_rescues_recovered_by_v2": 37,
+ "v2_vs_single_frame_descriptive": {
+  "v2_only": 8,
+  "single_frame_only": 0
+ },
+ "safety_development_criteria": {
+  "harm_v2": 2,
+  "limit": {
+   "harm_max": 2,
+   "memory_errors_max": 2,
+   "target_pushed_over_1mm_max": 1
+  },
+  "note": "memory errors and target push are read from the records by the C1 mechanism analysis; not recomputed here"
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "work": "gen_arch_plainconv_001",
+ "created_utc": "2026-11-22T21:02:03+00:00",
+ "files_sha256": {
+  "artifacts/policies/stack_1d_s1_d500_clean_v1_i080000/policy_meta.json": "9976053598632fd58c48b89c9dffabf8f97b3d18ccf5062127c9c0be3de8a468",
+  "artifacts/policies/stack_1d_s1_d500_clean_v1_i080000/weights.pt": "faacd2d86464c725a4fb95563a5ed5808019a8b420795b9a2a931822ed89db0e",
+  "configs/stackcube.yaml": "b145ca59607f4edf45f20bd45624f1bd4c8ff028a035ee4ab12b7de40bb08d8b",
+  "scripts/33_vision_center_v2.py": "9a4cd5ff72d363eb57e182110b58272bbf08b09e4c58d2d9a12ccbb5f87481d6",
+  "scripts/41_gen_arch_plainconv.py": "bc73c9f4a585ca362041ab65b484003e3722255d4f277391cc9df3d7e93cbdae",
+  "src/hci/policies.py": "d9083dfe1eff702bae087b96840d2703dbb609fb7947c01eb49864bbd0eb9157",
+  "src/hci/recovery_v1.py": "84512bbf4e89661b9e4b2923d37b896461f4a7d0fd5ea93fd27b1341d2d40464",
+  "src/hci/recovery_v1_oracle.py": "f652ead0a47750bd55ff990391ff4bb02d4af44331d351d4adea7112a973e765",
+  "src/hci/simulation.py": "c42626728cac7eb9ebeffd5372683fc4ba01e41ef9d050f01e51134b0208fe9d",
+  "src/hci/spatial_probe.py": "77fe1027bebddc6718b8624c5a5aa329c176750e5e8bc84a54cc5f4e8959d122",
+  "src/hci/statistics.py": "2e43b5f3134359412913abeee3eca3f30e27681ece10f1ae195ae0490ce1f5ad",
+  "src/hci/v2_confirm.py": "c46eb84217ecd2f8f024a076376c5789608b502bbe3223ad9e472b51a33928f4",
+  "src/hci/vision_center.py": "cc4a743976eb33da0824c1954a0ac19d075fc87b1369e45139812c09dce2797d",
+  "src/hci/vision_center_c1.py": "8e914ed2d7ad2e5e48c1080b0fd8505aa452598bcb2df22712d6612f185cfcd2",
+  "src/hci/vision_center_v2.py": "ab548ccc3825f9e25a7f979d4348563c34c1926c078e0acbd51f0101fd174fbc",
+  "src/hci/vision_v1.py": "deab7d2697dea81a995519cc568622f9c0d90df256d9281f2e3517811f06c9f7",
+  "tests/test_gen_arch_plainconv.py": "5ab724108c90db2df178dd328277aab5cdab45a3d6aec751880c8e5e59f074cc"
+ },
+ "policy": "artifacts/policies/stack_1d_s1_d500_clean_v1_i080000",
+ "seeds": [
+  51300,
+  51499
+ ],
+ "arms": [
+  "C0",
+  "V2_SINGLE_FRAME",
+  "VISION_CENTER_V2",
+  "CENTER_ORACLE"
+ ],
+ "hypothesis": {
+  "H_arch": "with the PlainConv policy, VISION_CENTER_V2 succeeds in more scenes than C0; exact one-sided paired test; alpha 0.05"
+ },
+ "safety_development_criteria": {
+  "harm_max": 2,
+  "memory_errors_max": 2,
+  "target_pushed_over_1mm_max": 1
+ },
+ "cost": {
+  "scene_runs": 200,
+  "seconds_per_scene_run_assumed": 14.0,
+  "setup_hours": 0.5,
+  "usd_per_hour_assumed": 0.36,
+  "cap_usd": 1.5,
+  "basis": "C1 measured 22.6 s per scene-run with 9 arms; 4 arms assumed 14 s (trunk ~6 s + 4 x ~1.9 s); measured in the first 5 scenes"
+ },
+ "data_role": "development (new seeds 51300-51499); not calibration, not test",
+ "status": "PREPARED, NOT RUN"
+}

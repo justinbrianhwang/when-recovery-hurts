@@ -26,7 +26,7 @@ def main():
         share = {k: (act[k] / n if n else 1 / len(jobs)) for k in jobs}
         for k in jobs: cost[k] += rate * (hi - lo) * share[k]
     res = {'credit_before': a.credit_before, 'credit_after': a.credit_after, 'instance_total_usd': total, 'instance_hours': span / 3600, 'usd_per_hour_effective': rate * 3600,
-           'per_job_usd': cost, 'caps_usd': {'B1': 2.0, 'B3': 1.5, 'B4': 1.0}, 'within_caps': {k: cost[k] <= c for k, c in {'B1': 2.0, 'B3': 1.5, 'B4': 1.0}.items()},
+           'per_job_usd': cost, 'caps_usd': {'B1': 2.5, 'B3': 1.5, 'B4': 1.0}, 'within_caps': {k: cost[k] <= c for k, c in {'B1': 2.5, 'B3': 1.5, 'B4': 1.0}.items()}, 'cap_note': 'B1 cap raised from 2.00 to 2.50 by the user during the run (approvals/cap_change_B1_2026-11-22.json)',
            'method': __doc__.split('Method (declared before the end of the run): ')[1].split('\n\nusage')[0]}
     Path(a.out).write_text(json.dumps(res, indent=1), encoding='utf-8'); print(json.dumps(res, indent=1))
 

@@ -1,0 +1,50 @@
+host cpu= Intel(R) Core(TM) i7-10700 CPU @ 2.90GHz gpu=NVIDIA GeForce RTX 4090, 595.99.02
+JOB SETUP start 2026-11-22T21:20:51Z
+STEP_START install_sys 2026-11-22T21:20:51Z cmd=bash scripts/00_system_packages.sh
+STEP_EXIT install_sys 0 2026-11-22T21:21:27Z
+STEP_START bootstrap 2026-11-22T21:21:27Z cmd=bash scripts/01_bootstrap_vast.sh
+STEP_EXIT bootstrap 0 2026-11-22T21:24:26Z
+STEP_START versions 2026-11-22T21:24:26Z cmd=python -c import torch,torchvision,sapien,mani_skill;print(torch.__version__,torchvision.__version__,sapien.__version__,mani_skill.__version__,torch.cuda.get_device_name(0))
+STEP_EXIT versions 0 2026-11-22T21:24:30Z
+JOB SETUP end 2026-11-22T21:24:30Z
+JOB B1 start 2026-11-22T21:24:30Z
+STEP_START freeze_calibration 2026-11-22T21:24:30Z cmd=python scripts/40_v2_confirm.py freeze --stage calibration --out frozen/ras_v2_confirm_001_calibration --amendment results/ras_submission_readiness_001/AMENDMENT_017_FINAL_PROPOSAL.md --approval-record approvals/approval_amendment_017.json --upstream-commit a4a4f9272ad64b1564035874b605ceb687b63ed8 --pip-freeze runs/ras_v2_confirm_001/pip_freeze.txt
+STEP_EXIT freeze_calibration 0 2026-11-22T21:24:31Z
+STEP_START smoke_train_seed_1 2026-11-22T21:24:31Z cmd=python scripts/40_v2_confirm.py run --frozen frozen/ras_v2_confirm_001_calibration --policy train_seed_1 --out runs/ras_v2_confirm_001/smoke --seeds 51103 51157 51253 --ledger-dir runs/ras_v2_confirm_001/smoke_ledger
+STEP_EXIT smoke_train_seed_1 0 2026-11-22T21:26:25Z
+STEP_START smoke_train_seed_2 2026-11-22T21:26:25Z cmd=python scripts/40_v2_confirm.py run --frozen frozen/ras_v2_confirm_001_calibration --policy train_seed_2 --out runs/ras_v2_confirm_001/smoke --seeds 51103 51157 51253 --ledger-dir runs/ras_v2_confirm_001/smoke_ledger
+STEP_EXIT smoke_train_seed_2 0 2026-11-22T21:28:26Z
+JOB B1 end_phase1_rc0 2026-11-22T21:28:26Z
+JOB B4 start 2026-11-22T21:28:26Z
+STEP_START s6_substep 2026-11-22T21:28:26Z cmd=python scripts/42_s6_substep_replay.py --out runs/s6_substep_001 --c1-records c1_ref
+STEP_EXIT s6_substep 0 2026-11-22T21:56:54Z
+JOB B4 end 2026-11-22T21:56:54Z
+JOB B3 start 2026-11-22T21:56:54Z
+STEP_START gen_placement 2026-11-22T21:56:54Z cmd=python scripts/41_gen_arch_plainconv.py placement --run runs/gen_arch_plainconv_001
+JOB B1 calibration_start 2026-11-22T21:58:34Z
+STEP_START cal_verify 2026-11-22T21:58:34Z cmd=python scripts/40_v2_confirm.py verify --frozen frozen/ras_v2_confirm_001_calibration
+STEP_EXIT cal_verify 0 2026-11-22T21:58:34Z
+STEP_START cal_placement 2026-11-22T21:58:34Z cmd=python scripts/40_v2_confirm.py placement --frozen frozen/ras_v2_confirm_001_calibration --out runs/ras_v2_confirm_001/calibration
+STEP_EXIT gen_placement 0 2026-11-22T21:59:59Z
+STEP_START gen_run 2026-11-22T21:59:59Z cmd=python scripts/41_gen_arch_plainconv.py run --run runs/gen_arch_plainconv_001
+JOB B4 try2_start 2026-11-22T22:00:22Z (try1 logged no sub-step: scene rebuilt at reset)
+STEP_EXIT cal_placement 0 2026-11-22T22:02:24Z
+STEP_START cal_run_train_seed_1 2026-11-22T22:02:24Z cmd=python scripts/40_v2_confirm.py run --frozen frozen/ras_v2_confirm_001_calibration --policy train_seed_1 --out runs/ras_v2_confirm_001/calibration
+JOB B1 seed2_parallel_start 2026-11-22T22:12:17Z (single-thread CPU bound at ~36 s/scene; train_seed_2 pass started in parallel; the chain2 seed2 step will then be refused by the existing pass and ledger)
+STEP_EXIT s6_substep_try2 0 2026-11-22T22:00:22Z
+JOB B4 try2_end 2026-11-22T22:00:22Z
+STEP_EXIT gen_run 0 2026-11-23T02:21:53Z
+STEP_START gen_analyze 2026-11-23T02:21:53Z cmd=python scripts/41_gen_arch_plainconv.py analyze --run runs/gen_arch_plainconv_001 --out runs/gen_arch_plainconv_001/analysis.json
+STEP_EXIT gen_analyze 0 2026-11-23T02:21:56Z
+JOB B3 end 2026-11-23T02:21:56Z
+PACK 0ebd7a04e3822ab0fcd20fb42ee74572e2eb61fb8ff1612b06ed24710849c4f8
+CHAIN1_END 2026-11-23T02:25:33Z
+STEP_EXIT cal_run_train_seed_1 0 2026-11-23T03:10:55Z
+STEP_START cal_run_train_seed_2 2026-11-23T03:10:55Z cmd=python scripts/40_v2_confirm.py run --frozen frozen/ras_v2_confirm_001_calibration --policy train_seed_2 --out runs/ras_v2_confirm_001/calibration
+STEP_EXIT cal_run_train_seed_2 1 2026-11-23T03:10:56Z
+JOB B1 calibration_end 2026-11-23T03:10:56Z
+PACK2 1e167518b57868a6bbe335421322784d8ddfe8f7fffdcc37d435fe16b6a2e32c
+CHAIN2_END 2026-11-23T03:13:46Z
+STEP_EXIT cal_run_train_seed_2_parallel 0 2026-11-22T22:12:17Z
+STEP_START cal_analyze_manual 2026-11-23T03:18:00Z
+STEP_EXIT cal_analyze_manual 0 2026-11-23T03:18:05Z
