@@ -1,0 +1,23 @@
+key,short_name,venue_year,category,policy_frozen_at_eval,intervention_at_runtime,reports_harm_on_baseline_successes_separately,finite_sample_guarantee,same_state_counterfactual,verification,note
+chi2023diffusion,Diffusion Policy,RSS 2023,base policy,n/a,no,n/a,no,n/a,VERIFIED,base policy family used here
+ross2011dagger,DAgger,AISTATS 2011 (PMLR 15),interactive IL,no (trained),expert labels,no,regret bounds (not harm),no,VERIFIED,
+laskey2017dart,DART,CoRL 2017 (PMLR 78),robust IL,no,no,no,no,no,VERIFIED,
+kelly2019hgdagger,HG-DAgger,ICRA 2019,interactive IL,no,human gate,no,no,no,title/authors VERIFIED; DOI UNVERIFIED,
+hoque2022thrifty,ThriftyDAgger,CoRL 2021 (PMLR 164),interactive IL,no,learned gate,no,no,no,VERIFIED,
+reichlin2022manifold,Back to the Manifold,IROS 2022,recovery,learned,yes,not stated in abstract,no,no,VERIFIED (arXiv),
+cideron2023getback,POIR,arXiv 2023,recovery,learned,yes,not stated in abstract,no,no,VERIFIED,
+vats2025recoverychaining,RecoveryChaining,IROS 2025,recovery,nominal controller kept,yes,not stated in abstract,no,no,VERIFIED,
+thananjeyan2021recoveryrl,Recovery RL,RA-L 2021,safe RL recovery,no,yes,constraint violations (not task harm),no,no,title/authors VERIFIED; DOI UNVERIFIED,
+du2024toerr,To Err is Robotic,arXiv 2024,retry,yes,yes,not stated in abstract,no,no,VERIFIED,
+zheng2026rewind,Rewind-IL,RA-L 2026,failure detection + respawn,yes,yes,not stated in abstract,no,no,VERIFIED,
+agia2025unpacking,Sentinel (Unpacking Failure Modes),CoRL 2024 (PMLR 270),runtime monitoring,yes,detects,no,calibrated detector thresholds (per paper; author to confirm),no,VERIFIED,
+romer2025fiper,FIPER,NeurIPS 2025,failure prediction,yes,predicts,no,conformal calibration of alarms (per paper; author to confirm),no,VERIFIED,
+liu2023reflect,REFLECT,CoRL 2023 (PMLR 229),failure explanation,n/a,LLM correction,no,no,no,VERIFIED,
+duan2025aha,AHA,ICLR 2025,failure detection VLM,n/a,detects,no,no,no,VERIFIED,
+liu2026checkvla,CheckVLA,arXiv 2026,execution verification,yes,verifies chunks,not stated in abstract,no,no,VERIFIED,
+ahmedt2026rescue,RESCUE,arXiv 2026,counterfactual monitor evaluation,yes,evaluates interventions,closest (counterfactual value of acting),not stated in abstract,yes,VERIFIED,closest in spirit
+liufu2026repovla,RePO-VLA,arXiv 2026,recovery-driven optimisation,no (optimised),yes,not stated in abstract,no,no,VERIFIED,
+li2026causalhistory,Causal-History TTS,arXiv 2026,test-time scaling recovery,yes,yes,not stated in abstract,no,no,VERIFIED,
+zhang2026memory,Memory That Changes Action,arXiv 2026,counterfactual memory audit,yes,no,n/a,no,yes,VERIFIED,related to our memory-ablation caveat
+angelopoulos2021ltt,Learn then Test,arXiv 2021,risk control,n/a,n/a,n/a,yes (multiple testing),n/a,VERIFIED,statistical basis
+this_paper,When Recovery Hurts,RAS (submission),release-time recovery + certificate,yes,yes (once per episode),yes,yes (exact binomial + Holm),yes,—,

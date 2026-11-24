@@ -1,0 +1,27 @@
+id,claim_in_manuscript,value,source_raw,source_result_file,recount_key,label
+E01,C1 seed 1 C0 / V2 success,171 / 184 (14 rescues 1 harm),runs/vision_center_v2_c1_001_server/.../pass_train_seed_1/scenes/51100-51299,results/vision_center_v2_c1_001/execution/server_records/result.json,C1_development.train_seed_1.VISION_CENTER_V2,DEVELOPMENT
+E02,C1 seed 2 C0 / V2 success,164 / 180 (16 rescues 0 harms),.../pass_train_seed_2/scenes,results/vision_center_v2_c1_001/execution/server_records/result.json,C1_development.train_seed_2.VISION_CENTER_V2,DEVELOPMENT
+E03,H_gen (seed 2 V2 vs C0),16 vs 0; p = 1.526e-5; rejected (Holm),.../pass_train_seed_2/scenes,results/vision_center_v2_c1_001/execution/server_records/result.json,C1_development.H_gen,PRE-REGISTERED (development)
+E04,H_mem (V2 vs single frame both seeds),10 vs 1 (p 0.0059) and 7 vs 0 (p 0.0078); IU p 0.0078; rejected,.../pass_*/scenes,results/vision_center_v2_c1_001/execution/server_records/result.json,C1_development.H_mem,PRE-REGISTERED (development)
+E05,C1 ablation chain (9 arms x 2 seeds),Table 2,.../pass_*/scenes,results/vision_center_v2_c1_001/execution/server_records/result.json,C1_development.*,DEVELOPMENT
+E06,Calibration harm seed 1,1/348; p 3.418e-7; certified,runs/ras_exec_001/download_final/.../calibration/pass_train_seed_1,results/ras_exec_001/b1_calibration_recount.json,calibration.train_seed_1,PRE-REGISTERED (confirmatory)
+E07,Calibration harm seed 2,0/337; p 3.111e-8; certified,.../calibration/pass_train_seed_2,results/ras_exec_001/b1_calibration_recount.json,calibration.train_seed_2,PRE-REGISTERED (confirmatory)
+E08,Calibration CP upper bounds,1.36% / 0.89%,.../calibration,data/recount.json,calibration.*.harm_cp95_upper_POSTHOC,POST HOC DESCRIPTIVE
+E09,Final Test seed 1,350 -> 379; 29 vs 0; p 1.863e-9; rejected,runs/ras_exec_001/download_test/.../test/pass_train_seed_1,results/ras_final_test_001/test_analysis.json; test_recount.json,test.train_seed_1,PRE-REGISTERED (confirmatory; run once)
+E10,Final Test seed 2,347 -> 373; 27 vs 1; p 1.080e-7; rejected,.../test/pass_train_seed_2,results/ras_final_test_001/test_analysis.json; test_recount.json,test.train_seed_2,PRE-REGISTERED (confirmatory; run once)
+E11,Final Test bootstrap CI of success difference,[+4.75 +10.0] / [+4.0 +9.0] pp,.../test,data/recount.json,test.*.success_diff_boot95_POSTHOC,POST HOC DESCRIPTIVE
+E12,Final Test pooled 2x2 matrix,696 / 56 / 1 / 47,.../test,figures/FIGURE_PROVENANCE.json (F1 info),test.*,derived from E09-E10
+E13,B3 PlainConv,52 -> 87 of 200; 37 vs 2; p 1.42e-9,runs/ras_exec_001/download_phase1/runs/gen_arch_plainconv_001/pass,results/ras_exec_001/b3_generalization/analysis.json,B3_development,PRE-DECLARED single test (development)
+E14,B3 oracle and single frame,oracle 90 (45/7); single 79 (29/2); V2 recovered 37 of 45 oracle rescues,.../gen_arch_plainconv_001/pass,results/ras_exec_001/b3_generalization/analysis.json,B3_development,DEVELOPMENT
+E15,Case 51157 offsets and motion,true 54.6 mm; est 54.7 mm; after 30.4 mm; TCP 24.3 mm in 12 steps; C0 success step 190,.../pass_train_seed_1/scenes/51157.json + traces/trace_51157.json.gz,-,figures/FIGURE_PROVENANCE.json (F5 info),DEVELOPMENT (single case)
+E16,Check 4 official result,V2 FAIL 9/41 and 5/39; all failures at step 1 only; 110 failing moves of 715; steps 2+ 0 failures,-,results/vision_center_v2_c1_001/posthoc_physics_diagnostics_001/CHECK4_DIAGNOSTIC_REPORT.md; CHECK4_ALL_MOVES.csv,figures (F6 info),PRE-DECLARED check; step-2+ reading POST HOC
+E17,S6 official FAIL,54267 / 580539 rows over 1 mm,-,results/vision_center_v2_c1_001/posthoc_physics_diagnostics_001/S6_ERRORS_BY_GROUP.csv,-,PRE-DECLARED check (FAIL kept)
+E18,B4 sub-step alignment,5181 -> 1874 of 56558 pairs over 1 mm; fast pairs 3436 -> 146,-,results/ras_exec_001/b4_s6_substep/S6_SUBSTEP_SUMMARY.json,-,POST HOC VALIDATION (calibration host)
+E19,Static known-geometry cases,56 of 59 with listed points; |diff| <= 0.05 mm,-,results/ras_submission_readiness_001/s6_static_validation/cases.csv,-,POST HOC VALIDATION
+E20,S4/S5 and hull sensitivity,S4 FAIL 1/715 (oracle 51152 -2.16 mm); S5 FAIL 11/3874 branches (2 events); hull: 0 status changes,-,results/vision_center_v2_c1_001/posthoc_hull_sensitivity_001/S45_HULL_SENSITIVITY_SUMMARY.json,-,POST HOC EXPLORATORY
+E21,V2 decisions per stage,Table S2,all stages raw scene records,-,figures/FIGURE_PROVENANCE_SUPP.json (S2 info),DESCRIPTIVE
+E22,Host difference,dev driver 550.120 vs confirmatory 595.99.02; outcome differences 16/300 and 6/11,-,results/ras_exec_001/b1_preflight/PREFLIGHT_NOTE.md,-,LIMITATION
+E23,Smoke-criterion deviation,0/6 identical to C1 records; identical to same-host collector; recorded before calibration,-,results/ras_final_test_freeze_001/FINAL_TEST_FREEZE_AUDIT.md section 3,-,DEVIATION (recorded; not pre-approved)
+E24,Placement checks,0 identical placements among 2347 references (calibration and test),-,results/ras_exec_001/b1_calibration/placement*; results/ras_final_test_001/placement_test.json,-,PROTOCOL CHECK
+E25,Costs,calibration 1.75; B3 0.67; B4 0.32; Final Test 2.13 USD,-,results/ras_exec_001/cost_split.json; results/ras_final_test_001/cost.json,-,ADMINISTRATIVE
+E26,Development history (diagnostic; oracle pilot; V1),see Supplementary S2,-,README.md rows Recovery-V1 diagnostic / oracle pilot / Vision-CENTER; results/recovery_v1_*,-,DEVELOPMENT (not recounted here)

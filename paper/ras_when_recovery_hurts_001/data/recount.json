@@ -1,0 +1,383 @@
+{
+ "what": "independent recount (implementations A and B) from hash-checked raw records",
+ "sources": {
+  "C1": "runs/vision_center_v2_c1_001_server/extracted/runs/vision_center_v2_c1_001",
+  "CAL": "runs/ras_exec_001/download_final/runs/ras_v2_confirm_001/calibration",
+  "TEST": "runs/ras_exec_001/download_test/runs/ras_v2_confirm_001/test",
+  "B3": "runs/ras_exec_001/download_phase1/runs/gen_arch_plainconv_001"
+ },
+ "C1_development": {
+  "train_seed_1": {
+   "triggered": 195,
+   "C0": {
+    "success": 171
+   },
+   "VISION_CENTER_V1": {
+    "n": 200,
+    "success_ref": 171,
+    "success_arm": 175,
+    "rescue": 4,
+    "harm": 0,
+    "net": 4,
+    "ref_failures": 29,
+    "ref_successes": 171,
+    "acted": 26,
+    "p_exact_vs_C0": 0.0625
+   },
+   "V2_SINGLE_FRAME": {
+    "n": 200,
+    "success_ref": 171,
+    "success_arm": 175,
+    "rescue": 4,
+    "harm": 0,
+    "net": 4,
+    "ref_failures": 29,
+    "ref_successes": 171,
+    "acted": 25,
+    "p_exact_vs_C0": 0.0625
+   },
+   "VISION_CENTER_V2": {
+    "n": 200,
+    "success_ref": 171,
+    "success_arm": 184,
+    "rescue": 14,
+    "harm": 1,
+    "net": 13,
+    "ref_failures": 29,
+    "ref_successes": 171,
+    "acted": 41,
+    "p_exact_vs_C0": 0.00048828125
+   },
+   "CENTER_ORACLE": {
+    "n": 200,
+    "success_ref": 171,
+    "success_arm": 185,
+    "rescue": 15,
+    "harm": 1,
+    "net": 14,
+    "ref_failures": 29,
+    "ref_successes": 171,
+    "acted": 195,
+    "p_exact_vs_C0": 0.0002593994140625
+   },
+   "V2_NO_HAND_MEMORY": {
+    "n": 200,
+    "success_ref": 171,
+    "success_arm": 183,
+    "rescue": 13,
+    "harm": 1,
+    "net": 12,
+    "ref_failures": 29,
+    "ref_successes": 171,
+    "acted": 39,
+    "p_exact_vs_C0": 0.00091552734375
+   },
+   "V2_NO_BASE_MEMORY": {
+    "n": 200,
+    "success_ref": 171,
+    "success_arm": 179,
+    "rescue": 9,
+    "harm": 1,
+    "net": 8,
+    "ref_failures": 29,
+    "ref_successes": 171,
+    "acted": 36,
+    "p_exact_vs_C0": 0.0107421875
+   },
+   "V2_NO_HOLD_MEMORY": {
+    "n": 200,
+    "success_ref": 171,
+    "success_arm": 183,
+    "rescue": 13,
+    "harm": 1,
+    "net": 12,
+    "ref_failures": 29,
+    "ref_successes": 171,
+    "acted": 38,
+    "p_exact_vs_C0": 0.00091552734375
+   },
+   "V2_RULES_OFF": {
+    "n": 200,
+    "success_ref": 171,
+    "success_arm": 185,
+    "rescue": 15,
+    "harm": 1,
+    "net": 14,
+    "ref_failures": 29,
+    "ref_successes": 171,
+    "acted": 53,
+    "p_exact_vs_C0": 0.0002593994140625
+   },
+   "V2_vs_SINGLE_FRAME": {
+    "v2_only": 10,
+    "single_only": 1,
+    "p_B": 0.005859375,
+    "p_A": 0.005859375
+   }
+  },
+  "train_seed_2": {
+   "triggered": 191,
+   "C0": {
+    "success": 164
+   },
+   "VISION_CENTER_V1": {
+    "n": 200,
+    "success_ref": 164,
+    "success_arm": 173,
+    "rescue": 9,
+    "harm": 0,
+    "net": 9,
+    "ref_failures": 36,
+    "ref_successes": 164,
+    "acted": 31,
+    "p_exact_vs_C0": 0.001953125
+   },
+   "V2_SINGLE_FRAME": {
+    "n": 200,
+    "success_ref": 164,
+    "success_arm": 173,
+    "rescue": 9,
+    "harm": 0,
+    "net": 9,
+    "ref_failures": 36,
+    "ref_successes": 164,
+    "acted": 30,
+    "p_exact_vs_C0": 0.001953125
+   },
+   "VISION_CENTER_V2": {
+    "n": 200,
+    "success_ref": 164,
+    "success_arm": 180,
+    "rescue": 16,
+    "harm": 0,
+    "net": 16,
+    "ref_failures": 36,
+    "ref_successes": 164,
+    "acted": 39,
+    "p_exact_vs_C0": 1.52587890625e-05
+   },
+   "CENTER_ORACLE": {
+    "n": 200,
+    "success_ref": 164,
+    "success_arm": 184,
+    "rescue": 21,
+    "harm": 1,
+    "net": 20,
+    "ref_failures": 36,
+    "ref_successes": 164,
+    "acted": 191,
+    "p_exact_vs_C0": 5.4836273193359375e-06
+   },
+   "V2_NO_HAND_MEMORY": {
+    "n": 200,
+    "success_ref": 164,
+    "success_arm": 179,
+    "rescue": 15,
+    "harm": 0,
+    "net": 15,
+    "ref_failures": 36,
+    "ref_successes": 164,
+    "acted": 37,
+    "p_exact_vs_C0": 3.0517578125e-05
+   },
+   "V2_NO_BASE_MEMORY": {
+    "n": 200,
+    "success_ref": 164,
+    "success_arm": 178,
+    "rescue": 14,
+    "harm": 0,
+    "net": 14,
+    "ref_failures": 36,
+    "ref_successes": 164,
+    "acted": 37,
+    "p_exact_vs_C0": 6.103515625e-05
+   },
+   "V2_NO_HOLD_MEMORY": {
+    "n": 200,
+    "success_ref": 164,
+    "success_arm": 179,
+    "rescue": 15,
+    "harm": 0,
+    "net": 15,
+    "ref_failures": 36,
+    "ref_successes": 164,
+    "acted": 38,
+    "p_exact_vs_C0": 3.0517578125e-05
+   },
+   "V2_RULES_OFF": {
+    "n": 200,
+    "success_ref": 164,
+    "success_arm": 183,
+    "rescue": 19,
+    "harm": 0,
+    "net": 19,
+    "ref_failures": 36,
+    "ref_successes": 164,
+    "acted": 50,
+    "p_exact_vs_C0": 1.9073486328125e-06
+   },
+   "V2_vs_SINGLE_FRAME": {
+    "v2_only": 7,
+    "single_only": 0,
+    "p_B": 0.0078125,
+    "p_A": 0.0078125
+   }
+  },
+  "H_gen": {
+   "p": 1.52587890625e-05,
+   "rejected": true
+  },
+  "H_mem": {
+   "p_intersection_union": 0.0078125,
+   "rejected": true
+  }
+ },
+ "calibration": {
+  "train_seed_1": {
+   "n": 400,
+   "success_ref": 348,
+   "success_arm": 371,
+   "rescue": 24,
+   "harm": 1,
+   "net": 23,
+   "ref_failures": 52,
+   "ref_successes": 348,
+   "acted": 73,
+   "triggered": 386,
+   "harm_p_B": 3.4176462152704115e-07,
+   "harm_rate": 0.0028735632183908046,
+   "harm_cp95_upper_POSTHOC": 0.01355868676034421,
+   "success_diff": 0.0575,
+   "success_diff_boot95_POSTHOC": [
+    0.035,
+    0.0825
+   ],
+   "eff_p_B": 7.748603820800781e-07,
+   "moved_among_baseline_success": 48,
+   "harm_certified": true,
+   "efficacy_rejected": true
+  },
+  "train_seed_2": {
+   "n": 400,
+   "success_ref": 337,
+   "success_arm": 366,
+   "rescue": 29,
+   "harm": 0,
+   "net": 29,
+   "ref_failures": 63,
+   "ref_successes": 337,
+   "acted": 66,
+   "triggered": 387,
+   "harm_p_B": 3.110677460253161e-08,
+   "harm_rate": 0.0,
+   "harm_cp95_upper_POSTHOC": 0.008850019256779423,
+   "success_diff": 0.0725,
+   "success_diff_boot95_POSTHOC": [
+    0.0475,
+    0.1
+   ],
+   "eff_p_B": 1.862645149230957e-09,
+   "moved_among_baseline_success": 36,
+   "harm_certified": true,
+   "efficacy_rejected": true
+  },
+  "joint_harm_statement": true
+ },
+ "test": {
+  "train_seed_1": {
+   "n": 400,
+   "success_ref": 350,
+   "success_arm": 379,
+   "rescue": 29,
+   "harm": 0,
+   "net": 29,
+   "ref_failures": 50,
+   "ref_successes": 350,
+   "acted": 67,
+   "triggered": 388,
+   "harm_p_B": 1.596841647856957e-08,
+   "harm_rate": 0.0,
+   "harm_cp95_upper_POSTHOC": 0.008522709100562015,
+   "success_diff": 0.0725,
+   "success_diff_boot95_POSTHOC": [
+    0.0475,
+    0.1
+   ],
+   "eff_p_B": 1.862645149230957e-09,
+   "moved_among_baseline_success": 38,
+   "harm_certified": true,
+   "efficacy_rejected": true
+  },
+  "train_seed_2": {
+   "n": 400,
+   "success_ref": 347,
+   "success_arm": 373,
+   "rescue": 27,
+   "harm": 1,
+   "net": 26,
+   "ref_failures": 53,
+   "ref_successes": 347,
+   "acted": 73,
+   "triggered": 382,
+   "harm_p_B": 3.5877198186977506e-07,
+   "harm_rate": 0.002881844380403458,
+   "harm_cp95_upper_POSTHOC": 0.013597550126856173,
+   "success_diff": 0.065,
+   "success_diff_boot95_POSTHOC": [
+    0.04,
+    0.09
+   ],
+   "eff_p_B": 1.0803341865539551e-07,
+   "moved_among_baseline_success": 46,
+   "harm_certified": true,
+   "efficacy_rejected": true
+  },
+  "joint_harm_statement": true
+ },
+ "B3_development": {
+  "triggered": 135,
+  "C0": 52,
+  "V2_SINGLE_FRAME": {
+   "n": 200,
+   "success_ref": 52,
+   "success_arm": 79,
+   "rescue": 29,
+   "harm": 2,
+   "net": 27,
+   "ref_failures": 148,
+   "ref_successes": 52,
+   "acted": 45,
+   "p_exact_vs_C0": 2.314336597919464e-07
+  },
+  "VISION_CENTER_V2": {
+   "n": 200,
+   "success_ref": 52,
+   "success_arm": 87,
+   "rescue": 37,
+   "harm": 2,
+   "net": 35,
+   "ref_failures": 148,
+   "ref_successes": 52,
+   "acted": 61,
+   "p_exact_vs_C0": 1.420630724169314e-09,
+   "success_diff_boot95_POSTHOC": [
+    0.12,
+    0.23
+   ]
+  },
+  "CENTER_ORACLE": {
+   "n": 200,
+   "success_ref": 52,
+   "success_arm": 90,
+   "rescue": 45,
+   "harm": 7,
+   "net": 38,
+   "ref_failures": 148,
+   "ref_successes": 52,
+   "acted": 135,
+   "p_exact_vs_C0": 3.486905075789082e-08
+  },
+  "oracle_rescues_recovered_by_v2": 37,
+  "oracle_rescues": 45
+ }
+}
