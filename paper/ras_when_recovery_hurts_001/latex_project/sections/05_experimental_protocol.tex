@@ -1,0 +1,26 @@
+%% ---------------------------------------------------------------------------------------------------------
+\section{Experimental protocol}\label{sec:protocol}
+
+\paragraph{Task and simulator} We use \texttt{StackCube-v1} of ManiSkill3 \cite{tao2024maniskill3} (version 3.0.1, commit \texttt{a4a4f92}) on SAPIEN 3.0.3 \cite{xiang2020sapien} with CPU PhysX, a single environment, a Panda arm with a wrist camera, end-effector delta-position control, and a 200-step horizon. Success is the first time the task condition holds (cube A on cube B, static, released); the episode then ends.
+
+\paragraph{Frozen policies} The base policies are RGB diffusion policies \cite{chi2023diffusion} (observation horizon 2, prediction 16, execution 8) with an ImageNet-pretrained ResNet-18 encoder \cite{he2016resnet}, trained on the same 500 motion-planning demonstrations with two training seeds (\emph{policy seed 1} and \emph{policy seed 2}) and frozen before any intervention data were collected. The generalisation study uses a third frozen policy with the original small, non-pretrained convolutional encoder (\emph{PlainConv}).
+
+\paragraph{Splits} Splits are disjoint ranges of scene seeds; all branches of a scene stay in one split.
+\begin{itemize}
+\item Development (C1): seeds 51100--51299, 200 scenes per policy, all arms.
+\item Calibration: seeds 30000--30399, 400 scenes per policy, C0 and V2.
+\item Final Test: seeds 90000--90399, 400 scenes per policy, C0 and V2, run once.
+\item Generalisation (development level): seeds 51300--51499, PlainConv policy.
+\end{itemize}
+Before each stage, a placement check confirmed that no new scene repeats a cube placement of any earlier scene (0 identical placements among 2,347 references for calibration and for test).
+
+\paragraph{Pre-registration and freezing} The development stage pre-registered two hypotheses: $H_{\mathrm{gen}}$ (V2 improves on C0 for policy seed 2, which was not used while developing V2) and $H_{\mathrm{mem}}$ (V2 improves on its single-frame variant for both policies, tested as an intersection--union test), with Holm over the two. The candidate (V2 with unchanged constants), the policy family, $\varepsilon$, $\delta$, the tests and all rules were then frozen in a manifest before calibration (SHA-256 \texttt{01b70a06\ldots}). The Final Test manifest (\texttt{94c5a591\ldots}) added the calibration analysis and the environment, and the test runner refused to start unless the live environment matched it (GPU, driver, Python version, upstream commit and the full package list) and three used development scenes reproduced bit for bit the reference recorded on the calibration host.
+
+\paragraph{Hosts} Development ran on a host with NVIDIA driver 550.120. Calibration and the Final Test ran on RTX 4090 hosts with driver 595.99.02. Rendering differs between the two drivers, and with it some policy actions: in 16 of 300 earlier scenes and in 6 of 11 selected diagnostic scenes the outcome differed between hosts. The certificate and the test result therefore refer to the 595.99.02 configuration (Section~\ref{sec:limits}).
+
+\paragraph{Policy sampling noise} The diffusion sampling noise is keyed to the scene and the control step, and is identical for all branches up to the trigger. After a move the policy resumes later and therefore draws different noise than C0 at the same phase of the task, so a discordant pair can reflect policy variance as well as the move. In an earlier development pilot, an arm that only held the robot still for a matched number of steps gave 1 rescue and 1 harm against C0 on 100 scenes; we read this as the approximate size of that floor, not as a correction. The efficacy test compares the deployed system (policy plus controller) with the policy alone and remains valid in this sense.
+
+\paragraph{Role of the AI agent} Experiment orchestration on rented GPU hosts, analysis code, recounts and figure generation were carried out with an AI coding agent (Claude, Anthropic) under the author's direction. Every protocol decision taken during the runs is listed with its approval status in Supplementary Section~S9; the author takes responsibility for all of them.
+
+\paragraph{Recount} All headline numbers were recomputed from the raw scene records, after checking the SHA-256 of every trajectory file, by two implementations (the project code and an independent hand-written count with SciPy); they agreed exactly (Supplementary Section~S8).
+

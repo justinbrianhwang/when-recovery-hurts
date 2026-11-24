@@ -1,0 +1,33 @@
+%% ---------------------------------------------------------------------------------------------------------
+\section{Introduction}\label{sec:intro}
+
+Learned visuomotor policies such as diffusion policies \cite{chi2023diffusion} are increasingly deployed as frozen components: after training, their weights are fixed, and any further improvement must come from outside the network. A natural outside improvement is a runtime recovery intervention: a monitor decides that something is about to go wrong, a small controller corrects the state, and the policy resumes. Many methods of this kind exist, from learned recovery policies \cite{reichlin2022manifold,cideron2023getback,vats2025recoverychaining} to human or learned interventions during interactive imitation \cite{ross2011dagger,kelly2019hgdagger,hoque2022thrifty} and runtime failure monitors \cite{agia2025unpacking,romer2025fiper,liu2023reflect,duan2025aha}.
+
+An intervention on a frozen policy changes the state from which the policy continues. If the policy would have failed, the change can rescue the episode. If the policy would have succeeded, the same change can also cause a failure, for example by spending the time budget or by moving the gripper into a configuration the policy handles badly. The net change in success rate is the number of rescues minus the number of harms, so an intervention with many rescues and many harms looks as good as one with fewer rescues and no harm. The two have different consequences for a user who already relies on the policy's successes, so we report them separately.
+
+This paper asks one question. \emph{Can an observation-only recovery intervention on a frozen policy increase task success while keeping, with a finite-sample statistical guarantee, the rate at which it turns the policy's own successes into failures below a stated level?} We answer it for one task, one intervention and two independently trained policies, and we report every step of the argument, including the parts that did not work.
+
+The study is built around three design choices.
+\begin{enumerate}
+\item \textbf{Paired branching.} Each scene runs once until the trigger; the simulator state is saved, and the uninterrupted policy (C0), the proposed controller and all ablations are run from that same snapshot. Each scene therefore yields a pair of outcomes $(Y_0, Y_g)$ and falls into one of four cells: both succeed, rescue, harm, both fail (Fig.~\ref{fig:problem}a).
+\item \textbf{Harm as a conditional rate.} We define harm as $h(g)=\Pr(Y_g=0 \mid Y_0=1)$, the probability that the intervention $g$ turns a baseline success into a failure, and test $h(g)\le\varepsilon$ with an exact binomial test on calibration scenes that were not used for development.
+\item \textbf{Separation of certificate and efficacy.} The harm certificate is computed on a calibration split; the efficacy claim (more successes than without the intervention) is tested once on a separate, held-out test split, under a frozen manifest.
+\end{enumerate}
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\linewidth]{F1_problem_rescue_vs_harm.pdf}
+\caption{Rescue and harm. (a) Paired outcome matrix of the Final Test, both policies. (b) A development rescue (scene 51103, policy seed 1): the policy alone fails; after the V2 move the policy's own release places the cube and the episode succeeds. (c) The only development harm of V2 for policy seed 1 (scene 51157): the policy alone drops the cube, regrasps it and succeeds at step 190; with V2 it fails. Each frame shows the stored base-camera (left half) and wrist-camera (right half) RGB images without processing.}\label{fig:problem}
+\end{figure}
+
+The contributions are the following.
+\begin{itemize}
+\item A paired evaluation protocol for recovery interventions on a frozen policy that reports rescue and harm separately and certifies the conditional harm rate with an exact finite-sample test (Section~\ref{sec:problem}).
+\item Vision-CENTER V2, an observation-only release-time centring controller with a short visual memory and explicit abstention rules (Section~\ref{sec:method}).
+\item A two-stage confirmatory result on 1,600 new paired scenes for two policies: the harm rate is certified below 5\% on calibration scenes, and the success gain is confirmed on held-out test scenes (Section~\ref{sec:confirm}).
+\item A descriptive mechanism analysis that traces a representative rescue and the single development harm through observation, memory, decision, movement and hand-back, including a commanded-versus-actual motion audit of all moves (Section~\ref{sec:mechanism}).
+\item An audit of the physical record that the analyses rely on. One of its checks, the agreement of logged contact separations with reconstructed gaps, fails; we report the failure, partially explain it, and state what it does and does not affect (Section~\ref{sec:physics}).
+\end{itemize}
+
+We do not claim physical safety, transfer to other tasks or to a real robot, or that the paired-branching design and the binomial certificate are new statistical ideas. Exact binomial bounds and risk-control procedures are well known \cite{clopper1934,angelopoulos2021ltt}; the contribution is their use to separate rescue from harm for a recovery intervention, together with a descriptive mechanism analysis of the controller. The controller itself is task-specific; we present it as a case study for the evaluation protocol, which is the part we expect to transfer.
+

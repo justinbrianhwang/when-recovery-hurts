@@ -1,0 +1,25 @@
+%% ---------------------------------------------------------------------------------------------------------
+\section{Calibration certificate and Final Test}\label{sec:confirm}
+
+\paragraph{Question} On new scenes and with nothing changed after development, is the harm rate below 5\%, and does V2 increase success?
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\linewidth]{F3_statistics_calibration_vs_test.pdf}
+\caption{Confirmatory stages. (a) Calibration (400 scenes per policy): observed conditional harm with the one-sided 95\% Clopper--Pearson upper bound (descriptive) against the pre-registered level $\varepsilon=5\%$ (marked $h^\ast$); the p-values are those of Eq.~\eqref{eq:cert}. (b) Final Test (400 held-out scenes per policy, run once): task success of C0 and V2. (c) Final Test discordant scenes and the p-values of Eq.~\eqref{eq:eff}.}\label{fig:stats}
+\end{figure}
+
+\begin{table}[!htbp]
+\centering\footnotesize
+\caption{Calibration certificate and Final Test. Trig.: scenes with a trigger; Acted: scenes in which V2 moved; C0, V2: successes of 400. Calibration tests $h(g)\le 0.05$ (Eq.~\ref{eq:cert}); the Final Test tests efficacy (Eq.~\ref{eq:eff}); both with Holm over the two policies at level 0.05.}\label{tab:confirm}
+\resizebox{\linewidth}{!}{\input{\tabdir T4_calibration_and_test.tex}}
+\end{table}
+
+\paragraph{Evidence: calibration} V2 turned 1 of 348 (policy seed 1) and 0 of 337 (policy seed 2) baseline successes into failures (Table~\ref{tab:confirm}, Fig.~\ref{fig:stats}a). The exact p-values were $3.4\times10^{-7}$ and $3.1\times10^{-8}$, far below the Holm thresholds, so the joint statement ``$h(g)\le0.05$ for both policies'' holds at $\delta=0.05$. As descriptive quantities, the one-sided 95\% Clopper--Pearson upper bounds \cite{clopper1934} of the conditional harm are 1.36\% and 0.89\%. V2 moved in 73 and 66 scenes; among the baseline successes in which it moved, it caused 1 harm in 48 and 0 in 36. Because abstaining and untriggered branches equal C0 by construction, harm can occur only where V2 moves, so much of the margin of the certificate comes from abstention. Restricted to the baseline successes in which V2 moved, the one-sided 95\% Clopper--Pearson upper bounds are 9.5\% and 8.0\% (post hoc; on the test split 0/38 and 1/46, 7.6\% and 9.9\%). The certificate is therefore a statement about the deployed system, the policy together with its gated controller, not about the move alone. The level $\varepsilon=5\%$ was fixed at the start of the project; it corresponds to about 17 lost successes out of 348, more than half of the rescue gain observed in development. The success counts of calibration (348 to 371 and 337 to 366) were pre-declared as descriptive and are not used as evidence of efficacy.
+
+\paragraph{Evidence: Final Test} The Final Test ran once, after a separate approval, with the frozen manifest verified before and after the run. Success rose from 350 to 379 (87.5\% to 94.75\%) for policy seed 1 and from 347 to 373 (86.75\% to 93.25\%) for policy seed 2. The discordant scenes were 29 rescues and 0 harms ($p=1.9\times10^{-9}$) and 27 rescues and 1 harm ($p=1.1\times10^{-7}$), so both efficacy nulls were rejected under Holm (Fig.~\ref{fig:stats}b,c). A paired bootstrap of the success difference (20,000 resamples; post hoc and descriptive) gives 95\% intervals of $[+4.8, +10.0]$ and $[+4.0, +9.0]$ percentage points. Harm on the test scenes was 0 of 350 and 1 of 347; the harm guarantee itself rests on the calibration certificate, not on these counts.
+
+\paragraph{Interpretation} The gain and the low harm seen in development carried over to 1,600 new paired scenes, without any change to the controller. Pooled over both policies and the test split, the four cells were 696 both-succeed, 56 rescues, 1 harm and 47 both-fail scenes (Fig.~\ref{fig:problem}a).
+
+\paragraph{Limits} The guarantee concerns the scene distribution $\mathcal{D}$ of this task, the two policies, and the simulator configuration of the calibration host. Calibration and test did not reproduce development outcomes exactly because of the host difference; one pre-declared smoke criterion (bit-identity with the development records) was therefore not met (Section~\ref{sec:limits}).
+

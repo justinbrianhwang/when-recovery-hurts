@@ -1,0 +1,42 @@
+%% -----------------------------------------------------------------------------------------------
+\section{Controller constants and decisions}\label{sec:s-constants}
+
+\begin{table}[!htbp]
+\centering\footnotesize
+\caption{Constants of Vision-CENTER V2 (frozen before calibration; source \texttt{src/hci/vision\_center\_v2.py}, \texttt{vision\_center.py}, \texttt{recovery\_v1\_oracle.py}).}\label{tab:s-const}
+\begin{tabular}{p{0.45\linewidth}r}
+\toprule
+Quantity & Value\\
+\midrule
+Trigger: open command after at least $n$ close commands & $n=3$\\
+Trigger: finger opening (sum of joints) & 0.02--0.06\,m\\
+Act if estimated offset $\ge$ & 15\,mm\\
+\ldots{} and offset minus reading bound $\ge$ & 10\,mm\\
+Reading bound: wrist-camera fit / base camera / hold fit & 2 / 5 / 2\,mm\\
+Extra bound after a near pass of the gripper & 5\,mm\\
+Memory confirmations before use ($m$) & 3 (single-frame variant: 1)\\
+Hold memory dropped if finger opening changes by more than & 1\,mm\\
+Hold refit interval while closed & every 4 steps\\
+Minimum carried height of the held cube centre & 58\,mm\\
+Minimum steps left in the episode & 20\\
+Command per step / target cap / maximum steps & 5\,mm / 30\,mm / 12\\
+Stop when residual offset $\le$ (frame / memory target) & 10 / 5\,mm\\
+Stop if target jumps or held cube slips by more than & 3\,mm\\
+Side-contact rule: centre distance at least & 40\,mm (+ bound)\\
+\ldots{} and held-cube bottom above target top by at least & 3\,mm\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[!htbp]
+\centering\footnotesize
+\caption{V2 decision at the trigger in every scene of every stage (raw scene records). s1, s2: policy seeds.}\label{tab:s-dec}
+\resizebox{\linewidth}{!}{\input{\tabdir TS1_decisions_by_stage.tex}}
+\end{table}
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\linewidth]{S2_decisions_by_stage.pdf}
+\caption{Share of each V2 decision per stage and policy (log scale). The proportions are stable from development to calibration and test: V2 acts in 16--21\% of scenes, and about two thirds of scenes are already aligned at the trigger.}\label{fig:s-dec}
+\end{figure}
+

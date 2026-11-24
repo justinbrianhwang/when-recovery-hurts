@@ -1,0 +1,36 @@
+\documentclass[preprint,12pt]{elsarticle}
+% Supplementary Material -- figures/tables generated from the original records (see *_PROVENANCE*.json)
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs,multirow,array}
+\usepackage[hidelinks]{hyperref}
+\graphicspath{{figures/}{../figures/}}
+\IfFileExists{tables/T2_development_arms.tex}{\newcommand{\tabdir}{tables/}}{\newcommand{\tabdir}{../tables/}}
+\renewcommand{\Pr}{\operatorname{P}}
+\newcommand{\Bin}{\operatorname{Bin}}
+\renewcommand{\thefigure}{S\arabic{figure}}
+\renewcommand{\thetable}{S\arabic{table}}
+\renewcommand{\theequation}{S\arabic{equation}}
+\renewcommand{\thesection}{S\arabic{section}}
+\IfFileExists{supplementary/sections/S0_overview.tex}{\newcommand{\secdir}{supplementary/sections/}}{\newcommand{\secdir}{sections/}}
+\journal{Robotics and Autonomous Systems}
+
+\begin{document}
+
+\begin{frontmatter}
+\title{Supplementary Material for ``When Recovery Hurts: Separating Rescue from Harm in an Observation-Only Recovery Intervention for a Frozen Visuomotor Policy''}
+\author{[Author name to confirm]}
+\end{frontmatter}
+
+\input{\secdir S0_overview}
+\input{\secdir S1_statistical_details}
+\input{\secdir S2_development_history_that_motivated_v2}
+\input{\secdir S3_controller_constants_and_decisions}
+\input{\secdir S4_the_development_harm_case_51157_in_full}
+\input{\secdir S5_commanded_versus_actual_motion_check_4}
+\input{\secdir S6_physics_validity_measurements}
+\input{\secdir S7_generalisation_details}
+\input{\secdir S8_recount_and_provenance}
+\input{\secdir S9_environment_deviations_and_cost}
+
+\end{document}

@@ -1,0 +1,12 @@
+\begin{tabular}{p{0.28\linewidth}p{0.40\linewidth}p{0.18\linewidth}}
+\toprule
+Check & Result & Status\\
+\midrule
+S4: robot--target clearance during the move & 715 acted branches; FAIL 1 (oracle arm, seed 2, scene 51152, $-2.16$\,mm) & FAIL in 1 branch, none in V2\\
+S5: reconstructed penetration $\le 1$\,mm & 11 of 3874 branches FAIL (2 fast-cube events) & FAIL in 2 events\\
+Hull sensitivity of S4/S5 & logged meshes replaced by convex hulls: 0 status changes & unchanged\\
+S6: logged PhysX separation vs reconstructed gap & 54,267 of 580,539 rows over 1\,mm & \textbf{official FAIL}\\
+S6 static, known geometry & 56 cases with listed points (of 59): $|\Delta| \le 0.05$\,mm & separation definition confirmed\\
+S6 sub-step logging (B4) & pre-sub-step pose: 5,181 $\to$ 1,874 of 56,558 pairs over 1\,mm & residual unexplained\\
+\bottomrule
+\end{tabular}

@@ -1,0 +1,27 @@
+%% ---------------------------------------------------------------------------------------------------------
+\section{Mechanism: how a rescue and a harm happen}\label{sec:mechanism}
+
+\paragraph{Question} Which steps of the chain observation $\to$ memory $\to$ decision $\to$ move $\to$ hand-back produce rescues, and where does harm enter?
+
+\paragraph{Rescue} In the typical rescue (Fig.~\ref{fig:problem}b) the policy carries the cube to a position beside the target and is about to release it there. V2 estimates the offset, moves the gripper towards the target, and the policy's own release then places the cube on the target. Across all 715 acted branches of all arms in development, the movement direction agreed with the command: after the first step, the cosine between the actual and the commanded horizontal displacement was at least 0.9 in every branch (Fig.~\ref{fig:control}c).
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\linewidth]{F6_control_check4.pdf}
+\caption{Commanded versus actual motion. (a,b) Scene 51157, V2: commanded and actual horizontal TCP displacement per move step and their direction cosine. (c) All 715 acted branches in development (post hoc): the first step often deviates in direction because the arm is still moving with the policy's previous command (110 branches below the pre-declared 0.9 threshold); from the second step on, no branch falls below it.}\label{fig:control}
+\end{figure}
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\linewidth]{F5_spatial_51157.pdf}
+\caption{The harm case 51157 (policy seed 1, development). (a) Footprints of the held cube A (blue) and target cube B (grey) at the trigger (solid) and at the end of the V2 move (dashed), the TCP paths and the target estimate. (b) Three-dimensional view at the trigger: cube boxes from the logged poses, TCP paths of C0 (grey) and V2 (orange), and the robot link frames. (c) Heights of the TCP and of cube A after the trigger.}\label{fig:spatial}
+\end{figure}
+
+\paragraph{Harm} The single development harm of V2 for policy seed 1 (scene 51157) is instructive because V2 did what it was designed to do. At the trigger the held cube was 54.6\,mm from the target centre; the V2 estimate was 54.7\,mm (error 0.15\,mm), within its 9\,mm reading bound. V2 moved for the full 12 steps and reduced the true offset to 30.4\,mm (Fig.~\ref{fig:spatial}a). The move tracked its direction but not its length: each 5\,mm command produced about 2\,mm of TCP displacement (Fig.~\ref{fig:control}a,b), so the 30\,mm cap was not reached. The policy then released the cube beside the target, it fell to the table, and the policy did not regrasp it before the horizon (Fig.~\ref{fig:spatial}c). Without V2 the policy also dropped the cube, but it regrasped it and completed the stack at step 190, 10 steps before the horizon; the 12 steps spent on the move exceed that margin. The record therefore supports two contributing factors, an incomplete correction and the time budget, without separating them. Acting on an offset larger than one move can correct is a weakness of the design: among acted scenes with an estimated offset above 40\,mm there were 3 in development (1 rescue, 1 harm, the latter being 51157), none in calibration, and 8 in the Final Test (6 rescues and 1 harm, the only harm of the test).
+
+\paragraph{The pre-declared motion check} A pre-declared check (``Check 4'') required every move step to have direction cosine $\ge0.9$ and progress $\ge0.2$\,mm. It failed in 9 of 41 V2 moves (seed 1) and 5 of 39 (seed 2). In all 14 failures, only the first step failed and only on direction (cosine 0.63--0.88); the later steps of the same moves had cosine 0.934--0.999. We keep the official FAIL and read it as a first-step lag of the arm, not as a wrong move direction.
+
+\paragraph{Missed rescues} The oracle rescued 15 and 21 development scenes; V2 rescued 14 and 16. Of the oracle rescues, V2 missed 1 (policy seed 1) and 5 (policy seed 2), all by abstaining: side-contact risk (2), held cube carried too low (2), no target estimate (1) and aligned within the reading bound (1). These rules were set to avoid moves on missing or uncertain estimates; in these scenes they cost a rescue. Supplementary Section~S3 lists every abstention reason.
+
+\paragraph{Limits} The mechanism is read from development records (driver 550.120) and is descriptive; it is not a causal decomposition. The 51157 case is one scene, and its C0 branch has a different outcome on the calibration host, so the mechanism describes the development configuration rather than the certified one.
+

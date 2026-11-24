@@ -1,0 +1,31 @@
+%% ---------------------------------------------------------------------------------------------------------
+\section{Vision-CENTER V2}\label{sec:method}
+
+Figure~\ref{fig:method} summarises the controller. Its design follows a development finding: in 100 diagnostic scenes, the 14 failures in which the frozen policy released the held cube over the target let go of it 1.7--4.7\,cm off-centre, whereas successful releases were at most 2.3\,cm off-centre (a post hoc reading; Supplementary Section~S2). A privileged centring move at the release instant had turned 10 failures into successes without harm on 100 development scenes, so the remaining problem was to estimate the offset from observations alone.
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\linewidth]{F2_method.pdf}
+\caption{Vision-CENTER V2. At the policy's first gripper-open command while a cube is held, the controller combines current base- and wrist-camera estimates with a confirmed memory of the target cube and of the held cube. It abstains unless both estimates exist, the memory is not contradicted by the current image, and the estimated offset is at least 15\,mm and exceeds its reading bound by at least 10\,mm; otherwise it makes a bounded horizontal move and returns control to the unchanged policy. Every arm is branched from the same simulator snapshot.}\label{fig:method}
+\end{figure}
+
+\paragraph{Trigger} The trigger fires at the first control step at which the policy's next queued action opens the gripper directly after at least three consecutive close commands, while the finger opening (sum of the two finger joints) lies between 0.02 and 0.06\,m, i.e.\ the fingers are closed on an object. Only the policy's own action queue and the robot's finger reading are used. At the trigger, the pending release command is held back; if the controller abstains, the queue is released unchanged and the branch is identical to C0.
+
+\paragraph{Observations} The controller receives the base and wrist RGB images ($128\times128$ each), the end-effector (TCP) pose and the finger opening. Cubes are located by colour segmentation and projected with the fixed camera parameters; no model is trained.
+
+\paragraph{Memory} The target cube is often hidden by the held cube at the trigger. V2 therefore keeps three memories, updated from the start of the episode: a \emph{hand} memory (target position from the wrist camera), a \emph{base} memory (target position from the base camera) and a \emph{hold} memory (position of the held cube relative to the gripper, refitted every fourth step while the gripper is closed). A memory entry is used only after $m=3$ consistent observations, and it is dropped when the finger opening changes by more than 1\,mm (hold) or when the current image contradicts it (target). Each estimate carries a reading bound $u$: 2\,mm for the wrist-camera fit, 5\,mm for the base-camera estimate, 2\,mm for the hold fit, and an extra 5\,mm when the gripper was close to the remembered target after its last confirmation.
+
+\paragraph{Decision} Let $\hat{\mathbf{o}}=\hat{\mathbf{x}}_{\mathrm{target}}-\hat{\mathbf{x}}_{\mathrm{held}}$ be the estimated horizontal offset. V2 acts only if
+\begin{equation}
+\|\hat{\mathbf{o}}\| \;\ge\; 15\ \mathrm{mm} \qquad\text{and}\qquad \|\hat{\mathbf{o}}\| - u \;\ge\; 10\ \mathrm{mm},
+\end{equation}
+and none of eight abstention rules holds: no held-cube estimate, no target estimate, memory contradicted, held cube too low (carried below 58\,mm, i.e.\ beside rather than above the target), side-contact risk, fewer than 20 steps left, already aligned (first condition violated), or aligned within the reading bound (second condition violated).
+
+\paragraph{Bounded move and hand-back} If V2 acts, it commands horizontal TCP increments $\Delta\mathbf{x}_t$ with
+\begin{equation}
+\|\Delta\mathbf{x}_t\|\le 5\ \mathrm{mm},\qquad \|\mathbf{x}^{\mathrm{cmd}}_t-\mathbf{x}_{t^\star}\|\le 30\ \mathrm{mm},\qquad t-t^\star\le 12,
+\end{equation}
+where $\mathbf{x}_t$ is the TCP position, $\mathbf{x}^{\mathrm{cmd}}_t=\mathbf{x}_t+\Delta\mathbf{x}_t$ the commanded position and $\mathbf{x}_{t^\star}$ the TCP position at the trigger, with no vertical and no gripper command, and stops when the re-estimated residual offset is below 10\,mm (5\,mm when the target came from memory) or when the target estimate jumps by more than 3\,mm or the held cube slips by more than 3\,mm. Every step of the move is charged to the 200-step episode budget. The held release command is then passed to the unchanged policy, which continues to the end of the episode. In execution the arm covered about 40\% of each commanded increment (about 2 of 5\,mm per step; Section~\ref{sec:mechanism}), so one move shifts the TCP by at most about 25\,mm and the 30\,mm cap rarely binds; larger offsets cannot be fully corrected by one move.
+
+\paragraph{Ablations and reference} \emph{V1} uses the wrist camera only and no memory. \emph{V2 single frame} uses V2 with $m=1$, so that each estimate rests on the current frame. \emph{V2 without hand/base/hold memory} removes one memory each. \emph{V2 rules off} disables the abstention rules. \emph{Oracle centring} replaces the estimates by the true cube positions and is privileged.
+

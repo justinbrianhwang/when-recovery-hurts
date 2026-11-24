@@ -1,0 +1,11 @@
+%% ---------------------------------------------------------------------------------------------------------
+\section{Discussion}\label{sec:discussion}
+
+\paragraph{Separating rescue from harm changes what is reported} A success rate of 94.75\% versus 87.5\% does not tell a user whether the intervention ever breaks a working episode. The paired four-cell count does: on the Final Test, 1 of 697 baseline successes was lost while 56 of 103 failures were rescued. The certificate turns the calibration counterpart of this statement into a bound with a stated error probability, although most of its margin comes from scenes in which V2 does not move.
+
+\paragraph{Abstention as a precaution} V2 acted in about one in five triggered scenes (41 of 195 and 39 of 191 in development). Most triggered scenes were already aligned, and in the rest V2 abstained whenever an estimate was missing or contradicted. The rules-off ablation acted in 53 and 50 development scenes instead of 41 and 39 and gained one and three rescues, and had the same harms (1 and 0). The development data therefore do not show that the rules reduce harm; we kept them as a precaution before the confirmatory stages.
+
+\paragraph{Harm through time and incomplete motion} The observed harm mechanism was not a collision but a combination of an under-tracking move and a spent time budget. Commanding 5\,mm per step produced about 2\,mm, so a correction that the controller believed sufficient was not. A recovery that reads its own executed displacement, or that charges fewer steps to the episode, could reduce both effects; this was not tested.
+
+\paragraph{What the memory does} Memory let V2 act when the target was hidden. Because the ablation that removes it also changes the confirmation count, our data support the statement that the confirmed multi-frame estimate improves on a single-frame estimate, not that memory alone does.
+

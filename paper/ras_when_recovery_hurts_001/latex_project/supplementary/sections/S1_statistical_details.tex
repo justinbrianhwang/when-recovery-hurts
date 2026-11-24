@@ -1,0 +1,25 @@
+%% -----------------------------------------------------------------------------------------------
+\section{Statistical details}\label{sec:s-stats}
+
+\paragraph{Sampling model} Scene seeds of a split are distinct integers; each seed determines the cube placements through the simulator's reset. We treat the scenes of a split as independent draws from the scene distribution $\mathcal{D}$ restricted to that split and assume that the policy's behaviour depends on the seed only through the scene (the policy's sampling noise is fixed per scene and identical for all branches). A placement check confirmed that no calibration or test scene repeats a placement of any earlier scene.
+
+\paragraph{Conditional binomial argument for the certificate} Let $(Y_0^{(i)},Y_g^{(i)})$, $i=1,\dots,n$, be i.i.d. Write $S=\{i: Y_0^{(i)}=1\}$ and $n_+=|S|$. Given $S$, the variables $(1-Y_g^{(i)})_{i\in S}$ are i.i.d.\ Bernoulli with parameter $h(g)=\Pr(Y_g=0\mid Y_0=1)$, because the pairs are independent across scenes and each pair's conditional law depends only on its own $Y_0$. Hence $k=\sum_{i\in S}(1-Y_g^{(i)})\sim\Bin(n_+,h)$ conditionally on $S$, and for every $h>\varepsilon$
+\begin{equation}
+\Pr\bigl(p_{\mathrm{harm}}\le a \bigm| S\bigr)\le a\qquad\text{for all } a\in[0,1],
+\end{equation}
+since $p_{\mathrm{harm}}=F_{\Bin(n_+,\varepsilon)}(k)$ is a valid p-value for $H_0: h>\varepsilon$ (also at $h=\varepsilon$) and the binomial distribution function is decreasing in $h$. Averaging over $S$ gives the unconditional statement. Holm's step-down procedure over the two policies controls the family-wise error at $\delta$ without assumptions on the dependence between the two p-values.
+
+\paragraph{Exact paired efficacy test} With $b$ rescues and $c$ harms, $d=b+c$, the conditional law of $b$ given $d$ is $\Bin(d,\theta)$ with $\theta=\Pr(\text{rescue})/(\Pr(\text{rescue})+\Pr(\text{harm}))$. The null hypothesis of no improvement is $\theta\le1/2$, and $p_{\mathrm{eff}}=\Pr(\Bin(d,1/2)\ge b)$. For $b=29,c=0$, $p=2^{-29}=1.86\times10^{-9}$; for $b=27,c=1$, $p=28\cdot2^{-28}+2^{-28}=1.08\times10^{-7}$.
+
+\paragraph{Intersection--union test for $H_{\mathrm{mem}}$} The memory hypothesis requires an improvement for both policies. The intersection--union test rejects the union of the two policy-level nulls when both are rejected at the same level; its p-value is the maximum of the two, $\max(0.0059,0.0078)=0.0078$.
+
+\paragraph{Post hoc descriptive quantities} Table~\ref{tab:s-desc} adds one-sided 95\% Clopper--Pearson upper bounds of the conditional harm and paired bootstrap intervals (20,000 resamples of scenes, percentile method, random seed 20261123) of the success difference. They were computed after the confirmatory stages, change no pre-registered decision, and are reported for orientation only.
+
+\begin{table}[!htbp]
+\centering\footnotesize
+\caption{Post hoc descriptive quantities for calibration and Final Test. ``Moved among $Y_0{=}1$'': baseline successes in which V2 made a move.}\label{tab:s-desc}
+\resizebox{\linewidth}{!}{\input{\tabdir TS2_descriptive_posthoc.tex}}
+\end{table}
+
+\paragraph{Power considerations} With $\varepsilon=0.05$, the certificate passes at the Holm level $0.025$ for up to 8 harms ($n_+=337$) or 9 harms ($n_+=348$), and at level $0.05$ for up to 10 harms (Eq.~(3) of the main text); the observed 1 and 0 harms are far from that boundary.
+

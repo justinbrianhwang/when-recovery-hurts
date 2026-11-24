@@ -1,0 +1,5 @@
+%% -----------------------------------------------------------------------------------------------
+\section{Commanded versus actual motion (Check 4)}\label{sec:s-check4}
+
+Check 4 was declared before the C1 run: every move step must have direction cosine $\ge0.9$ between actual and commanded horizontal TCP displacement and progress $\ge0.2$\,mm along the command. V2 failed it in 9 of 41 (seed 1) and 5 of 39 (seed 2) moves. Three independent computations (the audit CSV, re-running the audit function, an independent recomputation) agreed on all 715 acted branches. In every failing move of every arm (110 moves), only the first step failed; a post hoc check of steps 2 and later passed in all 715 moves. The first-step failures had no robot--target or robot--table impulse in the contact list, and the V2 failures had a smaller cosine between the first command and the motion before the trigger (median $-0.57$ vs $0.66$ for passing moves), consistent with the arm still moving with the policy's previous command.
+

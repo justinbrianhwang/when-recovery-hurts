@@ -1,0 +1,31 @@
+%% ---------------------------------------------------------------------------------------------------------
+\section{Related work}\label{sec:related}
+
+\paragraph{Recovery for learned policies}
+Learned policies drift away from the states seen in demonstrations, and the resulting compounding error is the classical motivation for interactive imitation learning \cite{ross2011dagger,laskey2017dart}. Recovery methods return the system to familiar states: Back to the Manifold learns to steer out-of-distribution states back to the data manifold \cite{reichlin2022manifold}, POIR plans a return to the demonstration distribution \cite{cideron2023getback}, RecoveryChaining learns local recovery policies that hand control back to a nominal controller \cite{vats2025recoverychaining}, and Recovery RL restricts exploration with a learned recovery policy \cite{thananjeyan2021recoveryrl}. Recent work on vision--language--action and world--action models adds recovery at scale \cite{liufu2026repovla,li2026causalhistory}, retries after failure \cite{du2024toerr}, or rewinds to an earlier state \cite{zheng2026rewind}. These methods are usually evaluated by success rate with and without recovery; our concern is the decomposition of that difference into rescues and harms on paired states.
+
+\paragraph{Interventions and runtime monitoring}
+Interactive imitation learning lets a human or a gate decide when to intervene \cite{kelly2019hgdagger,hoque2022thrifty}. Runtime monitors detect failures of generative policies from consistency and progress \cite{agia2025unpacking} or predict them online \cite{romer2025fiper}; language-model systems explain and correct failures \cite{liu2023reflect,duan2025aha}; CheckVLA verifies action chunks with a world model \cite{liu2026checkvla}. A failure prediction does not say whether acting on it helps. RESCUE makes exactly this point and evaluates monitor alarms by counterfactual interventions from the same policy state \cite{ahmedt2026rescue}, and a recent study audits whether memory in history-conditioned policies actually guides decisions \cite{zhang2026memory}. Our evaluation shares the counterfactual, same-state view; it adds a pre-registered confirmatory split and a certificate on the harm side.
+
+\paragraph{Statistical risk control}
+Learn then Test calibrates algorithms so that a chosen risk is controlled with finite-sample guarantees through multiple testing \cite{angelopoulos2021ltt}. Our certificate is the simplest instance of this idea: a single, pre-specified candidate and one binomial test per policy, combined with Holm's procedure \cite{holm1979}. The efficacy test is the exact one-sided form of McNemar's paired test \cite{mcnemar1947}.
+
+Table~\ref{tab:related} positions the present work against the closest papers. The table describes what each paper evaluates as stated in that paper; it is not a ranking.
+
+\begin{table}[!htbp]
+\centering\footnotesize
+\caption{Positioning against related work (qualitative; based on each paper's own description).}\label{tab:related}
+\begin{tabular}{p{0.24\linewidth}p{0.30\linewidth}p{0.38\linewidth}}
+\toprule
+Work & Primary question & Difference from this paper\\
+\midrule
+DAgger, DART, HG-DAgger, ThriftyDAgger \cite{ross2011dagger,laskey2017dart,kelly2019hgdagger,hoque2022thrifty} & collect corrective data or gate human interventions during training & the policy here is frozen; interventions are evaluated, not used for training\\
+Back to the Manifold, POIR, RecoveryChaining, Recovery RL \cite{reichlin2022manifold,cideron2023getback,vats2025recoverychaining,thananjeyan2021recoveryrl} & learn a recovery behaviour & our controller is hand-designed and bounded; we separate its rescues from its harms on paired states\\
+Sentinel, FIPER, REFLECT, AHA, CheckVLA \cite{agia2025unpacking,romer2025fiper,liu2023reflect,duan2025aha,liu2026checkvla} & detect, predict or explain failures & we evaluate what an action taken at the trigger does to the outcome\\
+RESCUE \cite{ahmedt2026rescue} & is an alarm worth acting on? counterfactual interventions from the same state & we add a calibration certificate for harm and a held-out confirmatory test\\
+To Err is Robotic, Rewind-IL, RePO-VLA, Causal-History TTS \cite{du2024toerr,zheng2026rewind,liufu2026repovla,li2026causalhistory} & retry, rewind or optimise for recovery & we report conditional harm on baseline successes, not only success rate\\
+Learn then Test \cite{angelopoulos2021ltt} & finite-sample risk control by multiple testing & we apply its simplest form to harm of one frozen candidate\\
+\bottomrule
+\end{tabular}
+\end{table}
+
