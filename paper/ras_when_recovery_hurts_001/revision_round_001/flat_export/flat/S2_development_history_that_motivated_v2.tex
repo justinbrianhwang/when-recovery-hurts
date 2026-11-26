@@ -1,0 +1,11 @@
+%% -----------------------------------------------------------------------------------------------
+\section{Development history that motivated V2}\label{sec:s-history}
+
+All of the following are development results on scene sets that were used once and are not part of calibration or test.
+\begin{enumerate}
+\item \textbf{Failure diagnostic} (seeds 50600--50699, policy seed 1, no intervention): 79 successes and 21 failures. Read after the run, the 14 failures that released the cube over the target let go of it 1.7--4.7\,cm off-centre, successes at most 2.3\,cm; up to 1.5\,cm offset, 62 episodes had 0 failures, above 2.5\,cm, 8 had 8 failures.
+\item \textbf{Oracle centring pilot} (seeds 50700--50799): no intervention 82, 5\,cm retreat 73, matched hold 82, oracle centring 92; centring against no intervention: 10 rescues, 0 harms; the retreat turned 14 successes into failures. Interrupting, waiting and re-planning (the matched hold) did not explain the gain.
+\item \textbf{Vision-CENTER V1} (wrist camera only, no memory; seeds 50800--50899): C0 91, V1 92, oracle 96; V1 recovered 1 of 5 oracle rescues and missed 4 by abstaining because the target was hidden (2) or the held cube was not fitted (2). This motivated the memory of V2.
+\item \textbf{V2 development} (seeds 50900--51099 and earlier used scenes; policy seed 1) and the pre-registered C1 stage reported in the main text. Nothing was adapted to policy seed 2.
+\end{enumerate}
+

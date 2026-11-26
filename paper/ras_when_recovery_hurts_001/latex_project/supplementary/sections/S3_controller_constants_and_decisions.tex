@@ -1,32 +1,37 @@
 %% -----------------------------------------------------------------------------------------------
-\section{Controller constants and decisions}\label{sec:s-constants}
+\section{Controller constants, decisions and hand-back}\label{sec:s-constants}
+
+\paragraph{Implementation} The controller is \path{vision_center_v2} in \path{src/hci/vision_center_v2.py}; the trigger rule, the per-step action and the move bounds come from \path{src/hci/recovery_v1_oracle.py} (\path{trigger_rule}, \path{_xy_action}), and the ablation arms from \path{src/hci/vision_center_c1.py}. At the trigger, \texttt{decide} returns ACT or one abstention reason. Abstaining returns without touching the runtime; every run checked that the simulator state, queue, history and counters of an abstaining branch equal those at the trigger. Acting calls \path{policy.clear()} (the pending open command is discarded), sends \path{_xy_action} at each step (horizontal command scaled to the controller's action range, vertical command 0, gripper component equal to the last executed command, which is a close command), re-reads both cameras and re-estimates the offset after each step, and calls \path{policy.clear()} again at the end. Every run checked that no policy inference happened during the move and that the queue was empty at the hand-back.
 
 \begin{table}[!htbp]
 \centering\footnotesize
 \caption{Constants of Vision-CENTER V2 (frozen before calibration; source \texttt{src/hci/vision\_center\_v2.py}, \texttt{vision\_center.py}, \texttt{recovery\_v1\_oracle.py}).}\label{tab:s-const}
-\begin{tabular}{p{0.45\linewidth}r}
+\begin{tabular}{p{0.55\linewidth}r}
 \toprule
 Quantity & Value\\
 \midrule
-Trigger: open command after at least $n$ close commands & $n=3$\\
-Trigger: finger opening (sum of joints) & 0.02--0.06\,m\\
+Trigger: queued open command after at least $n$ executed close commands & $n=3$\\
+Trigger: finger opening (sum of the two finger joints) & 0.02--0.06\,m\\
 Act if estimated offset $\ge$ & 15\,mm\\
 \ldots{} and offset minus reading bound $\ge$ & 10\,mm\\
-Reading bound: wrist-camera fit / base camera / hold fit & 2 / 5 / 2\,mm\\
-Extra bound after a near pass of the gripper & 5\,mm\\
-Memory confirmations before use ($m$) & 3 (single-frame variant: 1)\\
+Reading bound: wrist-camera fit / base-camera estimate / hold fit & 2 / 5 / 2\,mm\\
+Extra bound after an unobserved near pass of the gripper & 5\,mm\\
+Target confirmations before use ($m$) & 3 (single-frame variant: 1)\\
 Hold memory dropped if finger opening changes by more than & 1\,mm\\
-Hold refit interval while closed & every 4 steps\\
-Minimum carried height of the held cube centre & 58\,mm\\
+Hold refit interval while the gripper is commanded closed & every 4 steps\\
+Minimum estimated height of the held cube centre & 58\,mm\\
 Minimum steps left in the episode & 20\\
-Command per step / target cap / maximum steps & 5\,mm / 30\,mm / 12\\
-Stop when residual offset $\le$ (frame / memory target) & 10 / 5\,mm\\
-Stop if target jumps or held cube slips by more than & 3\,mm\\
-Side-contact rule: centre distance at least & 40\,mm (+ bound)\\
-\ldots{} and held-cube bottom above target top by at least & 3\,mm\\
+Command per step / cap from trigger TCP / maximum steps & 5\,mm / 30\,mm / 12\\
+Vertical command / gripper command during the move & 0 / held close command\\
+Stop when estimated residual $\le$ (frame / memory target) & 10 / 5\,mm\\
+Stop if target estimate jumps or held cube shifts by more than & 3\,mm (+$u$ for memory)\\
+Side-contact rule: offset at least & 40\,mm (+$u$ for memory)\\
+\ldots{} with held-cube bottom above target top by less than & 3\,mm\\
 \bottomrule
 \end{tabular}
 \end{table}
+
+\paragraph{Order of the rules} \texttt{decide} applies, in this order: an invalid estimate (no held-cube estimate, no target estimate, memory contradicted); \textsc{low carry} (held cube centre below 58\,mm, or a remembered target with the held cube's bottom below the target's top); \textsc{side-contact risk}; \textsc{too few steps}; \textsc{aligned} ($<15$\,mm); \textsc{aligned within uncertainty} (offset $-\,u<10$\,mm); otherwise ACT. The rules-off ablation (\path{decide_rules_off}) removes \textsc{aligned within uncertainty}, \textsc{side-contact risk} and the remembered-target part of \textsc{low carry}, and keeps the rest.
 
 \begin{table}[!htbp]
 \centering\footnotesize
@@ -36,7 +41,14 @@ Side-contact rule: centre distance at least & 40\,mm (+ bound)\\
 
 \begin{figure}[!htbp]
 \centering
-\includegraphics[width=\linewidth]{S2_decisions_by_stage.pdf}
-\caption{Share of each V2 decision per stage and policy (log scale). The proportions are stable from development to calibration and test: V2 acts in 16--21\% of scenes, and about two thirds of scenes are already aligned at the trigger.}\label{fig:s-dec}
+\includegraphics[width=\linewidth]{FigS1_decisions_by_stage.pdf}
+\caption{Share of each V2 decision per stage and policy (log scale; data of Table~S3). The proportions are similar from development to calibration and test: V2 acts in 16--21\% of scenes, and about two thirds of scenes are already aligned at the trigger.}\label{fig:s-dec}
 \end{figure}
 
+\paragraph{Hand-back as executed} Table~S4 summarises every acted V2 branch. In all of them the policy re-inferred at the first step after the move; its first gripper-open command followed 1--24 steps later, and in one calibration branch it never opened the gripper again. The net horizontal TCP displacement was about 36\% of the commanded path. No move ended at the 30\,mm cap.
+
+\begin{table}[!htbp]
+\centering\footnotesize
+\caption{Hand-back and executed motion in all acted V2 branches (raw scene records; descriptive). ``Steps to first open'': steps from the end of the move to the re-planned policy's first open command; ``Net/cmd.\ path'': net horizontal TCP displacement over commanded path length; end of move: estimated residual within tolerance, step budget, or another stop rule.}\label{tab:s-handback}
+\resizebox{\linewidth}{!}{\input{\tabdir TS3_handback.tex}}
+\end{table}

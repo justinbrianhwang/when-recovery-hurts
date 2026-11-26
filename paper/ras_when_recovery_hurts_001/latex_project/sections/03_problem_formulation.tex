@@ -1,34 +1,33 @@
 %% ---------------------------------------------------------------------------------------------------------
 \section{Problem formulation}\label{sec:problem}
 
-\paragraph{Research question} Given a frozen policy $\pi$ and an intervention $g$ that may act once per episode, does $g$ increase the success probability while keeping the probability that it destroys a success of $\pi$ below $\varepsilon$?
+\paragraph{Research question} Given a frozen policy $\pi$ and an intervention $g$ that may act once per episode, does $g$ increase the success probability, and is the probability that it destroys a success of $\pi$ below $\varepsilon$?
 
-\paragraph{Paired outcomes} A scene $s$ is drawn from a seed distribution $\mathcal{D}$. The policy runs from the initial state until a trigger time $t^\star(s)$, determined only by the policy's own commands (Section~\ref{sec:method}). The full simulator state at $t^\star$ is saved. From that snapshot we run the policy unchanged, which gives $Y_0(s)\in\{0,1\}$, and the policy with intervention $g$, which gives $Y_g(s)\in\{0,1\}$. Scenes without a trigger have $Y_g=Y_0$ by construction. The four cells are
+\paragraph{Paired outcomes} A scene $s$ is drawn from a scene distribution $\mathcal{D}$: in the simulator, a scene seed determines the initial cube placement and the policy's sampling noise. The policy runs from the initial state until a trigger step $t^\star(s)$, determined by an observable rule (Section~\ref{sec:method}). The full simulator state and the policy state at $t^\star$ are saved. From that snapshot we run the policy unchanged, which gives $Y_0(s)\in\{0,1\}$, and the policy with intervention $g$, which gives $Y_g(s)\in\{0,1\}$. Scenes without a trigger, and scenes in which $g$ abstains, have $Y_g=Y_0$ by construction. The four cells are
 \begin{equation}
 \begin{aligned}
 \text{rescue}: &\ Y_0=0,\ Y_g=1, & \qquad \text{harm}: &\ Y_0=1,\ Y_g=0,\\
-\text{both succeed}: &\ Y_0=1,\ Y_g=1, & \qquad \text{both fail}: &\ Y_0=0,\ Y_g=0.
+\text{both succeed}: &\ Y_0=1,\ Y_g=1, & \qquad \text{both fail}: &\ Y_0=0,\ Y_g=0,
 \end{aligned}
 \end{equation}
-With $R$ rescues and $H$ harms on $n$ scenes, the change in the number of successes is $\sum_s (Y_g-Y_0)=R-H$.
+and the success difference is Eq.~\eqref{eq:delta}.
 
 \paragraph{Conditional harm} We define
 \begin{equation}
 h(g) \;=\; \Pr_{s\sim\mathcal{D}}\bigl(Y_g(s)=0 \,\bigm|\, Y_0(s)=1\bigr).
 \end{equation}
-It is the probability that a success the policy would have achieved alone is lost because of $g$. It concerns the task outcome in the simulator; it does not measure collision, force or damage.
+It is the probability that a success the policy would have achieved alone is lost when $g$ is deployed. It concerns the task outcome in the simulator; it does not measure collision, force or damage.
 
-\paragraph{Harm certificate} On $n$ calibration scenes drawn independently from $\mathcal{D}$ (we treat distinct scene seeds as independent draws; Supplementary Section~S1), let $n_+=\sum_s Y_0(s)$ and $k=\sum_s Y_0(s)\,(1-Y_g(s))$. Conditional on $n_+$, the scenes with $Y_0=1$ are an i.i.d.\ sample from $\mathcal{D}$ conditioned on $Y_0=1$, so $k\sim\Bin(n_+, h(g))$. For the null hypothesis $H_0^{\mathrm{harm}}: h(g)>\varepsilon$ the exact p-value is
+\paragraph{Harm certificate} Let $n$ calibration scenes be drawn independently from $\mathcal{D}$. This is an assumption about the simulator's seed-to-scene map: distinct seeds are treated as independent draws of placement and noise, which a placement check supports but cannot prove (Supplementary Section~S1). Let $n_+=\sum_s Y_0(s)$ and $k=\sum_s Y_0(s)\,(1-Y_g(s))$. Conditional on which scenes have $Y_0=1$, those scenes are an i.i.d.\ sample from $\mathcal{D}$ given $Y_0=1$, so $k\sim\Bin(n_+, h(g))$. For the null hypothesis $H_0^{\mathrm{harm}}: h(g)\ge\varepsilon$ the exact p-value is
 \begin{equation}\label{eq:cert}
-p_{\mathrm{harm}} \;=\; \sum_{j=0}^{k}\binom{n_+}{j}\,\varepsilon^{j}(1-\varepsilon)^{n_+-j},
+p_{\mathrm{harm}} \;=\; \Pr\bigl(\Bin(n_+,\varepsilon)\le k\bigr) \;=\; \sum_{j=0}^{k}\binom{n_+}{j}\,\varepsilon^{j}(1-\varepsilon)^{n_+-j},
 \end{equation}
-and $g$ is certified for policy $\pi$ when $p_{\mathrm{harm}}$ is below its Holm threshold. For the two policies we use Holm's procedure with family-wise level $\delta$ \cite{holm1979}: sort the two p-values, compare the smaller with $\delta/2$ and, if rejected, the larger with $\delta$. Under the null, the probability of a false certificate for any member of the family is at most $\delta$. We pre-registered $\varepsilon=\delta=0.05$.
+which is valid because the binomial distribution function decreases in $h$. For the two policies we apply Holm's procedure \cite{holm1979} at family-wise level $\delta$: sort the two p-values, compare the smaller with $\delta/2$ and, if it is rejected, the larger with $\delta$. A policy is \emph{certified} when its null is rejected. The guarantee is frequentist: if $h(g)\ge\varepsilon$ for some policy in the family, the probability that the procedure nevertheless certifies that policy is at most $\delta$. It is not a statement that the true rate of a particular deployment is below $\varepsilon$ with probability $1-\delta$, and it holds only under the sampling assumption above and for the simulator configuration in which the calibration scenes were run. We pre-registered $\varepsilon=\delta=0.05$.
 
 \paragraph{Efficacy test} On the held-out test scenes, let $b$ be the number of rescues and $c$ the number of harms. Under the null hypothesis that the intervention does not increase success, $\Pr(Y_0=0,Y_g=1)\le\Pr(Y_0=1,Y_g=0)$, and conditional on the $d=b+c$ discordant scenes the number of rescues is stochastically at most $\Bin(d,1/2)$. The exact one-sided p-value is
 \begin{equation}\label{eq:eff}
-p_{\mathrm{eff}} \;=\; \sum_{j=b}^{d}\binom{d}{j}2^{-d},
+p_{\mathrm{eff}} \;=\; \Pr\bigl(\Bin(d,1/2)\ge b\bigr) \;=\; \sum_{j=b}^{d}\binom{d}{j}2^{-d},
 \end{equation}
-the exact form of McNemar's paired test \cite{mcnemar1947}. Holm's procedure is applied over the two policies at $\alpha=0.05$.
+the exact form of McNemar's paired test \cite{mcnemar1947}. Holm's procedure is applied over the two policies at $\alpha=0.05$. The unit of analysis is the scene; the two policies are tested separately, and pooled counts are descriptive only.
 
-\paragraph{Information constraint} The monitor and the controller may use only the robot's cameras, its proprioception and their own history. They may not read object poses from the simulator, the success flag or any future quantity. A privileged oracle that reads the true cube positions is reported only as a reference, never as a candidate.
-
+\paragraph{Information constraint} The trigger and the controller may use only the robot's cameras, its proprioception, the policy's own commands and their own history. They may not read object poses, grasp flags, the success flag or any future quantity from the simulator. A privileged oracle that reads the true cube positions is reported only as a reference, never as a candidate. Simulator ground truth is logged for diagnosis and never fed to the controller.

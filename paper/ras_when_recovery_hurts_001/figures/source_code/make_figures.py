@@ -120,22 +120,22 @@ def f1():
 
 # ------------------------------------------------------------------ F2 method schematic (no data)
 def f2():
-    fig, ax = plt.subplots(figsize=(W2, 2.55)); ax.axis('off'); ax.set_xlim(0, 100); ax.set_ylim(0, 38)
-    def box(x, y, w, h, txt, fc='#F4F7FB', ec='#4A6A8A', fs=5.6):
+    fig, ax = plt.subplots(figsize=(W2, 2.85)); ax.axis('off'); ax.set_xlim(0, 100); ax.set_ylim(-1, 40)
+    def box(x, y, w, h, txt, fc='#F4F7FB', ec='#4A6A8A', fs=5.15):
         ax.add_patch(FancyBboxPatch((x, y), w, h, boxstyle='round,pad=0.3,rounding_size=1.2', fc=fc, ec=ec, lw=.8))
         ax.text(x + w / 2, y + h / 2, txt, ha='center', va='center', fontsize=fs, color=COL['ink'], linespacing=1.25)
     def arr(x0, y0, x1, y1, c='#4A6A8A'): ax.annotate('', (x1, y1), (x0, y0), arrowprops=dict(arrowstyle='-|>', color=c, lw=.9, shrinkA=0, shrinkB=0))
-    box(0.5, 21, 16, 14, 'Frozen diffusion policy\n(ResNet18 encoder,\n2 training seeds)\nC0: run unchanged')
-    box(0.5, 3, 16, 14, 'Observations\nbase RGB, wrist RGB,\nrobot state\n(no object pose,\nno success label)')
-    box(20, 21, 15.5, 14, 'Trigger\nfirst gripper-open\ncommand while the\ncube is held')
-    box(20, 3, 15.5, 14, 'Memory\nhand / base / hold\nestimates, accepted\nafter 3 confirmations')
-    box(39, 10, 19.5, 18, 'Decision\nACT if target and held\ncube are estimated,\nmemory not contradicted,\noffset > reading bound u;\notherwise ABSTAIN', fc='#EEF6FF')
-    box(62, 21, 17, 14, 'ACT: bounded XY move\n<= 12 steps of 5 mm,\ntarget capped at 30 mm,\nno Z or gripper change', fc='#E7F4EE', ec='#2E7D5B')
-    box(62, 3, 17, 14, 'ABSTAIN\nbranch equals C0\n(same release,\nsame trajectory)', fc='#F2F2F2', ec='#888888')
-    box(82.5, 10, 17, 18, 'Frozen policy resumes\n(release, then the task\ncontinues to step 200)\n\npaired outcome\nY_g vs Y_0, same scene')
-    arr(17, 28, 20, 28); arr(17, 10, 20, 10); arr(35.8, 28, 39, 23); arr(35.8, 10, 39, 15)
-    arr(58.8, 23, 62, 28, '#2E7D5B'); arr(58.8, 15, 62, 10, '#888888'); arr(79.3, 28, 82.5, 23); arr(79.3, 10, 82.5, 15)
-    ax.text(50, 0.0, 'Each triggered scene is branched from one simulator snapshot: C0, V2 and every ablation start from the identical state (paired design).', ha='center', fontsize=5.8, color=COL['muted'])
+    box(0.5, 22, 16, 15, 'Frozen diffusion policy\n(action queue of\n8 steps; C0 = run\nunchanged)')
+    box(0.5, 3, 16, 15, 'Observations\nbase RGB, wrist RGB,\nTCP pose, finger\nopening (no object\npose, no grasp flag)')
+    box(20, 22, 15.5, 15, 'Trigger (observable)\nqueued open command\nafter >= 3 close\ncommands; fingers\n20-60 mm apart')
+    box(20, 3, 15.5, 15, 'Memory\ntarget (wrist or base\ncamera) and held cube;\ntarget used after\n3 confirmations')
+    box(39, 10, 19.5, 19, 'Decision (ordered rules)\nestimates valid, carried\nhigh, no side-contact\nrisk, >= 20 steps left,\noffset >= 15 mm and\noffset - u >= 10 mm: ACT', fc='#EEF6FF')
+    box(62, 22, 17, 15, 'ACT: queue cleared;\n<= 12 XY steps of 5 mm,\ncap 30 mm, Z = 0, close\ncommand held; offset\nre-estimated each step', fc='#E7F4EE', ec='#2E7D5B')
+    box(62, 3, 17, 15, 'ABSTAIN\nnothing changed:\nqueue, history and\nstate as at trigger,\nbranch equals C0', fc='#F2F2F2', ec='#888888')
+    box(82.5, 10, 17, 19, 'Hand-back\nqueue cleared again;\npolicy re-plans from\nlatest observations\nand decides when to\nopen; Y_g vs Y_0')
+    arr(17, 29.5, 20, 29.5); arr(17, 10.5, 20, 10.5); arr(35.8, 29.5, 39, 24); arr(35.8, 10.5, 39, 15)
+    arr(58.8, 24, 62, 29.5, '#2E7D5B'); arr(58.8, 15, 62, 10.5, '#888888'); arr(79.3, 29.5, 82.5, 24); arr(79.3, 10.5, 82.5, 15)
+    ax.text(50, -0.8, 'Each triggered scene is branched from one simulator snapshot: C0, V2 and every ablation start from the identical state (paired design).', ha='center', fontsize=5.8, color=COL['muted'])
     return save(fig, 'F2_method'), {}
 
 
@@ -147,7 +147,7 @@ def f3():
         c = R['calibration'][pid]; up = c['harm_cp95_upper_POSTHOC']; rate = c['harm_rate']
         ax.errorbar(i, rate * 100, yerr=[[rate * 100], [(up - rate) * 100]], fmt='o', ms=4.5, color=COL['v2'], capsize=3, lw=1)
         ax.text(i, up * 100 + 0.35, f'{c["harm"]}/{c["ref_successes"]}\np={c["harm_p_B"]:.1e}', ha='center', fontsize=6.2)
-    ax.axhline(5, color=COL['harm'], ls='--', lw=1); ax.text(1.45, 5.15, 'h* = 5%', color=COL['harm'], fontsize=6.3, ha='right')
+    ax.axhline(5, color=COL['harm'], ls='--', lw=1); ax.text(1.45, 5.15, 'ε = 5%', color=COL['harm'], fontsize=6.3, ha='right')
     ax.set_xticks([0, 1], ['seed 1', 'seed 2']); ax.set_xlim(-.6, 1.6); ax.set_ylim(0, 6); ax.set_ylabel('conditional harm (%)')
     ax.set_title('Calibration: harm certificate', fontsize=7.5); ax.grid(axis='y', color=COL['grid'], lw=.5)
     ax = axs[1]; panel(ax, 'b')
@@ -224,7 +224,7 @@ def footprint(P):
 
 def f5():
     r, tr, fr = scene('train_seed_1', 51157); t0 = r['trigger']['step']; v2 = tr['VISION_CENTER_V2']; c0 = tr['C0']; n = cell(r, 'VISION_CENTER_V2')['control_steps']
-    fig = plt.figure(figsize=(W2, 2.75)); gs = fig.add_gridspec(1, 3, width_ratios=[1.05, 1.15, 1.0], wspace=0.35)
+    fig = plt.figure(figsize=(W2, 2.9)); gs = fig.add_gridspec(1, 3, width_ratios=[1.0, 1.45, 0.95], wspace=0.34)
     ax = fig.add_subplot(gs[0]); panel(ax, 'a')
     st0 = v2[0]; ste = next(s for s in v2 if s['t'] == t0 + n)
     for s, ls, lab in ((st0, '-', f't={t0} (trigger)'), (ste, '--', f't={t0 + n} (end of move)')):

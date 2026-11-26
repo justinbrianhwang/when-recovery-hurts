@@ -1,0 +1,28 @@
+%% ---------------------------------------------------------------------------------------------------------
+\section{Development results}\label{sec:dev}
+
+\paragraph{Question} On development scenes, does V2 rescue failures without harming successes, and does the confirmed multi-frame estimate matter? These results motivated the confirmatory stages; they are not themselves confirmatory evidence of a harm bound.
+
+\begin{table}[!htbp]
+\centering\footnotesize
+\caption{Development stage (C1, seeds 51100--51299): successes of 200 scenes, rescues and harms against C0, and number of scenes in which the arm moved. The trigger fired in 195 (seed 1) and 191 (seed 2) scenes. For the oracle the column counts the scenes in which it entered its control loop (every trigger); it actually moved in 93 and 102.}\label{tab:dev}
+\resizebox{\linewidth}{!}{\input{\tabdir T2_development_arms.tex}}
+\end{table}
+
+\begin{table}[!htbp]
+\centering\footnotesize
+\caption{Pre-registered development hypotheses (exact one-sided paired tests on discordant scenes; Holm over the two hypotheses at $\alpha=0.05$, i.e.\ the smaller p-value is compared with 0.025 and the larger with 0.05; IU = intersection--union, whose p-value is the larger of the two per-policy p-values).}\label{tab:devtests}
+\resizebox{\linewidth}{!}{\input{\tabdir T3_development_tests.tex}}
+\end{table}
+
+\paragraph{Evidence} Table~\ref{tab:dev} lists all nine arms. V2 raised success from 171 to 184 (14 rescues, 1 harm) for policy seed 1 and from 164 to 180 (16 rescues, 0 harms) for policy seed 2. The privileged oracle reached 185 and 184. Both pre-registered hypotheses were rejected (Table~\ref{tab:devtests}): V2 against C0 for policy seed 2 ($16$ vs $0$, $p=1.5\times10^{-5}$) and V2 against its single-frame variant for both policies (intersection--union $p=0.0078$).
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\linewidth]{Fig03_memory_and_ablation.pdf}
+\caption{Memory and ablation on the development scenes (C1). (a) Source of the target estimate at the first V2 reading in triggered scenes: the current frame, the target memory with its position last set by the wrist camera (``memory hand'') or by the base camera (``memory base''), or none. (b) Successes of all arms of 200 scenes; labels give rescues/harms against C0. The single-frame variant behaves like the wrist-only V1; removing one memory source at a time loses less.}\label{fig:memory}
+\end{figure}
+
+\paragraph{Interpretation} At the first reading the target position came from the current frame in 106 and 98 triggered scenes, from the target memory in 81 and 83 (wrist-camera position 65 and 65, base-camera position 16 and 18), and in 8 and 10 no target estimate was available (Fig.~\ref{fig:memory}a). With a single frame the controller acted in 25 and 30 scenes and rescued 4 and 9; with the confirmed memory it acted in 41 and 39 and rescued 14 and 16. Removing only the wrist-camera or the hold source cost one rescue for each policy, while removing the base-camera source cost five and two; the sources partly substitute for each other.
+
+\paragraph{Limits} The single-frame variant both removes earlier frames and lowers the confirmation count to $m=1$, so $H_{\mathrm{mem}}$ tests the combined change, not memory alone (Section~\ref{sec:limits}). The per-source ablations are descriptive and were not tested. These are development results on scenes that informed the design.

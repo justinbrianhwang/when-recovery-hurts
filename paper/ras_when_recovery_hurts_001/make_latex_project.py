@@ -68,7 +68,10 @@ def supp_doc():
 
 
 def main():
-    if OUT.exists(): shutil.rmtree(OUT)  # derived folder
+    # Since revision round 001 the split project (latex_project/ = Drive Paper/Latex) is the canonical source and is
+    # edited directly; regenerating it from manuscripts/ would discard those edits. This script therefore refuses to run
+    # over an existing latex_project/. Derive other forms FROM latex_project/ (see export_flat_from_latex.py).
+    if OUT.exists(): raise SystemExit('latex_project/ exists and is canonical since revision round 001; refusing to overwrite it')
     main_tex, mfiles = main_doc(); supp_tex, sfiles = supp_doc()
     for k, v in {'main.tex': main_tex, 'supplementary/supplementary.tex': supp_tex, **mfiles, **sfiles}.items():
         f = OUT / k; f.parent.mkdir(parents=True, exist_ok=True); f.write_text(v, encoding='utf-8')

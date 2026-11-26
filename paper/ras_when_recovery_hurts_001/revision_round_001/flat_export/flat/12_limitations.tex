@@ -1,0 +1,13 @@
+%% ---------------------------------------------------------------------------------------------------------
+\section{Limitations}\label{sec:limits}
+
+\begin{itemize}
+\item \textbf{One task, simulation only.} All results are for \texttt{StackCube-v1} with rendered images. There is no real-robot experiment, and nothing is claimed about other tasks.
+\item \textbf{Statistical, task-level guarantee.} The certificate controls the probability of certifying a system whose conditional harm is 5\% or more, under the assumption that calibration scenes are independent draws from the scene distribution and for the calibration host's simulator configuration. It is not a guarantee of physical safety, force limits or collision freedom, and most of its margin comes from abstention.
+\item \textbf{Measurement validity.} The contact-separation check S6 failed (9.3\% of rows) and remains failed; in the sub-step re-run, 3.3\% of separated pairs remain unexplained.
+\item \textbf{Host configuration.} Development ran on driver 550.120 and the confirmatory stages on driver 595.99.02. Outcomes differed between hosts in some scenes, so development estimates and the development mechanism analysis are linked to the confirmatory results only qualitatively.
+\item \textbf{Deviation from a pre-declared criterion.} Before calibration, a smoke run was required to reproduce the development records bit for bit. It did not, because of the host difference; the runner did reproduce the unchanged development collector on the same host. The decision to proceed on a fixed host type was recorded and committed before the first calibration rollout by the AI agent that ran the experiment, without a prior approval by the author; the author reviewed it afterwards. It was not approved in advance. Nothing about the candidate, the policies, the levels or the tests changed.
+\item \textbf{Ablation confounds.} The single-frame variant changes both the use of earlier frames and the confirmation count; the rules-off variant removes a bundle of three rules.
+\item \textbf{No external baseline and policy-noise floor.} The comparators are the uninterrupted policy, ablations and a privileged oracle; no learned recovery or retry baseline was run. Part of the discordance may be policy variance after re-planning (Section~\ref{sec:protocol}).
+\item \textbf{Two policies of one architecture} for the certificate (they differ only in the training seed), and a single PlainConv policy at development level.
+\end{itemize}

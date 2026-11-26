@@ -1,0 +1,12 @@
+%% -----------------------------------------------------------------------------------------------
+\section{Environment, deviations and cost}\label{sec:s-env}
+
+\paragraph{Software} ManiSkill 3.0.1 at commit \texttt{a4a4f92}, SAPIEN 3.0.3, PhysX CPU, Python 3.10, single environment; the full package list is frozen with the manifests.
+
+\paragraph{Hosts} Development (C1): NVIDIA driver 550.120, Intel i7-13700K. Calibration, Final Test and the generalisation and sub-step runs: RTX 4090, driver 595.99.02, Intel i7-10700. Rendering and therefore policy actions differ between the drivers; outcome differences between hosts were found in 16 of 300 scenes of an earlier stage and in 6 of 11 selected diagnostic scenes.
+
+\paragraph{Deviation} The calibration design required a smoke run to reproduce the C1 records bit for bit. It reproduced none of 6 scene-runs (trunks differ; the C0 outcome of 51157 changed), but it reproduced the unchanged C1 collector on the same host exactly. The decision to proceed with a fixed host type was recorded and committed before the first calibration rollout. It was taken by the AI agent that ran the experiment, was not approved by the author in advance, and was reviewed by the author afterwards. Nothing about the candidate, policies, levels, tests or rules changed.
+
+\paragraph{Execution notes} The calibration pass of policy seed 2 was started as a separate parallel process for speed; the original chain's seed-2 step was therefore refused as ``already exists'' (exit code 1), as designed, and the analysis ran as a separate step. The first sub-step logging attempt did not log (the simulator rebuilds its scene at reset) and is kept as a failed try. The Final Test was approved separately and ran once; nothing was changed or re-run after it.
+
+\paragraph{Cost} Rented GPU time: calibration US\$1.75, generalisation US\$0.67, sub-step re-run US\$0.32, Final Test US\$2.13.

@@ -1,0 +1,24 @@
+item,code_location,code_fact,manuscript_location_after_revision,status
+trigger rule,src/hci/recovery_v1_oracle.py:81-83 trigger_rule; L37-40 constants,pending_grip>0 (open) AND close_run>=3 AND 0.02<=finger_width<=0.06 m (sum of finger joints); no grasp ground truth,§4 Trigger; Fig.2; Supp S3 Table S2,consistent
+pending action at trigger,src/hci/recovery_v1_oracle.py:86-96 pending(),the next queued action is read without executing it; if the queue is empty the chunk is inferred with the same noise key,§4 Trigger; §5 noise,consistent
+abstain invariance,src/hci/vision_center_v2.py:173 decide docstring; L301-309 runner check,abstaining branch: state/queue/history/counters checked equal to the trigger snapshot,§4 Trigger; Fig.2; Supp S3,consistent
+act start,src/hci/vision_center_v2.py:224,r.policy.clear() at ACT: pending open command discarded,§4 Bounded move; Fig.2,consistent (was wrong)
+per-step action,src/hci/recovery_v1_oracle.py:142-144 _xy_action,a[:2]=clip(step_xy/scale) a[2]=0 a[-1]=grip (last executed command; asserted close at L130-131),§4 Bounded move; Supp S3,consistent (was wrong)
+move bounds,src/hci/vision_center_v2.py:227-238; recovery_v1_oracle.py:42-45,|step|<=5 mm; |cur+step-start|<=30 mm else stop target_cap; used<12; stop within stop_tol,§4 Eq.(7); Supp Table S2,consistent
+closed loop,src/hci/vision_center_v2.py:239-247,after every step: observe both cameras; re-estimate; stop on target_moved/estimate_lost/low_carry/hold_shifted,§4 Bounded move,consistent
+stop tolerance,src/hci/vision_center_v2.py:186 stop_tol; L139 MEMORY_STOP_TOL_M,10 mm (frame target) / 5 mm (memory target),§4; Supp Table S2,consistent
+hand-back,src/hci/vision_center_v2.py:253; runner L313,r.policy.clear() at the end; runner asserts no inference during control and empty queue at return; policy re-plans next step,§4 Hand-back; Fig.2; Supp S3 Table S4,consistent (was wrong)
+no inference during move,src/hci/vision_center_v2.py:313,acted and (calls or queue) -> RuntimeError,§4,consistent
+policy history,src/hci/policies.py:34-40,clear() empties only the queue; observation history kept,§4 Hand-back,consistent
+target memory,src/hci/vision_center_v2.py:81-113 Memory,one target memory; wrist fit (u=2 mm) preferred else base estimate (u=5 mm); consistency within u1+u2; precise source owns xy; inconsistent obs replaces; used after 3 confirmations; +5 mm if exposed,§4 Memory; Fig.3 caption,consistent (was three memories)
+hold memory,src/hci/vision_center_v2.py:97-101,refit every 4th step while last grip<0 and width<0.075 m; dropped if not closed or width change >1 mm,§4 Memory,consistent
+decision order,src/hci/vision_center_v2.py:172-183 decide,estimate why -> LOW_CARRY (z<58 mm or remembered & gap<0) -> SIDE_CONTACT_RISK (n(+u)>=40 mm & gap<3 mm) -> TOO_FEW_STEPS (<20) -> ALIGNED (<15 mm) -> ALIGNED_WITHIN_UNCERTAINTY (n-u<10 mm) -> ACT,§4 Decision; Supp S3,consistent
+V2_SINGLE_FRAME,src/hci/vision_center_c1.py:10-13; L33; L125-126,memory empty until trigger; trigger-step observation only; confirm_min=1 (favours arm),§4 Ablations; §6 Limits; §12,consistent
+V2_RULES_OFF,src/hci/vision_center_c1.py:17-19; L36; L130-136,removes ALIGNED_WITHIN_UNCERTAINTY + SIDE_CONTACT_RISK + remembered-target LOW_CARRY as one bundle; V1 rules remain,§4; §11; §12; Supp S3,consistent (was 'all rules')
+memory-source ablations,src/hci/vision_center_c1.py:14-16; L32,use_hand/use_base/use_hold switched off,§4 Ablations,consistent
+Check 4,src/hci/trajectory_audit.py:22-23; 133-135,cos(actual step; commanded step)>=0.9 AND |actual step|>=0.2 mm for every step,§8; Supp S5,consistent (was 'along command')
+S4,src/hci/spatial_links.py:178; 186-197,control steps after trigger; min reconstructed robot-cubeB distance > 0 at logged poses,§9; Supp S6; T5,consistent
+S5,src/hci/spatial_links.py:179-180; 202-207,observed (non-zero impulse) shape pairs reconstructed <=1 mm apart; one-sided; penetration reported without threshold; all phases,§9; Supp S6; T5,consistent (was 'penetration <=1 mm')
+S6,src/hci/spatial_links.py:181; 209-213,pairs with PhysX min separation > 0; |physx-reconstructed|<=1 mm; all phases,§9; Supp S6; T5,consistent
+contact list,src/hci/spatial_probe.py:14-20,PhysX lists pairs within contact offset; zero impulse = proximity,§9 Quantities,consistent
+noise key,src/hci/recovery_v1_oracle.py:86-96,generate(r.episode r.t r.repeat): noise keyed to scene and step,§5 noise; Supp S1,consistent

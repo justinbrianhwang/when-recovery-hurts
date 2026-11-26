@@ -1,0 +1,18 @@
+%% -----------------------------------------------------------------------------------------------
+\section{The development harm case 51157 in full}\label{sec:s-51157}
+
+Scene 51157 (policy seed 1, development host) is the only development harm of V2 for this policy; it was chosen for that reason, not as a typical case.
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\linewidth]{FigS2_frames_51157.pdf}
+\caption{Scene 51157, policy seed 1. Rows 1--2: all 13 stored frames of the V2 move (trigger at step 111). Rows 3--4: stored frames after the hand-back for C0 and V2 at the steps shown. Each frame is base camera (left) and wrist camera (right), unprocessed, without overlay. C0 regrasps the dropped cube and succeeds at step 190; with V2 the cube lies beside the target and the episode ends at the horizon.}\label{fig:s-frames}
+\end{figure}
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\linewidth]{FigS3_memory_timeline_51157.pdf}
+\caption{Accepted observations before the trigger in scene 51157: wrist-camera target fits (18), base-camera target estimates (89) and held-cube fits (14); no conflicting observation. The target memory's position was set by the more precise wrist-camera fit and confirmed by base-camera estimates until step 106.}\label{fig:s-mem}
+\end{figure}
+
+\paragraph{Record} The trigger fired at step 111 with a closing run of 58 executed close commands and a finger opening of 48.8\,mm. True offset 54.6\,mm, estimated 54.7\,mm (reading bound 9\,mm, error 0.15\,mm). V2 acted for 12 steps (end reason: step budget); the TCP moved 24.3\,mm horizontally and 1.0\,mm down, the held cube 24.2\,mm; cube B did not move; the grasp was kept. The residual true offset was 30.4\,mm. The re-planned policy inferred at step 123 and first commanded an open at step 126. C0 released at the trigger, the cube fell beside the target, and the policy regrasped it and reached success at step 190; the V2 branch ran to the 200-step horizon. The move passed Check 4 (cosine above 0.999 at every step); its executed steps were about 1.9--2.0\,mm per 5\,mm command. The case is consistent with an incomplete correction and a spent time budget; it does not separate them, and a different simulation of the same scene (calibration host) gives a different C0 outcome.

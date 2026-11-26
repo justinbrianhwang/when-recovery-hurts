@@ -93,13 +93,13 @@ def t_physics():
     st = list(csv.DictReader(open(use(REPO / 'results/ras_submission_readiness_001/s6_static_validation/cases.csv'), encoding='utf-8')))
     stl = [x for x in st if x['min_sep_minus_gap_before_mm'] not in ('', 'NA')]; mx = max(abs(float(x['min_sep_minus_gap_before_mm'])) for x in stl)
     s4 = hs['status']['S4_logged_to_hull']; s5 = hs['status']['S5_logged_to_hull']
-    rows = [('S4: robot--target clearance during the move', f"{s4.get('PASS -> PASS', 0) + s4.get('FAIL -> FAIL', 0)} acted branches; FAIL {s4.get('FAIL -> FAIL', 0)} (oracle arm, seed 2, scene 51152, $-2.16$\\,mm)", 'FAIL in 1 branch, none in V2'),
-            ('S5: reconstructed penetration $\\le 1$\\,mm', f"{s5.get('FAIL -> FAIL', 0)} of {hs['status']['branches']} branches FAIL (2 fast-cube events)", 'FAIL in 2 events'),
-            ('Hull sensitivity of S4/S5', 'logged meshes replaced by convex hulls: 0 status changes', 'unchanged'),
-            ('S6: logged PhysX separation vs reconstructed gap', f"{int(allrow['over_tol']):,} of {int(allrow['n']):,} rows over 1\\,mm", '\\textbf{official FAIL}'),
-            ('S6 static, known geometry', f"{len(stl)} cases with listed points (of {len(st)}): $|\\Delta| \\le {mx:.2f}$\\,mm", 'separation definition confirmed'),
-            ('S6 sub-step logging (B4)', f"pre-sub-step pose: {b4['over_1mm_post']:,} $\\to$ {b4['over_1mm_pre']:,} of {b4['n']:,} pairs over 1\\,mm", 'residual unexplained')]
-    L = ['\\begin{tabular}{p{0.28\\linewidth}p{0.40\\linewidth}p{0.18\\linewidth}}', '\\toprule', 'Check & Result & Status\\\\', '\\midrule']
+    rows = [('S4 (pre-declared): robot--target distance $>0$ at logged poses of the move', f"{s4.get('PASS -> PASS', 0) + s4.get('FAIL -> FAIL', 0)} acted branches; 1 FAIL: oracle, seed 2, scene 51152, $-2.16$\\,mm (target cube grasped at the trigger)", 'FAIL in 1 oracle branch; 0 in V2'),
+            ('S5 (pre-declared): pairs with non-zero impulse reconstructed $\\le 1$\\,mm apart (one-sided)', f"{s5.get('FAIL -> FAIL', 0)} of {hs['status']['branches']} branch records FAIL; 2 distinct fast-cube events", 'FAIL in 2 events'),
+            ('Hull sensitivity of S4/S5 (post hoc)', 'logged link meshes replaced by convex hulls: 0 status changes', 'unchanged'),
+            ('S6 (pre-declared): PhysX separation vs reconstructed distance, separated listed pairs', f"{int(allrow['over_tol']):,} of {int(allrow['n']):,} rows differ by $>1$\\,mm (original record)", '\\textbf{official FAIL}'),
+            ('Static two-box experiment (post hoc, separate data)', f"{len(stl)} of {len(st)} cases with listed points: $|\\Delta| \\le {mx:.2f}$\\,mm before the last sub-step", 'separation definition confirmed'),
+            ('Sub-step re-run, calibration host (post hoc, separate data)', f"end-of-step vs pre-sub-step pose: {b4['over_1mm_post']:,} $\\to$ {b4['over_1mm_pre']:,} of {b4['n']:,} pairs over 1\\,mm", 'residual unexplained')]
+    L = ['\\begin{tabular}{p{0.33\\linewidth}p{0.40\\linewidth}p{0.17\\linewidth}}', '\\toprule', 'Check & Result & Status\\\\', '\\midrule']
     L += [f'{a} & {b} & {c}\\\\' for a, b, c in rows]; L += ['\\bottomrule', '\\end{tabular}']; return '\n'.join(L)
 
 
@@ -125,9 +125,23 @@ def t_descriptive():
     L += [BS + 'bottomrule', BS + 'end{tabular}']; return chr(10).join(L)
 
 
+def t_handback():
+    BS = chr(92); NL = BS + BS; d = jl(PAPER / 'data/handback_stats.json')
+    L = [BS + 'begin{tabular}{llrrcrrrr}', BS + 'toprule',
+         ' & & & & Steps to first open & Net/cmd. & ' + BS + 'multicolumn{3}{c}{End of move}' + NL,
+         BS + 'cmidrule(lr){7-9}', 'Stage & Policy & Acted & Never opened & min / median / max & path (median) & tolerance & budget & other' + NL, BS + 'midrule']
+    lab = {'C1': 'Development', 'calibration': 'Calibration', 'test': 'Final Test'}
+    for st in ('C1', 'calibration', 'test'):
+        for i, p in enumerate(('train_seed_1', 'train_seed_2')):
+            e = d[f'{st}|{p}']; g = e['steps_to_first_open_after_move']; r = e['net_xy_over_commanded_path']; er = e['end_reason']
+            tol = er.get('within_tolerance', 0); bud = er.get('step_budget', 0); oth = sum(er.values()) - tol - bud
+            L.append(f"{lab[st] if i == 0 else ''} & seed {i + 1} & {e['acted']} & {e['no_open_command_after_move']} & {g['min']:.0f} / {g['median']:.0f} / {g['max']:.0f} & {r['median']:.2f} & {tol} & {bud} & {oth}" + NL)
+    L += [BS + 'bottomrule', BS + 'end{tabular}']; return chr(10).join(L)
+
+
 def main():
     OUT.mkdir(parents=True, exist_ok=True); outs = {}
-    for name, fn in (('T2_development_arms', t_dev), ('T3_development_tests', t_tests), ('T4_calibration_and_test', t_confirm), ('T5_physics_validity', t_physics), ('T6_generalization_plainconv', t_b3), ('TS1_decisions_by_stage', t_decisions), ('TS2_descriptive_posthoc', t_descriptive)):
+    for name, fn in (('T2_development_arms', t_dev), ('T3_development_tests', t_tests), ('T4_calibration_and_test', t_confirm), ('T5_physics_validity', t_physics), ('T6_generalization_plainconv', t_b3), ('TS1_decisions_by_stage', t_decisions), ('TS2_descriptive_posthoc', t_descriptive), ('TS3_handback', t_handback)):
         p = OUT / f'{name}.tex'; p.write_text(fn() + '\n', encoding='utf-8'); outs[p.name] = sha(p); print(p.name)
     s = Path(__file__); (OUT / 'TABLE_PROVENANCE.json').write_text(json.dumps({'generator': str(s.relative_to(REPO)).replace('\\', '/'), 'generator_sha256': sha(s), 'inputs_sha256': USED, 'outputs_sha256': outs}, indent=1), encoding='utf-8')
 
